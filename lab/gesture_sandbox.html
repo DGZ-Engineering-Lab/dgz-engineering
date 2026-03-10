@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DGZ Spatial OS — Gestures Sandbox (Free Trial)</title>
+
+  <!-- MapLibre for GeoSpatial Render -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+  <!-- Phosphor Icons for Premium UI -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- MediaPipe Hands -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <!-- DGZ Core (Nav & i18n) -->
+  <link rel="stylesheet" href="../assets/css/index.css">
+
+  <style>
+    :root {
+      --bg-base: #000000;
+      --bg-panel: rgba(10, 10, 15, 0.7);
+      --border-primary: rgba(0, 229, 255, 0.1);
+      --accent-cyan: #00E5FF;
+      --accent-purple: #9D4EDD;
+      --accent-gold: #FFB400;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-base);
+      color: #fff;
+      font-family: var(--font-sans);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- MAP CONTAINER FULLSCREEN --- */
+    #map-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* --- UI OVERLAY LAYER --- */
+    .ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none; /* Let clicks pass to map unless on UI element */
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- TOP HEADER --- */
+    .os-header {
+      height: 60px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      pointer-events: auto;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sys-badge {
+      background: rgba(157, 78, 221, 0.1);
+      color: var(--accent-purple);
+      border: 1px solid rgba(157, 78, 221, 0.3);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.1);
+    }
+
+    /* --- CAMERA WIDGET (FULLSCREEN HUD) --- */
+    .vision-widget {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .vision-header {
+      position: absolute;
+      top: 80px;
+      right: 30px;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      padding: 10px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      pointer-events: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .vision-body {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .input_video {
+      display: none; /* Hide the raw video feed for a cleaner AR look */
+    }
+
+    .output_canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(-1); /* Mirror */
+      opacity: 0.6; /* Translucid floating skeleton */
+    }
+
+    .start-vision-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #00E5FF 0%, #0077B6 100%);
+      color: #000;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      z-index: 20;
+      pointer-events: auto;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .start-vision-btn:hover {
+      box-shadow: 0 0 50px rgba(0, 229, 255, 0.8);
+      transform: translate(-50%, -55%) scale(1.05);
+    }
+
+    /* --- VISION PRO UI: DOCK & PANELS --- */
+    .vision-dock {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    
+    .vision-glass-panel {
+      background: rgba(10, 10, 15, 0.10); /* Transparent premium look */
+      backdrop-filter: blur(25px) saturate(200%);
+      -webkit-backdrop-filter: blur(25px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.08); /* Borde minimalista */
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.02);
+      color: white;
+      pointer-events: auto;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .panel-toggle {
+      background: none;
+      border: none;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px 6px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .panel-toggle:hover, .panel-toggle.hovered {
+      opacity: 0.7;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+    }
+    .panel-content {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: max-height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, margin-top 0.3s ease;
+      max-height: 250px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    .panel-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      pointer-events: none;
+    }
+    .toggle-icon {
+      color: rgba(255,255,255,0.5);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .toggle-icon.rotated {
+      transform: rotate(-180deg);
+    }
+    
+    .vision-btn-side {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 100%;
+    }
+    
+    .vision-btn-side:hover, .vision-btn-side.hovered {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: var(--accent-cyan);
+      color: #fff;
+      transform: scale(1.05) translateZ(0);
+    }
+    .vision-btn-side.active {
+      background: rgba(0, 229, 255, 0.3);
+      border-color: var(--accent-cyan);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0,229,255,0.4);
+    }
+    
+    /* --- FLOATING ATTRIBUTE WINDOW --- */
+    #spatial-tooltip {
+      position: absolute;
+      display: none;
+      pointer-events: none;
+      z-index: 30;
+      min-width: 280px;
+      max-width: 350px;
+      transform: translate(25px, 25px); /* offset from cursor */
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .tooltip-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-gold);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      padding-bottom: 4px;
+    }
+    .data-label { color: rgba(255,255,255,0.5); }
+    .data-val { color: #fff; font-weight: 600; text-align: right; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+    /* --- CYBER CURSOR --- */
+    #cyber-cursor {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-cyan);
+      background: rgba(0, 229, 255, 0.2);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+      transition: width 0.1s, height 0.1s, background 0.1s;
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    #cyber-cursor.pinching {
+      width: 16px;
+      height: 16px;
+      background: var(--accent-cyan);
+      border-color: #fff;
+      box-shadow: 0 0 20px var(--accent-cyan);
+    }
+    
+    #cyber-cursor.zooming {
+      width: 40px;
+      height: 40px;
+      background: rgba(157, 78, 221, 0.3);
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 30px var(--accent-purple);
+    }
+
+    /* --- INFO HUD --- */
+    .info-hud {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      width: 290px;
+      z-index: 20;
+    }
+
+    .gesture-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+    }
+
+    .gesture-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--accent-gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MAP -->
+  <div id="map-container"></div>
+
+  <!-- CYBER CURSOR (Moves with Index Finger) -->
+  <div id="cyber-cursor"></div>
+
+  <!-- UI LAYER -->
+  <div class="ui-layer">
+    
+    <!-- HEADER -->
+    <header class="os-header">
+      <div class="header-brand">
+        <a href="validator.html" style="color: rgba(255,255,255,0.5); text-decoration: none; display: flex; align-items: center; gap: 5px;">
+          <i class="ph ph-arrow-left"></i> Volver a Validator
+        </a>
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" style="margin-left:1rem; filter: drop-shadow(0 0 5px var(--accent-cyan));">
+          <rect width="32" height="32" rx="6" fill="rgba(0,229,255,0.1)" stroke="rgba(0,229,255,0.4)" stroke-width="1"/>
+          <text x="16" y="21" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="900" fill="#00e5ff">DGZ</text>
+        </svg>
+        <span style="font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px;">VISION</span>
+        <span class="sys-badge"><i class="ph-bold ph-hand-pointing"></i> Free Trial Sandbox</span>
+      </div>
+    </header>
+
+    <!-- INFO HUD -->
+    <div class="info-hud vision-glass-panel">
+      <button class="panel-toggle" onclick="togglePanel(this)">
+        <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono);"><i class="ph-bold ph-magic-wand"></i> INTERACCIÓN INMERSIVA</div>
+        <i class="ph-bold ph-caret-up toggle-icon"></i>
+      </button>
+      <div class="panel-content">
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.4; margin: 0 0 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px;">Usa la cámara frontal de tu dispositivo para controlar el módulo sin tocar la pantalla.</p>
+        <ul class="gesture-list">
+          <li><i class="ph-bold ph-hand-pointing" style="font-size: 1.2rem; color: #fff;"></i> <b style="color:#fff;">Índice:</b> Mover Cursor</li>
+          <li><i class="ph-bold ph-arrows-in-line-horizontal" style="font-size: 1.2rem; color: #fff;"></i> <b style="color:#fff;">Pinza:</b> Arrastrar/Clic Espacial</li>
+          <li><i class="ph-bold ph-hand-peace" style="font-size: 1.2rem; color: var(--accent-cyan);"></i> <b style="color:var(--accent-cyan);">Paz:</b> Acercar Zoom (+)</li>
+          <li><i class="ph-bold ph-hand-palm" style="font-size: 1.2rem; color: var(--accent-purple);"></i> <b style="color:var(--accent-purple);">Cinco Dedos:</b> Alejar Zoom (-)</li>
+          <li><i class="ph-bold ph-hand-fist" style="font-size: 1.2rem; color: var(--status-err);"></i> <b style="color:var(--status-err);">Puño:</b> Resetear Vista</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VISION PRO DOCK -->
+    <div class="vision-dock">
+      <div class="vision-glass-panel">
+        <button class="panel-toggle" onclick="togglePanel(this)">
+          <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono);"><i class="ph-bold ph-stack"></i> MAPA BASE</div>
+          <i class="ph-bold ph-caret-up toggle-icon"></i>
+        </button>
+        <div class="panel-content">
+          <button class="vision-btn-side active" id="btn-dark" onclick="changeBasemap('dark')"><i class="ph-fill ph-moon"></i> Dark Matter</button>
+          <button class="vision-btn-side" id="btn-sat" onclick="changeBasemap('satellite')" style="margin-top: 5px;"><i class="ph-fill ph-globe-hemisphere-west"></i> Satélite VHR (Esri)</button>
+        </div>
+      </div>
+      
+      <div class="vision-glass-panel">
+        <button class="panel-toggle" onclick="togglePanel(this)">
+          <div style="font-size: 0.7rem; color: var(--accent-purple); font-family: var(--font-mono);"><i class="ph-bold ph-database"></i> DATAFEED PÚBLICO</div>
+          <i class="ph-bold ph-caret-up toggle-icon"></i>
+        </button>
+        <div class="panel-content">
+          <button class="vision-btn-side" id="btn-igac" onclick="toggleIGAC()"><i class="ph-bold ph-map-pin"></i> Mapa Geológico (SGC WMS)</button>
+          <button class="vision-btn-side" id="btn-cadastre" onclick="toggleCadastre()" style="margin-top: 5px;"><i class="ph-bold ph-house-line"></i> Catastro Vectorial (Lotes)</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- DYNAMIC TOOLTIP (APPLE VISION STYLE) -->
+    <div id="spatial-tooltip" class="vision-glass-panel">
+      <div class="tooltip-header">
+        <span><i class="ph-bold ph-scan"></i> OBJETO ESPACIAL</span>
+        <span id="tt-id" style="color: var(--accent-cyan);">ID: 000</span>
+      </div>
+      <div id="tt-content"></div>
+    </div>
+
+    <!-- VISION WIDGET (CAMERA OVERLAY) -->
+    <div class="vision-widget">
+      <div class="vision-header">
+        <span style="display: flex; align-items: center; gap: 5px;"><i class="ph-bold ph-camera"></i> Óptica Geométrica</span>
+        <span id="vision-status" style="color: rgba(255,255,255,0.5);">STANDBY</span>
+        <span id="gesture-status" style="color: var(--accent-gold); font-size: 0.65rem; margin-top: 5px;">Esperando Input...</span>
+      </div>
+      <div class="vision-body">
+        <video class="input_video" autoplay playsinline></video>
+        <canvas class="output_canvas"></canvas>
+        <button class="start-vision-btn" id="btn-start" onclick="initVision()"><i class="ph-bold ph-scan"></i> INICIAR LINK NEURONAL</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- 1. Inicializar MapLibre ---
+    const map = new maplibregl.Map({
+      container: 'map-container',
+      style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json', // Estilo dark premium
+      center: [-74.0721, 4.7110], // Bogota
+      zoom: 6,
+      interactive: true // We will also allow regular mouse events
+    });
+
+    let mapLoaded = false;
+    let isIGACActive = false;
+    let isCadastreActive = false;
+    
+    // Mock Catastro Bogotá
+    const cadastreGeoJSON = {
+      "type": "FeatureCollection",
+      "features": [
+        { "type": "Feature", "properties": { "predio": "001-A", "uso": "Residencial", "area": "120m²", "propietario": "J. Pérez", "avaluo": "$150M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7110 ], [ -74.0725, 4.7110 ], [ -74.0725, 4.7114 ], [ -74.0721, 4.7114 ], [ -74.0721, 4.7110 ] ] ] } },
+        { "type": "Feature", "properties": { "predio": "001-B", "uso": "Comercial", "area": "85m²", "propietario": "M. Gómez", "avaluo": "$210M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7106 ], [ -74.0725, 4.7106 ], [ -74.0725, 4.7110 ], [ -74.0721, 4.7110 ], [ -74.0721, 4.7106 ] ] ] } },
+        { "type": "Feature", "properties": { "predio": "002-A", "uso": "Lote Baldío", "area": "400m²", "propietario": "Distrito Capital", "avaluo": "$30M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0715, 4.7106 ], [ -74.0721, 4.7106 ], [ -74.0721, 4.7114 ], [ -74.0715, 4.7114 ], [ -74.0715, 4.7106 ] ] ] } }
+      ]
+    };
+
+    function addCustomLayers() {
+      // 1. Capa de prueba estática (Colombia)
+      if (!map.getSource('colombia-departamentos')) {
+        map.addSource('colombia-departamentos', {
+          type: 'geojson',
+          data: 'https://raw.githubusercontent.com/johan/world.geo.json/master/countries/COL.geo.json'
+        });
+      }
+      if (!map.getLayer('col-layer')) {
+        map.addLayer({
+          id: 'col-layer',
+          type: 'line',
+          source: 'colombia-departamentos',
+          paint: { 'line-color': '#00E5FF', 'line-width': 2, 'line-opacity': 0.6 }
+        });
+        map.addLayer({
+          id: 'col-fill',
+          type: 'fill',
+          source: 'colombia-departamentos',
+          paint: { 'fill-color': '#9D4EDD', 'fill-opacity': 0.1 }
+        });
+      }
+      
+      // 2. [DATOS CIENTÍFICOS] Sismos Globales
+      if (!map.getSource('earthquakes')) {
+        map.addSource('earthquakes', {
+           type: 'geojson',
+           data: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson'
+        });
+      }
+      if (!map.getLayer('earthquakes-glow')) {
+        map.addLayer({
+           id: 'earthquakes-glow',
+           type: 'circle',
+           source: 'earthquakes',
+           paint: {
+               'circle-radius': ['*', ['get', 'mag'], 4],
+               'circle-color': '#ff4b2b',
+               'circle-opacity': 0.2,
+               'circle-blur': 1
+           }
+        });
+        map.addLayer({
+           id: 'earthquakes-core',
+           type: 'circle',
+           source: 'earthquakes',
+           paint: {
+               'circle-radius': ['*', ['get', 'mag'], 1.5],
+               'circle-color': '#FFB400',
+               'circle-opacity': 0.8,
+               'circle-stroke-width': 1,
+               'circle-stroke-color': '#000'
+           }
+        });
+      }
+      
+      // 3. CAPAS PÚBLICAS SGC (SERVICIO GEOLÓGICO WMS)
+      if (isIGACActive) {
+         if (!map.getSource('sgc-wms')) {
+             // Fallback al Servicio Geológico Colombiano por caida del nodo IGAC
+             map.addSource('sgc-wms', {
+                 'type': 'raster',
+                 'tiles': [
+                     'https://srvags.sgc.gov.co/arcgis/services/Mapa_Geologico_Colombia_2015/Mapa_Geologico_Colombia_2015/MapServer/WMSServer?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=17,18,19,20,60&styles=,,,,'
+                 ],
+                 'tileSize': 256
+             });
+         }
+         if (!map.getLayer('sgc-layer')) {
+             map.addLayer({
+                 'id': 'sgc-layer',
+                 'type': 'raster',
+                 'source': 'sgc-wms',
+                 'paint': { 'raster-opacity': 0.8 }
+             }, 'col-fill'); 
+         }
+      } else if (map.getLayer('sgc-layer')) {
+         map.removeLayer('sgc-layer');
+         map.removeSource('sgc-wms');
+      }
+
+      // 4. CATASTRO VECTORIAL (TABLAS DE ATRIBUTOS MOCK)
+      if (isCadastreActive) {
+          if (!map.getSource('cadastre')) {
+              map.addSource('cadastre', {
+                  type: 'geojson',
+                  data: cadastreGeoJSON
+              });
+          }
+          if (!map.getLayer('cadastre-fill')) {
+              map.addLayer({
+                  id: 'cadastre-fill',
+                  type: 'fill',
+                  source: 'cadastre',
+                  paint: {
+                      'fill-color': [
+                          'match', ['get', 'uso'],
+                          'Residencial', '#00E5FF',
+                          'Comercial', '#FFB400',
+                          '#9D4EDD' // Default
+                      ],
+                      'fill-opacity': 0.4
+                  }
+              });
+              map.addLayer({
+                  id: 'cadastre-line',
+                  type: 'line',
+                  source: 'cadastre',
+                  paint: {
+                      'line-color': '#FFF',
+                      'line-width': 1
+                  }
+              });
+              
+              // Fly to bogota to see them
+              map.flyTo({ center: [-74.0720, 4.7110], zoom: 16.5, speed: 1.5 });
+          }
+      } else {
+          if (map.getLayer('cadastre-fill')) map.removeLayer('cadastre-fill');
+          if (map.getLayer('cadastre-line')) map.removeLayer('cadastre-line');
+          if (map.getSource('cadastre')) map.removeSource('cadastre');
+      }
+    }
+
+    map.on('style.load', () => {
+      mapLoaded = true;
+      addCustomLayers();
+    });
+    
+    // UI FUNCTIONS: Apple Vision Style Map Toggles
+    function changeBasemap(type) {
+        playSciFiBlip(500, 'square', 0.1);
+        document.getElementById('btn-dark').classList.remove('active');
+        document.getElementById('btn-sat').classList.remove('active');
+        
+        if (type === 'dark') {
+            document.getElementById('btn-dark').classList.add('active');
+            map.setStyle('https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json');
+        } else {
+            document.getElementById('btn-sat').classList.add('active');
+            map.setStyle({
+                'version': 8,
+                'sources': {
+                    'esri-sat': {
+                        'type': 'raster',
+                        'tiles': ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+                        'tileSize': 256
+                    }
+                },
+                'layers': [{
+                    'id': 'satellite',
+                    'type': 'raster',
+                    'source': 'esri-sat',
+                    'minzoom': 0,
+                    'maxzoom': 22
+                }]
+            });
+        }
+    }
+    
+    function toggleIGAC() {
+        playSciFiBlip(700, 'sawtooth', 0.15);
+        isIGACActive = !isIGACActive;
+        const btn = document.getElementById('btn-igac');
+        if(isIGACActive) btn.classList.add('active');
+        else btn.classList.remove('active');
+        addCustomLayers();
+    }
+
+    function toggleCadastre() {
+        playSciFiBlip(800, 'square', 0.1);
+        isCadastreActive = !isCadastreActive;
+        const btn = document.getElementById('btn-cadastre');
+        if(isCadastreActive) btn.classList.add('active');
+        else btn.classList.remove('active');
+        addCustomLayers();
+    }
+
+    function togglePanel(btnElement) {
+        if(typeof playSciFiBlip === 'function') playSciFiBlip(600, 'sine', 0.05);
+        const content = btnElement.nextElementSibling;
+        const icon = btnElement.querySelector('.toggle-icon');
+        content.classList.toggle('collapsed');
+        icon.classList.toggle('rotated');
+    }
+    
+    // UI FUNCTIONS: Dynamic Attribute Hover (Mouse fallback)
+    function onFeatureHover(x, y) {
+        if (!mapLoaded) return;
+        
+        let features = [];
+        try {
+            // Safe query avoiding non-existent layer errors
+            const layersToQuery = [];
+            if (map.getLayer('earthquakes-core')) layersToQuery.push('earthquakes-core');
+            if (map.getLayer('col-fill')) layersToQuery.push('col-fill');
+            if (map.getLayer('cadastre-fill')) layersToQuery.push('cadastre-fill');
+            
+            if(layersToQuery.length > 0) {
+                features = map.queryRenderedFeatures([x, y], { layers: layersToQuery });
+            }
+        } catch(err) {
+            console.warn("Query rendering error", err);
+            return;
+        }
+        
+        const tooltip = document.getElementById('spatial-tooltip');
+        
+        if (features.length > 0) {
+            const f = features[0];
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+            
+            if (f.layer.id === 'earthquakes-core') {
+                const mag = parseFloat(f.properties.mag).toFixed(1);
+                const place = f.properties.place;
+                const date = new Date(f.properties.time).toLocaleString();
+                document.getElementById('tt-id').innerText = "SISMO [USGS]";
+                document.getElementById('tt-content').innerHTML = `
+                    <div class="data-row"><span class="data-label">Magnitud</span><span class="data-val" style="color:#ff4b2b;">${mag} M</span></div>
+                    <div class="data-row"><span class="data-label">Epicentro</span><span class="data-val">${place.split(' of ').pop()}</span></div>
+                    <div class="data-row"><span class="data-label">Timestamp</span><span class="data-val">${date}</span></div>
+                `;
+            } else if (f.layer.id === 'col-fill') {
+                const name = f.properties.name || "Territorio Nacional";
+                document.getElementById('tt-id').innerText = "CAPA [COL]";
+                document.getElementById('tt-content').innerHTML = `
+                    <div class="data-row"><span class="data-label">Provincia</span><span class="data-val" style="color:var(--accent-purple);">${name}</span></div>
+                    <div class="data-row"><span class="data-label">Soberanía</span><span class="data-val">Autónoma</span></div>
+                    <div class="data-row"><span class="data-label">Resolución</span><span class="data-val">Alta (LADM-COL)</span></div>
+                `;
+            } else if (f.layer.id === 'cadastre-fill') {
+                document.getElementById('tt-id').innerText = "PREDIO [" + f.properties.predio + "]";
+                document.getElementById('tt-content').innerHTML = `
+                    <div class="data-row"><span class="data-label">Uso</span><span class="data-val" style="color:var(--accent-cyan);">${f.properties.uso}</span></div>
+                    <div class="data-row"><span class="data-label">Área</span><span class="data-val">${f.properties.area}</span></div>
+                    <div class="data-row"><span class="data-label">Propietario</span><span class="data-val">${f.properties.propietario}</span></div>
+                    <div class="data-row"><span class="data-label">Avalúo</span><span class="data-val" style="color:var(--accent-gold);">${f.properties.avaluo}</span></div>
+                `;
+            }
+        } else {
+            tooltip.style.display = 'none';
+        }
+    }
+    
+    map.on('mousemove', (e) => {
+        // Only use mouse hover if currently not using hands directly
+        if(currentGestureState === "NONE" || currentGestureState === "POINTER") {
+            onFeatureHover(e.point.x, e.point.y);
+        }
+    });
+
+    // --- 2. Variables del motor de visión ---
+    const videoElement = document.querySelector('.input_video');
+    const canvasElement = document.querySelector('.output_canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+    const cursor = document.getElementById('cyber-cursor');
+    const statusText = document.getElementById('vision-status');
+    const gestureFeedback = document.getElementById('gesture-status');
+    
+    let isPinching = false;
+    let dragStartMapCenter = null;
+    let dragStartCursorPos = null;
+    
+    // --- [PROGRAMACIÓN AVANZADA] Algoritmo de Suavizado (EMA - Exponential Moving Average)
+    let smoothedX = window.innerWidth / 2;
+    let smoothedY = window.innerHeight / 2;
+    const SMOOTHING_FACTOR = 0.25; // 0=Congelado, 1=Cero suavizado/Jitter máximo
+    
+    // Antispam states for gestures
+    let lastZoomActionTime = 0;
+    let currentGestureState = "NONE";
+    
+    // --- [AUDIO FEEDBACK] Sintetizador Web Audio API para inmersión
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSciFiBlip(freq = 800, type = 'sine', duration = 0.1) {
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime); // Volumen suave 5%
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+    
+    function setGestureState(newState, text, color) {
+      if (currentGestureState !== newState) {
+         currentGestureState = newState;
+         // Feedback auditivo según el estado
+         if(newState === 'DRAG') playSciFiBlip(400, 'square', 0.15);
+         else if(newState === 'ZOOM_IN') playSciFiBlip(1200, 'sine', 0.1);
+         else if(newState === 'ZOOM_OUT') playSciFiBlip(600, 'sine', 0.1);
+         else if(newState === 'RESET') playSciFiBlip(300, 'sawtooth', 0.3);
+         else if(newState === 'POINTER') playSciFiBlip(900, 'sine', 0.05);
+      }
+      gestureFeedback.innerText = text;
+      gestureFeedback.style.color = color;
+    }
+    
+    // --- 3. Inicializar MediaPipe ---
+    async function initVision() {
+      document.getElementById('btn-start').innerHTML = '<i class="ph-bold ph-spinner-gap"></i> CARGANDO MODELO...';
+      
+      try {
+        const hands = new Hands({locateFile: (file) => {
+          return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+        }});
+        
+        hands.setOptions({
+          maxNumHands: 1, // Only 1 hand for tracking logic
+          modelComplexity: 1,
+          minDetectionConfidence: 0.65,
+          minTrackingConfidence: 0.65
+        });
+        
+        hands.onResults(onResults);
+        
+        const camera = new Camera(videoElement, {
+          onFrame: async () => {
+            await hands.send({image: videoElement});
+          },
+          // Using typical webcam resolution, we'll scale it to full screen via css
+          width: 1280,
+          height: 720
+        });
+        
+        await camera.start();
+        document.getElementById('btn-start').style.display = 'none';
+        statusText.style.color = '#00E5FF';
+        statusText.innerText = 'ONLINE / TRACKING';
+        cursor.style.display = 'block';
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('btn-start').innerText = 'ERROR ACCESO CÁMARA';
+        document.getElementById('btn-start').style.background = '#ff4b2b';
+      }
+    }
+
+    // Resize canvas dynamically to match window
+    function resizeCanvas() {
+      canvasElement.width = window.innerWidth;
+      canvasElement.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    // Antispam states for gestures
+    
+    // --- 4. Procesamiento de cuadros y gestos ---
+    function onResults(results) {
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      
+      if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+        const landmarks = results.multiHandLandmarks[0];
+        
+        // Dibujar conectores luminosos flotantes fullscreen
+        drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {color: 'rgba(0, 229, 255, 0.4)', lineWidth: 3});
+        drawLandmarks(canvasCtx, landmarks, {color: '#9D4EDD', lineWidth: 1, radius: 4});
+        
+        // --- DETECCIÓN DE ESTADOS DE DEDOS ---
+        const thumbTip = landmarks[4];
+        const indexTip = landmarks[8];
+        const indexMcp = landmarks[5];
+        const midTip = landmarks[12];
+        const midMcp = landmarks[9];
+        const ringTip = landmarks[16];
+        const ringMcp = landmarks[13];
+        const pinkyTip = landmarks[20];
+        const pinkyMcp = landmarks[17];
+        const wrist = landmarks[0];
+        
+        // Helpers (Distance Y mostly, simple heuristic)
+        // A finger is "open" if its tip is mathematically higher (lower Y value) or further from wrist than its MCP
+        const dist = (p1, p2) => Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+        
+        const isIndexOpen = dist(indexTip, wrist) > dist(indexMcp, wrist) + 0.05;
+        const isMidOpen = dist(midTip, wrist) > dist(midMcp, wrist) + 0.05;
+        const isRingOpen = dist(ringTip, wrist) > dist(ringMcp, wrist) + 0.05;
+        const isPinkyOpen = dist(pinkyTip, wrist) > dist(pinkyMcp, wrist) + 0.05;
+        
+        // --- CONTROL DEL CURSOR (Con suavizado EMA matemático) ---
+        const mirroredX = 1 - indexTip.x;
+        const mappedX = mirroredX * window.innerWidth;
+        const mappedY = indexTip.y * window.innerHeight;
+        
+        // Aplicar Exponential Moving Average (EMA)
+        smoothedX = smoothedX + (mappedX - smoothedX) * SMOOTHING_FACTOR;
+        smoothedY = smoothedY + (mappedY - smoothedY) * SMOOTHING_FACTOR;
+        
+        // Telemetría 3D en HUD (Profundidad Z para sentir que es avanzado)
+        const depthZ = Math.round(indexTip.z * 1000);
+        
+        cursor.style.left = `${smoothedX}px`;
+        cursor.style.top = `${smoothedY}px`;
+        cursor.classList.remove('zooming');
+        
+        const pinchDist = dist(indexTip, thumbTip);
+        const pinchThreshold = 0.06; // Ajustado por heurística de estabilidad
+        
+        const now = Date.now();
+        
+        // 1. PUÑO CERRADO (Reset Vista)
+        if (!isIndexOpen && !isMidOpen && !isRingOpen && !isPinkyOpen) {
+           setGestureState('RESET', `ACCION: RESET VISTA [Z:${depthZ}]`, "var(--status-err)");
+           if (mapLoaded && now - lastZoomActionTime > 2000) {
+               map.flyTo({ center: [-74.0721, 4.7110], zoom: 6, bearing: 0, pitch: 0 });
+               lastZoomActionTime = now;
+           }
+           isPinching = false;
+           cursor.classList.remove('pinching');
+        }
+        // 2. DOS DEDOS (PAZ) - Zoom IN
+        else if (isIndexOpen && isMidOpen && !isRingOpen && !isPinkyOpen) {
+           setGestureState('ZOOM_IN', `ACCION: ZOOM IN (+) [Z:${depthZ}]`, "var(--accent-cyan)");
+           cursor.classList.add('zooming');
+           if (mapLoaded && now - lastZoomActionTime > 150) {
+               map.zoomTo(map.getZoom() + 0.2, {duration: 150});
+               lastZoomActionTime = now;
+           }
+           isPinching = false;
+           cursor.classList.remove('pinching');
+        }
+        // 3. CINCO DEDOS (MANO ABIERTA) - Zoom OUT
+        else if (isIndexOpen && isMidOpen && isRingOpen && isPinkyOpen && pinchDist > pinchThreshold) {
+           setGestureState('ZOOM_OUT', `ACCION: ZOOM OUT (-) [Z:${depthZ}]`, "var(--accent-purple)");
+           cursor.classList.add('zooming');
+           if (mapLoaded && now - lastZoomActionTime > 150) {
+               map.zoomTo(map.getZoom() - 0.2, {duration: 150});
+               lastZoomActionTime = now;
+           }
+           isPinching = false;
+           cursor.classList.remove('pinching');
+        }
+        // 4. PINZA (DRAG)
+        else if (pinchDist < pinchThreshold) {
+          setGestureState('DRAG', `ACCION: ARRASTRE [Z:${depthZ}]`, "#fff");
+          
+          if (!isPinching) {
+            isPinching = true;
+            cursor.classList.add('pinching');
+            dragStartMapCenter = map.getCenter();
+            dragStartCursorPos = { x: smoothedX, y: smoothedY };
+          } else {
+            const pixelDeltaX = dragStartCursorPos.x - smoothedX;
+            const pixelDeltaY = dragStartCursorPos.y - smoothedY;
+            
+            if(mapLoaded) {
+                const zoomFactor = Math.pow(2, map.getZoom());
+                const lngDelta = (pixelDeltaX / 512) * (360 / zoomFactor);
+                // factor cos(lat) para corregir distorsión mercator
+                const latDelta = -(pixelDeltaY / 512) * (360 / zoomFactor) * Math.cos(dragStartMapCenter.lat * Math.PI / 180);
+                
+                map.setCenter([
+                    dragStartMapCenter.lng + lngDelta,
+                    dragStartMapCenter.lat + latDelta
+                ]);
+            }
+          }
+        } 
+        // 5. NAVEGACION (PUNTERO O CLIC ESPACIAL)
+        else {
+          // Lógica de "Clic" Espacial para Interfaz (Pellizco rápido y suelto, o mantener puntero sobre botones)
+          setGestureState('POINTER', `TRACKING: PUNTERO [Z:${depthZ}]`, "rgba(255,255,255,0.5)");
+          
+          if (isPinching) {
+            isPinching = false;
+            cursor.classList.remove('pinching');
+            
+            // Si suelta el pinch rápido sobre un botón HTML, hacer clic!
+            const elementUnderCursor = document.elementFromPoint(smoothedX, smoothedY);
+            if(elementUnderCursor && (elementUnderCursor.tagName === 'BUTTON' || elementUnderCursor.closest('button'))) {
+                const btn = elementUnderCursor.tagName === 'BUTTON' ? elementUnderCursor : elementUnderCursor.closest('button');
+                btn.click();
+                playSciFiBlip(1000, 'square', 0.05);
+            }
+          } else {
+            // Hover states for HTML Buttons visually via JS since css :hover is slow with simulated cursors
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('hovered'));
+            const element = document.elementFromPoint(smoothedX, smoothedY);
+            if(element && (element.tagName === 'BUTTON' || element.closest('button'))) {
+                const btn = element.tagName === 'BUTTON' ? element : element.closest('button');
+                btn.classList.add('hovered');
+            }
+          }
+        }
+        
+        // --- TRIGGER VISION PRO HOVER TOOLTIPS WITH FINGER ---
+        if (currentGestureState === 'POINTER') {
+             // Throttled UI hover to avoid over processing
+             onFeatureHover(smoothedX, smoothedY);
+        } else {
+             document.getElementById('spatial-tooltip').style.display = 'none';
+        }
+        
+      } else {
+        if (isPinching) {
+          isPinching = false;
+          cursor.classList.remove('pinching');
+        }
+        document.getElementById('gesture-status').innerText = "Esperando Input...";
+        currentGestureState = "NONE";
+      }
+      canvasCtx.restore();
+    }
+  </script>
+
+</body>
+</html>
