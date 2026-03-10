@@ -192,6 +192,15 @@
       color: white;
       pointer-events: auto;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+    }
+
+    .vision-glass-panel.is-dragging {
+      transition: none !important;
+      z-index: 1000 !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 20px rgba(0,229,255,0.2);
+      transform: scale(1.02);
+      cursor: grabbing;
     }
     
     .panel-toggle {
@@ -201,7 +210,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
+      cursor: grab;
       padding: 4px 6px;
       outline: none;
       transition: all 0.3s;
@@ -384,9 +393,9 @@
     </header>
 
     <!-- INFO HUD -->
-    <div class="info-hud vision-glass-panel">
-      <button class="panel-toggle" onclick="togglePanel(this)">
-        <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono);"><i class="ph-bold ph-magic-wand"></i> INTERACCIÓN INMERSIVA</div>
+    <div class="info-hud vision-glass-panel" id="panel-help">
+      <button class="panel-toggle" onclick="togglePanel(this)" onmousedown="initMouseDrag(event, this.parentElement)">
+        <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono); pointer-events:none;"><i class="ph-bold ph-magic-wand"></i> INTERACCIÓN INMERSIVA</div>
         <i class="ph-bold ph-caret-up toggle-icon"></i>
       </button>
       <div class="panel-content">
@@ -403,9 +412,9 @@
 
     <!-- VISION PRO DOCK -->
     <div class="vision-dock">
-      <div class="vision-glass-panel">
-        <button class="panel-toggle" onclick="togglePanel(this)">
-          <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono);"><i class="ph-bold ph-stack"></i> MAPA BASE</div>
+      <div class="vision-glass-panel" id="panel-basemap">
+        <button class="panel-toggle" onclick="togglePanel(this)" onmousedown="initMouseDrag(event, this.parentElement)">
+          <div style="font-size: 0.7rem; color: var(--accent-cyan); font-family: var(--font-mono); pointer-events:none;"><i class="ph-bold ph-stack"></i> MAPA BASE</div>
           <i class="ph-bold ph-caret-up toggle-icon"></i>
         </button>
         <div class="panel-content">
@@ -414,9 +423,9 @@
         </div>
       </div>
       
-      <div class="vision-glass-panel">
-        <button class="panel-toggle" onclick="togglePanel(this)">
-          <div style="font-size: 0.7rem; color: var(--accent-purple); font-family: var(--font-mono);"><i class="ph-bold ph-database"></i> DATAFEED PÚBLICO</div>
+      <div class="vision-glass-panel" id="panel-data">
+        <button class="panel-toggle" onclick="togglePanel(this)" onmousedown="initMouseDrag(event, this.parentElement)">
+          <div style="font-size: 0.7rem; color: var(--accent-purple); font-family: var(--font-mono); pointer-events:none;"><i class="ph-bold ph-database"></i> DATAFEED PÚBLICO</div>
           <i class="ph-bold ph-caret-up toggle-icon"></i>
         </button>
         <div class="panel-content">
@@ -659,6 +668,47 @@
         const icon = btnElement.querySelector('.toggle-icon');
         content.classList.toggle('collapsed');
         icon.classList.toggle('rotated');
+    }
+
+    // DRAGGABLE UI LOGIC
+    let activeDragPanel = null;
+    let dragOffset = { x: 0, y: 0 };
+
+    function initMouseDrag(e, panel) {
+        // Prevent accidental toggle when dragging
+        e.stopPropagation();
+        activeDragPanel = panel;
+        
+        // Convert to absolute positioning if first time
+        const rect = panel.getBoundingClientRect();
+        panel.style.position = 'fixed';
+        panel.style.left = rect.left + 'px';
+        panel.style.top = rect.top + 'px';
+        panel.style.width = rect.width + 'px';
+        panel.style.margin = '0';
+        
+        dragOffset = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+        
+        panel.classList.add('is-dragging');
+        
+        document.addEventListener('mousemove', onMouseDrag);
+        document.addEventListener('mouseup', stopMouseDrag);
+    }
+
+    function onMouseDrag(e) {
+        if (!activeDragPanel) return;
+        activeDragPanel.style.left = (e.clientX - dragOffset.x) + 'px';
+        activeDragPanel.style.top = (e.clientY - dragOffset.y) + 'px';
+    }
+
+    function stopMouseDrag() {
+        if (activeDragPanel) activeDragPanel.classList.remove('is-dragging');
+        activeDragPanel = null;
+        document.removeEventListener('mousemove', onMouseDrag);
+        document.removeEventListener('mouseup', stopMouseDrag);
     }
     
     // UI FUNCTIONS: Dynamic Attribute Hover (Mouse fallback)
@@ -922,22 +972,49 @@
           if (!isPinching) {
             isPinching = true;
             cursor.classList.add('pinching');
-            dragStartMapCenter = map.getCenter();
-            dragStartCursorPos = { x: smoothedX, y: smoothedY };
-          } else {
-            const pixelDeltaX = dragStartCursorPos.x - smoothedX;
-            const pixelDeltaY = dragStartCursorPos.y - smoothedY;
             
-            if(mapLoaded) {
-                const zoomFactor = Math.pow(2, map.getZoom());
-                const lngDelta = (pixelDeltaX / 512) * (360 / zoomFactor);
-                // factor cos(lat) para corregir distorsión mercator
-                const latDelta = -(pixelDeltaY / 512) * (360 / zoomFactor) * Math.cos(dragStartMapCenter.lat * Math.PI / 180);
+            // Check if we are over a panel to start UI drag instead of map drag
+            const elementUnder = document.elementFromPoint(smoothedX, smoothedY);
+            if (elementUnder && elementUnder.closest('.vision-glass-panel')) {
+                activeDragPanel = elementUnder.closest('.vision-glass-panel');
+                activeDragPanel.classList.add('is-dragging');
                 
-                map.setCenter([
-                    dragStartMapCenter.lng + lngDelta,
-                    dragStartMapCenter.lat + latDelta
-                ]);
+                const rect = activeDragPanel.getBoundingClientRect();
+                activeDragPanel.style.position = 'fixed';
+                activeDragPanel.style.left = rect.left + 'px';
+                activeDragPanel.style.top = rect.top + 'px';
+                activeDragPanel.style.width = rect.width + 'px';
+                activeDragPanel.style.margin = '0';
+                
+                dragOffset = {
+                    x: smoothedX - rect.left,
+                    y: smoothedY - rect.top
+                };
+            } else {
+                activeDragPanel = null;
+                dragStartMapCenter = map.getCenter();
+                dragStartCursorPos = { x: smoothedX, y: smoothedY };
+            }
+          } else {
+            if (activeDragPanel) {
+                // Drag Panel with Gesture
+                activeDragPanel.style.left = (smoothedX - dragOffset.x) + 'px';
+                activeDragPanel.style.top = (smoothedY - dragOffset.y) + 'px';
+            } else {
+                // Drag Map with Gesture
+                const pixelDeltaX = dragStartCursorPos.x - smoothedX;
+                const pixelDeltaY = dragStartCursorPos.y - smoothedY;
+                
+                if(mapLoaded) {
+                    const zoomFactor = Math.pow(2, map.getZoom());
+                    const lngDelta = (pixelDeltaX / 512) * (360 / zoomFactor);
+                    const latDelta = -(pixelDeltaY / 512) * (360 / zoomFactor) * Math.cos(dragStartMapCenter.lat * Math.PI / 180);
+                    
+                    map.setCenter([
+                        dragStartMapCenter.lng + lngDelta,
+                        dragStartMapCenter.lat + latDelta
+                    ]);
+                }
             }
           }
         } 
@@ -949,6 +1026,10 @@
           if (isPinching) {
             isPinching = false;
             cursor.classList.remove('pinching');
+            if(activeDragPanel) {
+                activeDragPanel.classList.remove('is-dragging');
+                activeDragPanel = null;
+            }
             
             // Si suelta el pinch rápido sobre un botón HTML, hacer clic!
             const elementUnderCursor = document.elementFromPoint(smoothedX, smoothedY);
