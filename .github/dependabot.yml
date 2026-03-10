@@ -1,0 +1,17 @@
+# To get started with Dependabot version updates, please read the documentation:
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions" # Keep GitHub Actions up to date
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "CI/CD"
+      - "dependencies"
+
+  - package-ecosystem: "npm" # Only if you add package.json in the future
+    directory: "/"
+    schedule:
+      interval: "weekly"
