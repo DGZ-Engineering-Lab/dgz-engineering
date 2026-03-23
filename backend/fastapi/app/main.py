@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .schemas import ValidationRequest, GeoJSONFeature
@@ -60,3 +61,11 @@ async def detect_geospatial_changes():
         "capabilities": ["Sentinel-2", "Random Forest", "NDVI_Analysis"],
         "message": "Node require high-performance raster kernel."
     }
+@app.get("/config/mapbox-token", tags=["System"])
+async def get_mapbox_token():
+    """Returns the Mapbox token from environment variables."""
+    token = os.getenv("MAPBOX_TOKEN")
+    if not token:
+        # Fallback vacío para evitar bloqueo de seguridad de GitHub
+        return {"token": ""}
+    return {"token": token}

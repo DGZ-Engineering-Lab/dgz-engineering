@@ -5,10 +5,23 @@ import { initMap, changeBasemap, toggleIGAC, toggleCadastre, togglePowerLayer } 
 import { togglePanel, initMouseDrag, onFeatureHover } from './ui-controller.js';
 import { initVision, initVisionElements, getCurrentGestureState } from './gestures.js';
 
-// 1. Mapbox Configuration
-const MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN_HERE';
+// 1. Mapbox Configuration - Fetching from backend for security
+async function getMapboxToken() {
+    try {
+        // En Vercel, el backend suele estar en /api o la ruta configurada
+        const response = await fetch('/api/config/mapbox-token'); 
+        if(!response.ok) throw new Error('Backend config error');
+        const data = await response.json();
+        return data.token;
+    } catch (e) {
+        console.warn("Security policy: no local fallback allowed.");
+        return '';
+    }
+}
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    const MAPBOX_TOKEN = await getMapboxToken();
+    
     // 2. Initialize Map
     const map = initMap(MAPBOX_TOKEN);
 

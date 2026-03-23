@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00e5ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f2123",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Engineering Matrix | DGZ Engineering</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Nav Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-primary/20 px-6 md:px-10 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight tracking-tight">DGZ <span class="text-primary">Engineering</span></h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Matrix</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Repository</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Projects</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium" href="#">Standards</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-200/50 dark:bg-primary/10 border border-transparent focus-within:border-primary/50 transition-all">
+<div class="text-slate-500 dark:text-primary/70 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full min-w-0 flex-1 bg-transparent border-none focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-primary/40 px-3 text-sm" placeholder="Search parameters..." value=""/>
+</div>
+</label>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-primary/20 text-slate-600 dark:text-primary/70">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="Senior engineer professional profile photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACLpJLaga3OX4ORFUr9tqRVpzsR0VK4SkIA1n92ff_pSlprtZoKaajHqhssLpCfh-VpAavAp8Bn8ORWotgZUEw7qDt7-CO5E7dzucQ8GWHBvp8EUnWsUnxq3Rd25SsiyYHoqDyCoLNFw_DTuv65qBPTzQN7RTW97u0sJG9uKWuUMcILaplib_g5_6IV5KueJOus-A3Lax6eqVx3DPR61UJSwGvfXuhpvvLGUU3379SbFgNmF_HYzWRNdH99XIeCcWnpBHkTm8QAwok");'></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 hidden xl:flex flex-col border-r border-slate-200 dark:border-primary/10 bg-slate-50 dark:bg-background-dark/50 p-6 gap-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-slate-900 dark:text-slate-100 text-sm font-bold uppercase tracking-widest">Connected Stack</h1>
+<p class="text-primary text-xs font-mono font-medium">v4.2.0-stable</p>
+</div>
+<nav class="flex flex-col gap-2">
+<p class="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Systems</p>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 dark:bg-primary text-slate-900 dark:text-background-dark font-semibold shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="text-sm">Process</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-200 dark:hover:bg-primary/10 text-slate-600 dark:text-slate-300 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">gpp_good</span>
+<span class="text-sm">Safety</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-200 dark:hover:bg-primary/10 text-slate-600 dark:text-slate-300 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+<span class="text-sm">Civil</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-200 dark:hover:bg-primary/10 text-slate-600 dark:text-slate-300 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm">Mechanical</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-200 dark:hover:bg-primary/10 text-slate-600 dark:text-slate-300 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="text-sm">QA/QC</span>
+</a>
+</nav>
+<div class="mt-auto p-4 rounded-xl bg-gradient-to-br from-slate-200 to-slate-100 dark:from-primary/20 dark:to-transparent border border-slate-300 dark:border-primary/20">
+<p class="text-xs font-bold text-slate-700 dark:text-primary mb-1">System Health</p>
+<div class="w-full bg-slate-300 dark:bg-white/10 h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[94%]"></div>
+</div>
+<p class="text-[10px] mt-2 text-slate-500 dark:text-slate-400">94.8% Operational</p>
+</div>
+</aside>
+<!-- Main Content Area -->
+<section class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark">
+<!-- Breadcrumbs & Title Section -->
+<div class="p-6 md:p-8 space-y-6">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 dark:text-primary/60 hover:text-primary transition-colors" href="#">Engineering Matrix</a>
+<span class="text-slate-300 dark:text-primary/20">/</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">Technical Repository</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<h1 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Engineering Matrix <span class="text-primary">Screen</span></h1>
+<p class="text-slate-600 dark:text-slate-400 max-w-2xl">High-fidelity technical specifications with cross-functional synchronization and real-time telemetry.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-slate-200 dark:bg-primary/10 text-slate-900 dark:text-primary text-sm font-bold rounded hover:bg-primary hover:text-background-dark transition-all flex items-center gap-2 border border-transparent dark:border-primary/30">
+<span class="material-symbols-outlined text-[18px]">file_download</span> Export
+                        </button>
+<button class="px-4 py-2 bg-primary text-background-dark text-sm font-bold rounded hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">sync</span> Sync All
+                        </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="group p-5 rounded-xl bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 hover:border-primary/40 transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Active Nodes</p>
+<span class="material-symbols-outlined text-primary text-[20px]">hub</span>
+</div>
+<p class="text-2xl font-mono font-bold text-slate-900 dark:text-slate-100">1,248</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-green-500 text-[14px]">trending_up</span>
+<span class="text-green-500 text-xs font-bold">+12.4%</span>
+</div>
+</div>
+<div class="group p-5 rounded-xl bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 hover:border-primary/40 transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Compliance</p>
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+</div>
+<p class="text-2xl font-mono font-bold text-slate-900 dark:text-slate-100">99.92%</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-amber-500 text-[14px]">trending_flat</span>
+<span class="text-amber-500 text-xs font-bold">Stable</span>
+</div>
+</div>
+<div class="group p-5 rounded-xl bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 hover:border-primary/40 transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">System Latency</p>
+<span class="material-symbols-outlined text-primary text-[20px]">speed</span>
+</div>
+<p class="text-2xl font-mono font-bold text-slate-900 dark:text-slate-100">14<span class="text-sm font-normal text-slate-400 ml-1">ms</span></p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-green-500 text-[14px]">arrow_downward</span>
+<span class="text-green-500 text-xs font-bold">-2ms</span>
+</div>
+</div>
+<div class="group p-5 rounded-xl bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 hover:border-primary/40 transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Integrity</p>
+<span class="material-symbols-outlined text-primary text-[20px]">security</span>
+</div>
+<p class="text-2xl font-mono font-bold text-slate-900 dark:text-slate-100">Verified</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-slate-400 text-xs">SHA-256 Validated</span>
+</div>
+</div>
+</div>
+<!-- Technical Data Matrix -->
+<div class="bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-primary/10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50 dark:bg-primary/5">
+<h3 class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">database</span>
+                            Technical Repository Detail
+                        </h3>
+<div class="flex items-center gap-2 bg-slate-200 dark:bg-background-dark p-1 rounded-lg">
+<button class="px-3 py-1.5 text-xs font-bold rounded bg-white dark:bg-primary text-slate-900 shadow-sm transition-all">All Specs</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded text-slate-500 dark:text-slate-400 hover:text-primary">Conflict Only</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded text-slate-500 dark:text-slate-400 hover:text-primary">Recent Mods</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-100 dark:bg-primary/10 text-slate-500 dark:text-primary/60 text-[10px] uppercase tracking-widest font-black border-b border-slate-200 dark:border-primary/20">
+<th class="px-6 py-4">Ref ID</th>
+<th class="px-6 py-4">Module / Service</th>
+<th class="px-6 py-4">Specification Node</th>
+<th class="px-6 py-4">Dynamic Value</th>
+<th class="px-6 py-4">Tolerance</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-primary/10 text-sm font-mono">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 text-primary font-bold">PRC-402</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-slate-100 font-sans font-bold">Process</span>
+<span class="text-[11px] text-slate-500">Hydro-Static Flow Control</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">FlowRate_α_04</td>
+<td class="px-6 py-4 text-slate-900 dark:text-slate-100">124.5 m³/h</td>
+<td class="px-6 py-4 text-slate-500">±0.005</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-500/20 text-green-500 uppercase tracking-tighter ring-1 ring-inset ring-green-500/30">Optimal</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 text-primary font-bold">MEC-119</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-slate-100 font-sans font-bold">Mechanical</span>
+<span class="text-[11px] text-slate-500">Torque Vector Analysis</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Shaft_Rotation_Deg</td>
+<td class="px-6 py-4 text-slate-900 dark:text-slate-100">4,500 RPM</td>
+<td class="px-6 py-4 text-slate-500">±12.0</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-500 uppercase tracking-tighter ring-1 ring-inset ring-amber-500/30">Warning</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 text-primary font-bold">SAF-001</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-slate-100 font-sans font-bold">Safety</span>
+<span class="text-[11px] text-slate-500">Atmospheric Monitoring</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">O2_Saturation_Level</td>
+<td class="px-6 py-4 text-slate-900 dark:text-slate-100">20.9%</td>
+<td class="px-6 py-4 text-slate-500">±0.02</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-500/20 text-green-500 uppercase tracking-tighter ring-1 ring-inset ring-green-500/30">Optimal</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 text-primary font-bold">CIV-882</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-slate-100 font-sans font-bold">Civil</span>
+<span class="text-[11px] text-slate-500">Foundation Stress Load</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Concrete_PSI_Val</td>
+<td class="px-6 py-4 text-slate-900 dark:text-slate-100">6,500 PSI</td>
+<td class="px-6 py-4 text-slate-500">±50.0</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-500 uppercase tracking-tighter ring-1 ring-inset ring-blue-500/30">Certified</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 text-primary font-bold">QAC-092</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-slate-100 font-sans font-bold">QA/QC</span>
+<span class="text-[11px] text-slate-500">Batch Consistency Audit</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Spec_Conformance_Idx</td>
+<td class="px-6 py-4 text-slate-900 dark:text-slate-100">0.998</td>
+<td class="px-6 py-4 text-slate-500">±0.001</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-primary/20 text-primary uppercase tracking-tighter ring-1 ring-inset ring-primary/40">Verified</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-primary/5 border-t border-slate-200 dark:border-primary/10 flex justify-between items-center">
+<p class="text-[11px] text-slate-500 dark:text-slate-400">Displaying 5 of 128 dynamic parameters</p>
+<div class="flex gap-2">
+<button class="p-1 rounded bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 hover:border-primary text-slate-600 dark:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="p-1 rounded bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 hover:border-primary text-slate-600 dark:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer / Connected Stack Details -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 p-6 rounded-xl bg-background-dark dark:bg-slate-900/50 border border-slate-800 dark:border-primary/20 text-white flex flex-col justify-between overflow-hidden relative">
+<!-- Abstract Background Decoration -->
+<div class="absolute -right-20 -top-20 size-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="relative z-10">
+<h4 class="text-xl font-bold mb-2">Connected Stack <span class="text-primary italic">Philosophy</span></h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed max-w-xl">
+                                Engineering data isn't just numbers; it's the heartbeat of the infrastructure. Our Connected Stack integrates real-time telemetry from site sensors directly into your technical repository, ensuring zero-latency decision making.
+                            </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="space-y-1">
+<p class="text-[10px] text-primary font-bold uppercase tracking-tighter">Site Integration</p>
+<p class="text-lg font-mono font-bold">API ACTIVE</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-primary font-bold uppercase tracking-tighter">Data Flow</p>
+<p class="text-lg font-mono font-bold">BIDIRECTIONAL</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-primary font-bold uppercase tracking-tighter">Validation</p>
+<p class="text-lg font-mono font-bold">AUTOMATED</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] text-primary font-bold uppercase tracking-tighter">Encryption</p>
+<p class="text-lg font-mono font-bold">AES-256</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-white dark:bg-primary/5 border border-slate-200 dark:border-primary/10 flex flex-col items-center justify-center text-center gap-4">
+<div class="size-16 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">map</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Regional Deployment</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Global Cluster Nodes Active</p>
+</div>
+<div class="w-full aspect-video rounded-lg overflow-hidden border border-slate-200 dark:border-primary/20 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
+<img alt="Global satellite technical map display" class="w-full h-full object-cover" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw3Uw6onX4pIL2mwDlb2NAq3lK8z8TfPmt11vpvzWwWN5rOuiLqF41idiYvRrmbqciYeqf_BDUlp112YF36zThVNssy8nmUlWwps9rVDx3NK8Nb_hvFjMTRzhXgbOCyaILfye5LOwdn6VO9F3NYQRsMW5TcVgvvENo1FeEn6XQIpSRqBVmu14SicNowiiKg7RL7gjkYnSHnjglR6bNdWXq3vWbmjw0rMwKBMV4_MJbCzna3IPPFE6fZn00pu3vFz-ra596vQxx4T35"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

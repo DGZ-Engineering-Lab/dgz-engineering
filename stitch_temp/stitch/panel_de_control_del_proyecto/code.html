@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DGZ Engineering | Project Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00e5ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f2123",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(0, 229, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 border-r border-primary/10 bg-background-light dark:bg-background-dark flex flex-col hidden lg:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">account_tree</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">DGZ<span class="text-primary">.eng</span></h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2 overflow-y-auto custom-scrollbar">
+<div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4 px-2">Main Menu</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-sm font-medium">Project Hub</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">architecture</span>
+<span class="text-sm font-medium">3D Workspaces</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">description</span>
+<span class="text-sm font-medium">Technical Docs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span class="text-sm font-medium">Telemetry</span>
+</a>
+<div class="pt-8 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4 px-2">Communication</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">forum</span>
+<span class="text-sm font-medium">Engineer Direct</span>
+<span class="ml-auto bg-primary text-background-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">history</span>
+<span class="text-sm font-medium">Revision Logs</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/10">
+<div class="flex items-center gap-3 p-2 rounded-xl glass-panel">
+<div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="User Avatar" class="size-full" data-alt="Client profile avatar with stylized character" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbJCoA9nXw5DCmhqCxh2p5zfAtPU6gKaoAeeFGFBHo1aA95Gu5XHmzGd7Blaw6mhnD0UTb9kw_estDpufmrLeitOKnokQ7joqQsHqNj1CirKtqppnGI0IGzXofvAgd4PvOZTyWnAL9sj2NKZfhtQV-UTXjwOfENYk7-_ba7_CNQv2qRe2nSjNF7sB130__fqhlHv5YfcRYCdndGihYECZSz6lau99yEV0XnTGlcb4F7HgzYnBeQjjuhjgMVSFfll5ZP42IrVNweRev"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Acme Industrial</p>
+<p class="text-[10px] text-slate-500 truncate">Premium Partner</p>
+</div>
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">settings</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+<header class="h-16 border-b border-primary/10 flex items-center justify-between px-8 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md z-10">
+<div class="flex items-center gap-4">
+<button class="lg:hidden material-symbols-outlined text-slate-400">menu</button>
+<div class="flex flex-col">
+<h2 class="text-lg font-bold leading-none">Project Hyperion</h2>
+<span class="text-[10px] text-primary font-mono tracking-widest uppercase">ID: DGZ-2024-X9</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+<input class="bg-primary/5 border border-primary/10 rounded-lg pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search parameters..." type="text"/>
+</div>
+<div class="h-8 w-[1px] bg-primary/10 mx-2"></div>
+<button class="relative p-2 rounded-lg hover:bg-primary/10 text-slate-500 hover:text-primary transition-all">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-background-dark"></span>
+</button>
+<button class="p-2 rounded-lg hover:bg-primary/10 text-slate-500 hover:text-primary transition-all">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="p-6 rounded-xl border border-primary/10 glass-panel flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-semibold text-slate-500 uppercase">System Efficiency</span>
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black">94.2%</span>
+<span class="text-xs text-green-500 font-bold mb-1">+2.4%</span>
+</div>
+<div class="w-full bg-primary/10 h-1 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full w-[94.2%]"></div>
+</div>
+</div>
+<div class="p-6 rounded-xl border border-primary/10 glass-panel flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-semibold text-slate-500 uppercase">Build Milestone</span>
+<span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black">Phase 3</span>
+<span class="text-xs text-slate-500 mb-1">of 5</span>
+</div>
+<div class="flex gap-1 mt-4">
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-primary/20"></div>
+<div class="h-1 flex-1 rounded-full bg-primary/20"></div>
+</div>
+</div>
+<div class="p-6 rounded-xl border border-primary/10 glass-panel flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-semibold text-slate-500 uppercase">Active Components</span>
+<span class="material-symbols-outlined text-primary">settings_input_component</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black">1,402</span>
+<span class="text-xs text-slate-500 mb-1">Synced</span>
+</div>
+<div class="flex items-center gap-2 mt-4">
+<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] text-slate-400 font-mono tracking-tighter">TELEMETRY_LINK_STABLE</span>
+</div>
+</div>
+<div class="p-6 rounded-xl border border-primary/10 glass-panel flex flex-col justify-between bg-primary/5">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-semibold text-primary uppercase">Time to Deploy</span>
+<span class="material-symbols-outlined text-primary">timer</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black">12d 04h</span>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-[10px] text-slate-400 uppercase">Deadline: May 24</span>
+<span class="text-[10px] text-primary font-bold">On Schedule</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<div class="xl:col-span-2 space-y-6">
+<div class="rounded-xl border border-primary/10 overflow-hidden glass-panel relative group">
+<div class="absolute top-4 left-4 z-10 flex gap-2">
+<button class="px-3 py-1.5 rounded bg-background-dark/80 backdrop-blur border border-primary/20 text-[10px] font-bold text-primary flex items-center gap-2 uppercase tracking-widest">
+<span class="material-symbols-outlined text-xs">view_in_ar</span> 3D Model View
+                                </button>
+<button class="size-8 rounded bg-background-dark/80 backdrop-blur border border-primary/20 flex items-center justify-center text-slate-300">
+<span class="material-symbols-outlined text-sm">fullscreen</span>
+</button>
+</div>
+<div class="aspect-video bg-slate-900 flex items-center justify-center relative">
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, rgba(0,229,255,0.15) 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="relative flex flex-col items-center">
+<div class="size-32 border-2 border-dashed border-primary/30 rounded-full flex items-center justify-center animate-spin" style="animation-duration: 10s">
+<div class="size-24 border border-primary/50 rounded-full flex items-center justify-center animate-reverse-spin" style="animation-duration: 5s"></div>
+</div>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 material-symbols-outlined text-5xl text-primary/50">token</span>
+<p class="mt-4 text-xs font-mono text-primary tracking-widest uppercase">Initializing Visualizer Proxy...</p>
+</div>
+<div class="absolute bottom-4 right-4 flex flex-col gap-1 text-[8px] font-mono text-slate-500 uppercase">
+<span>Lat: 34.0522° N</span>
+<span>Lon: 118.2437° W</span>
+<span>Alt: 420.5m</span>
+</div>
+<img alt="3D Engineering model placeholder" class="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-overlay" data-alt="Technical blueprint of an industrial turbine" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH7pLUhsazVjfkhLm_conFpDJvD89Om8pTvBhmWUK4U5tHiTRIAQEY19V0Kie959cQB7_V8mpkPqfhBqpvtOGp_Hp73ocJvqg5teRFJjMqhnSvh2zgtWl6fnVQr-mdTgcVIbogHlqsvs2OfHujAETZxncGBS_4JN_YoVe8S_ag98y8Y6IkcptCEUN1zYALeDIGUjjwRHSKr7uW-O7W6k36i_74zM-u5dcabslmqiLBbePDMTfXH--c4IyvAVYmA7eKfq8woto_2Q3n"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 rounded-xl border border-primary/10 glass-panel">
+<h3 class="text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">folder_open</span> Technical Documentation
+                                </h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 rounded-lg border border-primary/5 hover:border-primary/20 hover:bg-primary/5 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">description</span>
+<div>
+<p class="text-xs font-semibold">Structural_Analysis_V4.pdf</p>
+<p class="text-[10px] text-slate-500">Updated 2h ago • 12.4 MB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">download</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg border border-primary/5 hover:border-primary/20 hover:bg-primary/5 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">inventory_2</span>
+<div>
+<p class="text-xs font-semibold">BOM_Final_Rev.xlsx</p>
+<p class="text-[10px] text-slate-500">Updated Yesterday • 4.1 MB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">download</span>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/10 rounded-lg transition-all">Access Full Repository</button>
+</div>
+<div class="p-6 rounded-xl border border-primary/10 glass-panel">
+<h3 class="text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">schedule</span> Recent Activity Log
+                                </h3>
+<div class="space-y-4">
+<div class="flex gap-3 relative before:absolute before:left-2 before:top-6 before:bottom-0 before:w-[1px] before:bg-primary/10 last:before:hidden">
+<div class="size-4 rounded-full bg-primary/20 border border-primary/40 flex-shrink-0 z-10"></div>
+<div>
+<p class="text-xs font-medium">Model Synchronized</p>
+<p class="text-[10px] text-slate-500">CAD Export #422 completed by Sarah W.</p>
+<p class="text-[9px] text-primary/60 font-mono mt-0.5">09:12 AM</p>
+</div>
+</div>
+<div class="flex gap-3 relative before:absolute before:left-2 before:top-6 before:bottom-0 before:w-[1px] before:bg-primary/10 last:before:hidden">
+<div class="size-4 rounded-full bg-orange-500/20 border border-orange-500/40 flex-shrink-0 z-10"></div>
+<div>
+<p class="text-xs font-medium">Issue Detected</p>
+<p class="text-[10px] text-slate-500">Thermal threshold deviation in Cluster B.</p>
+<p class="text-[9px] text-orange-500/60 font-mono mt-0.5">07:45 AM</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="size-4 rounded-full bg-primary/20 border border-primary/40 flex-shrink-0 z-10"></div>
+<div>
+<p class="text-xs font-medium">Client Review</p>
+<p class="text-[10px] text-slate-500">Feedback received on Phase 2 deliverables.</p>
+<p class="text-[9px] text-primary/60 font-mono mt-0.5">Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="p-6 rounded-xl border border-primary/10 glass-panel h-full flex flex-col">
+<h3 class="text-sm font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">contact_support</span> Engineer Direct Connect
+                            </h3>
+<div class="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-4 mb-6">
+<div class="flex flex-col gap-1 items-start max-w-[85%]">
+<div class="px-3 py-2 rounded-xl rounded-tl-none bg-slate-100 dark:bg-slate-800 text-xs">
+                                        Good morning. The structural stress tests for Phase 3 are showing excellent results. Would you like to review the raw data?
+                                    </div>
+<span class="text-[9px] text-slate-500 ml-1">James Chen, Lead Engineer • 10:15 AM</span>
+</div>
+<div class="flex flex-col gap-1 items-end max-w-[85%] ml-auto">
+<div class="px-3 py-2 rounded-xl rounded-tr-none bg-primary text-background-dark text-xs font-medium">
+                                        Yes, please send the CSV files over. Does this change the timeline?
+                                    </div>
+<span class="text-[9px] text-slate-500 mr-1">You • 10:22 AM</span>
+</div>
+<div class="flex flex-col gap-1 items-start max-w-[85%]">
+<div class="px-3 py-2 rounded-xl rounded-tl-none bg-slate-100 dark:bg-slate-800 text-xs">
+                                        No changes to the timeline. We are actually 2 days ahead on the fabrication sequence.
+                                    </div>
+<span class="text-[9px] text-slate-500 ml-1">James Chen • 10:25 AM</span>
+</div>
+<div class="flex flex-col items-center py-4 opacity-50">
+<div class="w-full h-[1px] bg-primary/10 mb-[-10px]"></div>
+<span class="bg-background-dark px-2 text-[9px] font-mono tracking-widest text-slate-500 uppercase">New Message Received</span>
+</div>
+</div>
+<div class="mt-auto relative">
+<textarea class="w-full bg-primary/5 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="Message project lead..." rows="2"></textarea>
+<div class="absolute bottom-3 right-3 flex items-center gap-2">
+<button class="material-symbols-outlined text-slate-500 hover:text-primary transition-colors text-lg">attach_file</button>
+<button class="size-8 rounded-lg bg-primary text-background-dark flex items-center justify-center hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all">
+<span class="material-symbols-outlined font-bold">send</span>
+</button>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-primary/10">
+<h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Assigned Team</h4>
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="Team member" data-alt="Avatar of lead engineer James" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuI11i-c2SEJKl7BbqpaJFLjo7r3sA4AoD-TBTTSAC5quQM4LJmastj02fG9lOdKBTcPAJFSGvaF1SklkUVLvtXNPkR5RXmN9_Fr2RhREklv-XrjMU7jZf_MS4u_baFR29un0pMYSpPoiit6bwGxygHzPDU05ngaO17S0XZd9O01cjx-hYPbRmSjULHtpKGtf7B0h6L0PpraRg0imRVgpPY_p4cJFTIEFlnX-R1AWRQLNG41fSJfz998aBy5Toy4FTAR5vVSqBVnsm"/>
+</div>
+<div class="size-8 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="Team member" data-alt="Avatar of project manager Sarah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzIpAkX-VjKWywV-FrBvTBcfZGS2vOV8rPYKQbZ1yzDhuF7ZhryARvPqFRMCLeLMOtKvBAyTlJpgaGZlQ-Hmf8BhKmUNUw6JB9yox8OC1pRoDD0IDt1SX8MSRMVsH77h1B8OGaYpLXEuh5oQpPuR5t0_3A0QCkg4fLXwrHLVYCSPXwwGOf4d2KMgXU9Ft_MZAAePyCZ-KDSng3531ZjCo36HcxVPyZq3T_1buKmDAVnNAbTQZqNLmDjAqANsvwu2f75PAojn147LQE"/>
+</div>
+<div class="size-8 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="Team member" data-alt="Avatar of structural engineer Marcus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWkATFI4wz_1bIk42YrUtV258KvwvqSZQPYSt6O93Dq0e7rxXm-MKYjTb7WQBItG2XoE7XMg5cktvxe2k5RF1oXIPS8pbRPA_L3jMeSj6ZE3RBi9m0j_7Vv0kBNyQ3dSYnZvmBfMSixysrRjKOwDuQUwX8CL3a_UFKjjzIRSsOvLpOUQUo1wkXu66xZLs_pxmeUpBZigIi73kB8QGszlgu4iNZ5XW8EEPBsmMBg1oha5g7W6ppoul4ToeVrfQs53c_vH0oGIz6xU-"/>
+</div>
+<div class="size-8 rounded-full border-2 border-background-dark bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">
+                                        +2
+                                    </div>
+</div>
+<button class="mt-4 flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">video_call</span> Start Video Consultation
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

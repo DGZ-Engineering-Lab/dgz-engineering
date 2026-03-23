@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#00e5ff",
+                "background-light": "#f5f8f8",
+                "background-dark": "#0f2123",
+              },
+              fontFamily: {
+                "display": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .anti-grid-blob {
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary selection:text-background-dark overflow-x-hidden">
+<!-- Background Ornaments (Anti-grid / Organic) -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+<div class="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] rounded-full bg-primary anti-grid-blob"></div>
+<div class="absolute top-[40%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary anti-grid-blob"></div>
+<div class="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-primary anti-grid-blob"></div>
+</div>
+<!-- Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">precision_manufacturing</span>
+</div>
+<h2 class="text-xl font-extrabold tracking-tighter text-slate-100 uppercase">DGZ<span class="text-primary font-light block text-xs tracking-widest leading-none">ENGINEERING</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">Solutions</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">Port Automation</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest" href="#">Regional</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-widest text-primary border-b border-primary/50" href="#">Green UX</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 bg-primary text-background-dark text-xs font-black uppercase tracking-widest rounded hover:brightness-110 transition-all shadow-[0_0_20px_rgba(0,229,255,0.3)]">
+                    Contact Us
+                </button>
+</div>
+</div>
+</header>
+<main class="relative z-10">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-6 pt-20 pb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 flex flex-col gap-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 w-fit">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Certified ABB Technical Partner</span>
+</div>
+<h1 class="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter text-slate-100">
+                        MAXIMIZING <br/> <span class="text-primary italic">INDUSTRIAL</span> <br/> UPTIME.
+                    </h1>
+<p class="text-xl text-slate-400 max-w-xl font-light leading-relaxed">
+                        Operational excellence through premium engineering. We deliver technical solutions for decision makers who demand efficiency and sustainable growth.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="flex items-center gap-3 px-8 py-4 bg-primary text-background-dark font-bold uppercase text-sm tracking-widest rounded-lg">
+                            Explore Solutions
+                            <span class="material-symbols-outlined">trending_flat</span>
+</button>
+<div class="flex items-center gap-4 px-6 border-l border-primary/20">
+<div>
+<div class="text-primary font-black text-2xl leading-none">99.9%</div>
+<div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">System Reliability</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 relative">
+<div class="aspect-square rounded-2xl overflow-hidden border border-primary/20 bg-primary/5 relative">
+<div class="absolute inset-0 bg-gradient-to-tr from-background-dark via-transparent to-transparent opacity-60 z-10"></div>
+<img class="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700" data-alt="Close up of high-tech industrial automation arm with cyan lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3BPpqEyvWyexIjiiD2VcdTD2HnA0vi5QIwSWa7yDq1NpZO5EqVPsCymm7TU8vJvcbVGCT2o_u4Zw0bhZ9Zpq5EblNz_QZvJWY73vX-Zo4jwfhzYPVkzLFTnY1LGwSCOwELJdRlqEXuaDo-L24OGRxcnqL1p8uUWvoA9z1oKBO34hcCpiUTuiHIZ1-8P7n12JlXUlzeb2biZsIOlBGGlnKmmxaw2L7-DUzUAEFqLg8hrKR1LLywKksgwjaV2Qqz4ze1jroTWqodjo6"/>
+<div class="absolute bottom-6 left-6 z-20 flex flex-col gap-2">
+<span class="text-[10px] uppercase font-bold tracking-widest text-primary">Live Operations Feed</span>
+<div class="w-32 h-1 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The High Level Narrative (Decision Maker Focus) -->
+<section class="bg-primary/5 py-24 border-y border-primary/10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row gap-16 items-start">
+<div class="md:w-1/3">
+<h3 class="text-primary text-xs font-black uppercase tracking-[0.3em] mb-4">Core Philosophy</h3>
+<h2 class="text-4xl font-bold text-slate-100 leading-tight">The intersection of <br/> Power &amp; Intelligence.</h2>
+</div>
+<div class="md:w-2/3 space-y-8">
+<p class="text-2xl font-light text-slate-300 leading-relaxed italic">
+                            "At DGZ, we merge deep engineering expertise with <span class="text-primary font-medium">Green UX principles</span>, ensuring that industrial systems are not just powerful, but intuitive and environmentally conscious."
+                        </p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">eco</span>
+<h4 class="font-bold text-slate-100">Green UX</h4>
+<p class="text-xs text-slate-400 leading-normal font-medium uppercase tracking-wider">Reducing cognitive load and energy consumption through interface design.</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span>
+<h4 class="font-bold text-slate-100">Uptime Focus</h4>
+<p class="text-xs text-slate-400 leading-normal font-medium uppercase tracking-wider">Predictive maintenance cycles that prevent costly downtime.</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+<h4 class="font-bold text-slate-100">ABB Integration</h4>
+<p class="text-xs text-slate-400 leading-normal font-medium uppercase tracking-wider">World-class hardware meets custom-engineered software.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Port Automation (Specialist Section) -->
+<section class="py-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col lg:flex-row gap-20 items-center">
+<div class="lg:w-1/2 order-2 lg:order-1 relative">
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative rounded-xl overflow-hidden border border-primary/10">
+<img class="w-full aspect-[4/3] object-cover" data-alt="Modern container port terminal with automated cranes and evening lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4iioZOycKVdAJRgCcFW4Y8q5mO-p46KxSrl0wg3gRpS96jGy-HoILKEmog7kWIP6Ku8pa6NKWR85Ig83THsNDae8EXhBBPt_GrPlR9lWIblGNexnRYi3IDzmLJuafkys8jGC6S74KsnQ1C0WpTAfWrQhYSQLL6A4k4j4nlOP9e0DmDeJRHvkkUF8_KfUhq0GpgRXW7F480OrBZm0jcw7IKO7Sq7CBcHvqvQ5rqZxXuIQ2LPXgbLJaHuck4C3DGG2e9KtBpWEDp5nD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8">
+<div class="flex justify-between items-end">
+<div class="text-slate-100">
+<div class="text-xs font-bold uppercase tracking-widest opacity-60">Success Case</div>
+<div class="text-xl font-bold italic text-primary">Global Logistics Terminal</div>
+</div>
+<div class="bg-primary/20 backdrop-blur px-3 py-1 rounded text-[10px] font-bold text-primary border border-primary/30 uppercase">
+                                        +22% Throughput
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 order-1 lg:order-2">
+<div class="flex flex-col gap-6">
+<h3 class="text-primary text-xs font-black uppercase tracking-[0.3em]">Specialization</h3>
+<h2 class="text-5xl font-black text-slate-100 leading-none tracking-tighter">PORT <br/> AUTOMATION</h2>
+<p class="text-lg text-slate-400 font-light leading-relaxed">
+                                Leveraging ABB's cutting-edge technology, we transform maritime infrastructure into semi-autonomous logistical hubs. Our solutions prioritize safety, speed, and real-time visibility.
+                            </p>
+<ul class="flex flex-col gap-4 text-slate-300 font-medium">
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Crane Control Systems</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Terminal Operation Optimization</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-sm">check_circle</span> Automated Horizontal Transport</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Regional Presence (Rosario, AR) -->
+<section class="py-24 bg-primary/5">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div>
+<h3 class="text-primary text-xs font-black uppercase tracking-[0.3em] mb-4">Strategic Footprint</h3>
+<h2 class="text-4xl font-bold text-slate-100 mb-6">Rosario, Argentina</h2>
+<p class="text-slate-400 font-light text-lg mb-8 leading-relaxed">
+                            Positioned at the heart of South America's industrial hub, our Rosario office serves as the regional engineering powerhouse, bridging local operational needs with global standards.
+                        </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-lg bg-background-dark border border-primary/10">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div class="text-sm">
+<div class="text-slate-100 font-bold">Regional HQ</div>
+<div class="text-slate-500 font-medium">Distrito Puerto, Rosario</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-lg bg-background-dark border border-primary/10">
+<span class="material-symbols-outlined text-primary">headset_mic</span>
+<div class="text-sm">
+<div class="text-slate-100 font-bold">24/7 Field Service</div>
+<div class="text-slate-500 font-medium">Supporting Southern Cone Operations</div>
+</div>
+</div>
+</div>
+</div>
+<div class="relative h-[400px] rounded-2xl overflow-hidden border border-primary/20">
+<div class="absolute inset-0 bg-primary/5">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Abstract map of Rosario Argentina region in dark tones and cyan lines" data-location="Rosario, Argentina" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG69JyovQmu7sFvIHkFCkMYabDS2g1eoj0SKQaUBNFcg9cBaOdUtPBrmPFmXbGC5CxeFW5-Wn5N8g_U22EX393u-H5EukNGp4Lm3B_kpfm44vhpIogTq-Fs7yvzMrEzHUkz7fVcEfuy86tVdycVSfNdG6n_LxjweNPiYOortZ1DP1DeItHaicf627Sr47qjLjJ7q_ddw7wZUIGhWQGBX_BmLvgW5Bwu9NC8OBLtljjr0FbpR2jsujRVnP7jMZMiv7_6ZEv_qFSmKBW"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-ping"></div>
+<div class="relative w-4 h-4 bg-primary rounded-full shadow-[0_0_15px_rgba(0,229,255,1)]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="max-w-7xl mx-auto px-6 py-24">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="flex flex-col gap-2 p-8 border border-primary/10 rounded-xl bg-primary/5">
+<span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Global Sites</span>
+<span class="text-4xl font-black text-slate-100">120+</span>
+<div class="w-8 h-1 bg-primary"></div>
+</div>
+<div class="flex flex-col gap-2 p-8 border border-primary/10 rounded-xl bg-primary/5">
+<span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">CO2 Saved</span>
+<span class="text-4xl font-black text-slate-100">14%</span>
+<div class="w-8 h-1 bg-primary"></div>
+</div>
+<div class="flex flex-col gap-2 p-8 border border-primary/10 rounded-xl bg-primary/5">
+<span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">ABB Certs</span>
+<span class="text-4xl font-black text-slate-100">Platinum</span>
+<div class="w-8 h-1 bg-primary"></div>
+</div>
+<div class="flex flex-col gap-2 p-8 border border-primary/10 rounded-xl bg-primary/5">
+<span class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Active Assets</span>
+<span class="text-4xl font-black text-slate-100">24/7</span>
+<div class="w-8 h-1 bg-primary"></div>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-primary/10 py-20 bg-background-dark relative z-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between gap-12">
+<div class="flex flex-col gap-6 max-w-xs">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary text-xl">precision_manufacturing</span>
+</div>
+<h2 class="text-lg font-extrabold tracking-tighter text-slate-100 uppercase">DGZ</h2>
+</div>
+<p class="text-xs text-slate-500 font-medium uppercase tracking-widest leading-loose">
+                        Engineering for a sustainable industrial future. Certified partners in progress.
+                    </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<h4 class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Contact</h4>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Solutions</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Automation</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Infrastructure</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Regional</h4>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Argentina</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Brazil</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Chile</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Tech</h4>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">ABB Portal</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Green UX Lab</a>
+<a class="text-xs text-slate-400 hover:text-primary font-bold" href="#">Security</a>
+</div>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">© 2024 DGZ Engineering. All rights reserved.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-600 hover:text-primary cursor-pointer">share</span>
+<span class="material-symbols-outlined text-slate-600 hover:text-primary cursor-pointer">rss_feed</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
