@@ -25,7 +25,7 @@ export default function SpatialLabSection() {
           </p>
 
           <div className="pt-4">
-            <a href="lab/gesture_sandbox.html" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-slate-900/50 border border-slate-800 text-white rounded-2xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all overflow-hidden shadow-xl">
+            <a href="/lab/gesture-sandbox" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-slate-900/50 border border-slate-800 text-white rounded-2xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <svg className="w-5 h-5 text-cyan-400 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
               <span className="font-bold tracking-widest text-xs uppercase">Sandbox IA Gestual (BETA)</span>
@@ -55,7 +55,7 @@ export default function SpatialLabSection() {
             </div>
             <div className="flex items-center justify-between pt-8 border-t border-slate-800/50">
               <span className="text-[10px] text-emerald-500 font-mono flex items-center gap-2 uppercase tracking-widest"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Node Operational</span>
-              <a href="lab/map.html" className="text-xs font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest">Launch →</a>
+              <a href="/projects/gis-dashboard" className="text-xs font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest">Launch →</a>
             </div>
           </div>
 
@@ -139,7 +139,7 @@ function ProjectCarousel() {
       desc: "Agente de IA que traduce lenguaje natural a Spatial SQL y genera informes catastrales estadísticos en tiempo real.",
       img: null,
       icon: "🤖",
-      link: "projects/geo-llm/index.html",
+      link: "/projects/geo-llm",
       tech: ["LLM", "PostGIS AI", "GeoJSON"],
       accent: "amber"
     },
@@ -151,7 +151,7 @@ function ProjectCarousel() {
       desc: "Interfaz interactiva conectada a PostGIS para análisis territorial y telemetría en tiempo real.",
       img: null,
       icon: "📊",
-      link: "projects/gis-dashboard/index.html",
+      link: "/projects/gis-dashboard",
       tech: ["React", "PostGIS", "MapLibre"],
       accent: "cyan"
     },
@@ -163,7 +163,7 @@ function ProjectCarousel() {
       desc: "Automatización desatendida de transformaciones de datos geográficos para evitar procesos manuales lentos.",
       img: null,
       icon: "⚙️",
-      link: "projects/automation-systems/index.html",
+      link: "/projects/automation-systems",
       tech: ["Python", "FME", "GDAL"],
       accent: "blue"
     },
@@ -175,7 +175,7 @@ function ProjectCarousel() {
       desc: "Herramientas nativas en la UI de QGIS para validación topológica instantánea de bases de datos territoriales.",
       img: null,
       icon: "🔌",
-      link: "projects/qgis-plugin/index.html",
+      link: "/projects/qgis-plugin",
       tech: ["PyQGIS", "LADM-COL", "Python"],
       accent: "purple"
     },
@@ -187,7 +187,7 @@ function ProjectCarousel() {
       desc: "Engineering Virtual Assistant. Framework avanzado de IA para la automatización de procesos de ingeniería y soporte técnico especializado.",
       img: null,
       icon: "🧠",
-      link: "https://github.com/DGZ-Engineering-Lab/E.V.A.git",
+      link: "https://dgz-engineering-lab.github.io/E.V.A/",
       tech: ["AI_AGENT", "AUTOMATION", "NODE.JS"],
       accent: "purple"
     }
