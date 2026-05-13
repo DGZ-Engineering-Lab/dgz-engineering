@@ -78,7 +78,7 @@ export default function ContactSection() {
         setTimeout(() => {
           setStatus("idle");
           closeContact();
-        }, 3000);
+        }, 5000);
       } else {
         setStatus("idle");
         alert("El envío falló. Por favor, inténtalo de nuevo.");
@@ -255,6 +255,33 @@ export default function ContactSection() {
                   {status === "success" && "¡MENSAJE ENVIADO!"}
                 </button>
               </form>
+
+              {/* Success Notification Overlay */}
+              <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050810]/95 backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${status === 'success' ? 'opacity-100 pointer-events-auto scale-100' : 'opacity-0 pointer-events-none scale-95'}`}>
+                <div className="relative flex items-center justify-center mb-6">
+                  {/* Glowing rings */}
+                  <div className="absolute w-24 h-24 bg-emerald-500/20 rounded-full blur-xl animate-pulse"></div>
+                  <div className="absolute w-16 h-16 bg-emerald-400/20 rounded-full animate-ping" style={{ animationDuration: '3s' }}></div>
+                  {/* Success Icon */}
+                  <div className="w-16 h-16 bg-[#0a0f16] border border-emerald-500/50 rounded-full flex items-center justify-center relative z-10 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                    <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                </div>
+                
+                <h3 className="text-2xl font-black text-white tracking-widest uppercase mb-2 text-center drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Transmisión Exitosa</h3>
+                <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-emerald-500 to-transparent mb-4"></div>
+                
+                <p className="text-slate-400 text-center text-sm max-w-[320px] leading-relaxed">
+                  Tu solicitud ha sido procesada de manera segura. Un especialista de <span className="text-cyan-400 font-bold">DevGiz</span> se pondrá en contacto contigo en breve.
+                </p>
+
+                <div className="mt-8 flex gap-2 items-center text-[10px] text-emerald-500/70 font-mono tracking-[0.2em] uppercase">
+                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></span>
+                  Conexión Establecida
+                </div>
+              </div>
             </div>
           </div>
         </div>
