@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { createChart } from 'lightweight-charts';
-import anime from 'animejs';
+import { animate } from 'animejs';
 
 export default function RealtimeDataStream() {
   const chartContainerRef = useRef(null);
@@ -49,14 +49,13 @@ export default function RealtimeDataStream() {
 
     window.addEventListener('resize', handleResize);
 
-    // Anime.js Scramble effect on title (simulated)
+    // Anime.js animation on title
     if (textRef.current) {
-        anime({
-            targets: textRef.current,
+        animate(textRef.current, {
             opacity: [0, 1],
             translateY: [20, 0],
             duration: 1500,
-            easing: 'easeOutExpo'
+            easing: 'outExpo'
         });
     }
 

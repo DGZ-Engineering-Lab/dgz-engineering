@@ -1,9 +1,10 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import Logo from "./Logo";
 import RealtimeDataStream from "./RealtimeDataStream";
-import anime from "animejs";
+import { animate } from "animejs";
 
-// ... existing SERVICES ...
 const SERVICES = [
   {
     id: "svc-01",
@@ -40,12 +41,11 @@ export default function UnifiedCapabilities() {
 
   useEffect(() => {
     if (terminalRef.current) {
-        anime({
-            targets: terminalRef.current,
+        animate(terminalRef.current, {
             opacity: [0, 1],
             translateX: [50, 0],
             duration: 1200,
-            easing: 'easeOutExpo',
+            easing: 'outExpo',
             delay: 300
         });
     }
