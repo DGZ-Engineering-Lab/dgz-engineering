@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoAI Research Lab | DevGiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{--mono:'JetBrains Mono',monospace;--purple:#9D4EDD;--electric:#00e5ff;--red:#ff4b2b;--green:#4ade80}
+        body{background:#020205;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:8rem 5% 5rem}
+        .noise{position:fixed;inset:0;background-image:url('https://grainy-gradients.vercel.app/noise.svg');opacity:.03;pointer-events:none;z-index:0}
+        .orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;width:500px;height:500px;background:radial-gradient(circle,rgba(157,78,221,.06),transparent);top:-5%;left:-5%}
+        .back-link{position:fixed;top:1.5rem;left:5%;font-family:var(--mono);font-size:.6rem;color:rgba(157,78,221,.7);text-decoration:none;display:flex;align-items:center;gap:.5rem;z-index:100;letter-spacing:.08em}
+        .back-link:hover{color:var(--purple)}
+        .sys-label{font-family:var(--mono);font-size:.55rem;color:rgba(157,78,221,.5);letter-spacing:.2em;margin-bottom:1rem;text-transform:uppercase;position:relative;z-index:1}
+        h1{font-size:clamp(2rem,5vw,4rem);font-weight:900;letter-spacing:-.04em;margin-bottom:1.5rem;line-height:1;position:relative;z-index:1}
+        .lead{color:rgba(255,255,255,.5);max-width:700px;font-size:1rem;line-height:1.8;margin-bottom:3rem;position:relative;z-index:1}
+        /* Metrics */
+        .metrics-row{display:flex;flex-wrap:wrap;gap:2rem;margin-bottom:3rem;position:relative;z-index:1}
+        .metric-chip{text-align:center;padding:1.2rem 2rem;background:rgba(255,255,255,.02);border:1px solid rgba(157,78,221,.15);border-radius:14px}
+        .m-num{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--electric),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+        .m-label{font-family:var(--mono);font-size:.5rem;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem}
+        /* Research cards */
+        .research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:3rem;position:relative;z-index:1}
+        .research-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:1.8rem;transition:border-color .3s}
+        .research-card:hover{border-color:rgba(157,78,221,.3)}
+        .rc-num{font-family:var(--mono);font-size:2rem;font-weight:900;color:rgba(157,78,221,.3);margin-bottom:.8rem}
+        .rc-title{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.6rem}
+        .rc-desc{color:rgba(255,255,255,.4);font-size:.85rem;line-height:1.7;margin-bottom:1rem}
+        .rc-pills{display:flex;flex-wrap:wrap;gap:.4rem}
+        .rc-pill{font-family:var(--mono);font-size:.45rem;padding:.2rem .5rem;border-radius:4px;background:rgba(157,78,221,.08);border:1px solid rgba(157,78,221,.2);color:rgba(157,78,221,.7);letter-spacing:.05em;text-transform:uppercase}
+        /* Mini pixel grid */
+        .pixel-demo{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;width:200px;height:200px;margin-bottom:2rem}
+        .px{border-radius:2px;transition:background .5s}
+        .px-n{background:rgba(0,115,200,.3)} .px-u{background:rgba(255,75,43,.7)} .px-s{background:rgba(74,222,128,.4)}
+        /* CTA */
+        .cta-row{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1}
+        .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.8rem 1.5rem;border-radius:10px;text-decoration:none;transition:all .3s}
+        .btn-purple{background:rgba(157,78,221,.12);border:1px solid rgba(157,78,221,.3);color:var(--purple)}
+        .btn-purple:hover{background:rgba(157,78,221,.22);transform:translateY(-2px)}
+        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+        .btn-outline:hover{border-color:rgba(255,255,255,.2);color:#fff}
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="orb"></div>
+    <a href="../index.html" class="back-link"><i class="ph ph-arrow-left"></i> PROJECTS_HUB</a>
+
+    <div class="sys-label">// SYSTEM_ID: RESEARCH_05 // STATUS: ACTIVE_RESEARCH // SENTINEL-2</div>
+    <h1>GeoAI<br>Research Lab</h1>
+    <p class="lead">Applied artificial intelligence for territorial analysis — Sentinel-2 satellite change detection, machine learning land cover classification, and predictive models for cadastral quality scoring.</p>
+
+    <div class="metrics-row">
+        <div class="metric-chip"><div class="m-num">94%</div><div class="m-label">Detection Accuracy</div></div>
+        <div class="metric-chip"><div class="m-num">2.3km²</div><div class="m-label">Urban Change Detected</div></div>
+        <div class="metric-chip"><div class="m-num">847</div><div class="m-label">Polygons Vectorized</div></div>
+        <div class="metric-chip"><div class="m-num">10m</div><div class="m-label">Spatial Resolution</div></div>
+    </div>
+
+    <div class="research-grid">
+        <div class="research-card">
+            <div class="rc-num">01</div>
+            <div class="rc-title">Urban Change Detection</div>
+            <div class="rc-desc">Multitemporal Sentinel-2 imagery analysis comparing 2020 vs 2025. Random Forest classifier trained on labeled urban expansion samples from IGAC datasets.</div>
+            <div class="rc-pills"><span class="rc-pill">Sentinel-2</span><span class="rc-pill">Rasterio</span><span class="rc-pill">Scikit-learn</span><span class="rc-pill">NumPy</span></div>
+        </div>
+        <div class="research-card">
+            <div class="rc-num">02</div>
+            <div class="rc-title">Cadastral Quality ML Predictor</div>
+            <div class="rc-desc">Gradient Boosting model predicting topological error probability in predios based on neighborhood, area, shape index, and historical QA results. Achieves 89% precision.</div>
+            <div class="rc-pills"><span class="rc-pill">XGBoost</span><span class="rc-pill">PostGIS</span><span class="rc-pill">GeoPandas</span><span class="rc-pill">SHAP</span></div>
+        </div>
+        <div class="research-card">
+            <div class="rc-num">03</div>
+            <div class="rc-title">Land Cover Classification</div>
+            <div class="rc-desc">4-class supervised classification (urban, vegetation, water, bare soil) over Medellín metropolitan area using spectral indices NDVI, NDWI, MNDWI from Sentinel-2 bands.</div>
+            <div class="rc-pills"><span class="rc-pill">NDVI</span><span class="rc-pill">Random Forest</span><span class="rc-pill">Shapely</span><span class="rc-pill">GDAL</span></div>
+        </div>
+        <div class="research-card">
+            <div class="rc-num">04</div>
+            <div class="rc-title">Drone + Satellite Fusion</div>
+            <div class="rc-desc">Integration of centimeter-resolution drone orthophotos with 10m Sentinel data for hybrid cadastral update workflows. Reduces field verification trips by ~60%.</div>
+            <div class="rc-pills"><span class="rc-pill">Agisoft</span><span class="rc-pill">OpenDroneMap</span><span class="rc-pill">Rasterio</span><span class="rc-pill">QGIS</span></div>
+        </div>
+    </div>
+
+    <div class="cta-row">
+        <a href="../../lab/geoai.html" class="btn btn-purple"><i class="ph ph-brain"></i> LIVE GEOAI DEMO</a>
+        <a href="../../index.html#geoai" class="btn btn-outline"><i class="ph ph-arrow-left"></i> BACK TO MAIN</a>
+    </div>
+</body>
+</html>

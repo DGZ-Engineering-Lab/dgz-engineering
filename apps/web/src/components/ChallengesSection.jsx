@@ -2,28 +2,28 @@ export default function ChallengesSection() {
   const challenges = [
     {
       num: "01",
-      problem: "QA manual lento y propenso a errores",
-      solution: "Validación automática con Python + PostGIS"
+      problem: "Revisiones manuales lentas y con errores",
+      solution: "Revisiones automáticas por computadora (Súper rápidas)"
     },
     {
       num: "02",
-      problem: "Datos prediales inconsistentes",
-      solution: "Modelado espacial LADM-COL estructurado"
+      problem: "Información de tierras desorganizada",
+      solution: "Organización bajo estándares internacionales (LADM-COL)"
     },
     {
       num: "03",
-      problem: "Procesos de digitalización lentos",
-      solution: "Pipelines SIG automatizados con GDAL/FME"
+      problem: "Mapas que tardan meses en digitalizarse",
+      solution: "Sistemas que procesan miles de datos en segundos"
     },
     {
       num: "04",
-      problem: "Topología catastral rota",
-      solution: "Motores de validación topológica automatizados"
+      problem: "Límites de terrenos que no encajan (Solapamientos)",
+      solution: "Limpieza automática de fronteras y linderos"
     },
     {
       num: "05",
-      problem: "Sin visibilidad sobre cambios de cobertura",
-      solution: "GeoAI: detección cambios con Sentinel + Rasterio"
+      problem: "Dificultad para ver cómo cambia el territorio",
+      solution: "Inteligencia Artificial que detecta cambios por satélite"
     }
   ];
 

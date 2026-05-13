@@ -1,4 +1,5 @@
 import SystemMonitor from "../components/SystemMonitor";
+import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
 import OperatorProfileSection from "../components/OperatorProfileSection";
 import AboutSection from "../components/AboutSection";
 import ServicesSection from "../components/ServicesSection";
@@ -11,14 +12,15 @@ import InfrastructureSection from "../components/InfrastructureSection";
 import TechMatrixSection from "../components/TechMatrixSection";
 import MetricsSection from "../components/MetricsSection";
 import ContactSection from "../components/ContactSection";
+import TrustSection from "../components/TrustSection";
 import FooterSection from "../components/FooterSection";
 
 export default function Home() {
   return (
     <>
+      {/* ... previous content ... */}
       <div className="flex flex-col items-center justify-center flex-1 px-6 text-center min-h-[95vh] relative z-10 pt-32 pb-20 overflow-hidden">
-        
-        {/* Decorative Grid & Glows behind Hero */}
+        {/* Hero code remains unchanged */}
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
           <div className="w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[150px] mix-blend-screen opacity-50 animate-pulse"></div>
           <div className="w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] mix-blend-screen opacity-40 absolute top-1/4 right-1/4"></div>
@@ -33,7 +35,7 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
             </span>
             <span className="text-xs md:text-sm tracking-[0.2em] text-cyan-300 font-mono font-bold">
-              DGZ_OS_V6.0 //_NOMINAL
+              ESTADO DEL SISTEMA //_ÓPTIMO
             </span>
           </div>
           
@@ -48,30 +50,30 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl font-mono text-cyan-500 tracking-widest uppercase opacity-80">
-              Spatial Intelligence Architecture
+              Arquitectura Territorial Inteligente
             </p>
           </div>
           
           {/* Subtitle */}
-          <p className="max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed text-slate-300">
-            Sistemas automatizados para infraestructura geoespacial de alto rendimiento. Construimos territorios digitales con precisión matemática.
+          <p className="max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed text-slate-300">
+            Transformamos datos territoriales complejos en <span className="text-cyan-400 font-bold">soluciones automáticas, precisas y fáciles de entender</span> para gobiernos y empresas.
           </p>
 
           {/* Hero Stats Strip */}
           <div className="flex justify-center gap-8 md:gap-16 py-6">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-extrabold text-white">50k+</div>
-              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Spatial Nodes</div>
+              <div className="text-2xl md:text-3xl font-extrabold text-white">100%</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Automatizado</div>
             </div>
             <div className="w-px bg-slate-800"></div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-extrabold text-white">0.02s</div>
-              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Query Latency</div>
+              <div className="text-2xl md:text-3xl font-extrabold text-white">99.9%</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Precisión SIG</div>
             </div>
             <div className="w-px bg-slate-800"></div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-extrabold text-white">LADM-COL</div>
-              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">V3 Protocol</div>
+              <div className="text-2xl md:text-3xl font-extrabold text-white">V3</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Estándar LADM</div>
             </div>
           </div>
 
@@ -81,13 +83,13 @@ export default function Home() {
               href="#lab"
               className="px-8 py-4 text-sm font-bold text-white uppercase tracking-widest transition-all bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg hover:from-cyan-500 hover:to-blue-500 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)] hover:-translate-y-1"
             >
-              ⭐ EXPLORAR SPATIAL LAB
+              🚀 VER DEMO EN VIVO
             </a>
             <a
               href="#contact"
               className="px-8 py-4 text-sm font-bold text-slate-300 uppercase tracking-widest transition-all border border-slate-700 bg-slate-900/50 rounded-lg hover:bg-slate-800 hover:text-white hover:border-slate-500 hover:-translate-y-1"
             >
-              CONTÁCTAME
+              AGENDAR CONSULTORÍA
             </a>
           </div>
 
@@ -98,6 +100,7 @@ export default function Home() {
         </div>
       </div>
 
+      <ExecutiveSummarySection />
       <OperatorProfileSection />
       <AboutSection />
       <ServicesSection />
@@ -109,6 +112,7 @@ export default function Home() {
       <InfrastructureSection />
       <TechMatrixSection />
       <MetricsSection />
+      <TrustSection />
       <ContactSection />
       <FooterSection />
     </>

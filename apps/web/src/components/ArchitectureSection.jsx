@@ -4,32 +4,32 @@ export default function ArchitectureSection() {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" /></svg>
       ),
-      title: "Captura de Campo",
-      desc: "Sistemas GNSS RTK, levantamientos 360° y fotogrametría con drones para alta precisión.",
+      title: "Recolección Inteligente",
+      desc: "Capturamos datos precisos en el mundo real usando drones y tecnología satelital de punta.",
       accent: "cyan"
     },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
       ),
-      title: "Motor de Validación",
-      desc: "Algoritmos en Python (GDAL/Shapely) para control de calidad topológico y normativo LADM-COL.",
+      title: "Cerebro de Validación",
+      desc: "Nuestros algoritmos revisan automáticamente que cada dato cumpla con las leyes y normas vigentes.",
       accent: "amber"
     },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
       ),
-      title: "PostGIS Engine",
-      desc: "Bases de datos espaciales de alto rendimiento bajo esquema certificado LADM-COL V3.",
+      title: "Base de Datos Segura",
+      desc: "Guardamos la información en bóvedas digitales seguras, listas para ser consultadas en cualquier momento.",
       accent: "cyan"
     },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
       ),
-      title: "Spatial API",
-      desc: "Microservicios en FastAPI para despliegue de capas, consultas y telemetría territorial.",
+      title: "Entrega de Resultados",
+      desc: "Convertimos todo el proceso en mapas interactivos y reportes fáciles de entender para su equipo.",
       accent: "cyan"
     }
   ];

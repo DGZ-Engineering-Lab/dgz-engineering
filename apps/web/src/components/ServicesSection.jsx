@@ -10,13 +10,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       ),
-      title: "Actualización Catastral Masiva",
-      desc: "Gestión y validación de +500 predios por ciclo. Automatización completa del flujo de reconocimiento predial bajo estándares IGAC y LADM-COL V3.",
+      title: "Actualización de Tierras (Catastro)",
+      desc: "Organizamos y actualizamos la información de miles de propiedades de forma rápida. Ideal para municipios que necesitan datos al día.",
       metrics: [
         { val: "+500", lbl: "Predios/Ciclo" },
-        { val: "99.8%", lbl: "Precisión SIG" }
+        { val: "Ahorro", lbl: "De Tiempo" }
       ],
-      tags: ["ArcGIS Pro", "LADM-COL", "PostGIS"]
+      tags: ["Organización", "Velocidad", "Precisión"]
     },
     {
       id: "SVC-Q-02",
@@ -29,13 +29,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: "QA/QC Catastral (Control de Calidad)",
-      desc: "Auditorías técnicas con Python y QGIS. Detección automática de solapamientos, huecos y errores topológicos. Reportes certificados.",
+      title: "Control de Calidad Automático",
+      desc: "Nuestros sistemas revisan sus mapas y detectan errores técnicos automáticamente, garantizando que todo encaje perfectamente.",
       metrics: [
-        { val: "100%", lbl: "Integridad Topo" },
-        { val: "Automated", lbl: "Engine" }
+        { val: "100%", lbl: "Confiabilidad" },
+        { val: "Zero", lbl: "Errores" }
       ],
-      tags: ["Python", "Shapely", "QGIS"]
+      tags: ["Auditoría", "Calidad", "Seguridad"]
     },
     {
       id: "SVC-E-03",
@@ -47,13 +47,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
       ),
-      title: "Pipelines ETL Geoespaciales",
-      desc: "Arquitectura de transformación desatendida para ingesta masiva de datos GIS. De campo a base de datos sin intervención manual.",
+      title: "Automatización de Datos",
+      desc: "Eliminamos el trabajo manual lento. Creamos procesos que mueven y transforman sus datos de campo a la oficina en segundos.",
       metrics: [
-        { val: "Headless", lbl: "Processing" },
-        { val: "Real-time", lbl: "Sync Status" }
+        { val: "24/7", lbl: "Operación" },
+        { val: "Direct", lbl: "Uplink" }
       ],
-      tags: ["GDAL/OGR", "FME", "FastAPI"]
+      tags: ["Flujos", "Eficiencia", "Nube"]
     },
     {
       id: "SVC-A-04",
@@ -65,13 +65,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
         </svg>
       ),
-      title: "GeoAI — Detección de Cambios",
-      desc: "Machine Learning sobre imagenería Sentinel-2 para detectar expansión urbana, cambios de cobertura y mutaciones territoriales.",
+      title: "Inteligencia Satelital (IA)",
+      desc: "Usamos inteligencia artificial para ver cómo crece la ciudad desde el espacio, detectando construcciones nuevas automáticamente.",
       metrics: [
-        { val: "Sentinel-2", lbl: "Multitemporal" },
-        { val: "Deep L.", lbl: "Engine" }
+        { val: "AI", lbl: "Powered" },
+        { val: "Space", lbl: "Imagery" }
       ],
-      tags: ["Scikit-learn", "Rasterio", "Sentinel-2"]
+      tags: ["Innovación", "Satélite", "IA"]
     },
     {
       id: "SVC-D-05",
@@ -83,13 +83,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
       ),
-      title: "Dashboards GIS Empresariales",
-      desc: "Interfaces interactivas conectadas a PostGIS para análisis territorial en tiempo real. Visualización de indicadores catastrales.",
+      title: "Tableros de Control (Dashboards)",
+      desc: "Vea toda su información en una sola pantalla fácil de usar. Mapas interactivos para que los jefes tomen decisiones informadas.",
       metrics: [
-        { val: "WebMap", lbl: "Rendering" },
-        { val: "Cloud", lbl: "Deployment" }
+        { val: "Visual", lbl: "Intel" },
+        { val: "Easy", lbl: "Access" }
       ],
-      tags: ["MapLibre GL", "React", "REST API"]
+      tags: ["Control", "Decisión", "Simple"]
     },
     {
       id: "SVC-C-06",
@@ -101,13 +101,13 @@ export default function ServicesSection() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
         </svg>
       ),
-      title: "Coordinación de Campo GIS",
-      desc: "Liderazgo de equipos técnicos en terrenos complejos. Nivelación topográfica, digitalización masiva y coordinación normativa.",
+      title: "Liderazgo y Equipos de Campo",
+      desc: "Coordinamos equipos técnicos en el terreno para asegurar que la toma de datos sea profesional y cumpla todas las normas.",
       metrics: [
-        { val: "RTK", lbl: "Hardware" },
-        { val: "NSR-10", lbl: "Compliance" }
+        { val: "Expert", lbl: "Fieldwork" },
+        { val: "Safe", lbl: "Deployment" }
       ],
-      tags: ["GPS RTK", "Civil 3D", "AutoCAD"]
+      tags: ["Terreno", "Gestión", "Norma"]
     }
   ];
 
