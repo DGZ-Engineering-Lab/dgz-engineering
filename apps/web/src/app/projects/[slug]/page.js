@@ -206,11 +206,11 @@ function InteractiveDemo({ type, slug }) {
        // Load dynamic map preview
        const link = document.createElement("link");
        link.rel = "stylesheet";
-       link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+       link.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
        document.head.appendChild(link);
 
        const script = document.createElement("script");
-       script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+       script.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
        script.onload = () => {
          if (window.L && mapRef.current) {
            const L = window.L;
@@ -234,7 +234,7 @@ function InteractiveDemo({ type, slug }) {
   if (type === "CONSOLE" || type === "PIPELINE") {
     return (
       <div className="w-full h-full p-10 font-mono text-[11px] bg-slate-950/50 flex flex-col gap-2">
-         <div className="text-slate-500">// {type}_STREAM_ACTIVE</div>
+         <div className="text-slate-500">{"// " + type + "_STREAM_ACTIVE"}</div>
          {logs.map((log, i) => (
            <div key={i} className="text-cyan-400 animate-in fade-in slide-in-from-left-4">
               <span className="text-slate-700 mr-4">[{i}]</span> {log}
