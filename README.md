@@ -1,4 +1,4 @@
-# 🦾 DGZ Engineering :: Vision Sandbox
+# 🦾 DevGiz :: Vision Sandbox
 
 [![DGZ Vision CI/CD](https://github.com/gaviriaz/dgz-engineering/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/gaviriaz/dgz-engineering/actions/workflows/gh-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -50,4 +50,4 @@ Este repositorio está configurado para un **flujo de trabajo profesional Zero-O
 Distribuido bajo la Licencia **MIT**. Ver `LICENSE` para más información.
 
 ---
-**Desarrollado con ❤️ para DGZ Engineering por Albert Gaviria.**
+**Desarrollado con ❤️ para DevGiz por Albert Gaviria.**

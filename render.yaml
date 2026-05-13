@@ -1,14 +1,15 @@
 services:
   - type: web
-    name: devgiz-geo-api
+    name: devgiz-api
     env: python
-    buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "uvicorn backend.fastapi.main:app --host 0.0.0.0 --port $PORT"
+    rootDir: apps/api
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: DATABASE_URL
-        sync: false # Esto lo llenaremos manualmente en el panel de Render con la URL de Neon/Supabase
+        sync: false
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_KEY
