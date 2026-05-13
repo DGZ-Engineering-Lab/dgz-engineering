@@ -2,17 +2,15 @@ import Logo from "../components/Logo";
 import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
 import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
-import ServicesSection from "../components/ServicesSection";
-import RealityShowcase from "../components/RealityShowcase";
-import OfficialGISDemo from "../components/OfficialGISDemo";
-import RealDataSimulator from "../components/RealDataSimulator";
-import OperationalWorkflow from "../components/OperationalWorkflow";
-import SpatialLabSection from "../components/SpatialLabSection";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
 import ImpactMetrics from "../components/ImpactMetrics";
 import SimpleValueSection from "../components/SimpleValueSection";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
+import UnifiedCapabilities from "../components/UnifiedCapabilities";
+import InteractiveCarousel from "../components/InteractiveCarousel";
+
+import ScrambleText from "../components/ScrambleText";
 
 export default function Home() {
   return (
@@ -39,9 +37,9 @@ export default function Home() {
                 Giz
               </span>
             </h1>
-            <p className="text-xl md:text-2xl font-mono text-cyan-500 tracking-[0.5em] uppercase opacity-80 font-bold">
-              Arquitectura Territorial Inteligente
-            </p>
+            <div className="text-xl md:text-2xl font-mono text-cyan-500 tracking-[0.5em] uppercase opacity-80 font-bold">
+              <ScrambleText text="Arquitectura Territorial Inteligente" />
+            </div>
           </div>
           
           {/* Subtitle */}
@@ -67,18 +65,35 @@ export default function Home() {
         </div>
       </div>
 
-      <ExecutiveSummarySection />
-      <ChallengesSection />
-      <ImpactMetrics />
-      <ProfessionalProfile />
-      <ServicesSection />
-      <RealityShowcase />
-      <OfficialGISDemo />
-      <RealDataSimulator />
-      <OperationalWorkflow />
-      <SpatialLabSection />
-      <TechnicalEcosystem />
-      <SimpleValueSection />
+      <div className="reveal" style={{ animationDelay: '0.2s' }}>
+        <ExecutiveSummarySection />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.3s' }}>
+        <ChallengesSection />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.4s' }}>
+        <ImpactMetrics />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.5s' }}>
+        <ProfessionalProfile />
+      </div>
+      
+      {/* Unified Enterprise Layer */}
+      <div className="reveal">
+        <UnifiedCapabilities />
+      </div>
+      
+      {/* Interactive Labs Layer */}
+      <div id="lab" className="reveal">
+        <InteractiveCarousel />
+      </div>
+
+      <div className="reveal">
+        <TechnicalEcosystem />
+      </div>
+      <div className="reveal">
+        <SimpleValueSection />
+      </div>
       <ContactSection />
       <FooterSection />
     </>
