@@ -178,6 +178,18 @@ function ProjectCarousel() {
       link: "projects/qgis-plugin/index.html",
       tech: ["PyQGIS", "LADM-COL", "Python"],
       accent: "purple"
+    },
+    {
+      id: "PROJ-EVA-01",
+      tag: "AI_ASSISTANT_NODE",
+      status: "STABLE_PRODUCTION",
+      title: "E.V.A. Framework",
+      desc: "Engineering Virtual Assistant. Framework avanzado de IA para la automatización de procesos de ingeniería y soporte técnico especializado.",
+      img: null,
+      icon: "🧠",
+      link: "https://github.com/DGZ-Engineering-Lab/E.V.A.git",
+      tech: ["AI_AGENT", "AUTOMATION", "NODE.JS"],
+      accent: "purple"
     }
   ];
 
