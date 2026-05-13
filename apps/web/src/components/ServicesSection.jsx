@@ -2,129 +2,128 @@ export default function ServicesSection() {
   const services = [
     {
       id: "SVC-M-01",
-      status: "SISTEMA ACTIVO",
+      status: "CORE SYSTEM",
       statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
       statusDot: "bg-emerald-400",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
         </svg>
       ),
-      title: "Actualización de Tierras (Catastro)",
-      desc: "Organizamos y actualizamos la información de miles de propiedades de forma rápida. Ideal para municipios que necesitan datos al día.",
+      title: "Actualización Territorial (LADM-COL)",
+      desc: "Implementación del modelo LADM-COL V3 para procesos catastrales masivos. Garantizamos integridad topológica y jurídica.",
       metrics: [
-        { val: "+500", lbl: "Predios/Ciclo" },
-        { val: "Ahorro", lbl: "De Tiempo" }
+        { val: "+500", lbl: "Predios/Día" },
+        { val: "100%", lbl: "Legal Ready" }
       ],
-      tags: ["Organización", "Velocidad", "Precisión"]
+      tags: ["Interoperabilidad", "Catastro Multipropósito", "IGAC Standard"]
     },
     {
       id: "SVC-Q-02",
-      status: "SISTEMA ACTIVO",
+      status: "AUTOMATED",
       statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
       statusDot: "bg-emerald-400",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
-      title: "Control de Calidad Automático",
-      desc: "Nuestros sistemas revisan sus mapas y detectan errores técnicos automáticamente, garantizando que todo encaje perfectamente.",
+      title: "Control de Calidad (QA/QC)",
+      desc: "Motores de validación automática para detectar inconsistencias espaciales y alfanuméricas antes de la entrega final.",
       metrics: [
-        { val: "100%", lbl: "Confiabilidad" },
-        { val: "Zero", lbl: "Errores" }
+        { val: "0.01%", lbl: "Error Margin" },
+        { val: "Auto", lbl: "Validation" }
       ],
-      tags: ["Auditoría", "Calidad", "Seguridad"]
+      tags: ["Precisión", "Auditoría", "GIS Compliance"]
     },
     {
       id: "SVC-E-03",
-      status: "SISTEMA ACTIVO",
-      statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-      statusDot: "bg-emerald-400",
+      status: "UPLINK LIVE",
+      statusColor: "text-blue-400 bg-blue-500/10 border-blue-500/20",
+      statusDot: "bg-blue-400",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       ),
-      title: "Automatización de Datos",
-      desc: "Eliminamos el trabajo manual lento. Creamos procesos que mueven y transforman sus datos de campo a la oficina en segundos.",
+      title: "ETL & GIS Pipelines",
+      desc: "Automatización completa del flujo de datos desde sensores de campo hasta bases de datos PostGIS centralizadas.",
       metrics: [
-        { val: "24/7", lbl: "Operación" },
-        { val: "Direct", lbl: "Uplink" }
+        { val: "Real-time", lbl: "Sync" },
+        { val: "FastAPI", lbl: "Backend" }
       ],
-      tags: ["Flujos", "Eficiencia", "Nube"]
+      tags: ["DevOps", "Python", "Spatial Data"]
     },
     {
       id: "SVC-A-04",
-      status: "EN DESARROLLO",
-      statusColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-      statusDot: "bg-cyan-400 animate-pulse",
+      status: "BETA ACCESS",
+      statusColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+      statusDot: "bg-purple-400 animate-pulse",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
         </svg>
       ),
-      title: "Inteligencia Satelital (IA)",
-      desc: "Usamos inteligencia artificial para ver cómo crece la ciudad desde el espacio, detectando construcciones nuevas automáticamente.",
+      title: "GeoAI & Computer Vision",
+      desc: "Extracción automática de coberturas y construcciones mediante modelos de deep learning aplicados a imágenes satelitales.",
       metrics: [
-        { val: "AI", lbl: "Powered" },
-        { val: "Space", lbl: "Imagery" }
+        { val: "CNN", lbl: "Models" },
+        { val: "95%", lbl: "Confidence" }
       ],
-      tags: ["Innovación", "Satélite", "IA"]
+      tags: ["Remote Sensing", "GeoAI", "Satellite"]
     },
     {
       id: "SVC-D-05",
-      status: "SISTEMA ACTIVO",
+      status: "CORE SYSTEM",
       statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
       statusDot: "bg-emerald-400",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
         </svg>
       ),
-      title: "Tableros de Control (Dashboards)",
-      desc: "Vea toda su información en una sola pantalla fácil de usar. Mapas interactivos para que los jefes tomen decisiones informadas.",
+      title: "Enterprise Dashboards",
+      desc: "Plataformas de visualización interactiva para la toma de decisiones gerenciales basadas en inteligencia geográfica.",
       metrics: [
-        { val: "Visual", lbl: "Intel" },
-        { val: "Easy", lbl: "Access" }
+        { val: "Visual", lbl: "BI" },
+        { val: "Mobile", lbl: "Ready" }
       ],
-      tags: ["Control", "Decisión", "Simple"]
+      tags: ["BI", "WebGIS", "Stakeholders"]
     },
     {
       id: "SVC-C-06",
-      status: "SISTEMA ACTIVO",
-      statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-      statusDot: "bg-emerald-400",
+      status: "FIELD OPS",
+      statusColor: "text-amber-400 bg-amber-500/10 border-amber-500/20",
+      statusDot: "bg-amber-400",
       icon: (
-        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      title: "Liderazgo y Equipos de Campo",
-      desc: "Coordinamos equipos técnicos en el terreno para asegurar que la toma de datos sea profesional y cumpla todas las normas.",
+      title: "Gestión de Equipos de Campo",
+      desc: "Coordinación técnica y logística para el levantamiento de información predial con altos estándares de calidad.",
       metrics: [
-        { val: "Expert", lbl: "Fieldwork" },
-        { val: "Safe", lbl: "Deployment" }
+        { val: "100%", lbl: "Traceability" },
+        { val: "Sync", lbl: "Offline" }
       ],
-      tags: ["Terreno", "Gestión", "Norma"]
+      tags: ["Campo", "Logística", "Gestión"]
     }
   ];
 
   return (
-    <section id="capabilities" className="relative w-full py-24 z-10 bg-black/20">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex flex-col items-center text-center mb-16">
+    <section id="capabilities" className="relative w-full py-32 z-10 bg-black/40 border-t border-slate-800/50">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col items-center text-center mb-24">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-purple-500"></div>
-            <span className="text-purple-400 font-mono text-sm tracking-widest uppercase">
-              Servicios Especializados
-            </span>
-            <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-purple-500"></div>
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-cyan-500"></div>
+            <span className="text-cyan-400 font-mono text-xs tracking-[0.4em] uppercase">Capacidades Técnicas</span>
+            <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-cyan-500"></div>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight max-w-3xl leading-tight">
-            Soluciones <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">especializadas</span> para cada desafío territorial
+          <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight max-w-4xl">
+            Sistemas de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Misión Crítica</span> para el Territorio
           </h2>
         </div>
 
@@ -132,40 +131,40 @@ export default function ServicesSection() {
           {services.map((svc) => (
             <div 
               key={svc.id}
-              className="group relative flex flex-col p-8 rounded-2xl bg-[#0a0d14] border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)] overflow-hidden"
+              className="group relative flex flex-col p-10 rounded-3xl bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/30 transition-all duration-500 hover:-translate-y-2 shadow-2xl overflow-hidden"
             >
-              {/* Top gradient glow on hover */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {/* Animated Glow on hover */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[60px] group-hover:bg-cyan-500/20 transition-all duration-700 rounded-full"></div>
               
-              <div className="flex justify-between items-start mb-6">
-                <span className="font-mono text-xs text-slate-500 tracking-wider">{svc.id}</span>
-                <div className={`flex items-center gap-2 px-3 py-1 rounded-full border text-[10px] font-bold tracking-wider ${svc.statusColor}`}>
+              <div className="flex justify-between items-start mb-8 relative z-10">
+                <span className="font-mono text-[10px] text-slate-500 tracking-[0.2em]">{svc.id}</span>
+                <div className={`flex items-center gap-2 px-3 py-1 rounded-full border text-[9px] font-black tracking-[0.1em] ${svc.statusColor}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${svc.statusDot}`}></span>
                   {svc.status}
                 </div>
               </div>
 
-              <div className="mb-6 p-4 rounded-xl bg-slate-900/50 inline-table w-max border border-slate-800 group-hover:border-cyan-500/30 transition-colors">
+              <div className="mb-8 p-5 rounded-2xl bg-slate-900/50 border border-slate-800 group-hover:border-cyan-500/30 group-hover:bg-slate-800 transition-all duration-500 inline-flex items-center justify-center text-cyan-400">
                 {svc.icon}
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-3">{svc.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+              <h3 className="text-2xl font-bold text-white mb-4 tracking-tight group-hover:text-cyan-400 transition-colors">{svc.title}</h3>
+              <p className="text-slate-400 text-base font-light leading-relaxed mb-10 flex-1">
                 {svc.desc}
               </p>
 
-              <div className="flex justify-between items-center py-4 border-t border-b border-slate-800/50 mb-6">
+              <div className="grid grid-cols-2 gap-4 py-6 border-t border-slate-800/50 mb-8">
                 {svc.metrics.map((metric, idx) => (
                   <div key={idx} className="flex flex-col">
-                    <span className="text-white font-mono font-bold">{metric.val}</span>
-                    <span className="text-xs text-slate-500 font-mono uppercase">{metric.lbl}</span>
+                    <span className="text-xl font-black text-white tracking-tighter">{metric.val}</span>
+                    <span className="text-[9px] text-slate-500 font-mono uppercase tracking-widest">{metric.lbl}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 relative z-10">
                 {svc.tags.map((tag, idx) => (
-                  <span key={idx} className="px-3 py-1 text-[10px] font-mono text-cyan-400 bg-cyan-500/5 border border-cyan-500/20 rounded">
+                  <span key={idx} className="px-3 py-1.5 text-[9px] font-mono text-slate-500 border border-slate-800 rounded-md group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
                     {tag}
                   </span>
                 ))}

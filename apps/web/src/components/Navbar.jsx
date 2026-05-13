@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
+import Logo from "./Logo";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -22,11 +22,9 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'py-4 bg-[#02040a]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl' : 'py-8 bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xs shadow-[0_0_15px_rgba(0,229,255,0.4)] group-hover:scale-110 transition-transform">
-            DG
-          </div>
-          <span className="text-xl font-bold tracking-tighter text-white">Dev<span className="text-cyan-400">Giz</span></span>
+        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <Logo className="w-9 h-9" />
+          <span className="text-2xl font-black tracking-tighter text-white">Dev<span className="text-cyan-400">Giz</span></span>
         </div>
 
         {/* Desktop Links */}
