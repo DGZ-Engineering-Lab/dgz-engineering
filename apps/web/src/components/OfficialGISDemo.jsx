@@ -9,11 +9,11 @@ export default function OfficialGISDemo() {
     // Load Leaflet dynamically to avoid SSR issues
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";
     document.head.appendChild(link);
 
     const script = document.createElement("script");
-    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
     script.onload = () => {
       if (window.L && !mapLoaded) {
         const L = window.L;
@@ -53,7 +53,7 @@ export default function OfficialGISDemo() {
     return () => {
       // Cleanup script/link if needed
     };
-  }, []);
+  }, [mapLoaded]);
 
   return (
     <section className="relative w-full py-32 bg-[#02040a] border-y border-slate-800/50">

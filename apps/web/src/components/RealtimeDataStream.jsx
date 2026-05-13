@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import { createChart } from 'lightweight-charts';
+import { createChart, AreaSeries } from 'lightweight-charts';
 import { animate } from 'animejs';
 
 export default function RealtimeDataStream() {
@@ -13,8 +13,8 @@ export default function RealtimeDataStream() {
 
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { color: 'transparent' },
-        textColor: '#64748b',
+        background: { type: 'solid', color: 'transparent' },
+        textColor: '#94a3b8',
       },
       grid: {
         vertLines: { color: 'rgba(30, 41, 59, 0.5)' },
@@ -23,14 +23,17 @@ export default function RealtimeDataStream() {
       width: chartContainerRef.current.clientWidth,
       height: 300,
       timeScale: {
-        visible: false,
+        timeVisible: true,
+        secondsVisible: true,
+        borderColor: 'rgba(30, 41, 59, 1)',
       },
       rightPriceScale: {
+        borderColor: 'rgba(30, 41, 59, 1)',
         borderVisible: false,
       },
     });
 
-    const areaSeries = chart.addAreaSeries({
+    const areaSeries = chart.addSeries(AreaSeries, {
       lineColor: '#06b6d4',
       topColor: 'rgba(6, 182, 212, 0.3)',
       bottomColor: 'rgba(6, 182, 212, 0)',
@@ -40,7 +43,9 @@ export default function RealtimeDataStream() {
     let counter = 0;
     const interval = setInterval(() => {
       const value = 50 + Math.random() * 20 + Math.sin(counter / 10) * 10;
-      areaSeries.update({ time: counter++, value });
+      const time = Math.floor(Date.now() / 1000) + counter;
+      areaSeries.update({ time, value });
+      counter++;
     }, 500);
 
     const handleResize = () => {
