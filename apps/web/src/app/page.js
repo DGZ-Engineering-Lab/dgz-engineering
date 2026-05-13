@@ -3,7 +3,7 @@ import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
 import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 import ServicesSection from "../components/ServicesSection";
-import OperationSimulator from "../components/OperationSimulator";
+import RealityShowcase from "../components/RealityShowcase";
 import OperationalWorkflow from "../components/OperationalWorkflow";
 import SpatialLabSection from "../components/SpatialLabSection";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
@@ -69,7 +69,7 @@ export default function Home() {
       <ImpactMetrics />
       <ProfessionalProfile />
       <ServicesSection />
-      <OperationSimulator />
+      <RealityShowcase />
       <OperationalWorkflow />
       <SpatialLabSection />
       <TechnicalEcosystem />
