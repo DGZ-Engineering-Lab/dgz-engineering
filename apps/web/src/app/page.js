@@ -4,6 +4,7 @@ import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 import ServicesSection from "../components/ServicesSection";
 import RealityShowcase from "../components/RealityShowcase";
+import OfficialGISDemo from "../components/OfficialGISDemo";
 import RealDataSimulator from "../components/RealDataSimulator";
 import OperationalWorkflow from "../components/OperationalWorkflow";
 import SpatialLabSection from "../components/SpatialLabSection";
@@ -71,6 +72,7 @@ export default function Home() {
       <ProfessionalProfile />
       <ServicesSection />
       <RealityShowcase />
+      <OfficialGISDemo />
       <RealDataSimulator />
       <OperationalWorkflow />
       <SpatialLabSection />
