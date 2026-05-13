@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+
 export default function SpatialLabSection() {
   return (
     <section id="lab" className="relative w-full py-24 z-10 bg-[#05070a]">
@@ -97,108 +100,182 @@ export default function SpatialLabSection() {
 
         </div>
 
-        {/* Flagship Projects */}
+        {/* Flagship Projects - Carousel Implementation */}
         <div className="pt-20 border-t border-slate-800">
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-8 h-[1px] bg-cyan-500"></div>
-            <h2 className="text-3xl font-bold text-white">Proyectos Destacados</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            {/* ConstruMetrix (Large) */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-2 flex flex-col md:flex-row bg-gradient-to-br from-slate-900 to-[#05070a] border border-slate-800 rounded-2xl overflow-hidden group hover:border-cyan-500/50 transition-colors">
-              <div className="w-full md:w-1/2 p-8 flex items-center justify-center bg-[#0a0f16] border-r border-slate-800">
-                <img src="/assets/img/logo-construmetrix.svg" alt="ConstruMetrix" className="w-3/4 max-w-[200px] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
-              </div>
-              <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-[10px] text-cyan-400 font-mono tracking-widest">FLAGSHIP_NODE</span>
-                  <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded">PRODUCTION STABLE</span>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">ConstruMetrix GIS</h3>
-                <p className="text-slate-400 text-sm mb-6">
-                  Enterprise-level GIS monitoring for modern urban infrastructure. Synchronizing real-time telemetry across distributed nodes.
-                </p>
-                <div className="flex gap-2 mb-8">
-                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">POSTGIS_9.4</span>
-                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PYQGIS_V3</span>
-                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">REST_API</span>
-                </div>
-                <a href="https://daga21gz.github.io/ConstruMetrix/" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 bg-white text-black font-bold text-sm rounded-lg hover:bg-cyan-400 hover:text-black transition-colors w-max">
-                  Launch Dashboard
-                </a>
-              </div>
-            </div>
-
-            {/* Geo-LLM */}
-            <a href="projects/geo-llm/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-[#f3ca20]/30 hover:border-[#f3ca20] rounded-2xl transition-colors group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#f3ca20]/10 rounded-full blur-[40px] -mr-10 -mt-10"></div>
-              <div className="flex justify-between items-center mb-4 relative z-10">
-                <span className="text-[10px] text-[#f3ca20] font-mono tracking-widest">GEO_LLM_05</span>
-                <span className="px-2 py-1 bg-[#f3ca20]/10 text-[#f3ca20] text-[10px] font-bold rounded">R&D KERNEL</span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3 relative z-10">Geo-LLM Intelligence</h3>
-              <p className="text-slate-400 text-sm mb-6 flex-1 relative z-10">
-                Agente de IA que traduce lenguaje natural a Spatial SQL y genera informes catastrales estadísticos en tiempo real.
-              </p>
-              <div className="flex flex-wrap gap-2 relative z-10">
-                <span className="px-2 py-1 bg-slate-800 text-[#f3ca20] text-[10px] font-mono rounded">LLM</span>
-                <span className="px-2 py-1 bg-slate-800 text-[#f3ca20] text-[10px] font-mono rounded">PostGIS AI</span>
-              </div>
-            </a>
-
-            {/* Dashboards */}
-            <a href="projects/gis-dashboard/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/50 rounded-2xl transition-colors group">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] text-slate-500 font-mono tracking-widest">DASHBOARD_02</span>
-                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">Enterprise GIS Dashboard</h3>
-              <p className="text-slate-400 text-sm mb-6 flex-1">
-                Interfaz interactiva conectada a PostGIS para análisis territorial y telemetría en tiempo real.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">React</span>
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PostGIS</span>
-              </div>
-            </a>
-
-            {/* ETL Pipelines */}
-            <a href="projects/automation-systems/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-blue-500/50 rounded-2xl transition-colors group">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] text-slate-500 font-mono tracking-widest">AUTOMATION_01</span>
-                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">Territorial ETL Pipelines</h3>
-              <p className="text-slate-400 text-sm mb-6 flex-1">
-                Automatización desatendida de transformaciones de datos geográficos para evitar procesos manuales lentos.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">Python</span>
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">FME</span>
-              </div>
-            </a>
-
-            {/* PyQGIS Plugin */}
-            <a href="projects/qgis-plugin/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-purple-500/50 rounded-2xl transition-colors group">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] text-slate-500 font-mono tracking-widest">PYQGIS_PLUGIN</span>
-                <span className="w-2 h-2 bg-[#f3ca20] rounded-full"></span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">LADM-COL QGIS Plugin</h3>
-              <p className="text-slate-400 text-sm mb-6 flex-1">
-                Scripts insertados como herramientas nativas en la UI de QGIS para validación topológica instantánea.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PyQGIS</span>
-                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">LADM-COL</span>
-              </div>
-            </a>
-
-          </div>
+          <ProjectCarousel />
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const projects = [
+    {
+      id: "PROJ-CM-01",
+      tag: "FLAGSHIP_NODE",
+      status: "PRODUCTION STABLE",
+      title: "ConstruMetrix GIS",
+      desc: "Enterprise-level GIS monitoring for modern urban infrastructure. Synchronizing real-time telemetry across distributed nodes.",
+      img: "/assets/img/logo-construmetrix.svg",
+      link: "https://daga21gz.github.io/ConstruMetrix/",
+      tech: ["POSTGIS_9.4", "PYQGIS_V3", "REST_API"],
+      accent: "cyan"
+    },
+    {
+      id: "PROJ-GLLM-05",
+      tag: "GEO_LLM_05",
+      status: "R&D KERNEL",
+      title: "Geo-LLM Intelligence",
+      desc: "Agente de IA que traduce lenguaje natural a Spatial SQL y genera informes catastrales estadísticos en tiempo real.",
+      img: null,
+      icon: "🤖",
+      link: "projects/geo-llm/index.html",
+      tech: ["LLM", "PostGIS AI", "GeoJSON"],
+      accent: "amber"
+    },
+    {
+      id: "PROJ-DASH-02",
+      tag: "DASHBOARD_02",
+      status: "LIVE_NODE",
+      title: "Enterprise GIS Dashboard",
+      desc: "Interfaz interactiva conectada a PostGIS para análisis territorial y telemetría en tiempo real.",
+      img: null,
+      icon: "📊",
+      link: "projects/gis-dashboard/index.html",
+      tech: ["React", "PostGIS", "MapLibre"],
+      accent: "cyan"
+    },
+    {
+      id: "PROJ-AUTO-01",
+      tag: "AUTOMATION_01",
+      status: "ACTIVE_PIPELINE",
+      title: "Territorial ETL Pipelines",
+      desc: "Automatización desatendida de transformaciones de datos geográficos para evitar procesos manuales lentos.",
+      img: null,
+      icon: "⚙️",
+      link: "projects/automation-systems/index.html",
+      tech: ["Python", "FME", "GDAL"],
+      accent: "blue"
+    },
+    {
+      id: "PROJ-QGIS-03",
+      tag: "PYQGIS_PLUGIN",
+      status: "STABLE_TOOL",
+      title: "LADM-COL QGIS Plugin",
+      desc: "Scripts insertados como herramientas nativas en la UI de QGIS para validación topológica instantánea.",
+      img: null,
+      icon: "🔌",
+      link: "projects/qgis-plugin/index.html",
+      tech: ["PyQGIS", "LADM-COL", "Python"],
+      accent: "purple"
+    }
+  ];
+
+  const next = () => setActiveIndex((prev) => (prev + 1) % projects.length);
+  const prev = () => setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
+
+  const activeProject = projects[activeIndex];
+
+  return (
+    <div className="relative">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-[1px] bg-cyan-500"></div>
+          <h2 className="text-3xl font-bold text-white tracking-tight">Proyectos <span className="text-cyan-400">Destacados</span></h2>
+        </div>
+        
+        {/* Carousel Controls */}
+        <div className="flex items-center gap-4">
+          <div className="flex gap-1 mr-4">
+            {projects.map((_, i) => (
+              <div 
+                key={i} 
+                className={`h-1 transition-all duration-500 rounded-full ${i === activeIndex ? 'w-8 bg-cyan-500' : 'w-2 bg-slate-800'}`}
+              />
+            ))}
+          </div>
+          <button onClick={prev} className="p-3 rounded-full border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-black/40">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <button onClick={next} className="p-3 rounded-full border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-black/40">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Active Project Card */}
+      <div className="relative min-h-[400px] group">
+        {/* Animated Background Glow */}
+        <div className="absolute inset-0 bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors"></div>
+        
+        <div className="relative bg-[#0a0d14]/80 backdrop-blur-md border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row animate-in fade-in slide-in-from-right-8 duration-700">
+          
+          {/* Visual Side */}
+          <div className="w-full lg:w-1/2 min-h-[300px] relative bg-[#05070a] flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+            {/* Cyber Grid Background */}
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #0e7490 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            
+            {activeProject.img ? (
+              <img 
+                src={activeProject.img} 
+                alt={activeProject.title} 
+                className="w-2/3 max-w-[250px] relative z-10 transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 drop-shadow-[0_0_30px_rgba(0,229,255,0.2)]" 
+              />
+            ) : (
+              <div className="text-[120px] relative z-10 animate-pulse">
+                {activeProject.icon}
+              </div>
+            )}
+
+            {/* Scanning Line Effect */}
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-cyan-500/50 shadow-[0_0_15px_cyan] animate-scan z-20"></div>
+          </div>
+
+          {/* Info Side */}
+          <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+            <div className="flex justify-between items-center mb-6">
+              <span className="font-mono text-[10px] text-cyan-500 tracking-[0.3em] uppercase">{activeProject.tag}</span>
+              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-wider">{activeProject.status}</span>
+              </div>
+            </div>
+
+            <h3 className="text-3xl lg:text-4xl font-black text-white mb-6 tracking-tight leading-none">
+              {activeProject.title}
+            </h3>
+
+            <p className="text-slate-400 text-lg leading-relaxed mb-8 font-light">
+              {activeProject.desc}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-10">
+              {activeProject.tech.map((t, i) => (
+                <span key={i} className="px-3 py-1 bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-400 rounded uppercase tracking-wider">
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <a 
+              href={activeProject.link} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="inline-flex items-center justify-center px-10 py-4 bg-cyan-600 text-white font-black text-sm rounded-xl hover:bg-cyan-500 transition-all shadow-[0_10px_20px_-10px_rgba(0,229,255,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(0,229,255,0.6)] hover:-translate-y-1 w-max uppercase tracking-widest"
+            >
+              Explorar Nodo
+            </a>
+          </div>
+        </div>
+
+        {/* Node ID indicator at bottom right */}
+        <div className="absolute -bottom-4 -right-4 font-mono text-[60px] font-black text-white/[0.03] pointer-events-none select-none">
+          {activeProject.id}
+        </div>
+      </div>
+    </div>
   );
 }

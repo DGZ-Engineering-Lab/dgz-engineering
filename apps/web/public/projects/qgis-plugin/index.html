@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyQGIS LADM-COL Plugin | DevGiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{--mono:'JetBrains Mono',monospace;--gold:#ffb400;--electric:#00e5ff}
+        body{background:#020205;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:8rem 5% 5rem}
+        .noise{position:fixed;inset:0;background-image:url('https://grainy-gradients.vercel.app/noise.svg');opacity:.03;pointer-events:none;z-index:0}
+        .orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;width:400px;height:400px;background:radial-gradient(circle,rgba(255,180,0,.05),transparent);bottom:10%;left:-5%}
+        .back-link{position:fixed;top:1.5rem;left:5%;font-family:var(--mono);font-size:.6rem;color:rgba(255,180,0,.7);text-decoration:none;display:flex;align-items:center;gap:.5rem;z-index:100;letter-spacing:.08em;transition:color .2s}
+        .back-link:hover{color:var(--gold)}
+        .sys-label{font-family:var(--mono);font-size:.55rem;color:rgba(255,180,0,.5);letter-spacing:.2em;margin-bottom:1rem;text-transform:uppercase;position:relative;z-index:1}
+        h1{font-size:clamp(2rem,5vw,4rem);font-weight:900;letter-spacing:-.04em;margin-bottom:1.5rem;line-height:1.1;position:relative;z-index:1}
+        .lead{color:rgba(255,255,255,.5);max-width:700px;font-size:1rem;line-height:1.8;margin-bottom:3rem;position:relative;z-index:1}
+        /* Code block */
+        .code-block{background:rgba(0,0,0,.5);border:1px solid rgba(255,180,0,.15);border-radius:14px;padding:1.5rem 2rem;margin-bottom:3rem;position:relative;z-index:1;font-family:var(--mono);font-size:.65rem;line-height:1.9;overflow-x:auto}
+        .code-label{font-size:.5rem;color:rgba(255,180,0,.4);letter-spacing:.15em;margin-bottom:1rem;text-transform:uppercase}
+        .c-kw{color:#9D4EDD}.c-fn{color:var(--electric)}.c-str{color:#4ade80}.c-comment{color:rgba(255,255,255,.25)}
+        /* Features */
+        .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:3rem;position:relative;z-index:1}
+        .feat-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,180,0,.1);border-radius:14px;padding:1.4rem}
+        .feat-icon{font-size:1.6rem;margin-bottom:.6rem}
+        .feat-title{font-weight:800;margin-bottom:.4rem;color:var(--gold);font-size:.9rem}
+        .feat-desc{color:rgba(255,255,255,.4);font-size:.8rem;line-height:1.6}
+        /* Install */
+        .install-box{background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.1);border-radius:14px;padding:1.5rem 2rem;margin-bottom:3rem;position:relative;z-index:1;font-family:var(--mono);font-size:.65rem;line-height:2;color:rgba(0,229,255,.7)}
+        .install-title{font-size:.55rem;color:rgba(0,229,255,.4);letter-spacing:.15em;margin-bottom:.8rem;text-transform:uppercase}
+        /* CTA */
+        .cta-row{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1}
+        .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.8rem 1.5rem;border-radius:10px;text-decoration:none;transition:all .3s}
+        .btn-gold{background:rgba(255,180,0,.1);border:1px solid rgba(255,180,0,.3);color:var(--gold)}
+        .btn-gold:hover{background:rgba(255,180,0,.2);transform:translateY(-2px)}
+        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+        .btn-outline:hover{border-color:rgba(255,255,255,.2);color:#fff}
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="orb"></div>
+    <a href="../index.html" class="back-link"><i class="ph ph-arrow-left"></i> PROJECTS_HUB</a>
+
+    <div class="sys-label">// SYSTEM_ID: QGIS_PLUGIN_04 // STATUS: BETA // PYQGIS_3.x</div>
+    <h1>PyQGIS LADM-COL<br>Automation Plugin</h1>
+    <p class="lead">Custom QGIS plugin that automates LADM-COL V3 cadastral compliance. Batch parcel renaming, coordinate transformation, topology QA, and direct PostGIS export — all in one toolbar click.</p>
+
+    <div class="code-block">
+        <div class="code-label">PLUGIN_CORE_SNIPPET // ladm_col_validator.py</div>
+        <span class="c-kw">from</span> qgis.core <span class="c-kw">import</span> QgsProject, QgsVectorLayer<br>
+        <span class="c-kw">from</span> shapely.geometry <span class="c-kw">import</span> shape<br>
+        <span class="c-kw">import</span> geopandas <span class="c-kw">as</span> gpd<br><br>
+        <span class="c-kw">class</span> <span class="c-fn">LadmColValidator</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-kw">def</span> <span class="c-fn">run_full_validation</span>(self, layer: QgsVectorLayer):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment"># 1. Export to GeoDataFrame</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gdf = gpd.GeoDataFrame.from_qgis(layer)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment"># 2. Validate LADM-COL V3 required fields</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errors = self.<span class="c-fn">check_schema</span>(gdf, schema=<span class="c-str">"LADM_COL_V3"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment"># 3. Topology check — overlaps & gaps</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;topology_errors = self.<span class="c-fn">check_topology</span>(gdf)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-comment"># 4. Write to PostGIS if no critical errors</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-kw">if not</span> topology_errors.critical:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<span class="c-fn">export_postgis</span>(gdf, table=<span class="c-str">"predios_ladm"</span>)
+    </div>
+
+    <div class="feat-grid">
+        <div class="feat-card"><div class="feat-icon">🔌</div><div class="feat-title">One-Click QA</div><div class="feat-desc">Full LADM-COL V3 validation with a single toolbar button. Results appear as styled QGIS layer.</div></div>
+        <div class="feat-card"><div class="feat-icon">🏷️</div><div class="feat-title">Batch Rename</div><div class="feat-desc">Auto-rename predios to IGAC convention based on municipality code + sequential numbering.</div></div>
+        <div class="feat-card"><div class="feat-icon">🗄️</div><div class="feat-title">PostGIS Export</div><div class="feat-desc">Validated features pushed directly to PostGIS with spatial index and audit log entry.</div></div>
+        <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title">CRS Enforcer</div><div class="feat-desc">Automatically reprojects any layer to EPSG:4326 / Magna-Sirgas as required by IGAC.</div></div>
+    </div>
+
+    <div class="install-box">
+        <div class="install-title">INSTALLATION // QGIS_PLUGIN_MANAGER</div>
+        1. Open QGIS → Plugins → Manage and Install Plugins<br>
+        2. Search: <strong>DGZ_LADM_COL_Validator</strong><br>
+        3. Install → Restart QGIS<br>
+        4. DGZ toolbar appears automatically in GIS panel
+    </div>
+
+    <div class="cta-row">
+        <a href="https://github.com/Daga21Gz" target="_blank" class="btn btn-gold"><i class="ph ph-github-logo"></i> VIEW ON GITHUB</a>
+        <a href="../../index.html" class="btn btn-outline"><i class="ph ph-arrow-left"></i> BACK TO MAIN</a>
+    </div>
+</body>
+</html>

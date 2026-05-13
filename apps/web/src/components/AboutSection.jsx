@@ -16,31 +16,36 @@ export default function AboutSection() {
           {/* Text Column */}
           <div className="space-y-8">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
-              Excelencia GIS & <br />
+              Ingeniería SIG & <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-                Arquitectura de Software
+                Soluciones Digitales
               </span>
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed font-light">
-              Cerramos la brecha entre el mapeo SIG tradicional y la arquitectura
-              de software escalable. Enfocados en flujos de datos de alta
-              precisión y automatización técnica. Nuestro núcleo transforma datos
-              geográficos sin estructura en inteligencia territorial automatizada
-              y soberana.
+              Ayudamos a entidades territoriales a modernizar su gestión de tierras. 
+              Combinamos la precisión de los mapas tradicionales con el poder de la 
+              automatización moderna. Transformamos datos complicados en herramientas 
+              sencillas para el crecimiento de su municipio o empresa.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-slate-800">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+              <div className="flex items-center gap-3 group">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
                   <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                 </div>
-                <span className="text-sm font-semibold text-slate-200">LADM-COL Autónoma</span>
+                <div>
+                  <span className="text-sm font-semibold text-slate-200 block">Estándares Legales</span>
+                  <span className="text-[10px] text-slate-500 font-mono">Cumplimiento LADM-COL</span>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
+              <div className="flex items-center gap-3 group">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors">
                   <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <span className="text-sm font-semibold text-slate-200">Pipeline ETL Desatendido</span>
+                <div>
+                  <span className="text-sm font-semibold text-slate-200 block">Automatización</span>
+                  <span className="text-[10px] text-slate-500 font-mono">Resultados más rápidos</span>
+                </div>
               </div>
             </div>
           </div>
