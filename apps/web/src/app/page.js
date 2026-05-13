@@ -1,8 +1,12 @@
 import SystemMonitor from "../components/SystemMonitor";
+import OperatorProfileSection from "../components/OperatorProfileSection";
 import AboutSection from "../components/AboutSection";
 import ServicesSection from "../components/ServicesSection";
+import ChallengesSection from "../components/ChallengesSection";
+import ArchitectureSection from "../components/ArchitectureSection";
 import SpatialLabSection from "../components/SpatialLabSection";
 import GeoAISection from "../components/GeoAISection";
+import TimelineSection from "../components/TimelineSection";
 import InfrastructureSection from "../components/InfrastructureSection";
 import TechMatrixSection from "../components/TechMatrixSection";
 import MetricsSection from "../components/MetricsSection";
@@ -53,19 +57,37 @@ export default function Home() {
             Sistemas automatizados para infraestructura geoespacial de alto rendimiento. Construimos territorios digitales con precisión matemática.
           </p>
 
+          {/* Hero Stats Strip */}
+          <div className="flex justify-center gap-8 md:gap-16 py-6">
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl font-extrabold text-white">50k+</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Spatial Nodes</div>
+            </div>
+            <div className="w-px bg-slate-800"></div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl font-extrabold text-white">0.02s</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Query Latency</div>
+            </div>
+            <div className="w-px bg-slate-800"></div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl font-extrabold text-white">LADM-COL</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">V3 Protocol</div>
+            </div>
+          </div>
+
           {/* Call to Actions */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 pb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 pb-12">
             <a
-              href="#contact"
+              href="#lab"
               className="px-8 py-4 text-sm font-bold text-white uppercase tracking-widest transition-all bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg hover:from-cyan-500 hover:to-blue-500 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)] hover:-translate-y-1"
             >
-              INITIATE_HANDSHAKE
+              ⭐ EXPLORAR SPATIAL LAB
             </a>
             <a
-              href="#capabilities"
+              href="#contact"
               className="px-8 py-4 text-sm font-bold text-slate-300 uppercase tracking-widest transition-all border border-slate-700 bg-slate-900/50 rounded-lg hover:bg-slate-800 hover:text-white hover:border-slate-500 hover:-translate-y-1"
             >
-              VIEW_ARCHITECTURE
+              CONTÁCTAME
             </a>
           </div>
 
@@ -76,10 +98,14 @@ export default function Home() {
         </div>
       </div>
 
+      <OperatorProfileSection />
       <AboutSection />
       <ServicesSection />
+      <ChallengesSection />
+      <ArchitectureSection />
       <SpatialLabSection />
       <GeoAISection />
+      <TimelineSection />
       <InfrastructureSection />
       <TechMatrixSection />
       <MetricsSection />

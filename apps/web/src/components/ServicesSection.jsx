@@ -71,7 +71,43 @@ export default function ServicesSection() {
         { val: "Sentinel-2", lbl: "Multitemporal" },
         { val: "Deep L.", lbl: "Engine" }
       ],
-      tags: ["PyTorch", "Rasterio", "GeoPandas"]
+      tags: ["Scikit-learn", "Rasterio", "Sentinel-2"]
+    },
+    {
+      id: "SVC-D-05",
+      status: "SISTEMA ACTIVO",
+      statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+      statusDot: "bg-emerald-400",
+      icon: (
+        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      title: "Dashboards GIS Empresariales",
+      desc: "Interfaces interactivas conectadas a PostGIS para análisis territorial en tiempo real. Visualización de indicadores catastrales.",
+      metrics: [
+        { val: "WebMap", lbl: "Rendering" },
+        { val: "Cloud", lbl: "Deployment" }
+      ],
+      tags: ["MapLibre GL", "React", "REST API"]
+    },
+    {
+      id: "SVC-C-06",
+      status: "SISTEMA ACTIVO",
+      statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+      statusDot: "bg-emerald-400",
+      icon: (
+        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      ),
+      title: "Coordinación de Campo GIS",
+      desc: "Liderazgo de equipos técnicos en terrenos complejos. Nivelación topográfica, digitalización masiva y coordinación normativa.",
+      metrics: [
+        { val: "RTK", lbl: "Hardware" },
+        { val: "NSR-10", lbl: "Compliance" }
+      ],
+      tags: ["GPS RTK", "Civil 3D", "AutoCAD"]
     }
   ];
 
@@ -92,7 +128,7 @@ export default function ServicesSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((svc) => (
             <div 
               key={svc.id}
