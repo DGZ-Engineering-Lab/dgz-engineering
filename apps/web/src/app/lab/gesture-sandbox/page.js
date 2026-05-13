@@ -8,7 +8,24 @@ export default function GestureSandboxPage() {
   const [logs, setLogs] = useState([]);
   const [activeCoords, setActiveCoords] = useState("4.6486° N, 74.0592° W");
 
+  const videoRef = useRef(null);
+  const [hasCamera, setHasCamera] = useState(false);
+
   useEffect(() => {
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          setHasCamera(true);
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+        setLogs(prev => ["[ERROR] Camera Access Denied", ...prev]);
+      }
+    }
+    
+    startCamera();
     setLogs(["[SYSTEM] Gesture Kernel v4.2 Initialized", "[AUTH] Neural Link Established", "[SENSOR] DepthMap Active"]);
     
     // Simulated gesture stream
@@ -79,6 +96,17 @@ export default function GestureSandboxPage() {
                  {/* Map Content - Dynamic Satellite Simulation */}
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
                     <img src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
+                 </div>
+
+                 {/* Camera Feed Overlay */}
+                 <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none mix-blend-screen opacity-40">
+                    <video 
+                      ref={videoRef} 
+                      autoPlay 
+                      playsInline 
+                      muted 
+                      className={`w-full h-full object-cover transition-opacity duration-1000 ${hasCamera ? 'opacity-100' : 'opacity-0'}`}
+                    />
                  </div>
                  
                  {/* Interactive HUD Overlays */}
