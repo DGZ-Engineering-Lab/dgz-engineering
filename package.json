@@ -1,0 +1,11 @@
+{
+  "name": "dgz-engineering-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/web run build",
+    "start": "npm --prefix apps/web run start",
+    "install:all": "npm install && npm --prefix apps/web install"
+  }
+}

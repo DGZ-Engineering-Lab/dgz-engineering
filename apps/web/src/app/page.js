@@ -1,6 +1,8 @@
 import SystemMonitor from "../components/SystemMonitor";
 import AboutSection from "../components/AboutSection";
 import ServicesSection from "../components/ServicesSection";
+import SpatialLabSection from "../components/SpatialLabSection";
+import GeoAISection from "../components/GeoAISection";
 import InfrastructureSection from "../components/InfrastructureSection";
 import TechMatrixSection from "../components/TechMatrixSection";
 import MetricsSection from "../components/MetricsSection";
@@ -76,6 +78,8 @@ export default function Home() {
 
       <AboutSection />
       <ServicesSection />
+      <SpatialLabSection />
+      <GeoAISection />
       <InfrastructureSection />
       <TechMatrixSection />
       <MetricsSection />
