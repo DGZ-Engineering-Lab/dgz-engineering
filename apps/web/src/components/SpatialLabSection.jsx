@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 "use client";
 import { useState } from "react";
 
+=======
+>>>>>>> origin/main
 export default function SpatialLabSection() {
   return (
     <section id="lab" className="relative w-full py-24 z-10 bg-[#05070a]">
@@ -100,14 +103,118 @@ export default function SpatialLabSection() {
 
         </div>
 
+<<<<<<< HEAD
         {/* Flagship Projects - Carousel Implementation */}
         <div className="pt-20 border-t border-slate-800">
           <ProjectCarousel />
+=======
+        {/* Flagship Projects */}
+        <div className="pt-20 border-t border-slate-800">
+          <div className="flex items-center gap-4 mb-12">
+            <div className="w-8 h-[1px] bg-cyan-500"></div>
+            <h2 className="text-3xl font-bold text-white">Proyectos Destacados</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* ConstruMetrix (Large) */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-2 flex flex-col md:flex-row bg-gradient-to-br from-slate-900 to-[#05070a] border border-slate-800 rounded-2xl overflow-hidden group hover:border-cyan-500/50 transition-colors">
+              <div className="w-full md:w-1/2 p-8 flex items-center justify-center bg-[#0a0f16] border-r border-slate-800">
+                <img src="/assets/img/logo-construmetrix.svg" alt="ConstruMetrix" className="w-3/4 max-w-[200px] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
+              </div>
+              <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-[10px] text-cyan-400 font-mono tracking-widest">FLAGSHIP_NODE</span>
+                  <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded">PRODUCTION STABLE</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">ConstruMetrix GIS</h3>
+                <p className="text-slate-400 text-sm mb-6">
+                  Enterprise-level GIS monitoring for modern urban infrastructure. Synchronizing real-time telemetry across distributed nodes.
+                </p>
+                <div className="flex gap-2 mb-8">
+                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">POSTGIS_9.4</span>
+                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PYQGIS_V3</span>
+                  <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">REST_API</span>
+                </div>
+                <a href="https://daga21gz.github.io/ConstruMetrix/" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 bg-white text-black font-bold text-sm rounded-lg hover:bg-cyan-400 hover:text-black transition-colors w-max">
+                  Launch Dashboard
+                </a>
+              </div>
+            </div>
+
+            {/* Geo-LLM */}
+            <a href="projects/geo-llm/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-[#f3ca20]/30 hover:border-[#f3ca20] rounded-2xl transition-colors group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#f3ca20]/10 rounded-full blur-[40px] -mr-10 -mt-10"></div>
+              <div className="flex justify-between items-center mb-4 relative z-10">
+                <span className="text-[10px] text-[#f3ca20] font-mono tracking-widest">GEO_LLM_05</span>
+                <span className="px-2 py-1 bg-[#f3ca20]/10 text-[#f3ca20] text-[10px] font-bold rounded">R&D KERNEL</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3 relative z-10">Geo-LLM Intelligence</h3>
+              <p className="text-slate-400 text-sm mb-6 flex-1 relative z-10">
+                Agente de IA que traduce lenguaje natural a Spatial SQL y genera informes catastrales estadísticos en tiempo real.
+              </p>
+              <div className="flex flex-wrap gap-2 relative z-10">
+                <span className="px-2 py-1 bg-slate-800 text-[#f3ca20] text-[10px] font-mono rounded">LLM</span>
+                <span className="px-2 py-1 bg-slate-800 text-[#f3ca20] text-[10px] font-mono rounded">PostGIS AI</span>
+              </div>
+            </a>
+
+            {/* Dashboards */}
+            <a href="projects/gis-dashboard/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/50 rounded-2xl transition-colors group">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[10px] text-slate-500 font-mono tracking-widest">DASHBOARD_02</span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Enterprise GIS Dashboard</h3>
+              <p className="text-slate-400 text-sm mb-6 flex-1">
+                Interfaz interactiva conectada a PostGIS para análisis territorial y telemetría en tiempo real.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">React</span>
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PostGIS</span>
+              </div>
+            </a>
+
+            {/* ETL Pipelines */}
+            <a href="projects/automation-systems/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-blue-500/50 rounded-2xl transition-colors group">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[10px] text-slate-500 font-mono tracking-widest">AUTOMATION_01</span>
+                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Territorial ETL Pipelines</h3>
+              <p className="text-slate-400 text-sm mb-6 flex-1">
+                Automatización desatendida de transformaciones de datos geográficos para evitar procesos manuales lentos.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">Python</span>
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">FME</span>
+              </div>
+            </a>
+
+            {/* PyQGIS Plugin */}
+            <a href="projects/qgis-plugin/index.html" className="flex flex-col p-8 bg-[#0a0f16] border border-slate-800 hover:border-purple-500/50 rounded-2xl transition-colors group">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[10px] text-slate-500 font-mono tracking-widest">PYQGIS_PLUGIN</span>
+                <span className="w-2 h-2 bg-[#f3ca20] rounded-full"></span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">LADM-COL QGIS Plugin</h3>
+              <p className="text-slate-400 text-sm mb-6 flex-1">
+                Scripts insertados como herramientas nativas en la UI de QGIS para validación topológica instantánea.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">PyQGIS</span>
+                <span className="px-2 py-1 bg-slate-800 text-slate-300 text-[10px] font-mono rounded">LADM-COL</span>
+              </div>
+            </a>
+
+          </div>
+>>>>>>> origin/main
         </div>
       </div>
     </section>
   );
 }
+<<<<<<< HEAD
 
 function ProjectCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -280,3 +387,5 @@ function ProjectCarousel() {
   );
 }
 
+=======
+>>>>>>> origin/main
