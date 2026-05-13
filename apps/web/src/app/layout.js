@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 import Background from "../components/Background";
 import Navbar from "../components/Navbar";
 import FloatingTelemetry from "../components/FloatingTelemetry";
+import SystemStatusHeader from "../components/SystemStatusHeader";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]">
         <Background />
+        <SystemStatusHeader />
         <Navbar />
         <main className="relative z-10 flex flex-col min-h-screen">
           {children}
