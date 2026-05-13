@@ -5,12 +5,25 @@ import { useEffect, useState } from "react";
 export default function FloatingTelemetry() {
   const [time, setTime] = useState("");
   const [load, setLoad] = useState(12);
+  const [activeNodes, setActiveNodes] = useState(1240);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/telemetry");
+        const data = await res.json();
+        if (data.activeNodes) setActiveNodes(data.activeNodes);
+      } catch (e) {
+        console.error("Telemetry fetch failed");
+      }
+    };
+
+    fetchData();
     const timer = setInterval(() => {
       const now = new Date();
       setTime(now.toLocaleTimeString("en-GB", { hour12: false }));
       setLoad(Math.floor(Math.random() * (25 - 10) + 10));
+      if (now.getSeconds() % 10 === 0) fetchData();
     }, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -39,6 +52,10 @@ export default function FloatingTelemetry() {
           <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-500 uppercase">
             <span>Encryption</span>
             <span className="text-emerald-400">DGZ_SECURE</span>
+          </div>
+          <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-500 uppercase border-t border-slate-800 pt-1 mt-1">
+            <span>Active_Nodes</span>
+            <span className="text-cyan-400 font-bold">{activeNodes}</span>
           </div>
         </div>
 

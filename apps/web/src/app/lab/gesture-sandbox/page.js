@@ -8,7 +8,24 @@ export default function GestureSandboxPage() {
   const [logs, setLogs] = useState([]);
   const [activeCoords, setActiveCoords] = useState("4.6486° N, 74.0592° W");
 
+  const videoRef = useRef(null);
+  const [hasCamera, setHasCamera] = useState(false);
+
   useEffect(() => {
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          setHasCamera(true);
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+        setLogs(prev => ["[ERROR] Camera Access Denied", ...prev]);
+      }
+    }
+    
+    startCamera();
     setLogs(["[SYSTEM] Gesture Kernel v4.2 Initialized", "[AUTH] Neural Link Established", "[SENSOR] DepthMap Active"]);
     
     // Simulated gesture stream
@@ -80,6 +97,17 @@ export default function GestureSandboxPage() {
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
                     <img src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
                  </div>
+
+                 {/* Camera Feed Overlay */}
+                 <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none mix-blend-screen opacity-40">
+                    <video 
+                      ref={videoRef} 
+                      autoPlay 
+                      playsInline 
+                      muted 
+                      className={`w-full h-full object-cover transition-opacity duration-1000 ${hasCamera ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                 </div>
                  
                  {/* Interactive HUD Overlays */}
                  <div className="absolute inset-0 pointer-events-none">
@@ -138,14 +166,14 @@ export default function GestureSandboxPage() {
                     <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-2xl">⚡</div>
                     <h3 className="text-xl font-bold">Interacción Fluida</h3>
                     <p className="text-sm text-slate-400 font-light leading-relaxed">
-                      Navegue por el territorio sin tocar el teclado. Nuestra tecnología de visión artificial detecta micro-gestos para un control total del entorno SIG.
+                       Navegue por el territorio sin tocar el teclado. Nuestra tecnología de visión artificial detecta micro-gestos para un control total del entorno SIG.
                     </p>
                  </div>
                  <div className="p-8 bg-slate-900/30 border border-slate-800 rounded-[2.5rem] space-y-4">
                     <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl">🌍</div>
                     <h3 className="text-xl font-bold">Datos Oficiales</h3>
                     <p className="text-sm text-slate-400 font-light leading-relaxed">
-                      Integrado directamente con los recursos de **Colombia en Mapas** y repositorios de datos abiertos del **IGAC** para máxima fidelidad territorial.
+                       Integrado directamente con los recursos de **Colombia en Mapas** y repositorios de datos abiertos del **IGAC** para máxima fidelidad territorial.
                     </p>
                  </div>
               </div>
@@ -200,7 +228,7 @@ export default function GestureSandboxPage() {
                     <div className="px-3 py-1 bg-black/10 border border-black/10 rounded-full text-[10px] font-black uppercase tracking-widest w-fit">Decision Guide</div>
                     <h3 className="text-3xl font-black leading-none tracking-tighter">¿Por qué usar gestos?</h3>
                     <p className="text-sm font-medium leading-relaxed opacity-90">
-                      En situaciones de alta presión o presentaciones ejecutivas, la interacción natural permite una navegación mucho más dinámica y profesional, eliminando la barrera entre el experto y los datos.
+                       En situaciones de alta presión o presentaciones ejecutivas, la interacción natural permite una navegación mucho más dinámica y profesional, eliminando la barrera entre el experto y los datos.
                     </p>
                  </div>
               </div>

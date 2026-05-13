@@ -1,7 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SpatialLabSection() {
+  const [flags, setFlags] = useState({
+    premium_viewer: false,
+    experimental_gestures: true
+  });
+
+  useEffect(() => {
+    const fetchFlags = async () => {
+      try {
+        const res = await fetch("/api/flags");
+        const data = await res.json();
+        setFlags(data);
+      } catch (e) {}
+    };
+    fetchFlags();
+  }, []);
+
   return (
     <section id="lab" className="relative w-full py-32 z-10 bg-[#05070a] overflow-hidden border-t border-slate-900">
       {/* Background Decor */}
@@ -39,7 +55,15 @@ export default function SpatialLabSection() {
           {/* Card 1 */}
           <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-slate-900/10 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-500 hover:bg-slate-900/30 overflow-hidden">
             <div className="flex justify-between items-start mb-10">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">SYS_NODE: VIEWER_01</span>
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">SYS_NODE: VIEWER_01</span>
+                {flags.premium_viewer && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/30 rounded text-[8px] font-mono text-cyan-400 animate-pulse">
+                    <svg className="w-2 h-2" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1a1 1 0 112 0v1a1 1 0 11-2 0zM13.536 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM6.464 14.95l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 01-1.414 1.414z" /></svg>
+                    PREMIUM_EDGE_ACTIVE
+                  </span>
+                )}
+              </div>
               <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-500 shadow-lg border border-cyan-500/20">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
               </div>

@@ -3,6 +3,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import OfficialGISDemo from "../../../components/OfficialGISDemo";
+import RealDataSimulator from "../../../components/RealDataSimulator";
 
 const PROJECTS_DATA = {
   "qgis-plugin": {
@@ -220,6 +222,14 @@ function InteractiveDemo({ type, slug }) {
        document.head.appendChild(script);
     }
   }, [type]);
+
+  if (slug === "gis-dashboard") {
+    return <OfficialGISDemo />;
+  }
+
+  if (slug === "qgis-plugin") {
+    return <RealDataSimulator />;
+  }
 
   if (type === "CONSOLE" || type === "PIPELINE") {
     return (
