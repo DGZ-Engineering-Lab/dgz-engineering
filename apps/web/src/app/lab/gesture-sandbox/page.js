@@ -166,14 +166,14 @@ export default function GestureSandboxPage() {
                     <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-2xl">⚡</div>
                     <h3 className="text-xl font-bold">Interacción Fluida</h3>
                     <p className="text-sm text-slate-400 font-light leading-relaxed">
-                      Navegue por el territorio sin tocar el teclado. Nuestra tecnología de visión artificial detecta micro-gestos para un control total del entorno SIG.
+                       Navegue por el territorio sin tocar el teclado. Nuestra tecnología de visión artificial detecta micro-gestos para un control total del entorno SIG.
                     </p>
                  </div>
                  <div className="p-8 bg-slate-900/30 border border-slate-800 rounded-[2.5rem] space-y-4">
                     <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-2xl">🌍</div>
                     <h3 className="text-xl font-bold">Datos Oficiales</h3>
                     <p className="text-sm text-slate-400 font-light leading-relaxed">
-                      Integrado directamente con los recursos de **Colombia en Mapas** y repositorios de datos abiertos del **IGAC** para máxima fidelidad territorial.
+                       Integrado directamente con los recursos de **Colombia en Mapas** y repositorios de datos abiertos del **IGAC** para máxima fidelidad territorial.
                     </p>
                  </div>
               </div>
@@ -228,7 +228,7 @@ export default function GestureSandboxPage() {
                     <div className="px-3 py-1 bg-black/10 border border-black/10 rounded-full text-[10px] font-black uppercase tracking-widest w-fit">Decision Guide</div>
                     <h3 className="text-3xl font-black leading-none tracking-tighter">¿Por qué usar gestos?</h3>
                     <p className="text-sm font-medium leading-relaxed opacity-90">
-                      En situaciones de alta presión o presentaciones ejecutivas, la interacción natural permite una navegación mucho más dinámica y profesional, eliminando la barrera entre el experto y los datos.
+                       En situaciones de alta presión o presentaciones ejecutivas, la interacción natural permite una navegación mucho más dinámica y profesional, eliminando la barrera entre el experto y los datos.
                     </p>
                  </div>
               </div>
