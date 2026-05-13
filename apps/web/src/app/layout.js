@@ -29,7 +29,6 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]">
         <Background />
         <Navbar />
-        <FloatingTelemetry />
         <main className="relative z-10 flex flex-col min-h-screen">
           {children}
         </main>

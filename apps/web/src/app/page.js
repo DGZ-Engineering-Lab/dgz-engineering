@@ -3,6 +3,7 @@ import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
 import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 import ServicesSection from "../components/ServicesSection";
+import RealityShowcase from "../components/RealityShowcase";
 import OperationalWorkflow from "../components/OperationalWorkflow";
 import SpatialLabSection from "../components/SpatialLabSection";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
@@ -20,21 +21,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-5xl mx-auto space-y-12 w-full relative z-10">
-          
           {/* Logo Centerpiece */}
           <div className="flex justify-center mb-4">
             <Logo className="w-32 h-32 md:w-40 md:h-40 drop-shadow-[0_0_50px_rgba(0,229,255,0.2)]" />
-          </div>
-          
-          {/* Status Badge */}
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 border rounded-full border-cyan-500/30 bg-[#0a0f16]/80 backdrop-blur-md mx-auto shadow-[0_0_20px_rgba(0,229,255,0.15)] group hover:border-cyan-400/50 transition-colors">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
-            </span>
-            <span className="text-xs md:text-sm tracking-[0.3em] text-cyan-300 font-mono font-bold">
-              SYSTEM_LIVE //_READY_FOR_UPLINK
-            </span>
           </div>
           
           {/* Main Title */}
@@ -80,6 +69,7 @@ export default function Home() {
       <ImpactMetrics />
       <ProfessionalProfile />
       <ServicesSection />
+      <RealityShowcase />
       <OperationalWorkflow />
       <SpatialLabSection />
       <TechnicalEcosystem />
