@@ -1,6 +1,7 @@
 import SystemMonitor from "../components/SystemMonitor";
 import AboutSection from "../components/AboutSection";
 import ServicesSection from "../components/ServicesSection";
+import InfrastructureSection from "../components/InfrastructureSection";
 import TechMatrixSection from "../components/TechMatrixSection";
 import MetricsSection from "../components/MetricsSection";
 import ContactSection from "../components/ContactSection";
@@ -75,6 +76,7 @@ export default function Home() {
 
       <AboutSection />
       <ServicesSection />
+      <InfrastructureSection />
       <TechMatrixSection />
       <MetricsSection />
       <ContactSection />
