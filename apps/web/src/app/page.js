@@ -10,6 +10,7 @@ import OperationalWorkflow from "../components/OperationalWorkflow";
 import SpatialLabSection from "../components/SpatialLabSection";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
 import ImpactMetrics from "../components/ImpactMetrics";
+import SimpleValueSection from "../components/SimpleValueSection";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 
@@ -77,6 +78,7 @@ export default function Home() {
       <OperationalWorkflow />
       <SpatialLabSection />
       <TechnicalEcosystem />
+      <SimpleValueSection />
       <ContactSection />
       <FooterSection />
     </>
