@@ -4,6 +4,7 @@ import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 import ServicesSection from "../components/ServicesSection";
 import RealityShowcase from "../components/RealityShowcase";
+import RealDataSimulator from "../components/RealDataSimulator";
 import OperationalWorkflow from "../components/OperationalWorkflow";
 import SpatialLabSection from "../components/SpatialLabSection";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
@@ -70,6 +71,7 @@ export default function Home() {
       <ProfessionalProfile />
       <ServicesSection />
       <RealityShowcase />
+      <RealDataSimulator />
       <OperationalWorkflow />
       <SpatialLabSection />
       <TechnicalEcosystem />
