@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+
 export default function SpatialLabSection() {
   return (
     <section id="lab" className="relative w-full py-24 z-10 bg-[#05070a]">
@@ -107,7 +110,7 @@ export default function SpatialLabSection() {
 }
 
 function ProjectCarousel() {
-  const [activeIndex, setActiveIndex] = (typeof window !== 'undefined') ? require('react').useState(0) : [0, () => {}];
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const projects = [
     {
