@@ -1,8 +1,10 @@
+import SystemMonitor from "../components/SystemMonitor";
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 px-6 text-center">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 border rounded-full border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm">
+      <div className="max-w-4xl mx-auto space-y-8 w-full">
+        <div className="inline-flex items-center gap-2 px-4 py-2 border rounded-full border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm mx-auto">
           <span className="flex w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
           <span className="text-sm tracking-wider text-cyan-300 font-mono">DGZ_OS_V6.0 //_NOMINAL</span>
         </div>
@@ -29,6 +31,9 @@ export default function Home() {
             VIEW_ARCHITECTURE
           </a>
         </div>
+
+        {/* Módulo de Telemetría que se conecta a Render y Neon */}
+        <SystemMonitor />
       </div>
     </div>
   );
