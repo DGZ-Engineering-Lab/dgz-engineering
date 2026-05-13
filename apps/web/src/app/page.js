@@ -1,4 +1,6 @@
+import Logo from "../components/Logo";
 import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
+import ChallengesSection from "../components/ChallengesSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 import ServicesSection from "../components/ServicesSection";
 import OperationalWorkflow from "../components/OperationalWorkflow";
@@ -11,13 +13,18 @@ import FooterSection from "../components/FooterSection";
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col items-center justify-center flex-1 px-6 text-center min-h-[90vh] relative z-10 pt-32 pb-20 overflow-hidden">
+      <div className="flex flex-col items-center justify-center flex-1 px-6 text-center min-h-[95vh] relative z-10 pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[150px] mix-blend-screen opacity-50 animate-pulse"></div>
-          <div className="w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] mix-blend-screen opacity-40 absolute top-1/4 right-1/4"></div>
+          <div className="w-[1000px] h-[1000px] bg-cyan-500/5 rounded-full blur-[150px] mix-blend-screen opacity-50 animate-pulse"></div>
+          <div className="w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px] mix-blend-screen opacity-40 absolute top-1/4 right-1/4"></div>
         </div>
 
-        <div className="max-w-5xl mx-auto space-y-10 w-full relative z-10">
+        <div className="max-w-5xl mx-auto space-y-12 w-full relative z-10">
+          
+          {/* Logo Centerpiece */}
+          <div className="flex justify-center mb-4">
+            <Logo className="w-32 h-32 md:w-40 md:h-40 drop-shadow-[0_0_50px_rgba(0,229,255,0.2)]" />
+          </div>
           
           {/* Status Badge */}
           <div className="inline-flex items-center gap-3 px-5 py-2.5 border rounded-full border-cyan-500/30 bg-[#0a0f16]/80 backdrop-blur-md mx-auto shadow-[0_0_20px_rgba(0,229,255,0.15)] group hover:border-cyan-400/50 transition-colors">
@@ -25,22 +32,22 @@ export default function Home() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
             </span>
-            <span className="text-xs md:text-sm tracking-[0.2em] text-cyan-300 font-mono font-bold">
-              SISTEMA_OPERATIVO //_ÓPTIMO
+            <span className="text-xs md:text-sm tracking-[0.3em] text-cyan-300 font-mono font-bold">
+              SYSTEM_LIVE //_READY_FOR_UPLINK
             </span>
           </div>
           
           {/* Main Title */}
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tighter text-white drop-shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-white">
+            <h1 className="text-7xl md:text-[8rem] font-black tracking-tighter text-white leading-none">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-white">
                 Dev
               </span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
                 Giz
               </span>
             </h1>
-            <p className="text-xl md:text-2xl font-mono text-cyan-500 tracking-widest uppercase opacity-80">
+            <p className="text-xl md:text-2xl font-mono text-cyan-500 tracking-[0.5em] uppercase opacity-80 font-bold">
               Arquitectura Territorial Inteligente
             </p>
           </div>
@@ -69,6 +76,7 @@ export default function Home() {
       </div>
 
       <ExecutiveSummarySection />
+      <ChallengesSection />
       <ImpactMetrics />
       <ProfessionalProfile />
       <ServicesSection />

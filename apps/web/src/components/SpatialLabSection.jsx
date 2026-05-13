@@ -3,105 +3,112 @@ import { useState } from "react";
 
 export default function SpatialLabSection() {
   return (
-    <section id="lab" className="relative w-full py-24 z-10 bg-[#05070a]">
-      <div className="max-w-7xl mx-auto px-6">
-        
+    <section id="lab" className="relative w-full py-32 z-10 bg-[#05070a] overflow-hidden border-t border-slate-900">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-cyan-500 font-mono text-sm tracking-widest uppercase">
-              DGZ SPATIAL LAB · LIVE DEMOS
-            </span>
+        <div className="flex flex-col items-center text-center mb-24 space-y-6">
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 font-mono text-[10px] tracking-[0.4em] uppercase font-bold">
+            // NODOS DE CONEXIÓN
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
-            Spatial Intelligence <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Laboratory</span>
+          <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight">
+            Laboratorio de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Inteligencia Espacial</span>
           </h2>
-          <p className="text-lg text-slate-400 font-light max-w-3xl">
-            High-performance geospatial nodes demonstrating territorial automation, multipurpose cadastral
-            engines, and advanced spatial systems engineering.
+          <p className="text-xl text-slate-400 font-light max-w-4xl leading-relaxed">
+            Demos interactivas de nodos geoespaciales de alto rendimiento. Automatización territorial, motores catastrales multipropósito e ingeniería de sistemas espaciales avanzados.
           </p>
-          <a href="lab/gesture_sandbox.html" className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-lg hover:bg-cyan-500 hover:text-white transition-all">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
-            <span className="font-semibold tracking-wide">Sandbox IA Gestual (BETA)</span>
-          </a>
+
+          <div className="pt-4">
+            <a href="lab/gesture_sandbox.html" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-slate-900/50 border border-slate-800 text-white rounded-2xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all overflow-hidden shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <svg className="w-5 h-5 text-cyan-400 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+              <span className="font-bold tracking-widest text-xs uppercase">Sandbox IA Gestual (BETA)</span>
+            </a>
+          </div>
         </div>
 
         {/* Spatial Lab Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-          
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+
           {/* Card 1 */}
-          <div className="flex flex-col p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/50 transition-colors group">
-            <div className="flex justify-between items-start mb-6">
-              <span className="text-xs font-mono text-slate-500">SYS_NODE: VIEWER_01</span>
-              <div className="p-2 rounded bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-slate-900/10 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-500 hover:bg-slate-900/30 overflow-hidden">
+            <div className="flex justify-between items-start mb-10">
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">SYS_NODE: VIEWER_01</span>
+              <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-500 shadow-lg border border-cyan-500/20">
+                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Interactive Spatial Node</h3>
-            <p className="text-slate-400 text-sm mb-6 flex-1">
-              High-precision GIS viewer with real-time parcel rendering. Interacting with local datasets exported from QGIS with deep topology attributes.
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Interactive Spatial Node</h3>
+            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light">
+              Visor GIS de alta precisión con renderizado de parcelas en tiempo real. Interacción con datasets locales exportados de QGIS con atributos topológicos profundos.
             </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="px-2 py-1 text-[10px] font-mono text-cyan-300 bg-cyan-500/10 rounded">MapLibre GL</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-cyan-300 bg-cyan-500/10 rounded">Vector Tiles</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-cyan-300 bg-cyan-500/10 rounded">PostGIS</span>
+            <div className="flex flex-wrap gap-2 mb-10 mt-auto">
+              {["MapLibre GL", "Vector Tiles", "PostGIS"].map(t => (
+                <span key={t} className="px-3 py-1.5 text-[9px] font-mono text-cyan-400 bg-cyan-500/5 border border-cyan-500/20 rounded-md">{t}</span>
+              ))}
             </div>
-            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-              <span className="text-xs text-emerald-500 font-mono flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Node Operational</span>
-              <a href="lab/map.html" className="text-sm text-white hover:text-cyan-400 transition-colors">Launch →</a>
+            <div className="flex items-center justify-between pt-8 border-t border-slate-800/50">
+              <span className="text-[10px] text-emerald-500 font-mono flex items-center gap-2 uppercase tracking-widest"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Node Operational</span>
+              <a href="lab/map.html" className="text-xs font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest">Launch →</a>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="flex flex-col p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-[#f3ca20]/50 transition-colors group">
-            <div className="flex justify-between items-start mb-6">
-              <span className="text-xs font-mono text-slate-500">SYS_NODE: VALIDATOR_02</span>
-              <div className="p-2 rounded bg-[#f3ca20]/10 text-[#f3ca20] group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-slate-900/10 border border-slate-800/50 hover:border-amber-500/30 transition-all duration-500 hover:bg-slate-900/30 overflow-hidden">
+            <div className="flex justify-between items-start mb-10">
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">SYS_NODE: VALIDATOR_02</span>
+              <div className="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500 shadow-lg border border-amber-500/20">
+                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Cadastral Intelligence</h3>
-            <p className="text-slate-400 text-sm mb-6 flex-1">
-              Automated LADM-COL V3 validator. Detecting overlaps, slivers, and topological inconsistencies using high-fidelity Python kernels.
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Cadastral Intelligence</h3>
+            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light">
+              Validador automático LADM-COL V3. Detección de traslapes, slivers e inconsistencias topológicas mediante kernels de Python de alta fidelidad.
             </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="px-2 py-1 text-[10px] font-mono text-[#f3ca20] bg-[#f3ca20]/10 rounded">FastAPI</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-[#f3ca20] bg-[#f3ca20]/10 rounded">Shapely</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-[#f3ca20] bg-[#f3ca20]/10 rounded">Topology</span>
+            <div className="flex flex-wrap gap-2 mb-10 mt-auto">
+              {["FastAPI", "Shapely", "Topology"].map(t => (
+                <span key={t} className="px-3 py-1.5 text-[9px] font-mono text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-md">{t}</span>
+              ))}
             </div>
-            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-              <span className="text-xs text-[#f3ca20] font-mono">Kernel Beta</span>
-              <button className="text-sm text-white hover:text-[#f3ca20] transition-colors">Initialize →</button>
+            <div className="flex items-center justify-between pt-8 border-t border-slate-800/50">
+              <span className="text-[10px] text-amber-500 font-mono uppercase tracking-widest">Kernel Beta</span>
+              <button className="text-xs font-bold text-white hover:text-amber-400 transition-colors uppercase tracking-widest">Initialize →</button>
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="flex flex-col p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-emerald-500/50 transition-colors group">
-            <div className="flex justify-between items-start mb-6">
-              <span className="text-xs font-mono text-slate-500">SYS_NODE: PIPELINE_03</span>
-              <div className="p-2 rounded bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
+          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-slate-900/10 border border-slate-800/50 hover:border-emerald-500/30 transition-all duration-500 hover:bg-slate-900/30 overflow-hidden">
+            <div className="flex justify-between items-start mb-10">
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">SYS_NODE: PIPELINE_03</span>
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500 shadow-lg border border-emerald-500/20">
+                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
               </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Sovereign Data Pipelines</h3>
-            <p className="text-slate-400 text-sm mb-6 flex-1">
-              Unattended ETL architecture for massive geospatial ingestion, ensuring data integrity across distributed GIS nodes.
+            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Sovereign Pipelines</h3>
+            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light">
+              Arquitectura ETL desatendida para ingestión geoespacial masiva, garantizando la integridad de datos a través de nodos GIS distribuidos.
             </p>
-            <div className="flex flex-wrap gap-2 mb-6">
-              <span className="px-2 py-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 rounded">GDAL/OGR</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 rounded">ETL</span>
-              <span className="px-2 py-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 rounded">CI/CD</span>
+            <div className="flex flex-wrap gap-2 mb-10 mt-auto">
+              {["GDAL/OGR", "ETL", "CI/CD"].map(t => (
+                <span key={t} className="px-3 py-1.5 text-[9px] font-mono text-emerald-500 bg-emerald-500/5 border border-emerald-500/20 rounded-md">{t}</span>
+              ))}
             </div>
-            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-              <span className="text-xs text-emerald-500 font-mono">System Stable</span>
-              <div className="text-emerald-500"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
+            <div className="flex items-center justify-between pt-8 border-t border-slate-800/50">
+              <span className="text-[10px] text-emerald-500 font-mono uppercase tracking-widest">System Stable</span>
+              <div className="text-emerald-500"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
             </div>
           </div>
 
         </div>
 
         {/* Flagship Projects - Carousel Implementation */}
-        <div className="pt-20 border-t border-slate-800">
+        <div className="pt-32 border-t border-slate-800/50">
           <ProjectCarousel />
         </div>
       </div>
@@ -118,10 +125,10 @@ function ProjectCarousel() {
       tag: "FLAGSHIP_NODE",
       status: "PRODUCTION STABLE",
       title: "ConstruMetrix GIS",
-      desc: "Enterprise-level GIS monitoring for modern urban infrastructure. Synchronizing real-time telemetry across distributed nodes.",
+      desc: "Monitoreo GIS a nivel empresarial para infraestructura urbana moderna. Sincronización de telemetría en tiempo real a través de nodos distribuidos.",
       img: "/assets/img/logo-construmetrix.svg",
       link: "https://daga21gz.github.io/ConstruMetrix/",
-      tech: ["POSTGIS_9.4", "PYQGIS_V3", "REST_API"],
+      tech: ["POSTGIS", "PYQGIS", "REST_API"],
       accent: "cyan"
     },
     {
@@ -165,7 +172,7 @@ function ProjectCarousel() {
       tag: "PYQGIS_PLUGIN",
       status: "STABLE_TOOL",
       title: "LADM-COL QGIS Plugin",
-      desc: "Scripts insertados como herramientas nativas en la UI de QGIS para validación topológica instantánea.",
+      desc: "Herramientas nativas en la UI de QGIS para validación topológica instantánea de bases de datos territoriales.",
       img: null,
       icon: "🔌",
       link: "projects/qgis-plugin/index.html",
@@ -181,100 +188,106 @@ function ProjectCarousel() {
 
   return (
     <div className="relative">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8">
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-[1px] bg-cyan-500"></div>
-          <h2 className="text-3xl font-bold text-white tracking-tight">Proyectos <span className="text-cyan-400">Destacados</span></h2>
+      <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-[1px] bg-cyan-500"></div>
+            <span className="text-[10px] font-mono text-cyan-500 uppercase tracking-[0.4em]">Portfolio Exhibit</span>
+          </div>
+          <h2 className="text-4xl font-black text-white tracking-tighter">Proyectos <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Destacados</span></h2>
         </div>
-        
+
         {/* Carousel Controls */}
-        <div className="flex items-center gap-4">
-          <div className="flex gap-1 mr-4">
+        <div className="flex items-center gap-6">
+          <div className="flex gap-1.5 mr-4">
             {projects.map((_, i) => (
-              <div 
-                key={i} 
-                className={`h-1 transition-all duration-500 rounded-full ${i === activeIndex ? 'w-8 bg-cyan-500' : 'w-2 bg-slate-800'}`}
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={`h-1.5 transition-all duration-500 rounded-full ${i === activeIndex ? 'w-10 bg-cyan-500' : 'w-2 bg-slate-800 hover:bg-slate-700'}`}
               />
             ))}
           </div>
-          <button onClick={prev} className="p-3 rounded-full border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-black/40">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-          </button>
-          <button onClick={next} className="p-3 rounded-full border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-black/40">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-          </button>
+          <div className="flex gap-2">
+            <button onClick={prev} className="p-4 rounded-2xl border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-slate-900/40 backdrop-blur-md">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button onClick={next} className="p-4 rounded-2xl border border-slate-800 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-slate-900/40 backdrop-blur-md">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Active Project Card */}
-      <div className="relative min-h-[400px] group">
-        {/* Animated Background Glow */}
-        <div className="absolute inset-0 bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors"></div>
-        
-        <div className="relative bg-[#0a0d14]/80 backdrop-blur-md border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row animate-in fade-in slide-in-from-right-8 duration-700">
-          
+      <div className="relative min-h-[450px] group">
+        <div className="absolute inset-0 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors"></div>
+
+        <div className="relative bg-[#0a0f16]/60 backdrop-blur-xl border border-slate-800/50 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row animate-in fade-in slide-in-from-right-8 duration-700">
+
           {/* Visual Side */}
-          <div className="w-full lg:w-1/2 min-h-[300px] relative bg-[#05070a] flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
-            {/* Cyber Grid Background */}
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #0e7490 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
-            
-            {activeProject.img ? (
-              <img 
-                src={activeProject.img} 
-                alt={activeProject.title} 
-                className="w-2/3 max-w-[250px] relative z-10 transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 drop-shadow-[0_0_30px_rgba(0,229,255,0.2)]" 
-              />
-            ) : (
-              <div className="text-[120px] relative z-10 animate-pulse">
-                {activeProject.icon}
-              </div>
-            )}
+          <div className="w-full lg:w-1/2 min-h-[350px] relative bg-[#05070a] flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800/50">
+            <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'radial-gradient(circle, #0e7490 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+
+            <div className="relative z-10 transition-all duration-700 group-hover:scale-110 flex flex-col items-center">
+              {activeProject.img ? (
+                <img
+                  src={activeProject.img}
+                  alt={activeProject.title}
+                  className="w-2/3 max-w-[280px] grayscale group-hover:grayscale-0 drop-shadow-[0_0_40px_rgba(0,229,255,0.3)] transition-all"
+                />
+              ) : (
+                <div className="text-[140px] drop-shadow-[0_0_40px_rgba(0,229,255,0.2)]">
+                  {activeProject.icon}
+                </div>
+              )}
+            </div>
 
             {/* Scanning Line Effect */}
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-cyan-500/50 shadow-[0_0_15px_cyan] animate-scan z-20"></div>
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_15px_cyan] animate-scan z-20"></div>
           </div>
 
           {/* Info Side */}
-          <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
-            <div className="flex justify-between items-center mb-6">
-              <span className="font-mono text-[10px] text-cyan-500 tracking-[0.3em] uppercase">{activeProject.tag}</span>
-              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+          <div className="w-full lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center space-y-8">
+            <div className="flex justify-between items-center">
+              <span className="font-mono text-[10px] text-cyan-500 tracking-[0.4em] uppercase font-bold">{activeProject.tag}</span>
+              <div className="flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-wider">{activeProject.status}</span>
+                <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest">{activeProject.status}</span>
               </div>
             </div>
 
-            <h3 className="text-3xl lg:text-4xl font-black text-white mb-6 tracking-tight leading-none">
-              {activeProject.title}
-            </h3>
+            <div className="space-y-4">
+              <h3 className="text-4xl lg:text-5xl font-black text-white tracking-tighter leading-none group-hover:text-cyan-400 transition-colors">
+                {activeProject.title}
+              </h3>
+              <p className="text-xl text-slate-400 leading-relaxed font-light">
+                {activeProject.desc}
+              </p>
+            </div>
 
-            <p className="text-slate-400 text-lg leading-relaxed mb-8 font-light">
-              {activeProject.desc}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2.5">
               {activeProject.tech.map((t, i) => (
-                <span key={i} className="px-3 py-1 bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-400 rounded uppercase tracking-wider">
+                <span key={i} className="px-4 py-2 bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 rounded-xl uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
                   {t}
                 </span>
               ))}
             </div>
 
-            <a 
-              href={activeProject.link} 
-              target="_blank" 
-              rel="noreferrer" 
-              className="inline-flex items-center justify-center px-10 py-4 bg-cyan-600 text-white font-black text-sm rounded-xl hover:bg-cyan-500 transition-all shadow-[0_10px_20px_-10px_rgba(0,229,255,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(0,229,255,0.6)] hover:-translate-y-1 w-max uppercase tracking-widest"
-            >
-              Explorar Nodo
-            </a>
+            <div className="pt-6">
+              <a
+                href={activeProject.link}
+                target="_blank"
+                rel="noreferrer"
+                className="group/btn relative inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black text-xs rounded-2xl hover:bg-cyan-500 transition-all shadow-2xl uppercase tracking-[0.2em] overflow-hidden"
+              >
+                <span className="relative z-10">Explorar Nodo</span>
+                <div className="absolute inset-0 bg-cyan-400 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Node ID indicator at bottom right */}
-        <div className="absolute -bottom-4 -right-4 font-mono text-[60px] font-black text-white/[0.03] pointer-events-none select-none">
-          {activeProject.id}
-        </div>
       </div>
     </div>
   );
