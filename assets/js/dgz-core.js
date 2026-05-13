@@ -630,21 +630,111 @@ class DGZCore {
 
     init() {
         document.addEventListener('DOMContentLoaded', () => {
-            this.injectHeader();
+            // Skip terminal intro and load page directly
+            const intro = document.getElementById('terminal-intro');
+            if (intro) intro.remove();
+            
             this.applyTranslations();
             this.setupListeners();
+            this.injectHeader();
+            this.setupScrollListener();
+            this.setupNeuralNodes();
+            this.setupIntersectionObserver();
+            this.setupMouseTracking();
+            this.initAssistant();
+            this.startTelemetry();
+            
+            // Initialize Tactical GIS Workstation if map exists
+            if (document.getElementById('intel-map')) {
+                this.gis = new GISWorkstation();
+            }
+        });
+    }
 
-            // Fast-load check: if skip_intro is in URL or was recently seen
-            if (window.location.search.includes('skip_intro') || sessionStorage.getItem('dgz_skip_intro')) {
-                const intro = document.getElementById('terminal-intro');
-                if (intro) intro.classList.add('hidden');
-                this.startTelemetry();
+    setupNeuralNodes() {
+        const container = document.getElementById('neural-nodes');
+        if (!container) return;
+
+        const nodeCount = 25;
+        for (let i = 0; i < nodeCount; i++) {
+            const node = document.createElement('div');
+            node.className = 'node';
+            
+            // Random parameters for organic feel
+            const left = Math.random() * 100;
+            const size = Math.random() * 3 + 1;
+            const delay = Math.random() * 20;
+            const duration = 15 + Math.random() * 10;
+            
+            node.style.left = `${left}%`;
+            node.style.width = `${size}px`;
+            node.style.height = `${size}px`;
+            node.style.animationDelay = `-${delay}s`;
+            node.style.animationDuration = `${duration}s`;
+            
+            container.appendChild(node);
+        }
+    }
+
+    setupIntersectionObserver() {
+        const options = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Optional: stop observing once revealed for performance
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    setupScrollListener() {
+        const header = document.getElementById('dgz-global-header');
+        if (!header) return;
+
+        window.addEventListener('scroll', () => {
+            // Scrolled class toggle
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
             } else {
-                this.handleTerminal();
+                header.classList.remove('scrolled');
             }
 
-            this.setupMouseTracking();
+            // Scroll progress calculation
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            header.style.setProperty('--scroll-width', scrolled + '%');
         });
+    }
+
+    handleReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(reveal => {
+            observer.observe(reveal);
+        });
+
+        // Force reveal hero elements immediately
+        setTimeout(() => {
+            const heroReveals = document.querySelectorAll('.hero-v2 .reveal');
+            heroReveals.forEach(el => el.classList.add('revealed'));
+        }, 100);
     }
 
     setupMouseTracking() {
@@ -662,6 +752,14 @@ class DGZCore {
                     if (cursor && trail) {
                         cursor.style.transform = `translate3d(${e.clientX - 4}px, ${e.clientY - 4}px, 0)`;
                         trail.style.transform = `translate3d(${e.clientX - 16}px, ${e.clientY - 16}px, 0)`;
+                    }
+
+                    // Enterprise Background Parallax
+                    const mesh = document.querySelector('.mesh-gradient');
+                    if (mesh) {
+                        const moveX = (x - 50) * 0.1;
+                        const moveY = (y - 50) * 0.1;
+                        mesh.style.transform = `scale(1.1) translate(${moveX}%, ${moveY}%)`;
                     }
                     ticking = false;
                 });
@@ -733,9 +831,10 @@ class DGZCore {
         header.innerHTML = `
             <div class="nav-blur-bg"></div>
             <div class="nav-content">
-                <a href="${rootPath}index.html" class="nav-logo">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-electric)" stroke-width="2.5">
+                <a href="${rootPath}index.html" class="nav-logo nav-logo-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-electric)" stroke-width="2.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        <circle cx="12" cy="12" r="2" fill="var(--accent-yellow)" stroke="none" />
                     </svg>
                     <span>DGZ <span class="hide-mobile">ENGINEERING</span></span>
                 </a>
@@ -762,10 +861,6 @@ class DGZCore {
                 </nav>
 
                 <div class="nav-actions">
-                    <div class="system-status hide-mobile">
-                        <span class="status-dot"></span>
-                        <span data-i18n="system_status">SYSTEM_OK</span>
-                    </div>
                     <button class="lang-toggle-btn" id="dgz-lang-toggle">
                         <i class="ph ph-globe"></i>
                         <span id="lang-label">${this.lang.toUpperCase() === 'EN' ? 'ES' : 'EN'}</span>
@@ -775,156 +870,10 @@ class DGZCore {
         `;
 
         document.body.prepend(header);
-        this.addStyles();
     }
 
     addStyles() {
-        if (document.getElementById('dgz-core-styles')) return;
-        const style = document.createElement('style');
-        style.id = 'dgz-core-styles';
-        style.textContent = `
-            .dgz-nav-master {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 60px;
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                color: #fff;
-            }
-            .nav-blur-bg {
-                position: absolute;
-                inset: 0;
-                background: rgba(3, 3, 5, 0.8);
-                backdrop-filter: blur(20px);
-                border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            }
-            .nav-content {
-                position: relative;
-                width: 100%;
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0 1.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                height: 100%;
-            }
-            .nav-logo {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                text-decoration: none;
-                color: #fff;
-                font-weight: 900;
-                letter-spacing: 1px;
-                font-size: 0.9rem;
-            }
-            .nav-links {
-                display: flex;
-                gap: 2rem;
-                align-items: center;
-            }
-            .nav-link {
-                text-decoration: none;
-                color: rgba(255,255,255,0.7);
-                font-family: var(--font-mono, monospace);
-                font-size: 0.75rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                cursor: pointer;
-                transition: 0.3s;
-                position: relative;
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-            .nav-link:hover, .nav-link.active {
-                color: var(--accent-electric, #00e5ff);
-            }
-            .nav-dropdown {
-                position: relative;
-            }
-            .dropdown-content {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background: #0A0A0F;
-                border: 1px solid rgba(0, 229, 255, 0.2);
-                border-radius: 8px;
-                min-width: 200px;
-                padding: 0.5rem;
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(10px);
-                transition: 0.3s;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            }
-            .nav-dropdown:hover .dropdown-content {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-            .dropdown-content a {
-                display: block;
-                padding: 0.6rem 1rem;
-                color: rgba(255,255,255,0.6);
-                text-decoration: none;
-                font-size: 0.7rem;
-                font-family: var(--font-mono, monospace);
-                text-transform: uppercase;
-                border-radius: 4px;
-            }
-            .dropdown-content a:hover {
-                background: rgba(0, 229, 255, 0.1);
-                color: var(--accent-electric, #00e5ff);
-            }
-            .nav-actions {
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
-            }
-            .system-status {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-family: var(--font-mono, monospace);
-                font-size: 0.6rem;
-                color: rgba(255,255,255,0.4);
-            }
-            .status-dot {
-                width: 6px;
-                height: 6px;
-                background: #4ade80;
-                border-radius: 50%;
-                box-shadow: 0 0 10px #4ade80;
-            }
-            .lang-toggle-btn {
-                background: rgba(255,255,255,0.05);
-                border: 1px solid rgba(255,255,255,0.1);
-                color: #fff;
-                padding: 5px 12px;
-                border-radius: 20px;
-                cursor: pointer;
-                font-family: var(--font-mono, monospace);
-                font-size: 0.7rem;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                transition: 0.3s;
-            }
-            .lang-toggle-btn:hover {
-                border-color: var(--accent-electric, #00e5ff);
-                background: rgba(0, 229, 255, 0.1);
-            }
-            @media (max-width: 768px) {
-                .hide-mobile { display: none; }
-                .nav-links { gap: 1rem; }
-            }
-        `;
-        document.head.appendChild(style);
+        // Styles moved to index.css for premium architecture
     }
 
     setupListeners() {
@@ -955,6 +904,145 @@ class DGZCore {
             }
         });
         document.documentElement.lang = this.lang;
+    }
+
+    initAssistant() {
+        const trigger = document.getElementById('geo-assistant-trigger');
+        const panel = document.getElementById('geo-assistant-panel');
+        const closeBtn = document.getElementById('close-assistant');
+        const sendBtn = document.getElementById('send-to-ai');
+        const input = document.getElementById('assistant-input');
+        const chat = document.getElementById('assistant-chat');
+
+        if (!trigger || !panel) return;
+
+        trigger.addEventListener('click', () => {
+            panel.classList.remove('collapsed');
+            trigger.style.display = 'none';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            panel.classList.add('collapsed');
+            trigger.style.display = 'flex';
+        });
+
+        const sendMessage = () => {
+            const text = input.value.trim();
+            if (!text) return;
+
+            // User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'user-msg';
+            userMsg.textContent = text;
+            chat.appendChild(userMsg);
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+
+            // Mock AI Response
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'ai-msg';
+                aiMsg.textContent = "Procesando consulta geoespacial... Analizando topología LADM-COL... [Mock Response: Los datos parecen correctos.]";
+                chat.appendChild(aiMsg);
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+        };
+
+        sendBtn.addEventListener('click', sendMessage);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+}
+
+/**
+ * TACTICAL GIS WORKSTATION v1.0
+ * Handles Intel Map Hub interactions, telemetry, and layer management.
+ */
+class GISWorkstation {
+    constructor() {
+        this.layers = {
+            parcels: true,
+            infra: false,
+            geoai: false
+        };
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.startTelemetry();
+        console.log("GIS_WORKSTATION_ACTIVE: Nucleus Online");
+    }
+
+    bindEvents() {
+        const layerBtns = document.querySelectorAll('.layer-opt');
+        layerBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const layer = btn.dataset.layer;
+                this.toggleLayer(layer, btn);
+            });
+        });
+
+        // Tooltip logic for map nodes
+        const mapNodes = document.querySelectorAll('.map-node');
+        mapNodes.forEach(node => {
+            node.addEventListener('mouseenter', (e) => this.showTooltip(e, node));
+            node.addEventListener('mouseleave', () => this.hideTooltip());
+        });
+    }
+
+    toggleLayer(layerId, btn) {
+        // Simple visual toggle for the demo
+        const isActive = btn.classList.contains('active');
+        
+        btn.classList.toggle('active');
+        this.layers[layerId] = !isActive;
+
+        // Visual feedback
+        const map = document.getElementById('intel-map');
+        if (map) {
+            map.setAttribute('data-active-layer', layerId);
+            map.style.opacity = '0.7';
+            setTimeout(() => map.style.opacity = '1', 300);
+        }
+
+        console.log(`GIS_LAYER_UPDATE: ${layerId} -> ${this.layers[layerId] ? 'VISIBLE' : 'HIDDEN'}`);
+    }
+
+    startTelemetry() {
+        const coordDisplay = document.querySelector('.map-projection-label');
+        if (!coordDisplay) return;
+
+        setInterval(() => {
+            const lat = (8.2 + Math.random() * 0.1).toFixed(6);
+            const lng = (-76.3 + Math.random() * 0.1).toFixed(6);
+            coordDisplay.innerHTML = `<span>COORD_UPLINK:</span> ${lat}°N, ${lng}°W [WGS84]`;
+        }, 2000);
+    }
+
+    showTooltip(e, node) {
+        const tooltip = document.getElementById('map-tooltip');
+        if (!tooltip) return;
+
+        const data = node.dataset;
+        tooltip.innerHTML = `
+            <div class="map-tooltip-content">
+                <b>LADM-COL_NODE_v3</b>
+                <p>IDENTIFIER: ${data.id || 'PRDL_7712'}</p>
+                <p>STATUS: ${data.status || 'VALIDATED'}</p>
+                <p>AREA: ${data.area || '142.5'} m²</p>
+            </div>
+        `;
+
+        tooltip.style.left = `${e.clientX + 15}px`;
+        tooltip.style.top = `${e.clientY + 15}px`;
+        tooltip.classList.add('visible');
+    }
+
+    hideTooltip() {
+        const tooltip = document.getElementById('map-tooltip');
+        if (tooltip) tooltip.classList.remove('visible');
     }
 }
 
