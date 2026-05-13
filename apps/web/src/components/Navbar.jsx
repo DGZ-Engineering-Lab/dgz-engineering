@@ -11,11 +11,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Inicio", href: "#" },
-    { name: "Qué hacemos", href: "#summary" },
-    { name: "Servicios", href: "#capabilities" },
-    { name: "Laboratorio", href: "#lab" },
-    { name: "Contacto", href: "#contact" }
+    { name: "Inicio", href: "/" },
+    { name: "Servicios", href: "/#capabilities" },
+    { name: "Laboratorio", href: "/#lab" },
+    { name: "Documentos", href: "/docs" }
   ];
 
   return (
