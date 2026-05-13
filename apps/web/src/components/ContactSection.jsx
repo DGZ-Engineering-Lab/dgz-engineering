@@ -15,11 +15,30 @@ export default function ContactSection() {
     e.preventDefault();
     setStatus("loading");
     
-    // Simulate API submission
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", service: "", message: "" });
-    }, 1500);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          company: formData.service // Using service as company for context
+        })
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", service: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("idle");
+        alert("Transmission failed. Re-initiating handshake...");
+      }
+    } catch (err) {
+      setStatus("idle");
+      console.error("Handshake error:", err);
+    }
   };
 
   return (
