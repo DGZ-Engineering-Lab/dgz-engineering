@@ -21,7 +21,6 @@ export default function Home() {
         </div>
 
         <div className="max-w-5xl mx-auto space-y-12 w-full relative z-10">
-          
           {/* Logo Centerpiece */}
           <div className="flex justify-center mb-4">
             <Logo className="w-32 h-32 md:w-40 md:h-40 drop-shadow-[0_0_50px_rgba(0,229,255,0.2)]" />
