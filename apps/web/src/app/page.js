@@ -1,6 +1,10 @@
 import SystemMonitor from "../components/SystemMonitor";
 import AboutSection from "../components/AboutSection";
 import ServicesSection from "../components/ServicesSection";
+import TechMatrixSection from "../components/TechMatrixSection";
+import MetricsSection from "../components/MetricsSection";
+import ContactSection from "../components/ContactSection";
+import FooterSection from "../components/FooterSection";
 
 export default function Home() {
   return (
@@ -42,6 +46,10 @@ export default function Home() {
 
       <AboutSection />
       <ServicesSection />
+      <TechMatrixSection />
+      <MetricsSection />
+      <ContactSection />
+      <FooterSection />
     </>
   );
 }
