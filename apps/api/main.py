@@ -10,6 +10,7 @@ from typing import List
 from schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
 from spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis
 from database import get_db
+from vur_service import vur_service
 
 app = FastAPI(
     title="DGZ Spatial Intelligence Engine",

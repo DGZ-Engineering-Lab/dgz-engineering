@@ -18,10 +18,60 @@ export default function SpatialIntelligenceDashboard() {
   const [isSimulating, setIsSimulating] = useState(false);
   const [telemetry, setTelemetry] = useState([]);
   const [polarsSpeed, setPolarsSpeed] = useState(0);
+  const [vurData, setVurData] = useState(null);
+  const [isVurLoading, setIsVurLoading] = useState(false);
 
   const addLog = (msg, type = "info") => {
     const time = new Date().toLocaleTimeString();
     setTelemetry(prev => [{ time, msg, type }, ...prev].slice(0, 8));
+  };
+
+  const fetchParcels = async () => {
+    addLog("INGESTING_DATA: Neon/PostGIS Stream...", "info");
+    try {
+      const res = await fetch(`${GEOAPI_URL}/parcels`);
+      const data = await res.json();
+      
+      if (map.current && data.features) {
+        if (map.current.getSource("parcels")) {
+            map.current.getSource("parcels").setData(data);
+        } else {
+            map.current.addSource("parcels", { type: "geojson", data });
+            map.current.addLayer({
+              id: "parcels-layer",
+              type: "fill",
+              source: "parcels",
+              paint: {
+                "fill-color": "#06b6d4",
+                "fill-opacity": 0.3,
+                "fill-outline-color": "#22d3ee"
+              }
+            });
+        }
+        addLog(`SYNC_COMPLETE: ${data.features.length} features received`, "success");
+      }
+    } catch (err) {
+      addLog("SYNC_ERROR: Backend connection failed", "error");
+    }
+  };
+
+  const runVurCheck = async (matricula = "001-123456") => {
+    setIsVurLoading(true);
+    addLog(`VUR_AUDIT_START: Querying Matrícula ${matricula}...`, "info");
+    try {
+      const res = await fetch(`${GEOAPI_URL}/intelligence/vur_check/${matricula}`);
+      const data = await res.json();
+      if (data.status === "SUCCESS") {
+        setVurData(data.data);
+        addLog("VUR_AUDIT_SUCCESS: Legal status verified", "success");
+      } else {
+        addLog("VUR_AUDIT_FAILED: Connection timeout", "error");
+      }
+    } catch (err) {
+      addLog("VUR_AUDIT_ERROR: Service unavailable", "error");
+    } finally {
+      setIsVurLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -122,35 +172,6 @@ export default function SpatialIntelligenceDashboard() {
     };
   }, []);
 
-  const fetchParcels = async () => {
-    addLog("INGESTING_DATA: Neon/PostGIS Stream...", "info");
-    try {
-      const res = await fetch(`${GEOAPI_URL}/parcels`);
-      const data = await res.json();
-      
-      if (map.current && data.features) {
-        if (map.current.getSource("parcels")) {
-            map.current.getSource("parcels").setData(data);
-        } else {
-            map.current.addSource("parcels", { type: "geojson", data });
-            map.current.addLayer({
-              id: "parcels-layer",
-              type: "fill",
-              source: "parcels",
-              paint: {
-                "fill-color": "#06b6d4",
-                "fill-opacity": 0.3,
-                "fill-outline-color": "#22d3ee"
-              }
-            });
-        }
-        addLog(`SYNC_COMPLETE: ${data.features.length} features received`, "success");
-      }
-    } catch (err) {
-      addLog("SYNC_ERROR: Backend connection failed", "error");
-    }
-  };
-
   const runSimulation = async () => {
     setIsSimulating(true);
     addLog("SIMULATION_START: Analyzing Radial Impact...", "info");
@@ -230,6 +251,14 @@ export default function SpatialIntelligenceDashboard() {
                 {isSimulating ? "SIMULATING..." : "RUN SPATIAL SIMULATION"}
               </button>
               
+              <button 
+                onClick={() => runVurCheck()}
+                disabled={isVurLoading}
+                className="w-full py-4 bg-emerald-600/20 border border-emerald-500/50 rounded-2xl text-emerald-400 font-bold tracking-widest text-xs uppercase hover:bg-emerald-600/40 transition-all disabled:opacity-50"
+              >
+                {isVurLoading ? "QUERYING VUR..." : "VUR LEGAL AUDIT (SNR)"}
+              </button>
+              
               {/* Telemetry Log */}
               <div className="bg-black/60 rounded-2xl p-6 font-mono text-[10px] h-48 overflow-hidden border border-slate-800/50">
                 <div className="text-slate-500 mb-2 border-b border-slate-800 pb-1">INTERNAL_TELEMETRY_STREAM</div>
@@ -270,6 +299,33 @@ export default function SpatialIntelligenceDashboard() {
                     <div>RADIUS: {activeAnalysis.impact_radius_m}m</div>
                     <div>RISK: {activeAnalysis.risk_assessment}</div>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* VUR Legal Data Overlay */}
+          {vurData && (
+            <div className="absolute bottom-8 left-8 w-80 bg-slate-900/90 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-6 space-y-4 shadow-2xl animate-in fade-in slide-in-from-bottom-4">
+              <div className="flex justify-between items-center">
+                <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest font-bold">VUR_SNR_REGISTRY</div>
+                <button onClick={() => setVurData(null)} className="text-slate-500 hover:text-white">✕</button>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between border-b border-slate-800 pb-1">
+                  <span className="text-slate-500 text-[10px]">Matrícula</span>
+                  <span className="text-white font-mono">{vurData.matricula}</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800 pb-1">
+                  <span className="text-slate-500 text-[10px]">Estado Legal</span>
+                  <span className="text-emerald-400 font-bold">{vurData.status}</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800 pb-1">
+                  <span className="text-slate-500 text-[10px]">Propietario</span>
+                  <span className="text-white">VERIFICADO</span>
+                </div>
+                <p className="text-[10px] text-slate-400 italic pt-2">
+                  {vurData.message}
+                </p>
               </div>
             </div>
           )}
