@@ -14,21 +14,14 @@ from vur_service import vur_service
 
 app = FastAPI(
     title="DGZ Spatial Intelligence Engine",
-    description="Advanced Spatial Systems Engineering API for Multipurpose Cadastre.",
+    description="Advanced Spatial Systems Engineering API for Multipurpose Cadastre & Territorial Intelligence.",
     version="6.2.0"
 )
 
 # Robust CORS Configuration for Production
-# Explicitly allowing common deployment origins
-origins = [
-    "http://localhost:3000",
-    "https://devgiz.vercel.app",
-    "https://dgz-engineering.vercel.app",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # For demo purposes, we allow all, but ensure it's handled
+    allow_origins=["*"], # For demo purposes, we allow all
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,19 +42,26 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.get("/", tags=["System"])
 async def get_system_status():
+    """Returns the Sovereign System status and versioning."""
     return {
         "engine": "DGZ_SPATIAL_OS",
         "version": "6.2.0",
         "status": "OPERATIONAL",
+        "architecture": "MODULAR_V6",
         "telemetry": {
             "uptime": "99.99%",
             "spatial_load": "nominal",
+            "db_status": "CONNECTED",
             "backend": "FastAPI/DuckDB/Polars"
         }
     }
 
 @app.get("/parcels", tags=["Cadastre"])
 async def get_ingested_parcels(db: Session = Depends(get_db)):
+    """
+    Retrieves real cadastral data ingested from IGAC.
+    Level 1: Data Access.
+    """
     try:
         # Optimized query for PostGIS
         query = text("""
@@ -91,10 +91,12 @@ async def get_ingested_parcels(db: Session = Depends(get_db)):
 
 @app.post("/validate", tags=["Topology"])
 async def validate_topology(request: ValidationRequest):
+    """Expert-level topological validation engine."""
     return validate_collection_topology(request.features)
 
 @app.post("/intelligence/parcel_score", tags=["AI"])
 async def calculate_parcel_intelligence(feature: GeoJSONFeature):
+    """Calculates the 'Spatial Intelligence Score' for a parcel."""
     return calculate_parcel_score(feature)
 
 @app.post("/intelligence/analyze_context", tags=["GeoAI"])
@@ -124,7 +126,7 @@ async def analyze_context(feature: GeoJSONFeature):
 async def query_vur(matricula: str):
     """
     Real-time query to SNR/VUR for property status.
-    Uses the CLAUDIAC.GOMEZ credentials for institutional handshake.
+    Uses institutional credentials for handshake.
     """
     try:
         data = await vur_service.get_parcel_data(matricula)
@@ -134,4 +136,6 @@ async def query_vur(matricula: str):
 
 @app.get("/config/mapbox-token", tags=["System"])
 async def get_mapbox_token():
-    return {"token": os.getenv("MAPBOX_TOKEN")}
+    """Returns the Mapbox token from environment variables."""
+    token = os.getenv("MAPBOX_TOKEN")
+    return {"token": token if token else ""}

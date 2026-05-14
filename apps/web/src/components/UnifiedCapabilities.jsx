@@ -48,10 +48,15 @@ const SERVICES = [
 
 export default function UnifiedCapabilities() {
   const [activeTab, setActiveTab] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const terminalRef = useRef(null);
 
   useEffect(() => {
-    if (terminalRef.current) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && terminalRef.current) {
         animate(terminalRef.current, {
             opacity: [0, 1],
             translateX: [50, 0],
@@ -60,7 +65,7 @@ export default function UnifiedCapabilities() {
             delay: 100
         });
     }
-  }, [activeTab]);
+  }, [activeTab, mounted]);
 
   return (
     <section id="capabilities" className="relative w-full py-32 lg:py-40 z-10 bg-[#02040a] border-t border-slate-800/50 overflow-hidden">
