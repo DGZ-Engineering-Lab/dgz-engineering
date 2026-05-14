@@ -6,3 +6,10 @@ psycopg2-binary==2.9.9
 sqlalchemy==2.0.28
 supabase==2.3.6
 python-dotenv==1.0.1
+geopandas==0.14.3
+shapely==2.0.3
+pyogrio==0.7.2
+duckdb==0.10.0
+polars==0.20.15
+libpysal==4.10
+pandas==2.2.1

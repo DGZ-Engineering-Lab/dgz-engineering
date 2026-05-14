@@ -37,9 +37,11 @@ const SERVICES = [
 
 export default function UnifiedCapabilities() {
   const [activeTab, setActiveTab] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const terminalRef = useRef(null);
 
   useEffect(() => {
+    setMounted(true);
     if (terminalRef.current) {
         animate(terminalRef.current, {
             opacity: [0, 1],
@@ -197,10 +199,16 @@ export default function UnifiedCapabilities() {
                        <span className="text-slate-600">v2.4.1</span>
                     </div>
                     <div className="space-y-2.5 text-cyan-500/80 leading-tight">
-                       <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [SYS] INIT_{SERVICES[activeTab].id.toUpperCase()}</div>
-                       <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [LOG] ALLOCATING_RESOURCES...</div>
-                       <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [LOG] SYNC_LADM_V3_COL</div>
-                       <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [OK] READY</div>
+                       {mounted ? (
+                         <>
+                           <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [SYS] INIT_{SERVICES[activeTab].id.toUpperCase()}</div>
+                           <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [LOG] ALLOCATING_RESOURCES...</div>
+                           <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [LOG] SYNC_LADM_V3_COL</div>
+                           <div><span className="text-slate-500">[{new Date().toLocaleTimeString()}]</span> [OK] READY</div>
+                         </>
+                       ) : (
+                         <div>[STDOUT_WAITING]</div>
+                       )}
                        <div className="text-white animate-pulse mt-2">_</div>
                     </div>
                  </div>
