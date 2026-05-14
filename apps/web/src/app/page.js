@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import Logo from "../components/Logo";
 import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
