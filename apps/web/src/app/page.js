@@ -1,3 +1,6 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import Logo from "../components/Logo";
 import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
 import ChallengesSection from "../components/ChallengesSection";
@@ -5,12 +8,18 @@ import ProfessionalProfile from "../components/ProfessionalProfile";
 import TechnicalEcosystem from "../components/TechnicalEcosystem";
 import ImpactMetrics from "../components/ImpactMetrics";
 import SimpleValueSection from "../components/SimpleValueSection";
+
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import UnifiedCapabilities from "../components/UnifiedCapabilities";
 import InteractiveCarousel from "../components/InteractiveCarousel";
 
 import ScrambleText from "../components/ScrambleText";
+
+const SpatialIntelligenceDashboard = dynamic(
+  () => import("../components/SpatialIntelligenceDashboard"),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
@@ -74,9 +83,13 @@ export default function Home() {
       <div className="reveal" style={{ animationDelay: '0.4s' }}>
         <ImpactMetrics />
       </div>
+      <div className="reveal">
+        <SpatialIntelligenceDashboard />
+      </div>
       <div className="reveal" style={{ animationDelay: '0.5s' }}>
         <ProfessionalProfile />
       </div>
+
       
       {/* Unified Enterprise Layer */}
       <div className="reveal">

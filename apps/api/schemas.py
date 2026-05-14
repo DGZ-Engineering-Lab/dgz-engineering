@@ -25,4 +25,3 @@ class AnalysisResult(BaseModel):
     recommendations: List[str]
     simulation_data: Optional[Dict[str, Any]] = None
     context_layers: Optional[List[Dict[str, Any]]] = None
-
