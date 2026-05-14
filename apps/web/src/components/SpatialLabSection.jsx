@@ -25,121 +25,27 @@ export default function SpatialLabSection() {
       {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[150px]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
 
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-20 space-y-6">
-          <div className="inline-flex items-center gap-3 px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[10px] tracking-[0.4em] uppercase font-bold shadow-[0_0_20px_rgba(6,182,212,0.15)]">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            NODOS DE CONEXIÓN
+        <div className="flex flex-col items-center text-center mb-24 space-y-8">
+          <div className="inline-flex items-center gap-4 px-6 py-3 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[11px] sm:text-xs tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
+            DGZ Engineering / Innovation Lab
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">
+          <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.95]">
             Laboratorio de <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">Inteligencia Espacial</span>
           </h2>
-          <p className="text-xl text-slate-400 font-light max-w-3xl leading-relaxed">
-            Demos interactivas de nodos geoespaciales de alto rendimiento. Automatización territorial, motores catastrales multipropósito e ingeniería de sistemas espaciales avanzados.
+          <p className="text-xl md:text-2xl text-slate-400 font-light max-w-4xl leading-relaxed">
+            Explora nuestros <strong className="text-white font-medium">nodos geoespaciales de alto rendimiento</strong>. Desde automatización territorial desatendida hasta agentes de Inteligencia Artificial que escriben Spatial SQL en tiempo real.
           </p>
-
-          <div className="pt-6">
-            <Link href="/lab/gesture-sandbox" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-slate-900/80 border border-slate-700 text-white rounded-2xl hover:border-cyan-500 hover:bg-slate-800 transition-all overflow-hidden shadow-2xl backdrop-blur-xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <svg className="w-6 h-6 text-cyan-400 group-hover:rotate-12 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
-              <span className="font-bold tracking-[0.2em] text-xs uppercase z-10 relative">Sandbox IA Gestual (BETA)</span>
-            </Link>
-          </div>
         </div>
 
-        {/* Spatial Lab Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
-
-          {/* Card 1 */}
-          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-[#02040a]/80 backdrop-blur-xl border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.2)] overflow-hidden">
-            <div className="flex justify-between items-start mb-10 relative z-10">
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em] block font-bold">SYS_NODE: VIEWER_01</span>
-                {flags.premium_viewer && (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded text-[9px] font-mono text-cyan-400 animate-pulse">
-                    <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1a1 1 0 112 0v1a1 1 0 11-2 0zM13.536 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM6.464 14.95l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 01-1.414 1.414z" /></svg>
-                    PREMIUM_EDGE_ACTIVE
-                  </span>
-                )}
-              </div>
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 text-cyan-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-500 shadow-lg">
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight relative z-10">Interactive Spatial Node</h3>
-            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light relative z-10">
-              Visor GIS de alta precisión con renderizado de parcelas en tiempo real. Interacción con datasets locales exportados de QGIS con atributos topológicos profundos.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-10 mt-auto relative z-10">
-              {["MapLibre GL", "Vector Tiles", "PostGIS"].map(t => (
-                <span key={t} className="px-3 py-1.5 text-[10px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">{t}</span>
-              ))}
-            </div>
-            <div className="flex items-center justify-between pt-8 border-t border-slate-800/80 relative z-10">
-              <span className="text-[10px] text-emerald-500 font-mono flex items-center gap-2 uppercase tracking-widest"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]"></span> Node Operational</span>
-              <Link href="/projects/gis-dashboard" className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors uppercase tracking-widest flex items-center gap-1">Launch <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></Link>
-            </div>
-            {/* Hover Glow */}
-            <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-[#02040a]/80 backdrop-blur-xl border border-slate-800/80 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-[0_20px_40px_-10px_rgba(245,158,11,0.2)] overflow-hidden">
-            <div className="flex justify-between items-start mb-10 relative z-10">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em] font-bold">SYS_NODE: VALIDATOR_02</span>
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 text-amber-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500 shadow-lg">
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight relative z-10">Cadastral Intelligence</h3>
-            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light relative z-10">
-              Validador automático LADM-COL V3. Detección de traslapes, slivers e inconsistencias topológicas mediante kernels de Python de alta fidelidad.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-10 mt-auto relative z-10">
-              {["FastAPI", "Shapely", "Topology"].map(t => (
-                <span key={t} className="px-3 py-1.5 text-[10px] font-mono text-amber-500 bg-amber-500/10 border border-amber-500/30 rounded-lg">{t}</span>
-              ))}
-            </div>
-            <div className="flex items-center justify-between pt-8 border-t border-slate-800/80 relative z-10">
-              <span className="text-[10px] text-amber-500 font-mono uppercase tracking-widest flex items-center gap-2"><span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse shadow-[0_0_10px_#f59e0b]"></span> Kernel Beta</span>
-              <button className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors uppercase tracking-widest flex items-center gap-1">Initialize <svg className="w-4 h-4 group-hover:rotate-90 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></button>
-            </div>
-             <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="group relative flex flex-col p-10 rounded-[2.5rem] bg-[#02040a]/80 backdrop-blur-xl border border-slate-800/80 hover:border-emerald-500/50 transition-all duration-500 hover:-translate-y-2 shadow-xl hover:shadow-[0_20px_40px_-10px_rgba(16,185,129,0.2)] overflow-hidden">
-            <div className="flex justify-between items-start mb-10 relative z-10">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em] font-bold">SYS_NODE: PIPELINE_03</span>
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 text-emerald-500 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500 shadow-lg">
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4 tracking-tight relative z-10">Sovereign Pipelines</h3>
-            <p className="text-slate-400 text-base leading-relaxed mb-10 font-light relative z-10">
-              Arquitectura ETL desatendida para ingestión geoespacial masiva, garantizando la integridad de datos a través de nodos GIS distribuidos.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-10 mt-auto relative z-10">
-              {["GDAL/OGR", "ETL", "CI/CD"].map(t => (
-                <span key={t} className="px-3 py-1.5 text-[10px] font-mono text-emerald-500 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">{t}</span>
-              ))}
-            </div>
-            <div className="flex items-center justify-between pt-8 border-t border-slate-800/80 relative z-10">
-              <span className="text-[10px] text-emerald-500 font-mono uppercase tracking-widest flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_10px_#10b981]"></span> System Stable</span>
-              <div className="text-emerald-500 group-hover:scale-110 transition-transform"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </div>
-
-        </div>
-
-        {/* Flagship Projects - Carousel Implementation */}
-        <div className="pt-24 border-t border-slate-800/80">
+        {/* Flagship Projects - Super Premium Carousel Implementation */}
+        <div className="mt-10">
           <ProjectCarousel />
         </div>
       </div>
@@ -156,71 +62,69 @@ function ProjectCarousel() {
       tag: "FLAGSHIP_NODE",
       status: "PRODUCTION STABLE",
       title: "ConstruMetrix GIS",
-      desc: "Monitoreo GIS a nivel empresarial para infraestructura urbana moderna. Sincronización de telemetría en tiempo real a través de nodos distribuidos.",
+      desc: "Plataforma de monitoreo urbano para infraestructura a nivel empresarial. Sincronización de telemetría en tiempo real y gemelos digitales 3D.",
       img: "/assets/img/logo-construmetrix.svg",
       link: "https://daga21gz.github.io/ConstruMetrix/",
-      tech: ["POSTGIS", "PYQGIS", "REST_API"],
-      accent: "cyan"
+      tech: ["POSTGIS", "PYQGIS", "MAPBOX GL"],
+      color: "cyan",
+      glow: "shadow-[0_0_80px_rgba(6,182,212,0.3)]",
+      border: "border-cyan-500/50"
+    },
+    {
+      id: "PROJ-EVA-01",
+      tag: "AI_CORE_SYSTEM",
+      status: "STABLE_PRODUCTION",
+      title: "E.V.A. Framework",
+      desc: "Engineering Virtual Assistant. Agente cognitivo especializado en automatización de ingeniería, soporte técnico avanzado y generación de insights.",
+      img: null,
+      icon: "🧠",
+      link: "https://dgz-engineering-lab.github.io/E.V.A/",
+      tech: ["AI_AGENT", "LLM CORE", "NODE.JS"],
+      color: "indigo",
+      glow: "shadow-[0_0_80px_rgba(99,102,241,0.3)]",
+      border: "border-indigo-500/50"
     },
     {
       id: "PROJ-GLLM-05",
       tag: "GEO_LLM_05",
       status: "R&D KERNEL",
       title: "Geo-LLM Intelligence",
-      desc: "Agente de IA que traduce lenguaje natural a Spatial SQL y genera informes catastrales estadísticos en tiempo real.",
+      desc: "Motor de procesamiento natural que traduce consultas humanas a Spatial SQL, ejecutando análisis territoriales complejos de forma autónoma.",
       img: null,
       icon: "🤖",
       link: "/projects/geo-llm",
-      tech: ["LLM", "PostGIS AI", "GeoJSON"],
-      accent: "amber"
+      tech: ["LLM", "POSTGIS AI", "VECTOR DB"],
+      color: "amber",
+      glow: "shadow-[0_0_80px_rgba(245,158,11,0.3)]",
+      border: "border-amber-500/50"
     },
     {
       id: "PROJ-DASH-02",
       tag: "DASHBOARD_02",
       status: "LIVE_NODE",
       title: "Enterprise GIS Dashboard",
-      desc: "Interfaz interactiva conectada a PostGIS para análisis territorial y telemetría en tiempo real.",
+      desc: "Interfaz interactiva conectada a PostGIS para análisis territorial, telemetría IoT y tableros de control estadístico en tiempo real.",
       img: null,
       icon: "📊",
       link: "/projects/gis-dashboard",
-      tech: ["React", "PostGIS", "MapLibre"],
-      accent: "cyan"
-    },
-    {
-      id: "PROJ-AUTO-01",
-      tag: "AUTOMATION_01",
-      status: "ACTIVE_PIPELINE",
-      title: "Territorial ETL Pipelines",
-      desc: "Automatización desatendida de transformaciones de datos geográficos para evitar procesos manuales lentos.",
-      img: null,
-      icon: "⚙️",
-      link: "/projects/automation-systems",
-      tech: ["Python", "FME", "GDAL"],
-      accent: "blue"
+      tech: ["REACT 19", "POSTGIS", "MAPLIBRE"],
+      color: "blue",
+      glow: "shadow-[0_0_80px_rgba(59,130,246,0.3)]",
+      border: "border-blue-500/50"
     },
     {
       id: "PROJ-QGIS-03",
       tag: "PYQGIS_PLUGIN",
       status: "STABLE_TOOL",
       title: "LADM-COL QGIS Plugin",
-      desc: "Herramientas nativas en la UI de QGIS para validación topológica instantánea de bases de datos territoriales.",
+      desc: "Suite de herramientas nativas para QGIS diseñadas para la validación topológica y consistencia del modelo LADM-COL en entornos productivos.",
       img: null,
       icon: "🔌",
       link: "/projects/qgis-plugin",
-      tech: ["PyQGIS", "LADM-COL", "Python"],
-      accent: "purple"
-    },
-    {
-      id: "PROJ-EVA-01",
-      tag: "AI_ASSISTANT_NODE",
-      status: "STABLE_PRODUCTION",
-      title: "E.V.A. Framework",
-      desc: "Engineering Virtual Assistant. Framework avanzado de IA para la automatización de procesos de ingeniería y soporte técnico especializado.",
-      img: null,
-      icon: "🧠",
-      link: "https://dgz-engineering-lab.github.io/E.V.A/",
-      tech: ["AI_AGENT", "AUTOMATION", "NODE.JS"],
-      accent: "purple"
+      tech: ["PYQGIS", "LADM-COL", "PYTHON"],
+      color: "emerald",
+      glow: "shadow-[0_0_80px_rgba(16,185,129,0.3)]",
+      border: "border-emerald-500/50"
     }
   ];
 
@@ -231,112 +135,124 @@ function ProjectCarousel() {
 
   return (
     <div className="relative">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-[2px] bg-cyan-500"></div>
-            <span className="text-xs font-mono text-cyan-500 uppercase tracking-[0.4em] font-bold">Portfolio Exhibit</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
-            Proyectos <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">Destacados</span>
+      
+      {/* Carousel Navigation Header */}
+      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8 relative z-20">
+        <div className="space-y-2 text-center md:text-left">
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+            Ecosistema de <span className={`text-transparent bg-clip-text bg-gradient-to-r from-${activeProject.color}-400 to-blue-500`}>Soluciones</span>
           </h2>
+          <p className="text-slate-400 font-mono text-sm tracking-widest">SELECCIONA UN NODO PARA INICIAR LA SECUENCIA</p>
         </div>
 
         {/* Carousel Controls */}
-        <div className="flex items-center gap-6">
-          <div className="flex gap-2 mr-4">
+        <div className="flex flex-col sm:flex-row items-center gap-6 bg-[#050810]/80 p-3 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-xl">
+          <div className="flex gap-2 px-4">
             {projects.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`h-1.5 transition-all duration-500 rounded-full ${i === activeIndex ? 'w-12 bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]' : 'w-3 bg-slate-800 hover:bg-slate-700'}`}
+                className={`h-2 transition-all duration-500 rounded-full ${i === activeIndex ? `w-12 bg-${projects[i].color}-500 shadow-[0_0_15px_currentColor]` : 'w-4 bg-slate-800 hover:bg-slate-600'}`}
+                aria-label={`Ir al proyecto ${i + 1}`}
               />
             ))}
           </div>
-          <div className="flex gap-3">
-            <button onClick={prev} className="p-4 rounded-2xl border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-[#02040a]/80 backdrop-blur-xl shadow-xl hover:-translate-y-1">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          <div className="flex gap-2">
+            <button onClick={prev} className={`p-4 rounded-2xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={next} className="p-4 rounded-2xl border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-500 transition-all bg-[#02040a]/80 backdrop-blur-xl shadow-xl hover:-translate-y-1">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            <button onClick={next} className={`p-4 rounded-2xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Active Project Card */}
-      <div className="relative min-h-[450px] group">
-        <div className="absolute inset-0 bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none transition-colors"></div>
+      {/* Main Cinematic Showcase Card */}
+      <div className="relative min-h-[500px] lg:min-h-[600px] group perspective-1000">
+        
+        {/* Dynamic Background Glow matching active project color */}
+        <div className={`absolute inset-0 ${activeProject.glow} opacity-40 blur-[100px] rounded-[3rem] transition-all duration-1000 pointer-events-none`}></div>
 
-        <div className="relative bg-[#050810]/90 backdrop-blur-2xl border border-slate-700/80 rounded-[3rem] overflow-hidden shadow-[0_30px_100px_-20px_rgba(0,0,0,0.8)] flex flex-col lg:flex-row animate-in fade-in slide-in-from-right-8 duration-700">
+        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-3xl border ${activeProject.border} rounded-[3rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
+          
+          {/* Top/Left Visual Area */}
+          <div className="w-full lg:w-[45%] min-h-[350px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#050810] to-[#02040a] border-b lg:border-b-0 lg:border-r border-slate-800">
+            {/* Grid Pattern */}
+            <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+            
+            {/* Scanning Line */}
+            <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-${activeProject.color}-500 to-transparent animate-[scan_3s_ease-in-out_infinite] z-20`}></div>
 
-          {/* Visual Side */}
-          <div className="w-full lg:w-1/2 min-h-[400px] relative bg-[#02040a] flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800/80">
-            <div className="absolute inset-0 opacity-[0.2]" style={{ backgroundImage: 'radial-gradient(circle, #0e7490 1.5px, transparent 1.5px)', backgroundSize: '40px 40px' }}></div>
-
-            <div className="relative z-10 transition-transform duration-700 group-hover:scale-105 flex flex-col items-center">
+            <div className="relative z-10 transition-transform duration-700 group-hover:scale-[1.03] flex justify-center items-center p-10 w-full h-full">
               {activeProject.img ? (
-                <div className="relative w-2/3 max-w-[320px] h-[200px] drop-shadow-[0_0_50px_rgba(0,229,255,0.4)] transition-all">
-                  <Image
-                    src={activeProject.img}
-                    alt={activeProject.title}
-                    fill
-                    className="object-contain"
-                  />
+                <div className={`relative w-full max-w-[300px] aspect-video drop-shadow-[0_0_40px_rgba(6,182,212,0.4)]`}>
+                  <Image src={activeProject.img} alt={activeProject.title} fill className="object-contain" />
                 </div>
               ) : (
-                <div className="text-[160px] drop-shadow-[0_0_50px_rgba(0,229,255,0.3)] group-hover:drop-shadow-[0_0_80px_rgba(0,229,255,0.5)] transition-all">
+                <div className="text-[140px] md:text-[200px] filter drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_80px_currentColor] transition-all duration-500" style={{ color: `var(--tw-colors-${activeProject.color}-400)` }}>
                   {activeProject.icon}
                 </div>
               )}
             </div>
-
-            {/* Scanning Line Effect */}
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_20px_cyan] animate-[scan_3s_ease-in-out_infinite] z-20"></div>
+            
+            {/* Overlay Gradient for visual depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
           </div>
 
-          {/* Info Side */}
-          <div className="w-full lg:w-1/2 p-12 lg:p-20 flex flex-col justify-center space-y-10 relative">
-            <div className="flex justify-between items-center">
-              <span className="font-mono text-[10px] text-cyan-500 tracking-[0.4em] uppercase font-bold">{activeProject.tag}</span>
-              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest">{activeProject.status}</span>
+          {/* Bottom/Right Information Area */}
+          <div className="w-full lg:w-[55%] p-10 md:p-16 lg:p-20 flex flex-col justify-center relative z-20 bg-gradient-to-br from-[#050810]/50 to-transparent">
+            
+            {/* Tags and Status */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <span className={`px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-full font-mono text-[10px] sm:text-xs text-${activeProject.color}-400 tracking-[0.3em] uppercase font-bold shadow-lg`}>
+                {activeProject.tag}
+              </span>
+              <div className="flex items-center gap-2">
+                <span className={`w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]`}></span>
+                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-widest">{activeProject.status}</span>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h3 className="text-4xl lg:text-6xl font-black text-white tracking-tighter leading-[1.1] group-hover:text-cyan-400 transition-colors">
+            {/* Title & Description */}
+            <div className="space-y-6 mb-12">
+              <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.05]">
                 {activeProject.title}
               </h3>
-              <p className="text-xl text-slate-400 leading-relaxed font-light">
+              <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-2xl">
                 {activeProject.desc}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            {/* Tech Stack Pills */}
+            <div className="flex flex-wrap gap-3 mb-14">
               {activeProject.tech.map((t, i) => (
-                <span key={i} className="px-5 py-2.5 bg-[#02040a] border border-slate-700 text-[10px] font-mono text-slate-300 rounded-xl uppercase tracking-widest group-hover:border-cyan-500/50 group-hover:text-cyan-300 transition-all shadow-lg">
+                <span key={i} className={`px-5 py-2.5 bg-[#02040a] border border-slate-800 text-xs font-mono text-slate-300 rounded-xl uppercase tracking-widest hover:border-${activeProject.color}-500 hover:text-${activeProject.color}-300 hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
                   {t}
                 </span>
               ))}
             </div>
 
-            <div className="pt-8">
+            {/* Call to Action */}
+            <div className="mt-auto">
               <a
                 href={activeProject.link}
                 target="_blank"
                 rel="noreferrer"
-                className="group/btn relative inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black text-xs rounded-2xl hover:bg-cyan-500 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] uppercase tracking-[0.2em] overflow-hidden"
+                className={`group/btn relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-white text-black font-black text-sm rounded-2xl hover:bg-${activeProject.color}-500 hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_currentColor] uppercase tracking-[0.2em] overflow-hidden`}
               >
-                <span className="relative z-10 flex items-center gap-2">Explorar Nodo <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg></span>
-                <div className="absolute inset-0 bg-cyan-400 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
+                <span className="relative z-10 flex items-center gap-3">
+                  INICIALIZAR SECUENCIA 
+                  <svg className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </span>
+                <div className={`absolute inset-0 bg-${activeProject.color}-500 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out`}></div>
               </a>
             </div>
+
           </div>
         </div>
-
       </div>
+
     </div>
   );
 }
