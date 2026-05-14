@@ -120,6 +120,18 @@ async def analyze_context(feature: GeoJSONFeature):
             "polars_performance_ms": 12.4
         }
 
+@app.get("/api/vur/query", tags=["Legal Tech"])
+async def query_vur(matricula: str):
+    """
+    Real-time query to SNR/VUR for property status.
+    Uses the CLAUDIAC.GOMEZ credentials for institutional handshake.
+    """
+    try:
+        data = await vur_service.get_parcel_data(matricula)
+        return data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/config/mapbox-token", tags=["System"])
 async def get_mapbox_token():
-    return {"token": os.getenv("MAPBOX_TOKEN", "pk.eyJ1IjoiYWxidXNnIiwiYSI6ImNsZnM5bWlqYjAxbmozY3B0Z2R2Z2R2Z2IifQ")}
+    return {"token": os.getenv("MAPBOX_TOKEN")}

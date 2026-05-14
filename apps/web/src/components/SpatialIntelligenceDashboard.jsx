@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { animate } from "animejs";
 
-// Token handling - Use env or fallback to a known valid public one for the demo
-const DEFAULT_MAPBOX_TOKEN = "pk.eyJ1IjoiYWxidXNnIiwiYSI6ImNsZnM5bWlqYjAxbmozY3B0Z2R2Z2R2Z2IifQ";
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || DEFAULT_MAPBOX_TOKEN;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
 const GEOAPI_URL = process.env.NEXT_PUBLIC_GEOAPI_URL || "https://devgiz-api.onrender.com";
 
@@ -26,7 +24,7 @@ export default function SpatialIntelligenceDashboard() {
     setTelemetry(prev => [{ time, msg, type }, ...prev].slice(0, 8));
   };
 
-  const fetchParcels = async () => {
+  const fetchParcels = useCallback(async () => {
     addLog("INGESTING_DATA: Neon/PostGIS Stream...", "info");
     try {
       const res = await fetch(`${GEOAPI_URL}/parcels`);
@@ -53,7 +51,7 @@ export default function SpatialIntelligenceDashboard() {
     } catch (err) {
       addLog("SYNC_ERROR: Backend connection failed", "error");
     }
-  };
+  }, []);
 
   const runVurCheck = async (matricula = "001-123456") => {
     setIsVurLoading(true);
@@ -170,7 +168,7 @@ export default function SpatialIntelligenceDashboard() {
         map.current = null;
       }
     };
-  }, []);
+  }, [fetchParcels]);
 
   const runSimulation = async () => {
     setIsSimulating(true);
@@ -211,8 +209,8 @@ export default function SpatialIntelligenceDashboard() {
 
   return (
     <section id="lab" className="relative w-full py-24 bg-[#02040a] overflow-hidden border-y border-slate-800/50">
-      {/* Noise Texture Background */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url(/noise.svg)' }}></div>
+      {/* Noise Texture Background - Fixed with inline SVG to prevent 404 */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
 
       <div className="max-w-[1600px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch h-[800px]">
         

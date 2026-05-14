@@ -4,8 +4,8 @@ import logging
 from typing import Dict, Any
 
 # Environment variables for security
-VUR_USER = os.getenv("VUR_USER", "CLAUDIAC.GOMEZ")
-VUR_PASS = os.getenv("VUR_PASS", "Caro19**")
+VUR_USER = os.getenv("VUR_USER", "")
+VUR_PASS = os.getenv("VUR_PASS", "")
 
 class VURService:
     """

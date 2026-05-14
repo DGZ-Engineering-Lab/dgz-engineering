@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* --- COLOR SYSTEM (The 'Enterprise Premium' Palette) --- */
     --bg-black: #02040a;
     --bg-dark: #0a0d17;
@@ -839,7 +839,7 @@ body::-webkit-scrollbar {
 }
 
 .dropdown-content a::after {
-    content: '→';
+    content: 'â†’';
     opacity: 0;
     transform: translateX(-10px);
     transition: all 0.3s var(--ease-apple);
@@ -1152,7 +1152,7 @@ body::-webkit-scrollbar {
     content: '';
     position: absolute;
     inset: 0;
-    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    background: url('/noise.svg');
     opacity: 0.03;
     pointer-events: none;
     mix-blend-mode: overlay;
@@ -1648,7 +1648,7 @@ section {
 }
 
 /* ============================================================
-   MASTER BLUEPRINT V6.0 — NEW SECTION STYLES
+   MASTER BLUEPRINT V6.0 â€” NEW SECTION STYLES
    ============================================================ */
 
 /* --- HERO V6 IDENTITY UPGRADE --- */
@@ -2768,7 +2768,7 @@ section {
 }
 
 /* ============================================================
-   RESPONSIVE — MASTER BLUEPRINT V6
+   RESPONSIVE â€” MASTER BLUEPRINT V6
    ============================================================ */
 @media (max-width: 1024px) {
     .lab-projects-grid {
@@ -2961,7 +2961,7 @@ section {
 }
 
 /* ============================================================
-   GIS WORKSTATION — ArcGIS Pro / QGIS Inspired Interface
+   GIS WORKSTATION â€” ArcGIS Pro / QGIS Inspired Interface
    ============================================================ */
 
 .gis-mono {
@@ -3218,7 +3218,7 @@ section {
 }
 
 .gis-layer-toggle input:checked::after {
-    content: '✓';
+    content: 'âœ“';
     position: absolute;
     top: -1px; left: 1px;
     font-size: 0.5rem;
@@ -3554,7 +3554,7 @@ section {
 }
 
 /* ============================================================
-   PRICING — ENTERPRISE COMMERCIAL ENGINE
+   PRICING â€” ENTERPRISE COMMERCIAL ENGINE
    ============================================================ */
 
 .pricing-section {
@@ -4736,9 +4736,9 @@ section {
     .tlv2-card::after { display: none; }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   V2 REDESIGN COMPONENTS — Clean B2B GovTech Aesthetic
-   ══════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   V2 REDESIGN COMPONENTS â€” Clean B2B GovTech Aesthetic
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 /* --- Section Eyebrow (replaces // LABEL_FORMAT) --- */
 .section-eyebrow-v2 {
@@ -4953,7 +4953,7 @@ section {
 }
 
 /*
- * Directional dark veil — covers the left column with a deep navy gradient
+ * Directional dark veil â€” covers the left column with a deep navy gradient
  * that fades to transparent by center. Text becomes perfectly readable
  * without any visible box or card.
  */
@@ -4972,7 +4972,7 @@ section {
     z-index: 1;
 }
 
-/* Electric accent — subtle cyan bloom top-left */
+/* Electric accent â€” subtle cyan bloom top-left */
 .hero-v2::after {
     content: '';
     position: absolute;
@@ -5003,7 +5003,7 @@ section {
     }
 }
 
-/* Content column — sits above the veil, no box */
+/* Content column â€” sits above the veil, no box */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -5014,7 +5014,7 @@ section {
     display: none;
 }
 
-/* Heading — rich white-to-blue gradient, sharp & large */
+/* Heading â€” rich white-to-blue gradient, sharp & large */
 .hero-h1 {
     font-family: 'Syne', var(--font-heading);
     font-size: clamp(2.6rem, 4.8vw, 4.2rem);
@@ -5033,7 +5033,7 @@ section {
     filter: drop-shadow(0 2px 20px rgba(0, 100, 255, 0.15));
 }
 
-/* Body — warm readable slate, not pure grey */
+/* Body â€” warm readable slate, not pure grey */
 .hero-p {
     font-family: 'Plus Jakarta Sans', var(--font-main);
     font-size: 1.12rem;
@@ -6747,7 +6747,7 @@ footer a:hover {
     content: '';
     position: absolute;
     inset: 0;
-    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    background: url('/noise.svg');
     opacity: 0.04;
     pointer-events: none;
     mix-blend-mode: overlay;
