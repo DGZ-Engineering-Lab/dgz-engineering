@@ -18,7 +18,6 @@ import {
   MousePointer2,
   AlertTriangle
 } from "lucide-react";
-import EntityLogos from "./EntityLogos";
 
 // Mapbox Token from Environment
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -395,9 +394,6 @@ export default function SpatialIntelligenceDashboard() {
             </AnimatePresence>
           </div>
         </div>
-
-        {/* Institutional Interoperability Logos */}
-        <EntityLogos />
       </div>
 
       <style jsx>{`
