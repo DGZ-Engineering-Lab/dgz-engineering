@@ -131,7 +131,7 @@ const EntityLogos = () => {
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 30H80V70H20V30Z" stroke="#3B82F6" strokeWidth="4" fill="#3B82F6" fillOpacity="0.1"/>
                   <path d="M30 40V60M50 40V60M70 40V60" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
-                  <circle cx="50" cy="50" r="5" fill="#3B82F6"/>
+                  <circle cx="50" cy="50" r="5" fill="#FFD700"/>
                 </svg>
             </div>
             <div className="flex flex-col items-center">
@@ -212,3 +212,4 @@ const EntityLogos = () => {
 };
 
 export default EntityLogos;
+

@@ -18,6 +18,7 @@ import {
   MousePointer2,
   AlertTriangle
 } from "lucide-react";
+import EntityLogos from "./EntityLogos";
 
 // Mapbox Token from Environment
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -385,7 +386,7 @@ export default function SpatialIntelligenceDashboard() {
                     </div>
                     <div className="bg-black/40 p-3 rounded-xl border border-slate-800/50 mt-4">
                       <p className="text-[10px] text-slate-400 italic leading-relaxed">
-                        "{vurData.message}"
+                        &quot;{vurData.message}&quot;
                       </p>
                     </div>
                   </div>
@@ -394,6 +395,9 @@ export default function SpatialIntelligenceDashboard() {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Institutional Interoperability Logos */}
+        <EntityLogos />
       </div>
 
       <style jsx>{`
