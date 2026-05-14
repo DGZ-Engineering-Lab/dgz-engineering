@@ -386,7 +386,7 @@ export default function SpatialIntelligenceDashboard() {
                     </div>
                     <div className="bg-black/40 p-3 rounded-xl border border-slate-800/50 mt-4">
                       <p className="text-[10px] text-slate-400 italic leading-relaxed">
-                        "{vurData.message}"
+                        &quot;{vurData.message}&quot;
                       </p>
                     </div>
                   </div>
