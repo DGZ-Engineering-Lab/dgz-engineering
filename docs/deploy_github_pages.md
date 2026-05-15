@@ -1,4 +1,4 @@
-# Deploy to GitHub Pages (zero cost) — DGZ Engineering
+# Deploy to GitHub Pages (zero cost) — DevGiz
 
 This guide prepares the repository to be published on GitHub Pages and includes a fallback for Turf.js issues in locked browsers.
 

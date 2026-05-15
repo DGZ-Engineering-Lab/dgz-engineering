@@ -1,6 +1,6 @@
-# 🛰️ DGZ Engineering: Sovereign Audit Report
+# 🛰️ DevGiz: Sovereign Audit Report
 
-This audit evaluates the current state of the **DGZ Engineering Spatial Intelligence** ecosystem against the high-expertise standards defined in the `MASTER_EXECUTION_BLUEPRINT.md`.
+This audit evaluates the current state of the **DevGiz Spatial Intelligence** ecosystem against the high-expertise standards defined in the `MASTER_EXECUTION_BLUEPRINT.md`.
 
 ---
 
@@ -59,4 +59,4 @@ This audit evaluates the current state of the **DGZ Engineering Spatial Intellig
 
 ---
 
-**Auditor Conclusion**: DGZ Engineering is currently a "Premium Shell" with a "Pro Core". Phase 2 will focus on **connecting the nerves**—making the technical depth visible and functional.
+**Auditor Conclusion**: DevGiz is currently a "Premium Shell" with a "Pro Core". Phase 2 will focus on **connecting the nerves**—making the technical depth visible and functional.

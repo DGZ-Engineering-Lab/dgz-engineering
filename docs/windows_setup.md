@@ -1,4 +1,4 @@
-# Local Windows setup (PostgreSQL + PostGIS) — DGZ Engineering
+# Local Windows setup (PostgreSQL + PostGIS) — DevGiz
 
 Este documento describe los pasos para dejar el proyecto 100% funcional en Windows sin usar Docker Desktop.
 
