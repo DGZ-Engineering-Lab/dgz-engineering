@@ -41,7 +41,7 @@ export default function OfficialGISDemo() {
         // DEV-GIZ SPATIAL INTELLIGENCE LAYER (The "Blood" of the project)
         const fetchParcels = async () => {
           try {
-            const response = await fetch("https://devgiz-api.onrender.com/parcels");
+            const response = await fetch("https://devgiz-api.onrender.com/api/parcels");
             const data = await response.json();
             
             if (data && data.features) {
@@ -57,7 +57,7 @@ export default function OfficialGISDemo() {
                     layer.bindPopup("Cargando análisis de inteligencia...").openPopup();
                     
                     try {
-                      const analysisResponse = await fetch("https://devgiz-api.onrender.com/intelligence/analyze_context", {
+                      const analysisResponse = await fetch("https://devgiz-api.onrender.com/api/intelligence/analyze_context", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(feature)

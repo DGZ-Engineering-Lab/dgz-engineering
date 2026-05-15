@@ -18,7 +18,19 @@ export default function Home() {
       
       {/* Hero Section - Institutional Power */}
       <section className="relative pt-48 pb-32 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        {/* Advanced Engineering Background - Dynamic Scanning */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)`, backgroundSize: '40px 40px' }}></div>
+          <motion.div
+            initial={{ top: "-10%" }}
+            animate={{ top: "110%" }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-slate-400 to-transparent shadow-[0_0_15px_rgba(148,163,184,0.5)]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#fcfcfc] via-transparent to-[#fcfcfc]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-8 space-y-12">
               <div className="flex items-center gap-4">
