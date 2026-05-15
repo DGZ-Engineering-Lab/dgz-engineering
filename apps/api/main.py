@@ -2,6 +2,7 @@ import os
 import time
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from brotli_asgi import BrotliMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -26,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Enable Brotli Compression for optimal GeoJSON delivery
+app.add_middleware(BrotliMiddleware, minimum_size=100)
 
 # Global Exception Handler to ensure CORS headers are sent even on 500 errors
 @app.exception_handler(Exception)
