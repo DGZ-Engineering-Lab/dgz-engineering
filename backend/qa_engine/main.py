@@ -1,5 +1,6 @@
 import os
 import json
+import uuid
 from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from core_validator import GeoQAValidator
@@ -59,12 +60,15 @@ import tempfile
 import zipfile
 import shutil
 
+# Diccionario en memoria para rastrear tareas (Sustituye a Redis de forma 100% gratuita)
+JOB_TRACKER = {}
+
 @app.post("/api/v1/analyze-shapefile")
-async def analyze_shapefile(file: UploadFile = File(...)):
+async def analyze_shapefile(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
     """
-    Endpoint masivo:
+    Endpoint masivo Asíncrono (Evita Timeouts en Free Tiers como Render/Heroku):
     Acepta .zip (Shapefiles), .geojson, .gpkg, .kml.
-    Retorna reporte topológico + informe LLM + GeoJSON limpio para visualización.
+    Retorna un JobID inmediatamente.
     """
     allowed_extensions = ('.geojson', '.json', '.zip', '.kml', '.gpkg', '.shp')
     if not file.filename.lower().endswith(allowed_extensions):
@@ -78,23 +82,36 @@ async def analyze_shapefile(file: UploadFile = File(...)):
          content = await file.read()
          f.write(content)
          
-    try:
-        # Si es un ZIP, extraer y buscar el .shp principal
-        target_path = temp_file_path
-        if file.filename.lower().endswith('.zip'):
-             extract_dir = os.path.join(temp_dir, "extracted")
-             os.makedirs(extract_dir, exist_ok=True)
-             with zipfile.ZipFile(temp_file_path, 'r') as zip_ref:
-                 zip_ref.extractall(extract_dir)
-             
-             # Buscar el shapefile o geojson principal
-             for root, dirs, files in os.walk(extract_dir):
-                 for name in files:
-                     if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
-                         target_path = os.path.join(root, name)
-                         break
+    job_id = str(uuid.uuid4())
+    JOB_TRACKER[job_id] = {"status": "Processing", "file": file.filename, "result": None, "error": None}
+    
+    # Enviar a Background Tasks de FastAPI (Nativo, no bloqueante)
+    background_tasks.add_task(
+        _background_process_shapefile, 
+        job_id, temp_dir, temp_file_path, file.filename
+    )
+    
+    return {
+        "job_id": job_id, 
+        "status": "Processing", 
+        "message": "Archivo encolado. Use /api/v1/jobs/{job_id} para ver el resultado."
+    }
 
-        # Instanciar el Validador
+def _background_process_shapefile(job_id: str, temp_dir: str, temp_file_path: str, filename: str):
+    """Worker thread para procesar geometrías pesadas sin bloquear el servidor web."""
+    try:
+        target_path = temp_file_path
+        if filename.lower().endswith('.zip'):
+            extract_dir = os.path.join(temp_dir, "extracted")
+            os.makedirs(extract_dir, exist_ok=True)
+            with zipfile.ZipFile(temp_file_path, 'r') as zip_ref:
+                zip_ref.extractall(extract_dir)
+            for root, dirs, files in os.walk(extract_dir):
+                for name in files:
+                    if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
+                        target_path = os.path.join(root, name)
+                        break
+
         import fiona
         fiona.drvsupport.supported_drivers['KML'] = 'rw'
         fiona.drvsupport.supported_drivers['LIBKML'] = 'rw'
@@ -102,53 +119,48 @@ async def analyze_shapefile(file: UploadFile = File(...)):
         validator = GeoQAValidator()
         gdf = validator.load_dataset(target_path)
         
-        # QA/QC Oficial
         qaqc_report = validator.run_full_qaqc(gdf)
-        
-        # Reporte LLM Inteligente
         final_assessment = generar_reporte_llm(qaqc_report)
         
-        # Inserción Secreta a Base de Datos de Supabase (Historial Catastral LADM)
         report_id = None
         try:
             if "SUPABASE_URL" in os.environ and "SUPABASE_KEY" in os.environ:
                 from supabase import create_client, Client
-                url: str = os.environ.get("SUPABASE_URL")
-                key: str = os.environ.get("SUPABASE_KEY")
-                supabase: Client = create_client(url, key)
-                
+                supabase: Client = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_KEY"))
                 payload = {
                     "user_email": "contractor.node@dgz.os",
-                    "filename": file.filename,
+                    "filename": filename,
                     "total_features": int(qaqc_report["total_features"]),
                     "invalid_overlaps": int(qaqc_report["topology_val"]["overlaps_count"]),
                     "slivers_found": int(qaqc_report["slivers_val"]["slivers_count"]),
                     "llm_ai_diagnosis": str(final_assessment)
                 }
-                
                 resp = supabase.table("catastral_reports").insert(payload).execute()
-                if resp.data:
-                    report_id = resp.data[0]['id']
+                if resp.data: report_id = resp.data[0]['id']
         except Exception as sb_err:
             print(f"Warning - Subabase Error: {sb_err}")
         
-        # Convertir a GeoJSON
         gdf_wgs84 = gdf.to_crs("EPSG:4326")
-        geojson_data = json.loads(gdf_wgs84.to_json())
         
-        return {
+        JOB_TRACKER[job_id]["status"] = "Completed"
+        JOB_TRACKER[job_id]["result"] = {
             "report_id": report_id,
-            "file": file.filename,
-            "status": "Processed",
             "qaqc_metrics": qaqc_report,
             "geo_llm_intelligence_report": final_assessment,
-            "geojson": geojson_data
+            "geojson": json.loads(gdf_wgs84.to_json())
         }
-
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        JOB_TRACKER[job_id]["status"] = "Failed"
+        JOB_TRACKER[job_id]["error"] = str(e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
+
+@app.get("/api/v1/jobs/{job_id}")
+async def get_job_status(job_id: str):
+    """Endpoint para hacer Polling desde el Frontend y obtener los resultados."""
+    if job_id not in JOB_TRACKER:
+        raise HTTPException(status_code=404, detail="Job no encontrado.")
+    return JOB_TRACKER[job_id]
 
 @app.post("/api/v1/interoperability-cross")
 async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_file: UploadFile = File(...)):
