@@ -6,6 +6,9 @@ import Logo from "../components/Logo";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
+import GeoAISection from "../components/GeoAISection";
+import UnifiedCapabilities from "../components/UnifiedCapabilities";
+import SpatialLabSection from "../components/SpatialLabSection";
 
 const SpatialIntelligenceDashboard = dynamic(
   () => import("../components/SpatialIntelligenceDashboard"),
@@ -94,26 +97,32 @@ export default function Home() {
         <TechTicker />
       </section>
 
+      {/* Capabilities Section */}
+      <UnifiedCapabilities />
+
       {/* Strategic Vision - 3 Pillars */}
       <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100 shadow-2xl">
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">🏛️</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">🏛️</div>
             <h3 className="text-2xl font-black tracking-tight">Gobernanza</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Implementación de estándares internacionales para la seguridad jurídica del territorio nacional.</p>
           </div>
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">⚙️</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">⚙️</div>
             <h3 className="text-2xl font-black tracking-tight">Ingeniería</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Pipelines de procesamiento masivo desatendido con precisión milimétrica y validación automática.</p>
           </div>
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">🧠</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">🧠</div>
             <h3 className="text-2xl font-black tracking-tight">Inteligencia</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Visualización táctica de activos territoriales y simulación de escenarios de impacto fiscal.</p>
           </div>
         </div>
       </section>
+
+      {/* GeoAI Node */}
+      <GeoAISection />
 
       {/* Territorial Control - Interactive Section */}
       <section className="py-20 bg-[#1a1a1a] text-white overflow-hidden relative">
@@ -147,6 +156,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Spatial Innovation Lab */}
+      <SpatialLabSection />
 
       {/* Featured Insights - Link to Journal */}
       <section className="py-24 px-6">
