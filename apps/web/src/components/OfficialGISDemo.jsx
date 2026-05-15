@@ -153,7 +153,7 @@ export default function OfficialGISDemo() {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
           
-          <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
+          <div className="relative bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
             
             <div className="p-4 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex justify-between items-center z-20">
                <div className="flex items-center gap-4">

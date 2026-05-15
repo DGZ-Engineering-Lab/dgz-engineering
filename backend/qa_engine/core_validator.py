@@ -26,8 +26,8 @@ class GeoQAValidator:
         """Evalúa geometrías inválidas y las repara automáticamente."""
         invalid_count = (~gdf.is_valid).sum()
         
-        # Auto-heal geometries
-        gdf.geometry = gdf.geometry.apply(lambda geom: make_valid(geom) if not geom.is_valid else geom)
+        # Auto-heal geometries (Optimizado: vectorizado nativo de GeoPandas)
+        gdf.geometry = gdf.geometry.make_valid()
         
         return {
             "invalid_geometries_found": int(invalid_count),
@@ -111,52 +111,79 @@ class GeoQAValidator:
     def cross_reference_excel(self, gdf: gpd.GeoDataFrame, excel_path: str, join_col="npu") -> dict:
         """
         Módulo de Interoperabilidad: Cruce Físico-Jurídico (Catastro vs Registro).
-        Compara la base cartográfica con una matriz tabular (Excel/CSV).
+        Compara la base cartográfica con una matriz tabular (Excel/CSV) usando Polars para ultra-rendimiento.
         """
-        import pandas as pd
-        import numpy as np
+        import polars as pl
+        import warnings
         
-        # 1. Cargar Excel
-        df_registral = pd.read_excel(excel_path) if excel_path.endswith('.xlsx') else pd.read_csv(excel_path)
-        
+        # 1. Cargar Excel/CSV con Polars
+        try:
+            if excel_path.endswith('.xlsx'):
+                df_registral = pl.read_excel(excel_path)
+            else:
+                df_registral = pl.read_csv(excel_path, ignore_errors=True)
+        except Exception as e:
+            return {"error": f"Error al cargar el archivo tabular con Polars: {e}"}
+
         # Normalizar nombres de columnas a minúsculas para evitar errores de digitación
         gdf.columns = [c.lower() for c in gdf.columns]
-        df_registral.columns = [c.lower() for c in df_registral.columns]
+        df_registral = df_registral.rename({col: col.lower() for col in df_registral.columns})
         join_col = join_col.lower()
 
         if join_col not in gdf.columns or join_col not in df_registral.columns:
             return {"error": f"Columna de unión '{join_col}' no encontrada en ambos archivos."}
 
-        # 2. Identificar Diferencias de Existencia
-        spatial_keys = set(gdf[join_col].unique())
-        registral_keys = set(df_registral[join_col].unique())
+        # Aseguramos que el gdf tenga calculada la columna area_m2
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            gdf['area_m2_calc'] = gdf.geometry.area
 
-        missing_in_spatial = registral_keys - spatial_keys
-        missing_in_registral = spatial_keys - registral_keys
+        # Convertimos la parte alfanumérica de GeoPandas a Polars (sin geometría para ahorrar memoria)
+        # Convertimos tipos explícitamente a string (Utf8) para evitar problemas de merge entre ints y strs
+        df_spatial = pl.from_pandas(gdf[[join_col, 'area_m2_calc']]).with_columns(pl.col(join_col).cast(pl.Utf8))
+        df_registral = df_registral.with_columns(pl.col(join_col).cast(pl.Utf8))
+
+        # 2. Identificar Diferencias de Existencia usando Anti-Joins de Polars (Vectorizado Puro)
+        # Registros en lo registral (Excel) que no están en lo espacial (Shapefile)
+        missing_in_spatial = df_registral.join(df_spatial, on=join_col, how="anti").height
+        # Registros en lo espacial (Shapefile) que no están en lo registral (Excel)
+        missing_in_registral = df_spatial.join(df_registral, on=join_col, how="anti").height
 
         # 3. Comparación de Áreas (si existe columna 'area')
         area_diffs = []
-        common_keys = spatial_keys.intersection(registral_keys)
+        area_col_snr = [c for c in df_registral.columns if 'area' in c]
         
-        # Aseguramos que el gdf tenga calculada la columna area_m2
-        gdf['area_m2_calc'] = gdf.geometry.area
+        area_discrepancies_count = 0
+        if area_col_snr:
+            snr_area_col = area_col_snr[0]
 
-        for key in list(common_keys)[:100]: # Limitamos a los primeros 100 para el reporte resumen
-            area_cat = gdf[gdf[join_col] == key]['area_m2_calc'].values[0]
-            # Buscamos en registro (asumiendo columna 'area_snr' o similar, sino usamos lo que encontremos)
-            area_col_snr = [c for c in df_registral.columns if 'area' in c]
-            if area_col_snr:
-                area_snr = df_registral[df_registral[join_col] == key][area_col_snr[0]].values[0]
-                diff = abs(area_cat - area_snr)
-                if diff > 1.0: # Tolerancia de 1m2
-                    area_diffs.append({"id": str(key), "diff_m2": round(diff, 2)})
+            # Asegurar que el área en el registro sea float
+            df_registral = df_registral.with_columns(pl.col(snr_area_col).cast(pl.Float64, strict=False))
+
+            # Inner join para comparar los que existen en ambos
+            merged = df_spatial.join(df_registral.select([join_col, snr_area_col]), on=join_col, how="inner")
+
+            # Filtramos diferencias mayores a 1 m2
+            discrepancies = merged.with_columns(
+                (pl.col("area_m2_calc") - pl.col(snr_area_col)).abs().alias("diff_m2")
+            ).filter(pl.col("diff_m2") > 1.0).sort("diff_m2", descending=True)
+
+            area_discrepancies_count = discrepancies.height
+
+            # Limitamos el reporte a las primeras 100 anomalías para no saturar JSON
+            area_diffs = discrepancies.head(100).select([join_col, "diff_m2"]).to_dicts()
+
+            # Formateamos la lista resultante
+            for diff in area_diffs:
+                diff['id'] = diff.pop(join_col)
+                diff['diff_m2'] = round(diff['diff_m2'], 2)
 
         return {
-            "total_spatial": len(gdf),
-            "total_registral": len(df_registral),
-            "missing_geometries": len(missing_in_spatial),
-            "missing_legal_records": len(missing_in_registral),
-            "area_discrepancies_count": len(area_diffs),
+            "total_spatial": df_spatial.height,
+            "total_registral": df_registral.height,
+            "missing_geometries": missing_in_spatial,
+            "missing_legal_records": missing_in_registral,
+            "area_discrepancies_count": area_discrepancies_count,
             "sample_discrepancies": area_diffs[:5]
         }
 
