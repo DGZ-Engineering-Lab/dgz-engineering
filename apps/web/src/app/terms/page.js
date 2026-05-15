@@ -43,7 +43,7 @@ export default function TermsPage() {
               Última revisión: 15 de Mayo, 2026. <br />
               Sede Principal: Bogotá, Colombia.
             </p>
-          </div>
+          </section>
         </div>
 
         <div className="mt-24 pt-12 border-t border-slate-100 flex justify-between items-center">

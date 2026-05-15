@@ -43,7 +43,7 @@ export default function PrivacyPage() {
               Este documento refleja nuestro compromiso con la transparencia institucional. <br />
               Última actualización: Mayo 15, 2026.
             </p>
-          </div>
+          </section>
         </div>
 
         <div className="mt-24 pt-12 border-t border-slate-100 flex justify-between items-center">
