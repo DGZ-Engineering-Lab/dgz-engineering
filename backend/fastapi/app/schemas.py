@@ -15,3 +15,14 @@ class GeoJSONFeature(BaseModel):
 class ValidationRequest(BaseModel):
     type: str = "FeatureCollection"
     features: List[GeoJSONFeature]
+
+class AnalysisResult(BaseModel):
+    parcel_id: str
+    risk_level: str
+    infrastructure_proximity: Dict[str, float]
+    urban_compliance: bool
+    spatial_score: int
+    recommendations: List[str]
+    simulation_data: Optional[Dict[str, Any]] = None
+    context_layers: Optional[List[Dict[str, Any]]] = None
+
