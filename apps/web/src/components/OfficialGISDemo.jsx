@@ -122,7 +122,7 @@ export default function OfficialGISDemo() {
   }, [mapLoaded]);
 
   return (
-    <section className="relative w-full py-32 bg-[#02040a] border-y border-slate-800/50">
+    <section className="relative w-full py-12 lg:py-16 bg-[#02040a] border-y border-slate-800/50">
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
@@ -131,20 +131,20 @@ export default function OfficialGISDemo() {
               <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
               <span className="text-[10px] font-mono text-blue-400 uppercase tracking-[0.3em] font-black">Spatial Intelligence v6.1</span>
             </div>
-            <h2 className="text-6xl md:text-7xl font-black text-white tracking-tighter leading-none">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter leading-none">
               Plataforma <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500">GeoAI Enterprise</span>
             </h2>
-            <p className="text-slate-400 text-xl font-light leading-relaxed max-w-2xl">
+            <p className="text-slate-400 text-sm lg:text-base font-light leading-relaxed max-w-2xl">
               Integración de datos catastrales del IGAC con motores de análisis predictivo. Generando el Digital Twin de Colombia con soberanía tecnológica.
             </p>
           </div>
           <div className="lg:col-span-5 flex justify-end gap-4">
              <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-2xl flex-1 text-center">
-                <div className="text-3xl font-black text-blue-400">LEVEL 4</div>
+                <div className="text-2xl font-black text-blue-400">LEVEL 4</div>
                 <div className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Digital Twin Maturity</div>
              </div>
              <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-2xl flex-1 text-center">
-                <div className="text-3xl font-black text-cyan-400">PostGIS</div>
+                <div className="text-2xl font-black text-cyan-400">PostGIS</div>
                 <div className="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Spatial Core</div>
              </div>
           </div>
@@ -153,7 +153,7 @@ export default function OfficialGISDemo() {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
           
-          <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[750px] flex flex-col">
+          <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
             
             <div className="p-4 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex justify-between items-center z-20">
                <div className="flex items-center gap-4">

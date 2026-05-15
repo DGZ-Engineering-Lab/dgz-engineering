@@ -21,7 +21,7 @@ export default function SpatialLabSection() {
   }, []);
 
   return (
-    <div className="relative w-full py-16 lg:py-24 z-10 bg-transparent overflow-hidden">
+    <div className="relative w-full py-12 lg:py-16 z-10 bg-transparent overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px]"></div>
@@ -31,15 +31,15 @@ export default function SpatialLabSection() {
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
 
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-24 space-y-8">
-          <div className="inline-flex items-center gap-4 px-6 py-3 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[11px] sm:text-xs tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
+        <div className="flex flex-col items-center text-center mb-16 space-y-6">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
             DGZ Engineering / Innovation Lab
           </div>
-          <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.95]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter leading-[0.95]">
             Laboratorio de <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">Inteligencia Espacial</span>
           </h2>
-          <p className="text-xl md:text-2xl text-slate-400 font-light max-w-4xl leading-relaxed">
+          <p className="text-sm md:text-base text-slate-400 font-light max-w-4xl leading-relaxed">
             Explora nuestros <strong className="text-white font-medium">nodos geoespaciales de alto rendimiento</strong>. Desde automatización territorial desatendida hasta agentes de Inteligencia Artificial que escriben Spatial SQL en tiempo real.
           </p>
         </div>
@@ -137,17 +137,17 @@ function ProjectCarousel() {
     <div className="relative">
       
       {/* Carousel Navigation Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-8 relative z-20">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6 relative z-20">
         <div className="space-y-2 text-center md:text-left">
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+          <h2 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase">
             Ecosistema de <span className={`text-transparent bg-clip-text bg-gradient-to-r from-${activeProject.color}-400 to-blue-500`}>Soluciones</span>
           </h2>
-          <p className="text-slate-400 font-mono text-sm tracking-widest">SELECCIONA UN NODO PARA INICIAR LA SECUENCIA</p>
+          <p className="text-slate-400 font-mono text-xs tracking-widest">SELECCIONA UN NODO PARA INICIAR LA SECUENCIA</p>
         </div>
 
         {/* Carousel Controls */}
-        <div className="flex flex-col sm:flex-row items-center gap-6 bg-[#050810]/80 p-3 rounded-3xl border border-slate-800 backdrop-blur-xl shadow-xl">
-          <div className="flex gap-2 px-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4 bg-[#050810]/80 p-2 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-xl">
+          <div className="flex gap-2 px-3">
             {projects.map((_, i) => (
               <button
                 key={i}
@@ -158,39 +158,39 @@ function ProjectCarousel() {
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={prev} className={`p-4 rounded-2xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+            <button onClick={prev} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={next} className={`p-4 rounded-2xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+            <button onClick={next} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Cinematic Showcase Card */}
-      <div className="relative min-h-[500px] lg:min-h-[600px] group perspective-1000">
+      <div className="relative min-h-[350px] lg:min-h-[450px] group perspective-1000">
         
         {/* Dynamic Background Glow matching active project color */}
-        <div className={`absolute inset-0 ${activeProject.glow} opacity-40 blur-[100px] rounded-[3rem] transition-all duration-1000 pointer-events-none`}></div>
+        <div className={`absolute inset-0 ${activeProject.glow} opacity-40 blur-[100px] rounded-[2rem] transition-all duration-1000 pointer-events-none`}></div>
 
-        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-3xl border ${activeProject.border} rounded-[3rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
+        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-3xl border ${activeProject.border} rounded-[2rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
           
           {/* Top/Left Visual Area */}
-          <div className="w-full lg:w-[45%] min-h-[350px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#050810] to-[#02040a] border-b lg:border-b-0 lg:border-r border-slate-800">
+          <div className="w-full lg:w-[45%] min-h-[250px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#050810] to-[#02040a] border-b lg:border-b-0 lg:border-r border-slate-800">
             {/* Grid Pattern */}
             <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
             
             {/* Scanning Line */}
             <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-${activeProject.color}-500 to-transparent animate-[scan_3s_ease-in-out_infinite] z-20`}></div>
 
-            <div className="relative z-10 transition-transform duration-700 group-hover:scale-[1.03] flex justify-center items-center p-10 w-full h-full">
+            <div className="relative z-10 transition-transform duration-700 group-hover:scale-[1.03] flex justify-center items-center p-6 w-full h-full">
               {activeProject.img ? (
-                <div className={`relative w-full max-w-[300px] aspect-video drop-shadow-[0_0_40px_rgba(6,182,212,0.4)]`}>
+                <div className={`relative w-full max-w-[200px] aspect-video drop-shadow-[0_0_40px_rgba(6,182,212,0.4)]`}>
                   <Image src={activeProject.img} alt={activeProject.title} fill className="object-contain" />
                 </div>
               ) : (
-                <div className="text-[140px] md:text-[200px] filter drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_80px_currentColor] transition-all duration-500" style={{ color: `var(--tw-colors-${activeProject.color}-400)` }}>
+                <div className="text-[80px] md:text-[100px] filter drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_80px_currentColor] transition-all duration-500" style={{ color: `var(--tw-colors-${activeProject.color}-400)` }}>
                   {activeProject.icon}
                 </div>
               )}
@@ -201,33 +201,33 @@ function ProjectCarousel() {
           </div>
 
           {/* Bottom/Right Information Area */}
-          <div className="w-full lg:w-[55%] p-10 md:p-16 lg:p-20 flex flex-col justify-center relative z-20 bg-gradient-to-br from-[#050810]/50 to-transparent">
+          <div className="w-full lg:w-[55%] p-6 md:p-8 lg:p-10 flex flex-col justify-center relative z-20 bg-gradient-to-br from-[#050810]/50 to-transparent">
             
             {/* Tags and Status */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-              <span className={`px-4 py-1.5 bg-slate-900 border border-slate-700 rounded-full font-mono text-[10px] sm:text-xs text-${activeProject.color}-400 tracking-[0.3em] uppercase font-bold shadow-lg`}>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <span className={`px-3 py-1 bg-slate-900 border border-slate-700 rounded-full font-mono text-[9px] sm:text-[10px] text-${activeProject.color}-400 tracking-[0.3em] uppercase font-bold shadow-lg`}>
                 {activeProject.tag}
               </span>
               <div className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]`}></span>
-                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-widest">{activeProject.status}</span>
+                <span className={`w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]`}></span>
+                <span className="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest">{activeProject.status}</span>
               </div>
             </div>
 
             {/* Title & Description */}
-            <div className="space-y-6 mb-12">
-              <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[1.05]">
+            <div className="space-y-4 mb-8">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tighter leading-[1.05]">
                 {activeProject.title}
               </h3>
-              <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-2xl">
+              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed max-w-2xl">
                 {activeProject.desc}
               </p>
             </div>
 
             {/* Tech Stack Pills */}
-            <div className="flex flex-wrap gap-3 mb-14">
+            <div className="flex flex-wrap gap-2 mb-10">
               {activeProject.tech.map((t, i) => (
-                <span key={i} className={`px-5 py-2.5 bg-[#02040a] border border-slate-800 text-xs font-mono text-slate-300 rounded-xl uppercase tracking-widest hover:border-${activeProject.color}-500 hover:text-${activeProject.color}-300 hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
+                <span key={i} className={`px-3 py-1.5 bg-[#02040a] border border-slate-800 text-[10px] font-mono text-slate-300 rounded-lg uppercase tracking-widest hover:border-${activeProject.color}-500 hover:text-${activeProject.color}-300 hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
                   {t}
                 </span>
               ))}
@@ -239,11 +239,11 @@ function ProjectCarousel() {
                 href={activeProject.link}
                 target="_blank"
                 rel="noreferrer"
-                className={`group/btn relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-white text-black font-black text-sm rounded-2xl hover:bg-${activeProject.color}-500 hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_currentColor] uppercase tracking-[0.2em] overflow-hidden`}
+                className={`group/btn relative inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-black font-black text-xs rounded-xl hover:bg-${activeProject.color}-500 hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_currentColor] uppercase tracking-[0.2em] overflow-hidden`}
               >
-                <span className="relative z-10 flex items-center gap-3">
+                <span className="relative z-10 flex items-center gap-2">
                   INICIALIZAR SECUENCIA 
-                  <svg className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                 </span>
                 <div className={`absolute inset-0 bg-${activeProject.color}-500 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out`}></div>
               </a>

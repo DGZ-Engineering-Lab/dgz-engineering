@@ -34,15 +34,15 @@ export default function ProfessionalProfile() {
   const badges = ["Cloud Native", "DevOps", "GeoAI", "LADM Expert", "FullStack"];
 
   return (
-    <section id="profile" className="relative w-full py-32 z-10 bg-[#05070a] border-t border-slate-800/50 overflow-hidden">
+    <section id="profile" className="relative w-full py-12 lg:py-16 z-10 bg-[#05070a] border-t border-slate-800/50 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-cyan-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Bio Column */}
-          <div className="lg:col-span-5 space-y-10">
+          <div className="lg:col-span-5 space-y-6">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/30 bg-cyan-500/5 rounded-full">
                 <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
@@ -50,11 +50,11 @@ export default function ProfessionalProfile() {
               </div>
               
               <div className="space-y-4">
-                <h2 className="text-5xl font-black text-white tracking-tighter leading-tight">
+                <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tighter leading-tight">
                   Albert Daniel <br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Gaviria Zapata</span>
                 </h2>
-                <p className="text-xl text-slate-400 font-light leading-relaxed">
+                <p className="text-base lg:text-lg text-slate-400 font-light leading-relaxed">
                   Ingeniero SIG y Desarrollador de Software enfocado en la <span className="text-white font-medium">automatización territorial</span>. Fusiono la precisión cartográfica con arquitecturas de nube escalables.
                 </p>
               </div>
@@ -70,11 +70,11 @@ export default function ProfessionalProfile() {
 
             <div className="grid grid-cols-1 gap-4">
               {tools.map((t, i) => (
-                <div key={i} className={`group p-6 rounded-2xl bg-gradient-to-br ${t.color} to-transparent border border-slate-800 hover:border-cyan-500/30 transition-all duration-500 shadow-xl`}>
+                <div key={i} className={`group p-4 lg:p-5 rounded-2xl bg-gradient-to-br ${t.color} to-transparent border border-slate-800 hover:border-cyan-500/30 transition-all duration-500 shadow-xl`}>
                   <div className="flex justify-between items-end mb-4">
                     <div>
                       <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{t.name}</div>
-                      <div className="text-2xl font-black text-white tracking-tighter">{t.val}</div>
+                      <div className="text-xl font-black text-white tracking-tighter">{t.val}</div>
                     </div>
                     <div className="text-right">
                        <div className="flex gap-2 justify-end">
@@ -110,10 +110,10 @@ export default function ProfessionalProfile() {
 
           {/* Timeline Column */}
           <div className="lg:col-span-7">
-            <div className="relative p-10 rounded-3xl bg-[#0a0f16]/80 backdrop-blur-xl border border-slate-800 shadow-2xl">
+            <div className="relative p-6 lg:p-8 rounded-3xl bg-[#0a0f16]/80 backdrop-blur-xl border border-slate-800 shadow-2xl">
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none"></div>
               
-              <div className="flex items-center justify-between mb-12 border-b border-slate-800/50 pb-6">
+              <div className="flex items-center justify-between mb-8 border-b border-slate-800/50 pb-4">
                 <h3 className="text-sm font-mono text-slate-500 uppercase tracking-[0.4em]">
                   Track Record // <span className="text-cyan-400">Logros Clave</span>
                 </h3>
@@ -124,7 +124,7 @@ export default function ProfessionalProfile() {
                 </div>
               </div>
 
-              <div className="space-y-12">
+              <div className="space-y-8">
                 {experiences.map((exp, i) => (
                   <div key={i} className="relative pl-10 group">
                     {/* Vertical Line Connector */}
@@ -137,7 +137,7 @@ export default function ProfessionalProfile() {
                         <span className="text-xs font-mono text-cyan-500 bg-cyan-500/5 px-2 py-1 rounded border border-cyan-500/20">{exp.period}</span>
                         <span className="text-xs font-mono text-slate-600 uppercase tracking-widest">{exp.company}</span>
                       </div>
-                      <h4 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">{exp.role}</h4>
+                      <h4 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">{exp.role}</h4>
                       <p className="text-slate-400 font-light max-w-md">{exp.desc}</p>
                       <div className="flex flex-wrap gap-2 pt-2">
                         {exp.tags.map((tag, j) => (
@@ -149,7 +149,7 @@ export default function ProfessionalProfile() {
                 ))}
               </div>
 
-              <div className="mt-16 p-6 rounded-2xl bg-slate-900/50 border border-dashed border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="mt-10 p-5 rounded-2xl bg-slate-900/50 border border-dashed border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="text-center sm:text-left">
                   <div className="text-xs font-mono text-slate-500 uppercase mb-1">Portafolio Técnico PDF</div>
                   <div className="text-sm font-bold text-white">Descargar Dossier de Ingeniería</div>
