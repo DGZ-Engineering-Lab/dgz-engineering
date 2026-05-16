@@ -1,3 +1,5 @@
+"use client";
+
 export default function TimelineSection() {
   const experiences = [
     {
@@ -52,7 +54,7 @@ export default function TimelineSection() {
 
   return (
     <section id="timeline" className="relative w-full py-24 z-10 bg-gradient-to-b from-[#05070a] to-[#020406] overflow-hidden">
-      
+
       {/* Background decor */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] absolute -bottom-1/4 -left-1/4"></div>
@@ -60,7 +62,7 @@ export default function TimelineSection() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16">
-          
+
           {/* Left: Sticky header */}
           <div className="w-full lg:w-2/5 lg:sticky lg:top-32 lg:self-start">
             <div className="flex items-center gap-4 mb-6">
@@ -82,27 +84,25 @@ export default function TimelineSection() {
             <div className="relative border-l-2 border-slate-800 ml-4 space-y-10">
               {experiences.map((exp, i) => (
                 <div key={i} className="relative pl-10 group">
-                  
+
                   {/* Timeline dot */}
-                  <div className={`absolute -left-[9px] top-2 w-4 h-4 rounded-full border-2 ${
-                    exp.current
+                  <div className={`absolute -left-[9px] top-2 w-4 h-4 rounded-full border-2 ${exp.current
                       ? "bg-[#f3ca20] border-[#f3ca20] shadow-[0_0_12px_rgba(243,202,32,0.5)]"
                       : "bg-slate-900 border-slate-600 group-hover:border-cyan-500 transition-colors"
-                  }`}></div>
+                    }`}></div>
 
-                  <div className={`p-8 rounded-2xl bg-[#0a0f16] border transition-all duration-300 ${
-                    exp.current
+                  <div className={`p-8 rounded-2xl bg-[#0a0f16] border transition-all duration-300 ${exp.current
                       ? "border-[#f3ca20]/30 hover:border-[#f3ca20]/60 shadow-[0_0_30px_rgba(243,202,32,0.05)]"
                       : "border-slate-800 hover:border-cyan-500/40"
-                  }`}>
-                    
+                    }`}>
+
                     <div className="font-mono text-xs text-slate-500 tracking-widest mb-2">{exp.period}</div>
                     <h3 className="text-xl font-bold text-white mb-1">{exp.role}</h3>
                     <div className={`font-mono text-xs mb-4 ${exp.current ? "text-[#f3ca20]" : "text-cyan-500"}`}>
                       {exp.company}
                     </div>
                     <p className="text-sm text-slate-400 leading-relaxed mb-6">{exp.desc}</p>
-                    
+
                     <div className="flex flex-wrap gap-2">
                       {exp.tags.map((tag, j) => (
                         <span key={j} className="px-2 py-1 text-[10px] font-mono text-slate-300 bg-slate-800 rounded">

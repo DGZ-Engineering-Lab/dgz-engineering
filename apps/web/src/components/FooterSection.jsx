@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import Logo from "./Logo";
+import { Globe, ExternalLink, Mail } from "lucide-react";
 
 export default function FooterSection() {
   const [time, setTime] = useState("");
@@ -17,15 +20,54 @@ export default function FooterSection() {
   }, []);
 
   return (
-    <footer className="relative w-full border-t border-slate-800 bg-[#050505] z-10">
-      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-slate-500">
-        
-        {/* Legal Info */}
-        <div className="flex flex-col sm:flex-row items-center gap-2 text-center md:text-left">
-          <span>© 2026 ALBERT DANIEL GAVIRIA ZAPATA. TODOS LOS DERECHOS RESERVADOS.</span>
-          <span className="hidden sm:inline text-cyan-500">·</span>
-          <span className="text-slate-400 font-semibold tracking-wider">LADM-COL V3 CERTIFIED</span>
+    <footer className="relative w-full border-t border-slate-100 bg-white text-[#1a1a1a] z-10 pt-24 pb-12">
+      <div className="max-w-7xl mx-auto px-6">
+
+        {/* Global Marketing Hook CTA */}
+        <div className="mb-24 p-12 bg-[#1a1a1a] rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative group">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+          <div className="relative z-10 space-y-4 text-center lg:text-left">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.5em]">Enterprise Solutions</div>
+            <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter">¿Listo para escalar su <span className="text-slate-500 italic">Infraestructura Espacial?</span></h3>
+            <p className="text-slate-400 text-sm max-w-xl">Únase a los gobiernos y empresas que ya optimizan sus activos territoriales con nuestra tecnología.</p>
+          </div>
+          <Link
+            href="/#contact"
+            className="relative z-10 px-10 py-5 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-200 transition-all shadow-2xl rounded-sm whitespace-nowrap"
+          >
+            Solicitar Auditoría Espacial
+          </Link>
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-24">
+          
+          {/* Brand Info */}
+          <div className="lg:col-span-4 space-y-8">
+            <Link href="/" className="flex items-center gap-3">
+              <Logo className="w-10 h-10" />
+              <div className="flex flex-col leading-none">
+                <span className="text-2xl font-black tracking-tighter">DevGiz</span>
+                <span className="text-[8px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold">Engineering Lab</span>
+              </div>
+            </Link>
+            <p className="text-slate-500 font-light leading-relaxed text-sm max-w-xs">
+              Líderes en infraestructura de datos territoriales y soberanía digital para el sector público y privado en Colombia.
+            </p>
+            <div className="flex items-center gap-6">
+              <a href="#" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><Globe className="w-5 h-5" /></a>
+              <a href="#" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><ExternalLink className="w-5 h-5" /></a>
+              <a href="mailto:info@devgiz.com" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><Mail className="w-5 h-5" /></a>
+            </div>
+          </div>
+        </div>
+
+        {/* Legal Info and System Status */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-t border-slate-200 pt-8 mt-8 text-xs font-mono text-slate-500">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-center md:text-left">
+            <span>© 2026 ALBERT DANIEL GAVIRIA ZAPATA. TODOS LOS DERECHOS RESERVADOS.</span>
+            <span className="hidden sm:inline text-slate-300">·</span>
+            <span className="text-slate-800 font-semibold tracking-wider">LADM-COL V3 CERTIFIED</span>
+          </div>
 
         {/* System Status */}
         <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900 border border-slate-800" title="Operaciones estables">
@@ -49,6 +91,7 @@ export default function FooterSection() {
           </div>
         </div>
 
+        </div>
       </div>
     </footer>
   );

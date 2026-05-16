@@ -39,16 +39,16 @@ export default function ExecutiveSummarySection() {
     <section id="summary" className="relative w-full py-32 z-10 bg-[#05070a] overflow-hidden">
       {/* Subtle Grid Pattern Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
+
         <div className="flex flex-col lg:flex-row gap-24 items-start">
           {/* Left: Message */}
           <div className="w-full lg:w-1/2 space-y-10">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase font-bold">
-              //_ESTRATEGIA_Y_MISIÓN
+              //_ESTRATEGIA_Y_M ISIÓN
             </div>
-            
+
             <div className="space-y-6">
               <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.1]">
                 Inteligencia Territorial para la <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Era Digital.</span>
@@ -57,20 +57,20 @@ export default function ExecutiveSummarySection() {
                 En DevGiz, transformamos el caos de datos geográficos en <span className="text-white">activos estratégicos</span>. Diseñamos el cerebro digital de su territorio para una gestión ágil, precisa y 100% auditable.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6 border-t border-slate-800/50">
               <div className="flex items-start gap-4">
                 <div className="mt-1 w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] border border-emerald-500/20">✓</div>
                 <div>
-                   <div className="text-white font-bold text-sm mb-1 tracking-tight">Compliance LADM-COL</div>
-                   <div className="text-slate-500 text-xs">Alineación total con estándares IGAC.</div>
+                  <div className="text-white font-bold text-sm mb-1 tracking-tight">Compliance LADM-COL</div>
+                  <div className="text-slate-500 text-xs">Alineación total con estándares IGAC.</div>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="mt-1 w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] border border-emerald-500/20">✓</div>
                 <div>
-                   <div className="text-white font-bold text-sm mb-1 tracking-tight">Escalabilidad Cloud</div>
-                   <div className="text-slate-500 text-xs">Infraestructura lista para el futuro.</div>
+                  <div className="text-white font-bold text-sm mb-1 tracking-tight">Escalabilidad Cloud</div>
+                  <div className="text-slate-500 text-xs">Infraestructura lista para el futuro.</div>
                 </div>
               </div>
             </div>

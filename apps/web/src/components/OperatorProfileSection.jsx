@@ -1,3 +1,5 @@
+"use client";
+
 export default function OperatorProfileSection() {
   return (
     <section id="profile" className="relative w-full py-24 z-10 bg-[#05070a] border-t border-slate-800">

@@ -1,3 +1,5 @@
+"use client";
+
 export default function TechMatrixSection() {
   const matrixData = [
     {
@@ -52,20 +54,20 @@ export default function TechMatrixSection() {
 
         <div className="space-y-6">
           {matrixData.map((row, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-2xl bg-black/40 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:bg-slate-900/50 relative overflow-hidden"
             >
               {/* Animated left border on hover */}
               <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              
+
               <div className="flex-shrink-0 p-4 rounded-xl bg-slate-900/80 border border-slate-700 group-hover:border-cyan-500/30 transition-colors">
                 {row.icon}
               </div>
 
               <div className="flex-1 space-y-2">
                 <h3 className="text-xl font-bold text-white font-mono flex items-center gap-3">
-                  {row.id} 
+                  {row.id}
                   <span className="text-xs px-2 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full">ACTIVE</span>
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed max-w-2xl">
@@ -75,8 +77,8 @@ export default function TechMatrixSection() {
 
               <div className="flex flex-wrap md:justify-end gap-2 w-full md:w-auto mt-4 md:mt-0">
                 {row.tags.map((tag, tIdx) => (
-                  <span 
-                    key={tIdx} 
+                  <span
+                    key={tIdx}
                     className="px-3 py-1.5 text-[11px] font-mono text-slate-300 bg-slate-800/50 border border-slate-700 rounded shadow-sm group-hover:border-slate-600 transition-colors"
                   >
                     {tag}

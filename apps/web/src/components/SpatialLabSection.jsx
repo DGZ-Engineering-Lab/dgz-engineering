@@ -1,5 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import ShapefileUploader from "./ShapefileUploader";
 
 export default function SpatialLabSection() {
   const [flags, setFlags] = useState({
@@ -135,6 +138,17 @@ export default function SpatialLabSection() {
         <div className="pt-32 border-t border-slate-800/50">
           <ProjectCarousel />
         </div>
+
+        {/* Async Geometry Validator - Expert Node */}
+        <div className="mt-20 max-w-4xl mx-auto">
+          <div className="text-center mb-10 space-y-4">
+             <div className="text-[10px] font-mono text-indigo-400 uppercase tracking-[0.3em]">Módulo de Validación Masiva</div>
+             <h3 className="text-3xl font-black text-white tracking-tighter">Auditoría Topológica <span className="italic font-light text-slate-500">Asíncrona</span></h3>
+             <p className="text-slate-400 text-sm max-w-2xl mx-auto">Cargue archivos Shapefile (.zip) para ejecutar procesos de limpieza topológica LADM-COL en nuestro clúster de computación distribuida.</p>
+          </div>
+          <ShapefileUploader />
+        </div>
+
       </div>
     </section>
   );

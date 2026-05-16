@@ -121,7 +121,7 @@ export default function ServicesSection() {
             <span className="text-cyan-400 font-mono text-xs tracking-[0.4em] uppercase">Capacidades Técnicas</span>
             <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-cyan-500"></div>
           </div>
-          
+
           <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight max-w-4xl">
             Sistemas de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Misión Crítica</span> para el Territorio
           </h2>
@@ -129,13 +129,13 @@ export default function ServicesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((svc) => (
-            <div 
+            <div
               key={svc.id}
               className="group relative flex flex-col p-10 rounded-3xl bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/30 transition-all duration-500 hover:-translate-y-2 shadow-2xl overflow-hidden"
             >
               {/* Animated Glow on hover */}
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[60px] group-hover:bg-cyan-500/20 transition-all duration-700 rounded-full"></div>
-              
+
               <div className="flex justify-between items-start mb-8 relative z-10">
                 <span className="font-mono text-[10px] text-slate-500 tracking-[0.2em]">{svc.id}</span>
                 <div className={`flex items-center gap-2 px-3 py-1 rounded-full border text-[9px] font-black tracking-[0.1em] ${svc.statusColor}`}>

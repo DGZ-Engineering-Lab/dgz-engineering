@@ -1,3 +1,4 @@
+"use client";
 export default function MetricsSection() {
   const metrics = [
     {
@@ -54,7 +55,7 @@ export default function MetricsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {metrics.map((m, idx) => (
-            <div 
+            <div
               key={idx}
               className={`relative flex flex-col p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-slate-600 transition-all duration-300 ${m.glow} group`}
             >
@@ -76,7 +77,7 @@ export default function MetricsSection() {
               <h4 className="text-white font-semibold text-lg leading-tight mb-2">
                 {m.label}
               </h4>
-              
+
               <div className="mt-auto pt-4 border-t border-slate-800/50">
                 <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
                   {m.sub}

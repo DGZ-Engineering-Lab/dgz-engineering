@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 export default function OfficialGISDemo() {
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [apiStatus, setApiStatus] = useState("INITIALIZING");
 
   useEffect(() => {
     // Load Leaflet dynamically to avoid SSR issues
@@ -37,6 +38,76 @@ export default function OfficialGISDemo() {
           attribution: "© IGAC - Colombia en Mapas",
           opacity: 0.7
         }).addTo(map);
+
+
+        // DEV-GIZ SPATIAL INTELLIGENCE LAYER (The "Blood" of the project)
+        const fetchParcels = async () => {
+          try {
+            const response = await fetch("https://devgiz-api.onrender.com/api/parcels");
+            const data = await response.json();
+            
+            if (data && data.features) {
+              const geojsonLayer = L.geoJSON(data, {
+                style: {
+                  color: "#3b82f6",
+                  weight: 2,
+                  fillColor: "#3b82f6",
+                  fillOpacity: 0.2
+                },
+                onEachFeature: (feature, layer) => {
+                  layer.on('click', async (e) => {
+                    layer.bindPopup("Cargando análisis de inteligencia...").openPopup();
+                    
+                    try {
+                      const analysisResponse = await fetch("https://devgiz-api.onrender.com/api/intelligence/analyze_context", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(feature)
+                      });
+                      const analysis = await analysisResponse.json();
+                      
+                      const popupContent = `
+                        <div class="p-2 font-mono text-[10px] space-y-2">
+                          <div class="flex justify-between border-b border-white/10 pb-1">
+                            <span class="text-blue-400">ID_PREDIO:</span>
+                            <span class="text-white">${analysis.parcel_id}</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-cyan-400">SPATIAL_SCORE:</span>
+                            <span class="font-bold ${analysis.spatial_score > 70 ? 'text-emerald-400' : 'text-yellow-400'}">${analysis.spatial_score}/100</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-red-400">RIESGO_AMBIENTAL:</span>
+                            <span class="font-bold">${analysis.risk_level}</span>
+                          </div>
+                          <div class="mt-2 pt-2 border-t border-white/10">
+                            <div class="text-blue-300 uppercase mb-1">Recomendaciones:</div>
+                            <ul class="list-disc pl-3 text-slate-300">
+                              ${analysis.recommendations.map(r => `<li>${r}</li>`).join('')}
+                            </ul>
+                          </div>
+                        </div>
+                      `;
+                      layer.setPopupContent(popupContent);
+                    } catch (err) {
+                      layer.setPopupContent("Error en nodo de inteligencia.");
+                    }
+                  });
+                }
+              }).addTo(map);
+              
+              // Center map on parcels
+              map.fitBounds(geojsonLayer.getBounds());
+              setApiStatus("GEO_AI_NODE_ACTIVE");
+            }
+          } catch (error) {
+            console.error("API Connection error:", error);
+            setApiStatus("OFFLINE_FALLBACK");
+          }
+        };
+
+        fetchParcels();
+
 
         L.control.layers({
           "OpenStreetMap": osm,
@@ -88,7 +159,7 @@ export default function OfficialGISDemo() {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
           
-          <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[700px] flex flex-col">
+          <div className="relative bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
             
             {/* Console Header */}
             <div className="p-4 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex justify-between items-center z-20">

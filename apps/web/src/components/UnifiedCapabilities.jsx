@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import Logo from "./Logo";
 import RealtimeDataStream from "./RealtimeDataStream";
