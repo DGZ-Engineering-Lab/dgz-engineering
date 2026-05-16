@@ -27,6 +27,23 @@ export default function FooterSection() {
   return (
     <footer className="relative w-full border-t border-slate-100 bg-white text-[#1a1a1a] z-10 pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-6">
+
+        {/* Global Marketing Hook CTA */}
+        <div className="mb-24 p-12 bg-[#1a1a1a] rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative group">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+          <div className="relative z-10 space-y-4 text-center lg:text-left">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.5em]">Enterprise Solutions</div>
+            <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter">¿Listo para escalar su <span className="text-slate-500 italic">Infraestructura Espacial?</span></h3>
+            <p className="text-slate-400 text-sm max-w-xl">Únase a los gobiernos y empresas que ya optimizan sus activos territoriales con nuestra tecnología.</p>
+          </div>
+          <Link
+            href="/#contact"
+            className="relative z-10 px-10 py-5 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-200 transition-all shadow-2xl rounded-sm whitespace-nowrap"
+          >
+            Solicitar Auditoría Espacial
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-24">
           
           {/* Brand Info */}

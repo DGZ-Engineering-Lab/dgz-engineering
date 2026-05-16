@@ -26,7 +26,7 @@ export default function ShapefileUploader() {
   const uploadFile = async () => {
     if (!file) return;
     setStatus("UPLOADING");
-    
+
     const formData = new FormData();
     formData.append("file", file);
 
@@ -64,7 +64,7 @@ export default function ShapefileUploader() {
           const response = await fetch(`${API_URL}/api/v1/jobs/${jobId}`);
           if (response.ok) {
             const data = await response.json();
-            
+
             if (data.status === "Completed") {
               setStatus("COMPLETED");
               setResult(data.result);
@@ -92,7 +92,7 @@ export default function ShapefileUploader() {
     <div className="w-full max-w-2xl mx-auto p-6 bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-2xl relative overflow-hidden">
       {/* Fondo de ruido y luces */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 pointer-events-none"></div>
-      
+
       <div className="relative z-10 space-y-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20">
@@ -106,8 +106,8 @@ export default function ShapefileUploader() {
 
         {/* Zona de Drop/Upload */}
         <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-colors bg-black/40 rounded-2xl p-8 text-center relative group">
-          <input 
-            type="file" 
+          <input
+            type="file"
             accept=".zip,.geojson,.kml,.gpkg,.shp"
             onChange={handleFileChange}
             disabled={status === "UPLOADING" || status === "PROCESSING"}
