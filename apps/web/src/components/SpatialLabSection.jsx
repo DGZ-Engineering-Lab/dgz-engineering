@@ -66,7 +66,17 @@ function ProjectCarousel() {
       img: "/assets/img/logo-construmetrix.svg",
       link: "https://daga21gz.github.io/ConstruMetrix/",
       tech: ["POSTGIS", "PYQGIS", "MAPBOX GL"],
-      color: "cyan",
+      theme: {
+        text: "text-cyan-400",
+        from: "from-cyan-400",
+        bg: "bg-cyan-500",
+        hoverBorder: "hover:border-cyan-500",
+        hoverBg: "hover:bg-cyan-500",
+        hoverText: "hover:text-cyan-300",
+        via: "via-cyan-500",
+        shadow: "shadow-[0_0_15px_#06b6d4]",
+        colorHex: "#22d3ee"
+      },
       glow: "shadow-[0_0_80px_rgba(6,182,212,0.3)]",
       border: "border-cyan-500/50"
     },
@@ -80,7 +90,17 @@ function ProjectCarousel() {
       icon: "🧠",
       link: "https://dgz-engineering-lab.github.io/E.V.A/",
       tech: ["AI_AGENT", "LLM CORE", "NODE.JS"],
-      color: "indigo",
+      theme: {
+        text: "text-indigo-400",
+        from: "from-indigo-400",
+        bg: "bg-indigo-500",
+        hoverBorder: "hover:border-indigo-500",
+        hoverBg: "hover:bg-indigo-500",
+        hoverText: "hover:text-indigo-300",
+        via: "via-indigo-500",
+        shadow: "shadow-[0_0_15px_#6366f1]",
+        colorHex: "#818cf8"
+      },
       glow: "shadow-[0_0_80px_rgba(99,102,241,0.3)]",
       border: "border-indigo-500/50"
     },
@@ -94,7 +114,17 @@ function ProjectCarousel() {
       icon: "🤖",
       link: "/projects/geo-llm",
       tech: ["LLM", "POSTGIS AI", "VECTOR DB"],
-      color: "amber",
+      theme: {
+        text: "text-amber-400",
+        from: "from-amber-400",
+        bg: "bg-amber-500",
+        hoverBorder: "hover:border-amber-500",
+        hoverBg: "hover:bg-amber-500",
+        hoverText: "hover:text-amber-300",
+        via: "via-amber-500",
+        shadow: "shadow-[0_0_15px_#f59e0b]",
+        colorHex: "#fbbf24"
+      },
       glow: "shadow-[0_0_80px_rgba(245,158,11,0.3)]",
       border: "border-amber-500/50"
     },
@@ -108,7 +138,17 @@ function ProjectCarousel() {
       icon: "📊",
       link: "/projects/gis-dashboard",
       tech: ["REACT 19", "POSTGIS", "MAPLIBRE"],
-      color: "blue",
+      theme: {
+        text: "text-blue-400",
+        from: "from-blue-400",
+        bg: "bg-blue-500",
+        hoverBorder: "hover:border-blue-500",
+        hoverBg: "hover:bg-blue-500",
+        hoverText: "hover:text-blue-300",
+        via: "via-blue-500",
+        shadow: "shadow-[0_0_15px_#3b82f6]",
+        colorHex: "#60a5fa"
+      },
       glow: "shadow-[0_0_80px_rgba(59,130,246,0.3)]",
       border: "border-blue-500/50"
     },
@@ -122,7 +162,17 @@ function ProjectCarousel() {
       icon: "🔌",
       link: "/projects/qgis-plugin",
       tech: ["PYQGIS", "LADM-COL", "PYTHON"],
-      color: "emerald",
+      theme: {
+        text: "text-emerald-400",
+        from: "from-emerald-400",
+        bg: "bg-emerald-500",
+        hoverBorder: "hover:border-emerald-500",
+        hoverBg: "hover:bg-emerald-500",
+        hoverText: "hover:text-emerald-300",
+        via: "via-emerald-500",
+        shadow: "shadow-[0_0_15px_#10b981]",
+        colorHex: "#34d399"
+      },
       glow: "shadow-[0_0_80px_rgba(16,185,129,0.3)]",
       border: "border-emerald-500/50"
     }
@@ -140,7 +190,7 @@ function ProjectCarousel() {
       <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6 relative z-20">
         <div className="space-y-2 text-center md:text-left">
           <h2 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase">
-            Ecosistema de <span className={`text-transparent bg-clip-text bg-gradient-to-r from-${activeProject.color}-400 to-blue-500`}>Soluciones</span>
+            Ecosistema de <span className={`text-transparent bg-clip-text bg-gradient-to-r ${activeProject.theme.from} to-blue-500`}>Soluciones</span>
           </h2>
           <p className="text-slate-400 font-mono text-xs tracking-widest">SELECCIONA UN NODO PARA INICIAR LA SECUENCIA</p>
         </div>
@@ -152,16 +202,16 @@ function ProjectCarousel() {
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`h-2 transition-all duration-500 rounded-full ${i === activeIndex ? `w-12 bg-${projects[i].color}-500 shadow-[0_0_15px_currentColor]` : 'w-4 bg-slate-800 hover:bg-slate-600'}`}
+                className={`h-2 transition-all duration-500 rounded-full ${i === activeIndex ? `w-12 ${projects[i].theme.bg} ${projects[i].theme.shadow}` : 'w-4 bg-slate-800 hover:bg-slate-600'}`}
                 aria-label={`Ir al proyecto ${i + 1}`}
               />
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={prev} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
+            <button onClick={prev} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={next} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-${activeProject.color}-500 hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
+            <button onClick={next} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>
@@ -174,7 +224,7 @@ function ProjectCarousel() {
         {/* Dynamic Background Glow matching active project color */}
         <div className={`absolute inset-0 ${activeProject.glow} opacity-40 blur-[100px] rounded-[2rem] transition-all duration-1000 pointer-events-none`}></div>
 
-        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-3xl border ${activeProject.border} rounded-[2rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
+        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-md border ${activeProject.border} rounded-[2rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
           
           {/* Top/Left Visual Area */}
           <div className="w-full lg:w-[45%] min-h-[250px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#050810] to-[#02040a] border-b lg:border-b-0 lg:border-r border-slate-800">
@@ -182,7 +232,7 @@ function ProjectCarousel() {
             <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
             
             {/* Scanning Line */}
-            <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-${activeProject.color}-500 to-transparent animate-[scan_3s_ease-in-out_infinite] z-20`}></div>
+            <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${activeProject.theme.via} to-transparent animate-[scan_3s_ease-in-out_infinite] z-20`}></div>
 
             <div className="relative z-10 transition-transform duration-700 group-hover:scale-[1.03] flex justify-center items-center p-6 w-full h-full">
               {activeProject.img ? (
@@ -190,7 +240,7 @@ function ProjectCarousel() {
                   <Image src={activeProject.img} alt={activeProject.title} fill className="object-contain" />
                 </div>
               ) : (
-                <div className="text-[80px] md:text-[100px] filter drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_80px_currentColor] transition-all duration-500" style={{ color: `var(--tw-colors-${activeProject.color}-400)` }}>
+                <div className="text-[80px] md:text-[100px] filter drop-shadow-[0_0_60px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_80px_currentColor] transition-all duration-500" style={{ color: activeProject.theme.colorHex }}>
                   {activeProject.icon}
                 </div>
               )}
@@ -205,7 +255,7 @@ function ProjectCarousel() {
             
             {/* Tags and Status */}
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <span className={`px-3 py-1 bg-slate-900 border border-slate-700 rounded-full font-mono text-[9px] sm:text-[10px] text-${activeProject.color}-400 tracking-[0.3em] uppercase font-bold shadow-lg`}>
+              <span className={`px-3 py-1 bg-slate-900 border border-slate-700 rounded-full font-mono text-[9px] sm:text-[10px] ${activeProject.theme.text} tracking-[0.3em] uppercase font-bold shadow-lg`}>
                 {activeProject.tag}
               </span>
               <div className="flex items-center gap-2">
@@ -227,7 +277,7 @@ function ProjectCarousel() {
             {/* Tech Stack Pills */}
             <div className="flex flex-wrap gap-2 mb-10">
               {activeProject.tech.map((t, i) => (
-                <span key={i} className={`px-3 py-1.5 bg-[#02040a] border border-slate-800 text-[10px] font-mono text-slate-300 rounded-lg uppercase tracking-widest hover:border-${activeProject.color}-500 hover:text-${activeProject.color}-300 hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
+                <span key={i} className={`px-3 py-1.5 bg-[#02040a] border border-slate-800 text-[10px] font-mono text-slate-300 rounded-lg uppercase tracking-widest ${activeProject.theme.hoverBorder} ${activeProject.theme.hoverText} hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
                   {t}
                 </span>
               ))}
@@ -239,13 +289,13 @@ function ProjectCarousel() {
                 href={activeProject.link}
                 target="_blank"
                 rel="noreferrer"
-                className={`group/btn relative inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-black font-black text-xs rounded-xl hover:bg-${activeProject.color}-500 hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_currentColor] uppercase tracking-[0.2em] overflow-hidden`}
+                className={`group/btn relative inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-black font-black text-xs rounded-xl ${activeProject.theme.hoverBg} hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_currentColor] uppercase tracking-[0.2em] overflow-hidden`}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   INICIALIZAR SECUENCIA 
                   <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                 </span>
-                <div className={`absolute inset-0 bg-${activeProject.color}-500 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out`}></div>
+                <div className={`absolute inset-0 ${activeProject.theme.bg} translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out`}></div>
               </a>
             </div>
 
