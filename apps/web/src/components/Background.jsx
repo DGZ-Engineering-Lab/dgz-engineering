@@ -7,12 +7,19 @@ export default function Background() {
   const gridRef = useRef(null);
 
   useEffect(() => {
+    let ticking = false;
     const handleMouseMove = (e) => {
-      if (gridRef.current) {
-        const x = (e.clientX / window.innerWidth) * 100;
-        const y = (e.clientY / window.innerHeight) * 100;
-        gridRef.current.style.setProperty("--mouse-x", `${x}%`);
-        gridRef.current.style.setProperty("--mouse-y", `${y}%`);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (gridRef.current) {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            gridRef.current.style.setProperty("--mouse-x", `${x}%`);
+            gridRef.current.style.setProperty("--mouse-y", `${y}%`);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
