@@ -17,7 +17,7 @@ export default function GeoAISection() {
             // GEOAI_MODULE
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            GeoAI Intelligence
+            Soberanía de Datos con GeoAI
           </h2>
         </div>
 
@@ -27,20 +27,20 @@ export default function GeoAISection() {
           <div className="w-full lg:w-1/2 space-y-10">
             <div>
               <h3 className="text-2xl font-bold text-emerald-300 mb-4">
-                Urban Change Detection<br />con Imagenería Sentinel
+                Detección de Construcciones <br /> No Autorizadas
               </h3>
               <p className="text-slate-400 leading-relaxed">
-                Aplicación de inteligencia artificial geoespacial para detectar cambios de cobertura urbana y rural comparando imágenes satelitales multitemporales. Pipeline completo desde descarga Sentinel hasta exportación GeoJSON.
+                Implementamos algoritmos de visión artificial sobre imagenería Sentinel-2 para el monitoreo dinámico del territorio, permitiendo identificar crecimientos urbanos informales y optimizar el recaudo fiscal.
               </p>
             </div>
 
             {/* Steps */}
             <div className="space-y-6">
               {[
-                { num: "01", title: "Descarga Imagenería Sentinel-2", desc: "API Copernicus // Bandas espectrales B04, B08, B11 // resolución 10m" },
-                { num: "02", title: "Procesamiento con Rasterio + GeoPandas", desc: "Normalización radiométrica // Comparación multitemporal // NumPy arrays" },
-                { num: "03", title: "Clasificación con Scikit-learn", desc: "Random Forest // Detección de cambios // Vectorización de polígonos" },
-                { num: "04", title: "Exportación GeoJSON → Web GIS", desc: "Visualización en MapLibre GL // Integración PostGIS // API REST" }
+                { num: "01", title: "Adquisición Multiespectral", desc: "Monitoreo constante vía constelación Sentinel // resolución 10m" },
+                { num: "02", title: "Análisis de Cobertura Vegetal (NDVI)", desc: "Identificación de remoción de capa vegetal para nuevas obras" },
+                { num: "03", title: "Segmentación con Machine Learning", desc: "Clasificación automática de cambios en el tejido urbano" },
+                { num: "04", title: "Alerta de Impacto Catastral", desc: "Notificación automática a sistemas de planeación y hacienda" }
               ].map((step, i) => (
                 <div key={i} className="flex gap-6 group">
                   <div className="flex flex-col items-center">
@@ -108,10 +108,10 @@ export default function GeoAISection() {
 
               {/* Console Output */}
               <div className="p-6 bg-[#0a0f16] font-mono text-xs leading-relaxed text-slate-400">
-                <div className="text-emerald-500">&gt;&gt;&gt; SENTINEL_BAND: B08+B04+B11</div>
-                <div>&gt;&gt;&gt; DATE_COMPARISON: 2023-01-15 vs 2025-01-15</div>
-                <div>&gt;&gt;&gt; CHANGE_PIXELS_DETECTED: <span className="text-red-400">RED</span> = URBAN_EXPANSION</div>
-                <div>&gt;&gt;&gt; STABLE_PIXELS: <span className="text-emerald-400">GREEN</span> = NO_CHANGE</div>
+                <div className="text-emerald-500">&gt;&gt;&gt; ENGINE_STATUS: MONITORING_ACTIVE</div>
+                <div>&gt;&gt;&gt; TARGET: URBAN_GROWTH_CONTROL</div>
+                <div>&gt;&gt;&gt; DETECTED: <span className="text-red-400">NEW_CONSTRUCTION</span> // ACTION: UPDATE_CADASTRE</div>
+                <div>&gt;&gt;&gt; IMPACT: <span className="text-emerald-400">REVENUE_OPTIMIZATION</span></div>
               </div>
 
             </div>

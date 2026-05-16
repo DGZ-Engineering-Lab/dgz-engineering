@@ -60,7 +60,7 @@ async def get_system_status():
         }
     }
 
-@app.get("/parcels", tags=["Cadastre"])
+@app.get("/api/parcels", tags=["Cadastre"])
 async def get_ingested_parcels(db: Session = Depends(get_db)):
     """
     Retrieves real cadastral data ingested from IGAC.
@@ -93,17 +93,17 @@ async def get_ingested_parcels(db: Session = Depends(get_db)):
             "note": "FALLBACK_DEMO_DATA"
         }
 
-@app.post("/validate", tags=["Topology"])
+@app.post("/api/validate", tags=["Topology"])
 async def validate_topology(request: ValidationRequest):
     """Expert-level topological validation engine."""
     return validate_collection_topology(request.features)
 
-@app.post("/intelligence/parcel_score", tags=["AI"])
+@app.post("/api/intelligence/parcel_score", tags=["AI"])
 async def calculate_parcel_intelligence(feature: GeoJSONFeature):
     """Calculates the 'Spatial Intelligence Score' for a parcel."""
     return calculate_parcel_score(feature)
 
-@app.post("/intelligence/analyze_context", tags=["GeoAI"])
+@app.post("/api/intelligence/analyze_context", tags=["GeoAI"])
 async def analyze_context(feature: GeoJSONFeature):
     """
     Advanced Environmental Analysis using Polars and DuckDB Simulation.
@@ -138,7 +138,7 @@ async def query_vur(matricula: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/config/mapbox-token", tags=["System"])
+@app.get("/api/config/mapbox-token", tags=["System"])
 async def get_mapbox_token():
     """Returns the Mapbox token from environment variables."""
     token = os.getenv("MAPBOX_TOKEN")

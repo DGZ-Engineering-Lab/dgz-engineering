@@ -9,14 +9,27 @@ let isIGACActive = false;
 let isCadastreActive = false;
 let isPowerActive = false;
 
-const cadastreGeoJSON = {
-    "type": "FeatureCollection",
-    "features": [
-        { "type": "Feature", "properties": { "predio": "001-A", "uso": "Residencial", "area": "120m²", "propietario": "J. Pérez", "avaluo": "$150M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7110 ], [ -74.0725, 4.7110 ], [ -74.0725, 4.7114 ], [ -74.0721, 4.7114 ], [ -74.0721, 4.7110 ] ] ] } },
-        { "type": "Feature", "properties": { "predio": "001-B", "uso": "Comercial", "area": "85m²", "propietario": "M. Gómez", "avaluo": "$210M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7106 ], [ -74.0725, 4.7106 ], [ -74.0725, 4.7110 ], [ -74.0721, 4.7110 ], [ -74.0721, 4.7106 ] ] ] } },
-        { "type": "Feature", "properties": { "predio": "002-A", "uso": "Lote Baldío", "area": "400m²", "propietario": "Distrito Capital", "avaluo": "$30M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0715, 4.7106 ], [ -74.0721, 4.7106 ], [ -74.0721, 4.7114 ], [ -74.0715, 4.7114 ], [ -74.0715, 4.7106 ] ] ] } }
-    ]
-};
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8000'
+    : '';
+
+async function fetchParcels() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/parcels`);
+        if (!response.ok) throw new Error('API_FETCH_ERROR');
+        return await response.json();
+    } catch (e) {
+        console.warn("Using fallback static parcels.");
+        return {
+            "type": "FeatureCollection",
+            "features": [
+                { "type": "Feature", "properties": { "predio": "001-A", "uso": "Residencial", "area": "120m²", "propietario": "J. Pérez", "avaluo": "$150M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7110 ], [ -74.0725, 4.7110 ], [ -74.0725, 4.7114 ], [ -74.0721, 4.7114 ], [ -74.0721, 4.7110 ] ] ] } },
+                { "type": "Feature", "properties": { "predio": "001-B", "uso": "Comercial", "area": "85m²", "propietario": "M. Gómez", "avaluo": "$210M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0721, 4.7106 ], [ -74.0725, 4.7106 ], [ -74.0725, 4.7110 ], [ -74.0721, 4.7110 ], [ -74.0721, 4.7106 ] ] ] } },
+                { "type": "Feature", "properties": { "predio": "002-A", "uso": "Lote Baldío", "area": "400m²", "propietario": "Distrito Capital", "avaluo": "$30M" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -74.0715, 4.7106 ], [ -74.0721, 4.7106 ], [ -74.0721, 4.7114 ], [ -74.0715, 4.7114 ], [ -74.0715, 4.7106 ] ] ] } }
+            ]
+        };
+    }
+}
 
 const powerLinesGeoJSON = {
     "type": "FeatureCollection",
@@ -62,7 +75,7 @@ export function initMap(accessToken) {
     return map;
 }
 
-export function addCustomLayers() {
+export async function addCustomLayers() {
     if (!map) return;
     
     // 1. Colombia Departamentos
@@ -147,9 +160,10 @@ export function addCustomLayers() {
     // 4. Cadastre
     if (isCadastreActive) {
         if (!map.getSource('cadastre')) {
+            const data = await fetchParcels();
             map.addSource('cadastre', {
                 type: 'geojson',
-                data: cadastreGeoJSON
+                data: data
             });
         }
         if (!map.getLayer('cadastre-fill')) {
@@ -164,7 +178,8 @@ export function addCustomLayers() {
                         'Comercial', '#FFB400',
                         '#9D4EDD'
                     ],
-                    'fill-opacity': 0.4
+                    'fill-opacity': 0.5,
+                    'fill-outline-color': '#fff'
                 }
             });
             map.addLayer({
@@ -172,8 +187,22 @@ export function addCustomLayers() {
                 type: 'line',
                 source: 'cadastre',
                 paint: {
-                    'line-color': '#FFF',
-                    'line-width': 1
+                    'line-color': '#00E5FF',
+                    'line-width': 2,
+                    'line-dasharray': [2, 1]
+                }
+            });
+
+            // Adding a glow effect for selected/highlighted area look
+            map.addLayer({
+                id: 'cadastre-glow',
+                type: 'line',
+                source: 'cadastre',
+                paint: {
+                    'line-color': '#00E5FF',
+                    'line-width': 8,
+                    'line-blur': 6,
+                    'line-opacity': 0.3
                 }
             });
             map.flyTo({ center: [-74.0720, 4.7110], zoom: 16.5, speed: 1.5 });
@@ -181,6 +210,7 @@ export function addCustomLayers() {
     } else {
         if (map.getLayer('cadastre-fill')) map.removeLayer('cadastre-fill');
         if (map.getLayer('cadastre-line')) map.removeLayer('cadastre-line');
+        if (map.getLayer('cadastre-glow')) map.removeLayer('cadastre-glow');
         if (map.getSource('cadastre')) map.removeSource('cadastre');
     }
 
