@@ -385,6 +385,59 @@
       box-shadow: 0 0 30px var(--accent-purple);
     }
 
+    /* --- NEURAL BOOTING OVERLAY --- */
+    #neural-boot-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease-out, visibility 1s;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    #neural-boot-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .boot-loader {
+      width: 300px;
+      height: 2px;
+      background: rgba(0, 229, 255, 0.1);
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .boot-loader::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 15px var(--accent-cyan);
+      animation: loading 2s infinite;
+    }
+
+    @keyframes loading {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .boot-text {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
     /* --- INFO HUD --- */
     .info-hud {
       position: absolute;
@@ -392,6 +445,16 @@
       left: 30px;
       width: 290px;
       z-index: 20;
+    }
+
+    .vision-glass-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      pointer-events: none;
+      border-radius: inherit;
     }
 
     .gesture-list {
@@ -413,6 +476,17 @@
 </head>
 
 <body>
+
+  <!-- NEURAL BOOT OVERLAY -->
+  <div id="neural-boot-overlay">
+    <div class="boot-text" id="boot-status">Initializing Neural Link...</div>
+    <div class="boot-loader"></div>
+    <div style="margin-top: 40px; font-family: var(--font-mono); font-size: 0.5rem; color: rgba(0, 229, 255, 0.3); text-align: center; line-height: 1.5;">
+      SYNCING_SPATIAL_NODES... [OK]<br>
+      CALIBRATING_OPTICS... [OK]<br>
+      ESTABLISHING_ENCRYPTED_UPLINK... [OK]
+    </div>
+  </div>
 
   <!-- MAP -->
   <div id="map-container"></div>
