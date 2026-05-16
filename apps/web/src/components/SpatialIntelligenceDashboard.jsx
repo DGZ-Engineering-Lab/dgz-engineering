@@ -296,7 +296,7 @@ export default function SpatialIntelligenceDashboard() {
           
           {/* Left Control Panel */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <div className="p-6 bg-slate-900/40 backdrop-blur-3xl border border-slate-800/50 rounded-[2rem] flex flex-col justify-between h-full shadow-2xl">
+            <div className="p-6 bg-slate-900/40 backdrop-blur-md border border-slate-800/50 rounded-[2rem] flex flex-col justify-between h-full shadow-2xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -406,11 +406,11 @@ export default function SpatialIntelligenceDashboard() {
           </div>
 
           {/* Map Viewport (Right) */}
-          <div className="lg:col-span-8 relative">
+          <div className="lg:col-span-8 relative min-h-[400px]">
             <div className="absolute inset-0 bg-slate-900 animate-pulse rounded-[2rem] -z-10"></div>
             <div 
               ref={mapContainer} 
-              className="w-full h-full rounded-[2rem] border border-slate-800 shadow-2xl overflow-hidden"
+              className="absolute inset-0 rounded-[2rem] border border-slate-800 shadow-2xl overflow-hidden"
             />
             
             {/* Analysis Overlay HUD */}
