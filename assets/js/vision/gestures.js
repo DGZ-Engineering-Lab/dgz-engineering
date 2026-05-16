@@ -39,7 +39,9 @@ export function initVisionElements(elements) {
 
 export async function initVision() {
     statusText.innerText = 'CARGANDO MODELO...';
-    
+    const overlay = document.getElementById('neural-boot-overlay');
+    if(overlay) overlay.classList.add('active');
+
     try {
         const hands = new Hands({locateFile: (file) => {
             return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -63,10 +65,15 @@ export async function initVision() {
         });
         
         await camera.start();
-        document.getElementById('btn-start').style.display = 'none';
-        statusText.style.color = '#00E5FF';
-        statusText.innerText = 'ONLINE / TRACKING';
-        cursor.style.display = 'block';
+
+        // Simulate a technical boot sequence
+        setTimeout(() => {
+            if(overlay) overlay.classList.remove('active');
+            document.getElementById('btn-start').style.display = 'none';
+            statusText.style.color = '#00E5FF';
+            statusText.innerText = 'ONLINE / TRACKING';
+            cursor.style.display = 'block';
+        }, 2000);
 
     } catch (err) {
         console.error(err);

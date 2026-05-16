@@ -6,6 +6,7 @@ import Logo from "../components/Logo";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
+import RealtimeDataStream from "../components/RealtimeDataStream";
 import GeoAISection from "../components/GeoAISection";
 import UnifiedCapabilities from "../components/UnifiedCapabilities";
 import SpatialLabSection from "../components/SpatialLabSection";
@@ -23,6 +24,9 @@ export default function Home() {
       <section className="relative pt-48 pb-32 px-6 overflow-hidden">
         {/* Advanced Engineering Background - Dynamic Scanning */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 opacity-40">
+            <RealtimeDataStream />
+          </div>
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)`, backgroundSize: '40px 40px' }}></div>
           <motion.div
             initial={{ top: "-10%" }}
