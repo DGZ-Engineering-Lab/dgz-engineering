@@ -49,12 +49,12 @@ export default function RealDataSimulator() {
 
   useEffect(() => {
     setIsValidating(true);
-    setLogs(["[INIT] Connecting to ICDE/IGAC Node...", `[FETCH] Pulling XTF record ${sample.id}`]);
+    setLogs(["[INIT] Connecting to ICDE/IGAC Node...", "[FETCH] Pulling XTF record " + sample.id]);
     
     const timers = [
-      setTimeout(() => setLogs(prev => [...prev, "[PARSING] Extracting LADM-COL packages..."]), 500),
+      setTimeout(() => setLogs(prev => [...prev, "[PARSING] Extracting LADM-COL packages..."])),
       setTimeout(() => setLogs(prev => [...prev, "[VALIDATION] Checking topology integrity..."]), 1000),
-      setTimeout(() => setLogs(prev => [...prev, `[SUCCESS] Spatial Unit validated: ${sample.nupre}`]), 2000),
+      setTimeout(() => setLogs(prev => [...prev, "[SUCCESS] Spatial Unit validated: " + sample.nupre]), 2000),
       setTimeout(() => setIsValidating(false), 2500)
     ];
 
@@ -62,7 +62,7 @@ export default function RealDataSimulator() {
   }, [currentIndex]);
 
   return (
-    <section className="relative w-full py-12 lg:py-16 bg-[#02040a] overflow-hidden border-y border-slate-800/30">
+    <section className="relative w-full py-32 bg-[#02040a] overflow-hidden border-y border-slate-800/30">
       <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#38BDF8 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -72,10 +72,10 @@ export default function RealDataSimulator() {
             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-[0.3em] font-black">Official Data Engine</span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">
+          <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
             Integración <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Nativa IGAC</span>
           </h2>
-          <p className="text-slate-400 max-w-3xl mx-auto text-sm lg:text-base font-light leading-relaxed">
+          <p className="text-slate-400 max-w-3xl mx-auto text-lg font-light leading-relaxed">
             Nuestros sistemas consumen y validan información directamente de los repositorios oficiales de la ICDE bajo el estándar LADM-COL.
           </p>
         </div>
@@ -102,15 +102,15 @@ export default function RealDataSimulator() {
             </div>
 
             <div className="flex-1 p-8 font-mono text-[11px] space-y-6 overflow-hidden">
-                <div className="space-y-2">
-                  <div className="text-slate-500">{/* RAW_JSON_INPUT (LADM-COL Schema) */}</div>
+               <div className="space-y-2">
+                 <div className="text-slate-500">// RAW_JSON_INPUT (LADM-COL Schema)</div>
                  <pre className="text-cyan-400/90 leading-relaxed overflow-auto max-h-[300px] scrollbar-hide">
                     {JSON.stringify(sample.raw, null, 2)}
                  </pre>
                </div>
                
-                <div className="pt-6 border-t border-slate-800/50 space-y-2">
-                  <div className="text-slate-500">{/* VALIDATION_STREAM */}</div>
+               <div className="pt-6 border-t border-slate-800/50 space-y-2">
+                  <div className="text-slate-500">// VALIDATION_STREAM</div>
                   <div className="space-y-1.5">
                     {logs.map((log, i) => (
                       <div key={i} className="flex gap-3 text-emerald-400/80 animate-in fade-in slide-in-from-left-4 duration-500">
@@ -165,7 +165,7 @@ export default function RealDataSimulator() {
                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-3xl">✅</div>
                <div className="flex-1 space-y-1">
                  <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Compliance Status</div>
-                 <div className="text-lg font-black text-white uppercase tracking-tight">Fully LADM-COL Compliant</div>
+                 <div className="text-xl font-black text-white uppercase tracking-tight">Fully LADM-COL Compliant</div>
                  <p className="text-xs text-slate-500">Registro validado contra el Catálogo de Objetos Catastrales IGAC 2024.</p>
                </div>
             </div>

@@ -36,24 +36,24 @@ export default function ExecutiveSummarySection() {
   ];
 
   return (
-    <section id="summary" className="relative w-full py-12 lg:py-16 z-10 bg-[#05070a] overflow-hidden">
+    <section id="summary" className="relative w-full py-32 z-10 bg-[#05070a] overflow-hidden">
       {/* Subtle Grid Pattern Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+        <div className="flex flex-col lg:flex-row gap-24 items-start">
           {/* Left: Message */}
           <div className="w-full lg:w-1/2 space-y-10">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase font-bold">
-              {"//_ESTRATEGIA_Y_MISIÓN"}
+              //_ESTRATEGIA_Y_MISIÓN
             </div>
             
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-[1.1]">
+              <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-[1.1]">
                 Inteligencia Territorial para la <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Era Digital.</span>
               </h2>
-              <p className="text-lg lg:text-xl text-slate-400 font-light leading-relaxed">
+              <p className="text-2xl text-slate-400 font-light leading-relaxed">
                 En DevGiz, transformamos el caos de datos geográficos en <span className="text-white">activos estratégicos</span>. Diseñamos el cerebro digital de su territorio para una gestión ágil, precisa y 100% auditable.
               </p>
             </div>
@@ -79,16 +79,16 @@ export default function ExecutiveSummarySection() {
           {/* Right: Feature Matrix */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6">
             {pillars.map((p, i) => (
-              <div key={i} className="group relative p-6 lg:p-8 rounded-[2rem] bg-slate-900/10 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-500 hover:bg-slate-900/30 flex gap-6 lg:gap-8 items-center">
-                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-500 shadow-xl border border-slate-700/50">
+              <div key={i} className="group relative p-10 rounded-[2rem] bg-slate-900/10 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-500 hover:bg-slate-900/30 flex gap-8 items-center">
+                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center text-cyan-400 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-black transition-all duration-500 shadow-xl border border-slate-700/50">
                   {p.icon}
                 </div>
-                <div className="flex-1 space-y-1 lg:space-y-2">
+                <div className="flex-1 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl lg:text-2xl font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors">{p.title}</h3>
+                    <h3 className="text-2xl font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors">{p.title}</h3>
                     <span className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">{p.subtitle}</span>
                   </div>
-                  <p className="text-slate-400 text-xs lg:text-sm leading-relaxed font-light">{p.desc}</p>
+                  <p className="text-slate-400 text-base leading-relaxed font-light">{p.desc}</p>
                 </div>
               </div>
             ))}

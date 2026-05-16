@@ -28,10 +28,8 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      data-scroll-behavior="smooth"
-      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]">
         <Background />
         <SystemStatusHeader />
         <Navbar />
