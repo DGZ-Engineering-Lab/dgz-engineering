@@ -19,12 +19,13 @@ const TECH_STACK = [
 
 export default function TechTicker() {
   return (
-    <div className="w-full bg-[#02040a] py-6 overflow-hidden border-y border-slate-800/30 relative">
+    <div className="w-full bg-[#02040a] py-6 overflow-hidden border-y border-slate-800/30 relative ph-no-capture sentry-block" data-sentry-block>
       <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#02040a] to-transparent z-10"></div>
       <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#02040a] to-transparent z-10"></div>
       
       <motion.div 
-        className="flex gap-12 items-center whitespace-nowrap"
+        className="flex gap-12 items-center whitespace-nowrap ph-no-capture sentry-block"
+        data-sentry-block
         animate={{ x: [0, -2000] }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       >
