@@ -84,16 +84,16 @@ async def analyze_shapefile(background_tasks: BackgroundTasks, file: UploadFile 
          
     job_id = str(uuid.uuid4())
     JOB_TRACKER[job_id] = {"status": "Processing", "file": file.filename, "result": None, "error": None}
-    
+
     # Enviar a Background Tasks de FastAPI (Nativo, no bloqueante)
     background_tasks.add_task(
-        _background_process_shapefile, 
+        _background_process_shapefile,
         job_id, temp_dir, temp_file_path, file.filename
     )
-    
+
     return {
-        "job_id": job_id, 
-        "status": "Processing", 
+        "job_id": job_id,
+        "status": "Processing",
         "message": "Archivo encolado. Use /api/v1/jobs/{job_id} para ver el resultado."
     }
 

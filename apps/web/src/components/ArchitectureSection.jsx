@@ -1,3 +1,5 @@
+"use client";
+
 export default function ArchitectureSection() {
   const nodes = [
     {
@@ -42,7 +44,7 @@ export default function ArchitectureSection() {
   return (
     <section id="architecture" className="relative w-full py-24 z-10 bg-[#05070a]">
       <div className="max-w-6xl mx-auto px-6">
-        
+
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16">
           <div className="flex items-center gap-4 mb-6">
@@ -71,7 +73,7 @@ export default function ArchitectureSection() {
                   <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-px bg-slate-700 z-0"></div>
                 )}
                 <div className={`relative z-10 flex flex-col items-center text-center p-8 rounded-2xl bg-[#0a0f16] border ${a.border} ${a.hoverBorder} transition-all duration-300`}>
-                  
+
                   {/* Step number */}
                   <div className="absolute -top-3 left-6 px-2 py-0.5 bg-[#05070a] text-slate-600 font-mono text-[10px] tracking-widest">
                     STEP_{String(i + 1).padStart(2, "0")}

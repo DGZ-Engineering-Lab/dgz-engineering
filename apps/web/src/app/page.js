@@ -1,24 +1,104 @@
 "use client";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import Logo from "../components/Logo";
+import ExecutiveSummarySection from "../components/ExecutiveSummarySection";
+import ChallengesSection from "../components/ChallengesSection";
+import ProfessionalProfile from "../components/ProfessionalProfile";
+import TechnicalEcosystem from "../components/TechnicalEcosystem";
+import ImpactMetrics from "../components/ImpactMetrics";
+import SimpleValueSection from "../components/SimpleValueSection";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
+import GeoAISection from "../components/GeoAISection";
+import UnifiedCapabilities from "../components/UnifiedCapabilities";
+import SpatialLabSection from "../components/SpatialLabSection";
+import SpatialIntelligenceDashboard from "../components/SpatialIntelligenceDashboard";
+import Link from "next/link";
 
-const SpatialIntelligenceDashboard = dynamic(
-  () => import("../components/SpatialIntelligenceDashboard"),
-  { ssr: false }
-);
+import ScrambleText from "../components/ScrambleText";
 
 export default function Home() {
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 overflow-x-hidden">
+    <>
+      <div className="flex flex-col items-center justify-center flex-1 px-6 text-center min-h-[95vh] relative z-10 pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <div className="w-[1000px] h-[1000px] bg-cyan-500/5 rounded-full blur-[150px] mix-blend-screen opacity-50 animate-pulse"></div>
+          <div className="w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px] mix-blend-screen opacity-40 absolute top-1/4 right-1/4"></div>
+        </div>
+
+        <div className="max-w-5xl mx-auto space-y-12 w-full relative z-10">
+          {/* Logo Centerpiece */}
+          <div className="flex justify-center mb-4">
+            <Logo className="w-32 h-32 md:w-40 md:h-40 drop-shadow-[0_0_50px_rgba(0,229,255,0.2)]" />
+          </div>
+          
+          {/* Main Title */}
+          <div className="space-y-4">
+            <h1 className="text-7xl md:text-[8rem] font-black tracking-tighter text-white leading-none">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-white">
+                Dev
+              </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
+                Giz
+              </span>
+            </h1>
+            <div className="text-xl md:text-2xl font-mono text-cyan-500 tracking-[0.5em] uppercase opacity-80 font-bold">
+              <ScrambleText text="Arquitectura Territorial Inteligente" />
+            </div>
+          </div>
+          
+          {/* Subtitle */}
+          <p className="max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed text-slate-300">
+            Transformamos datos territoriales complejos en <span className="text-cyan-400 font-bold">soluciones automáticas y precisas</span> para el sector público y privado.
+          </p>
+
+          {/* Call to Actions */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+            <a
+              href="#lab"
+              className="px-8 py-4 text-sm font-bold text-white uppercase tracking-widest transition-all bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg hover:from-cyan-500 hover:to-blue-500 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)] hover:-translate-y-1"
+            >
+              🚀 VER ECOSISTEMA
+            </a>
+            <a
+              href="#contact"
+              className="px-8 py-4 text-sm font-bold text-slate-300 uppercase tracking-widest transition-all border border-slate-700 bg-slate-900/50 rounded-lg hover:bg-slate-800 hover:text-white hover:border-slate-500 hover:-translate-y-1"
+            >
+              SOLUCIONES ENTERPRISE
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="reveal" style={{ animationDelay: '0.2s' }}>
+        <ExecutiveSummarySection />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.3s' }}>
+        <ChallengesSection />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.4s' }}>
+        <ImpactMetrics />
+      </div>
+      <div className="reveal" style={{ animationDelay: '0.5s' }}>
+        <ProfessionalProfile />
+      </div>
       
       {/* Hero Section - Institutional Power */}
       <section className="relative pt-48 pb-32 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        {/* Advanced Engineering Background - Dynamic Scanning */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)`, backgroundSize: '40px 40px' }}></div>
+          <motion.div
+            initial={{ top: "-10%" }}
+            animate={{ top: "110%" }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-slate-400 to-transparent shadow-[0_0_15px_rgba(148,163,184,0.5)]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#fcfcfc] via-transparent to-[#fcfcfc]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-8 space-y-12">
               <div className="flex items-center gap-4">
@@ -82,26 +162,32 @@ export default function Home() {
         <TechTicker />
       </section>
 
+      {/* Capabilities Section */}
+      <UnifiedCapabilities />
+
       {/* Strategic Vision - 3 Pillars */}
       <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100 shadow-2xl">
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">🏛️</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">🏛️</div>
             <h3 className="text-2xl font-black tracking-tight">Gobernanza</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Implementación de estándares internacionales para la seguridad jurídica del territorio nacional.</p>
           </div>
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">⚙️</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">⚙️</div>
             <h3 className="text-2xl font-black tracking-tight">Ingeniería</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Pipelines de procesamiento masivo desatendido con precisión milimétrica y validación automática.</p>
           </div>
           <div className="bg-[#fcfcfc] p-16 space-y-8 hover:bg-white transition-colors">
-            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl">🧠</div>
+            <div className="w-12 h-12 bg-slate-100 flex items-center justify-center text-xl shadow-inner rounded-xl">🧠</div>
             <h3 className="text-2xl font-black tracking-tight">Inteligencia</h3>
             <p className="text-slate-500 font-light leading-relaxed text-sm">Visualización táctica de activos territoriales y simulación de escenarios de impacto fiscal.</p>
           </div>
         </div>
       </section>
+
+      {/* GeoAI Node */}
+      <GeoAISection />
 
       {/* Territorial Control - Interactive Section */}
       <section className="py-20 bg-[#1a1a1a] text-white overflow-hidden relative">
@@ -135,6 +221,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Spatial Innovation Lab */}
+      <SpatialLabSection />
 
       {/* Featured Insights - Link to Journal */}
       <section className="py-24 px-6">
@@ -172,9 +261,14 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="reveal">
+        <TechnicalEcosystem />
+      </div>
+      <div className="reveal">
+        <SimpleValueSection />
+      </div>
       <ContactSection />
-
       <FooterSection />
-    </main>
+    </>
   );
 }

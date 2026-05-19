@@ -1,7 +1,6 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,7 +15,7 @@
     "@vercel/flags": "^2.6.2",
     "@vercel/kv": "^1.0.1",
     "@vercel/speed-insights": "^1.0.12",
-    "animejs": "^4.4.1",
+    "animejs": "^3.2.2",
     "framer-motion": "^12.38.0",
     "lightweight-charts": "^5.2.0",
     "lucide-react": "^1.16.0",

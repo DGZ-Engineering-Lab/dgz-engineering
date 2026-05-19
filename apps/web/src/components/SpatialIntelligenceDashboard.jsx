@@ -28,6 +28,7 @@ export default function SpatialIntelligenceDashboard() {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [activeAnalysis, setActiveAnalysis] = useState(null);
+  const [dashboardMode, setDashboardMode] = useState("TECHNICAL"); // TECHNICAL, STRATEGIC
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationStage, setSimulationStage] = useState("IDLE"); // IDLE, INGESTING, ANALYZING, CORRECTING, FINAL
   const [telemetry, setTelemetry] = useState([]);
@@ -53,7 +54,7 @@ export default function SpatialIntelligenceDashboard() {
   const fetchParcels = useCallback(async () => {
     addLog("INGESTING_DATA: Neon/PostGIS Stream...", "info");
     try {
-      const res = await fetch(`${GEOAPI_URL}/parcels`);
+      const res = await fetch(`${GEOAPI_URL}/api/parcels`);
       const data = await res.json();
       
       if (map.current && data.features) {
@@ -295,11 +296,21 @@ export default function SpatialIntelligenceDashboard() {
           
           {/* Left Control Panel */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <div className="p-6 bg-slate-900/40 backdrop-blur-md border border-slate-800/50 rounded-[2rem] flex flex-col justify-between h-full shadow-2xl">
+            <div className="p-6 bg-slate-900/40 backdrop-blur-3xl border border-slate-800/50 rounded-[2rem] flex flex-col justify-between h-full shadow-2xl">
               <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_15px_#06b6d4]"></div>
-                  <span className="text-cyan-400 font-mono text-xs tracking-widest font-bold uppercase">Territorial OS v6.2</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_15px_#06b6d4]"></div>
+                    <span className="text-cyan-400 font-mono text-xs tracking-widest font-bold uppercase">Territorial OS v6.2</span>
+                  </div>
+
+                  {/* Mode Toggle */}
+                  <button
+                    onClick={() => setDashboardMode(prev => prev === "TECHNICAL" ? "STRATEGIC" : "TECHNICAL")}
+                    className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[8px] font-bold text-slate-400 hover:text-white transition-all uppercase tracking-tighter"
+                  >
+                    {dashboardMode === "TECHNICAL" ? "View Strategic Mode" : "View Technical Mode"}
+                  </button>
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-black text-white tracking-tighter leading-tight">Spatial Intelligence <br/><span className="text-slate-500 italic">Digital Twin</span></h2>
                 <p className="text-slate-400 text-xs leading-relaxed">
@@ -307,21 +318,52 @@ export default function SpatialIntelligenceDashboard() {
                 </p>
               </div>
 
-              {/* Performance Stats */}
-              <div className="grid grid-cols-2 gap-4 my-8">
-                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-emerald-500/30 transition-all">
-                      <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
-                        <Cpu className="w-3 h-3" /> Polars Engine
+              {/* Performance / Strategic Stats */}
+              <AnimatePresence mode="wait">
+                {dashboardMode === "TECHNICAL" ? (
+                  <motion.div
+                    key="tech-stats"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="grid grid-cols-2 gap-4 my-8"
+                  >
+                      <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-emerald-500/30 transition-all">
+                          <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
+                            <Cpu className="w-3 h-3" /> Polars Engine
+                          </div>
+                          <div className="text-lg font-bold text-emerald-400">{polarsSpeed}ms</div>
                       </div>
-                      <div className="text-lg font-bold text-emerald-400">{polarsSpeed}ms</div>
-                  </div>
-                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-cyan-500/30 transition-all">
-                      <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
-                        <Activity className="w-3 h-3" /> Latency
+                      <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-cyan-500/30 transition-all">
+                          <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
+                            <Activity className="w-3 h-3" /> Latency
+                          </div>
+                          <div className="text-lg font-bold text-cyan-400">0.08ms</div>
                       </div>
-                      <div className="text-lg font-bold text-cyan-400">0.08ms</div>
-                  </div>
-              </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="strat-stats"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="grid grid-cols-2 gap-4 my-8"
+                  >
+                      <div className="p-4 bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/20 group hover:border-emerald-500/50 transition-all">
+                          <div className="text-[9px] text-emerald-500 font-mono mb-1 uppercase flex items-center gap-2">
+                            <ShieldCheck className="w-3 h-3" /> Fiscal Impact
+                          </div>
+                          <div className="text-lg font-bold text-white">+$2.4M USD</div>
+                      </div>
+                      <div className="p-4 bg-gradient-to-br from-blue-900/20 to-transparent rounded-2xl border border-blue-500/20 group hover:border-blue-500/50 transition-all">
+                          <div className="text-[9px] text-blue-500 font-mono mb-1 uppercase flex items-center gap-2">
+                            <Layers className="w-3 h-3" /> Compliance
+                          </div>
+                          <div className="text-lg font-bold text-white">100% LADM</div>
+                      </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className="space-y-4">
                 <button 
@@ -364,11 +406,11 @@ export default function SpatialIntelligenceDashboard() {
           </div>
 
           {/* Map Viewport (Right) */}
-          <div className="lg:col-span-8 relative min-h-[400px]">
+          <div className="lg:col-span-8 relative">
             <div className="absolute inset-0 bg-slate-900 animate-pulse rounded-[2rem] -z-10"></div>
             <div 
               ref={mapContainer} 
-              className="absolute inset-0 rounded-[2rem] border border-slate-800 shadow-2xl overflow-hidden"
+              className="w-full h-full rounded-[2rem] border border-slate-800 shadow-2xl overflow-hidden"
             />
             
             {/* Analysis Overlay HUD */}

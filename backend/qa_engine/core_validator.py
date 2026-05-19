@@ -124,7 +124,7 @@ class GeoQAValidator:
                 df_registral = pl.read_csv(excel_path, ignore_errors=True)
         except Exception as e:
             return {"error": f"Error al cargar el archivo tabular con Polars: {e}"}
-            
+
         # Normalizar nombres de columnas a minúsculas para evitar errores de digitación
         gdf.columns = [c.lower() for c in gdf.columns]
         df_registral = df_registral.rename({col: col.lower() for col in df_registral.columns})
@@ -156,23 +156,23 @@ class GeoQAValidator:
         area_discrepancies_count = 0
         if area_col_snr:
             snr_area_col = area_col_snr[0]
-            
+
             # Asegurar que el área en el registro sea float
             df_registral = df_registral.with_columns(pl.col(snr_area_col).cast(pl.Float64, strict=False))
-            
+
             # Inner join para comparar los que existen en ambos
             merged = df_spatial.join(df_registral.select([join_col, snr_area_col]), on=join_col, how="inner")
-            
+
             # Filtramos diferencias mayores a 1 m2
             discrepancies = merged.with_columns(
                 (pl.col("area_m2_calc") - pl.col(snr_area_col)).abs().alias("diff_m2")
             ).filter(pl.col("diff_m2") > 1.0).sort("diff_m2", descending=True)
-            
+
             area_discrepancies_count = discrepancies.height
-            
+
             # Limitamos el reporte a las primeras 100 anomalías para no saturar JSON
             area_diffs = discrepancies.head(100).select([join_col, "diff_m2"]).to_dicts()
-            
+
             # Formateamos la lista resultante
             for diff in area_diffs:
                 diff['id'] = diff.pop(join_col)

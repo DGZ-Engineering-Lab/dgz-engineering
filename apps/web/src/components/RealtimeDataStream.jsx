@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import { createChart, AreaSeries } from 'lightweight-charts';
-import { animate } from 'animejs';
+import { createChart } from 'lightweight-charts';
+import anime from 'animejs';
 
 export default function RealtimeDataStream() {
   const chartContainerRef = useRef(null);
@@ -13,8 +13,8 @@ export default function RealtimeDataStream() {
 
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { type: 'solid', color: 'transparent' },
-        textColor: '#94a3b8',
+        background: { color: 'transparent' },
+        textColor: '#64748b',
       },
       grid: {
         vertLines: { color: 'rgba(30, 41, 59, 0.5)' },
@@ -23,17 +23,14 @@ export default function RealtimeDataStream() {
       width: chartContainerRef.current.clientWidth,
       height: 300,
       timeScale: {
-        timeVisible: true,
-        secondsVisible: true,
-        borderColor: 'rgba(30, 41, 59, 1)',
+        visible: false,
       },
       rightPriceScale: {
-        borderColor: 'rgba(30, 41, 59, 1)',
         borderVisible: false,
       },
     });
 
-    const areaSeries = chart.addSeries(AreaSeries, {
+    const areaSeries = chart.addAreaSeries({
       lineColor: '#06b6d4',
       topColor: 'rgba(6, 182, 212, 0.3)',
       bottomColor: 'rgba(6, 182, 212, 0)',
@@ -43,9 +40,7 @@ export default function RealtimeDataStream() {
     let counter = 0;
     const interval = setInterval(() => {
       const value = 50 + Math.random() * 20 + Math.sin(counter / 10) * 10;
-      const time = Math.floor(Date.now() / 1000) + counter;
-      areaSeries.update({ time, value });
-      counter++;
+      areaSeries.update({ time: counter++, value });
     }, 500);
 
     const handleResize = () => {
@@ -54,13 +49,14 @@ export default function RealtimeDataStream() {
 
     window.addEventListener('resize', handleResize);
 
-    // Anime.js animation on title
+    // Anime.js Scramble effect on title (simulated)
     if (textRef.current) {
-        animate(textRef.current, {
+        anime({
+            targets: textRef.current,
             opacity: [0, 1],
             translateY: [20, 0],
             duration: 1500,
-            easing: 'outExpo'
+            easing: 'easeOutExpo'
         });
     }
 
