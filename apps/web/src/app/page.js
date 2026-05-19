@@ -133,7 +133,24 @@ export default function Home() {
                   <span className="text-[8px] font-mono text-white uppercase tracking-widest font-black">Tactical View: Activated</span>
                 </div>
               </div>
+              
+              <div className="absolute top-4 right-4 z-20">
+                <Link
+                  href="/projects"
+                  prefetch={false}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-slate-950/75 hover:bg-slate-900 backdrop-blur-md border border-slate-800 hover:border-cyan-500/50 rounded-sm text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_20px_rgba(6,182,212,0.35)] group/btn"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-maximize-2 w-3.5 h-3.5 text-cyan-400 group-hover/btn:rotate-12 transition-transform duration-300">
+                    <path d="M15 3h6v6" />
+                    <path d="M9 21H3v-6" />
+                    <path d="M21 3l-7 7" />
+                    <path d="M3 21l7-7" />
+                  </svg>
+                  <span>MÁXIMA RESOLUCIÓN</span>
+                </Link>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
