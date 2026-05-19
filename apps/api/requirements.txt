@@ -14,3 +14,4 @@ polars==0.20.15
 libpysal==4.10
 pandas==2.2.1
 brotli-asgi==1.4.0
+sentry-sdk[fastapi]==2.1.1

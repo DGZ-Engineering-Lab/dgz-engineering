@@ -1,5 +1,6 @@
 import os
 import time
+import sentry_sdk
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from brotli_asgi import BrotliMiddleware
@@ -13,11 +14,19 @@ from spatial_engine import validate_collection_topology, calculate_parcel_score,
 from database import get_db
 from vur_service import vur_service
 
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN", "https://930a7dd3e1c00e4cb8ce7deb6f4da906@o4511416986238976.ingest.us.sentry.io/4511416995545088"),
+    send_default_pii=True,
+    traces_sample_rate=0.3,
+    profiles_sample_rate=0.3,
+)
+
 app = FastAPI(
     title="DGZ Spatial Intelligence Engine",
     description="Advanced Spatial Systems Engineering API for Multipurpose Cadastre & Territorial Intelligence.",
     version="6.2.0"
 )
+
 
 # Robust CORS Configuration for Production
 app.add_middleware(
@@ -143,3 +152,10 @@ async def get_mapbox_token():
     """Returns the Mapbox token from environment variables."""
     token = os.getenv("MAPBOX_TOKEN")
     return {"token": token if token else ""}
+
+@app.get("/sentry-debug", tags=["System"])
+async def trigger_error():
+    """Triggers an error to verify Sentry connection."""
+    division_by_zero = 1 / 0
+    return {"result": division_by_zero}
+

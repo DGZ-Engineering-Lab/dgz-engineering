@@ -17,6 +17,7 @@ import FloatingTelemetry from "../components/FloatingTelemetry";
 import SystemStatusHeader from "../components/SystemStatusHeader";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { PostHogProvider } from "../components/PostHogProvider";
 
 export const metadata = {
   title: "DevGiz | Smart Geospatial DevOps Systems",
@@ -32,15 +33,18 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]" suppressHydrationWarning>
-        <Background />
-        <SystemStatusHeader />
-        <Navbar />
-        <main className="relative z-10 flex flex-col min-h-screen">
-          {children}
-        </main>
-        <Analytics />
-        <SpeedInsights />
+        <PostHogProvider>
+          <Background />
+          <SystemStatusHeader />
+          <Navbar />
+          <main className="relative z-10 flex flex-col min-h-screen">
+            {children}
+          </main>
+          <Analytics />
+          <SpeedInsights />
+        </PostHogProvider>
       </body>
     </html>
   );
 }
+
