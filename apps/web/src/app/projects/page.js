@@ -15,7 +15,7 @@ const PROJECTS = [
     category: "Gestión Territorial",
     tagline: "Soberanía fiscal y seguridad jurídica mediante el estándar LADM-COL.",
     impact: ["+300k Predios Actualizados", "100% Interoperabilidad XTF", "Reducción de tiempos en 70%"],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-ladm-col.png",
     stats: { label: "Estándar", value: "LADM-COL v3.0" }
   },
   {
@@ -24,7 +24,7 @@ const PROJECTS = [
     category: "Software de Ingeniería",
     tagline: "Validación topológica nativa de alto rendimiento.",
     impact: ["Error Humano -95%", "Sincronización PostGIS", "Reportes Automáticos"],
-    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/geoai_before.png",
     stats: { label: "Engine", value: "PyQGIS / Python" }
   },
   {
@@ -33,7 +33,7 @@ const PROJECTS = [
     category: "Infraestructura de Datos",
     tagline: "Automatización geoespacial desatendida para entidades públicas.",
     impact: ["500k+ Registros/Día", "Validación INTERLIS", "Cifrado AES-256"],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/topo-bg.png",
     stats: { label: "Protocolo", value: "GDAL / OGR" }
   },
   {
@@ -42,7 +42,7 @@ const PROJECTS = [
     category: "Inteligencia Artificial",
     tagline: "Análisis espacial avanzado mediante procesamiento de lenguaje natural.",
     impact: ["Natural Language SQL", "Análisis Predictivo", "Insights Territoriales"],
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-cybersecurity.png",
     stats: { label: "Modelo", value: "LLM-Hybrid GIS" }
   }
 ];

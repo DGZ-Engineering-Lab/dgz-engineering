@@ -12,7 +12,7 @@ const PROJECTS_DATA = {
     title: "Catastro Multipropósito: Valle del Cauca",
     category: "Gestión Territorial",
     tagline: "Soberanía fiscal y seguridad jurídica mediante el estándar LADM-COL.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-ladm-col.png",
     description: "Este proyecto representa la vanguardia en administración de tierras en Colombia. Implementamos un ecosistema completo basado en la norma ISO 19152 para descentralizar la gestión catastral del departamento, garantizando interoperabilidad con el IGAC y el SNR.",
     goals: [
       "Armonización de datos alfanuméricos y geográficos.",
@@ -31,7 +31,7 @@ const PROJECTS_DATA = {
     title: "LADM-COL QGIS Plugin",
     category: "Software de Ingeniería",
     tagline: "Validación topológica nativa para gestores territoriales.",
-    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/geoai_before.png",
     description: "Herramienta industrial diseñada para la validación instantánea de bases de datos territoriales bajo el estándar LADM-COL. Optimiza el flujo de trabajo eliminando errores manuales en la edición cartográfica.",
     goals: [
       "Detección de traslapes y huecos en tiempo real.",
@@ -50,7 +50,7 @@ const PROJECTS_DATA = {
     title: "Territorial ETL Pipelines",
     category: "Infraestructura de Datos",
     tagline: "Automatización geoespacial desatendida de alto rendimiento.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/topo-bg.png",
     description: "Sistemas de orquestación de datos para la migración y transformación masiva de archivos GML, GeoJSON y XTF. Diseñado para alta disponibilidad en entornos gubernamentales críticos.",
     goals: [
       "Orquestación desatendida mediante motores GDAL.",
@@ -69,7 +69,7 @@ const PROJECTS_DATA = {
     title: "Geo-LLM Intelligence",
     category: "Inteligencia Artificial",
     tagline: "Análisis espacial avanzado mediante lenguaje natural.",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-cybersecurity.png",
     description: "Motor de IA que permite interactuar con bases de datos geográficas mediante lenguaje natural. Convierte preguntas complejas en consultas espaciales precisas sobre el territorio.",
     goals: [
       "Traducción de lenguaje natural a Spatial SQL.",
