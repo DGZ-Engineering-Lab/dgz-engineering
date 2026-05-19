@@ -41,12 +41,14 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
                 <Link
                   href="/projects"
+                  prefetch={false}
                   className="px-10 py-5 bg-[#1a1a1a] text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-800 transition-all shadow-2xl"
                 >
                   Explorar Proyectos
                 </Link>
                 <Link
                   href="/about"
+                  prefetch={false}
                   className="px-10 py-5 border border-slate-200 text-[#1a1a1a] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-50 transition-all"
                 >
                   Nuestro Manifiesto
@@ -116,7 +118,7 @@ export default function Home() {
                 Nuestra plataforma unificada permite el monitoreo en tiempo real de la dinámica predial y la infraestructura crítica con protocolos de seguridad de alto nivel.
               </p>
               <div className="pt-4">
-                <Link href="/standards" className="inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white group">
+                <Link href="/standards" prefetch={false} className="inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white group">
                   Ver Protocolos de Seguridad
                   <span className="w-12 h-px bg-white transition-all group-hover:w-20"></span>
                 </Link>
@@ -144,13 +146,13 @@ export default function Home() {
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Engineering Journal</div>
               <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-[#1a1a1a]">Pensamiento <span className="text-slate-400 italic font-light">Estratégico</span></h2>
             </div>
-            <Link href="/blog" className="text-[10px] font-black uppercase tracking-widest border-b-2 border-[#1a1a1a] pb-1 hover:text-slate-500 hover:border-slate-300 transition-all">
+            <Link href="/blog" prefetch={false} className="text-[10px] font-black uppercase tracking-widest border-b-2 border-[#1a1a1a] pb-1 hover:text-slate-500 hover:border-slate-300 transition-all">
               Ver todas las publicaciones
             </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <Link href="/blog/1" className="group space-y-6">
+            <Link href="/blog/1" prefetch={false} className="group space-y-6">
               <div className="aspect-video bg-slate-100 overflow-hidden rounded-sm">
                 <img src="/assets/img/blog-ladm-col.png" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="LADM-COL" />
               </div>
@@ -159,7 +161,7 @@ export default function Home() {
                 <p className="text-slate-500 font-light text-sm line-clamp-2">Análisis profundo sobre la implementación del estándar LADM-COL en el Valle del Cauca y su impacto fiscal.</p>
               </div>
             </Link>
-            <Link href="/blog/2" className="group space-y-6">
+            <Link href="/blog/2" prefetch={false} className="group space-y-6">
               <div className="aspect-video bg-slate-100 overflow-hidden rounded-sm">
                 <img src="/assets/img/blog-cybersecurity.png" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Cybersecurity" />
               </div>
