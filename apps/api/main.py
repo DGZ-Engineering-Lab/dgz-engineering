@@ -12,11 +12,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from typing import List, Dict, Any
 
-# Ensure qa_engine is in the import path
+# Ensure apps/api directory is in the import path
 api_dir = os.path.dirname(os.path.abspath(__file__))
-qa_engine_path = os.path.abspath(os.path.join(api_dir, "..", "..", "backend", "qa_engine"))
-if qa_engine_path not in sys.path:
-    sys.path.insert(0, qa_engine_path)
+if api_dir not in sys.path:
+    sys.path.insert(0, api_dir)
+
 
 from schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
 from spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis

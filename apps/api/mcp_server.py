@@ -2,9 +2,9 @@ import sys
 import os
 
 api_dir = os.path.dirname(os.path.abspath(__file__))
-qa_engine_path = os.path.abspath(os.path.join(api_dir, "..", "..", "backend", "qa_engine"))
-if qa_engine_path not in sys.path:
-    sys.path.insert(0, qa_engine_path)
+if api_dir not in sys.path:
+    sys.path.insert(0, api_dir)
+
 
 import asyncio
 from typing import List, Dict, Any
