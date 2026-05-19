@@ -52,10 +52,10 @@ export default function AboutSection() {
 
           {/* Skills Column */}
           <div className="space-y-6 bg-black/40 border border-slate-800 p-8 rounded-2xl backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-            <SkillBar title="Spatial Data Engineering" percentage={95} color="bg-cyan-500" />
-            <SkillBar title="Python Automatization (GDAL/PyQGIS)" percentage={90} color="bg-emerald-500" />
-            <SkillBar title="PostGIS & Database Architecture" percentage={85} color="bg-purple-500" />
-            <SkillBar title="Frontend Web GIS (React/MapLibre)" percentage={80} color="bg-amber-500" />
+            <SkillBar title="Cruce Catastro-SNR Acelerado (Polars)" percentage={98} color="bg-emerald-500" />
+            <SkillBar title="Auto-Sanación Topológica (IA / Shapely)" percentage={95} color="bg-cyan-500" />
+            <SkillBar title="Sincronización Híbrida Real-Time & Offline" percentage={92} color="bg-red-500" />
+            <SkillBar title="Búsqueda Geo-LLM & Parquet (DuckDB)" percentage={88} color="bg-blue-500" />
           </div>
         </div>
       </div>

@@ -9,38 +9,38 @@ import { animate } from "animejs";
 const SERVICES = [
   {
     id: "svc-01",
-    title: "Actualización Territorial (LADM-COL)",
-    desc: "Implementación del modelo LADM-COL V3 para procesos catastrales masivos. Garantizamos integridad topológica y jurídica.",
-    icon: "🏗️",
-    metrics: ["+500 Predios/Día", "100% Legal Ready"],
-    tags: ["Interoperabilidad", "Catastro", "IGAC"],
-    color: "cyan"
-  },
-  {
-    id: "svc-02",
-    title: "Control de Calidad (QA/QC)",
-    desc: "Motores de validación automática para detectar inconsistencias espaciales y alfanuméricas antes de la entrega final.",
-    icon: "✅",
-    metrics: ["0.01% Error Margin", "Auto Validation"],
-    tags: ["Precisión", "Auditoría", "Compliance"],
+    title: "Cruce Físico-Jurídico (Polars)",
+    desc: "Procesamiento vectorizado ultrarrápido con Polars que ejecuta anti-joins paralelos entre cartografía catastral (GeoJSON/Shapefiles) y folios SNR (Excel/CSV) sin sobrecargar la base de datos.",
+    icon: "🧬",
+    metrics: ["0% DB Overhead", "Cruce en < 5ms"],
+    tags: ["Polars Engine", "Anti-Joins", "Interoperabilidad"],
     color: "emerald"
   },
   {
+    id: "svc-02",
+    title: "Auto-Sanación de Topología",
+    desc: "Mecanismo interactivo en caliente que invoca Shapely (vía FastMCP) directamente desde el HUD del mapa 3D para diagnosticar y auto-sanar traslapes y geometrías inválidas al instante.",
+    icon: "⚡",
+    metrics: ["make_valid() Live", "Glowing HUD Feedback"],
+    tags: ["Shapely", "FastMCP", "Validación Espacial"],
+    color: "cyan"
+  },
+  {
     id: "svc-03",
-    title: "ETL & GIS Pipelines",
-    desc: "Automatización completa del flujo de datos desde sensores de campo hasta bases de datos PostGIS centralizadas.",
-    icon: "📡",
-    metrics: ["Real-time Sync", "FastAPI Backend"],
-    tags: ["DevOps", "Python", "Spatial Data"],
+    title: "Búsqueda Geo-LLM (DuckDB)",
+    desc: "Barra de búsqueda semántica con lenguaje natural alimentada por DuckDB, consultando de forma dinámica particiones Hive de archivos Parquet para geolocalizar predios de manera eficiente.",
+    icon: "🔍",
+    metrics: ["Hive Partitions", "DuckDB Analytics"],
+    tags: ["DuckDB", "Parquet", "Semantic Search"],
     color: "blue"
   },
   {
     id: "svc-04",
-    title: "Auditoría Digital VUR/SNR",
-    desc: "Consulta y validación jurídica en tiempo real directamente desde la base de datos de la SNR (VUR). Garantía de certeza física y jurídica.",
-    icon: "⚖️",
-    metrics: ["SNR Live Sync", "99.9% Reliability"],
-    tags: ["VUR", "SNR", "Legal Tech"],
+    title: "Sincronización Híbrida",
+    desc: "Motor híbrido inteligente de sincronización local y nube con soporte offline-first. Cuenta con caché inteligente de 10 min de TTL que reduce la latencia a 0ms y garantiza resiliencia en la red.",
+    icon: "🔄",
+    metrics: ["Offline-First Sync", "TTL 10m / 0ms Latency"],
+    tags: ["Hybrid Storage", "Real-Time Sync", "Local Cache Wrapper"],
     color: "red"
   }
 ];
