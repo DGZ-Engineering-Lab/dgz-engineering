@@ -14,7 +14,7 @@ if (apiKey) {
 export async function POST(req) {
   try {
     // 1. IP Rate Limiting (Using Upstash)
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
     const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:ai:${ip}`);
 
     if (!success) {

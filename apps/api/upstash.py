@@ -52,11 +52,13 @@ def rate_limiter(limit: int = 15, window: int = 60):
     """
     async def dependency(request: Request):
         # Extract IP address from headers (handling proxy / Cloudflare)
-        ip = request.headers.get("x-forwarded-for")
-        if ip:
-            ip = ip.split(",")[0].strip()
-        else:
-            ip = request.client.host if request.client else "127.0.0.1"
+        ip = request.headers.get("cf-connecting-ip")
+        if not ip:
+            ip_header = request.headers.get("x-forwarded-for")
+            if ip_header:
+                ip = ip_header.split(",")[0].strip()
+            else:
+                ip = request.client.host if request.client else "127.0.0.1"
             
         if await is_rate_limited(ip, limit, window):
             logger.warning(f"🚫 IP {ip} exceeded rate limit of {limit} requests per {window}s.")

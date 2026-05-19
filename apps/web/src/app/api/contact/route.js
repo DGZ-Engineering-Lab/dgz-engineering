@@ -11,7 +11,7 @@ export const runtime = 'edge';
 
 export async function POST(req) {
   try {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
     const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:contact:${ip}`);
 
     if (!success) {
