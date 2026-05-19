@@ -322,22 +322,22 @@ export default function SpatialIntelligenceDashboard() {
                   <span className="text-cyan-400 font-mono text-xs tracking-widest font-bold uppercase">Territorial OS v6.2</span>
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-black text-white tracking-tighter leading-tight">Spatial Intelligence <br/><span className="text-slate-500 italic">Digital Twin</span></h2>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p className="text-slate-300 text-xs leading-relaxed font-medium">
                   Interoperabilidad avanzada con Neon (PostGIS), IGAC y motor analítico acelerado por Polars & DuckDB.
                 </p>
               </div>
 
               {/* Performance Stats */}
               <div className="grid grid-cols-2 gap-4 my-8">
-                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-emerald-500/30 transition-all">
-                      <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
-                        <Cpu className="w-3 h-3" /> Polars Engine
+                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-emerald-500/50 transition-all duration-300">
+                      <div className="text-[9px] text-slate-300 font-mono mb-1 uppercase flex items-center gap-2">
+                        <Cpu className="w-3 h-3 text-emerald-400" /> Polars Engine
                       </div>
                       <div className="text-lg font-bold text-emerald-400">{polarsSpeed}ms</div>
                   </div>
-                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-cyan-500/30 transition-all">
-                      <div className="text-[9px] text-slate-500 font-mono mb-1 uppercase flex items-center gap-2">
-                        <Activity className="w-3 h-3" /> Latency
+                  <div className="p-4 bg-black/40 rounded-2xl border border-slate-800/50 group hover:border-cyan-500/50 transition-all duration-300">
+                      <div className="text-[9px] text-slate-300 font-mono mb-1 uppercase flex items-center gap-2">
+                        <Activity className="w-3 h-3 text-cyan-400" /> Latency
                       </div>
                       <div className="text-lg font-bold text-cyan-400">0.08ms</div>
                   </div>
@@ -347,7 +347,7 @@ export default function SpatialIntelligenceDashboard() {
                 <button 
                   onClick={runSimulation}
                   disabled={isSimulating}
-                  className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl text-white font-bold tracking-widest text-[10px] uppercase hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                  className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl text-white font-bold tracking-widest text-[10px] uppercase hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 cursor-pointer hover:brightness-110"
                 >
                   <Globe className={`w-4 h-4 ${isSimulating ? "animate-spin" : ""}`} />
                   {isSimulating ? "SIMULATING..." : "RUN SPATIAL SIMULATION"}
@@ -356,7 +356,7 @@ export default function SpatialIntelligenceDashboard() {
                 <button 
                   onClick={() => runVurCheck()}
                   disabled={isVurLoading}
-                  className="w-full py-3 bg-emerald-600/10 border border-emerald-500/30 rounded-xl text-emerald-400 font-bold tracking-widest text-[10px] uppercase hover:bg-emerald-600/20 transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                  className="w-full py-3 bg-emerald-600/10 border border-emerald-500/30 rounded-xl text-emerald-400 font-bold tracking-widest text-[10px] uppercase hover:bg-emerald-600/20 transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 cursor-pointer hover:border-emerald-400"
                 >
                   <ShieldCheck className={`w-4 h-4 ${isVurLoading ? "animate-pulse" : ""}`} />
                   {isVurLoading ? "QUERYING SNR..." : "VUR LEGAL AUDIT (SNR)"}
@@ -365,17 +365,17 @@ export default function SpatialIntelligenceDashboard() {
                 {/* Telemetry Log */}
                 <div className="bg-black/60 rounded-xl p-4 font-mono text-[9px] h-36 overflow-hidden border border-slate-800/50 relative">
                   <div className="absolute top-0 left-0 w-full px-4 py-2 bg-black/40 border-b border-slate-800 flex justify-between items-center">
-                    <span className="text-slate-500 uppercase tracking-widest">INTERNAL_TELEMETRY</span>
-                    <TerminalIcon className="w-3 h-3 text-slate-700" />
+                    <span className="text-slate-300 uppercase tracking-widest">INTERNAL_TELEMETRY</span>
+                    <TerminalIcon className="w-3 h-3 text-slate-400" />
                   </div>
                   <div className="mt-6 space-y-1 overflow-y-auto h-24 custom-scrollbar">
                     {telemetry.map((log, i) => (
-                      <div key={i} className={`flex gap-2 ${log.type === "error" ? "text-red-400" : log.type === "success" ? "text-emerald-400" : "text-cyan-500/70"}`}>
-                        <span className="opacity-30">[{log.time}]</span>
+                      <div key={i} className={`flex gap-2 ${log.type === "error" ? "text-red-400" : log.type === "success" ? "text-emerald-400" : "text-cyan-400"}`}>
+                        <span className="opacity-60">[{log.time}]</span>
                         <span>{log.msg}</span>
                       </div>
                     ))}
-                    {telemetry.length === 0 && <div className="text-slate-700 italic">Idle. Awaiting command...</div>}
+                    {telemetry.length === 0 && <div className="text-slate-400 italic">Idle. Awaiting command...</div>}
                     <div className="text-white animate-pulse">_</div>
                   </div>
                 </div>
@@ -446,16 +446,16 @@ export default function SpatialIntelligenceDashboard() {
                   <circle cx="380" cy="120" r="3" fill="#22d3ee" />
 
                   {/* Graphic coordinate trackers */}
-                  <text x="230" y="190" fill="#22d3ee" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-80 select-none">
+                  <text x="230" y="190" fill="#22d3ee" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-100 select-none">
                     PREDIO_001 [98.4% SHAPELY_SCORE]
                   </text>
-                  <text x="430" y="160" fill="#10b981" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-80 select-none">
+                  <text x="430" y="160" fill="#10b981" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-100 select-none">
                     PREDIO_002 [SNR_VERIFIED]
                   </text>
                 </svg>
 
                 {/* Floating telemetry inside viewport */}
-                <div className="absolute bottom-6 right-6 p-4 bg-slate-950/90 border border-slate-800 rounded-xl font-mono text-[9px] text-cyan-400/80 z-20 space-y-1 shadow-2xl">
+                <div className="absolute bottom-6 right-6 p-4 bg-slate-950/90 border border-slate-800 rounded-xl font-mono text-[9px] text-cyan-300 z-20 space-y-1 shadow-2xl">
                   <div className="flex items-center gap-1.5 text-emerald-400 font-bold mb-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                     SOVEREIGN SIMULATION ACTIVE
@@ -480,15 +480,15 @@ export default function SpatialIntelligenceDashboard() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="absolute top-6 right-6 w-64 bg-slate-900/90 backdrop-blur-2xl border border-cyan-500/30 rounded-2xl p-4 space-y-3 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+                  className="absolute top-6 right-6 left-6 sm:left-auto w-auto sm:w-64 bg-slate-900/95 backdrop-blur-2xl border border-cyan-500/40 rounded-2xl p-4 space-y-3 shadow-[0_0_50px_rgba(0,0,0,0.6)] z-20"
                 >
                   <div className="flex justify-between items-center">
                     <div className="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Analysis_Core</div>
-                    <button onClick={() => setActiveAnalysis(null)} className="text-slate-600 hover:text-white">✕</button>
+                    <button onClick={() => setActiveAnalysis(null)} className="text-slate-400 hover:text-white cursor-pointer transition-colors p-1">✕</button>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between items-end">
-                      <span className="text-[9px] text-slate-400 uppercase">Spatial Score</span>
+                      <span className="text-[9px] text-slate-300 uppercase">Spatial Score</span>
                       <span className="text-2xl font-black text-white">{activeAnalysis.score}</span>
                     </div>
                     <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
@@ -500,11 +500,11 @@ export default function SpatialIntelligenceDashboard() {
                     </div>
                     <div className="grid grid-cols-2 gap-3 pt-2">
                         <div className="p-3 bg-black/40 rounded-xl border border-slate-800">
-                          <div className="text-[8px] text-slate-500 uppercase">Radius</div>
+                          <div className="text-[8px] text-slate-300 uppercase">Radius</div>
                           <div className="text-xs font-bold text-white">{activeAnalysis.impact_radius_m}m</div>
                         </div>
                         <div className="p-3 bg-black/40 rounded-xl border border-slate-800">
-                          <div className="text-[8px] text-slate-500 uppercase">Risk</div>
+                          <div className="text-[8px] text-slate-300 uppercase">Risk</div>
                           <div className={`text-xs font-bold ${activeAnalysis.risk_assessment === 'LOW' ? 'text-emerald-400' : 'text-amber-400'}`}>
                             {activeAnalysis.risk_assessment}
                           </div>
@@ -522,29 +522,29 @@ export default function SpatialIntelligenceDashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
-                  className="absolute bottom-6 left-6 w-72 bg-slate-900/90 backdrop-blur-2xl border border-emerald-500/30 rounded-2xl p-4 space-y-3 shadow-2xl"
+                  className="absolute bottom-6 left-6 right-6 sm:right-auto w-auto sm:w-72 bg-slate-900/95 backdrop-blur-2xl border border-emerald-500/40 rounded-2xl p-4 space-y-3 shadow-2xl z-20"
                 >
                   <div className="flex justify-between items-center">
                     <div className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest font-bold flex items-center gap-2">
                       <ShieldCheck className="w-3 h-3" /> VUR_SNR_RECORDS
                     </div>
-                    <button onClick={() => setVurData(null)} className="text-slate-500 hover:text-white">✕</button>
+                    <button onClick={() => setVurData(null)} className="text-slate-400 hover:text-white cursor-pointer transition-colors p-1">✕</button>
                   </div>
                   <div className="space-y-2.5 text-sm">
                     <div className="flex justify-between border-b border-slate-800/50 pb-1.5">
-                      <span className="text-slate-500 text-[10px] uppercase">Matrícula</span>
+                      <span className="text-slate-300 text-[10px] uppercase">Matrícula</span>
                       <span className="text-white font-mono font-bold">{vurData.matricula}</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-800/50 pb-1.5">
-                      <span className="text-slate-500 text-[10px] uppercase">Estado</span>
+                      <span className="text-slate-300 text-[10px] uppercase">Estado</span>
                       <span className="text-emerald-400 font-bold">{vurData.status}</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-800/50 pb-1.5">
-                      <span className="text-slate-500 text-[10px] uppercase">Propietario</span>
+                      <span className="text-slate-300 text-[10px] uppercase">Propietario</span>
                       <span className="text-white truncate max-w-[120px]">VERIFICADO (SNR)</span>
                     </div>
                     <div className="bg-black/40 p-3 rounded-xl border border-slate-800/50 mt-4">
-                      <p className="text-[10px] text-slate-400 italic leading-relaxed">
+                      <p className="text-[10px] text-slate-200 italic leading-relaxed">
                         &quot;{vurData.message}&quot;
                       </p>
                     </div>

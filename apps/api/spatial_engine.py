@@ -12,7 +12,7 @@ from pathlib import Path
 from schemas import GeoJSONFeature, AnalysisResult
 
 # Path to the enriched analytics dataset
-ANALYTICS_DB_PATH = Path(__file__).parent.parent.parent / "enriched_parcels_analytics.parquet"
+ANALYTICS_DB_PATH = Path(__file__).parent.parent.parent / "enriched_parcels_analytics"
 
 def validate_collection_topology(features: List[GeoJSONFeature]) -> Dict[str, Any]:
     """
@@ -137,7 +137,9 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     # Query local analytics using DuckDB + Polars
     if codigo and ANALYTICS_DB_PATH.exists():
         try:
-            query = f"SELECT * FROM '{ANALYTICS_DB_PATH}' WHERE codigo = '{codigo}'"
+            # Convertir ruta a formato posix compatible con DuckDB para soportar comodines
+            query_path = (ANALYTICS_DB_PATH / "**" / "*.parquet").as_posix()
+            query = f"SELECT * FROM '{query_path}' WHERE codigo = '{codigo}'"
             df_analytics = duckdb.query(query).to_df()
             
             if not df_analytics.empty:

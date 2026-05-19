@@ -100,12 +100,12 @@ export default function ShapefileUploader() {
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">Auditoría Catastral LADM-COL</h3>
-            <p className="text-xs text-slate-400 font-mono">Motor Asíncrono de Inteligencia Geoespacial</p>
+            <p className="text-xs text-slate-300 font-mono">Motor Asíncrono de Inteligencia Geoespacial</p>
           </div>
         </div>
 
         {/* Zona de Drop/Upload */}
-        <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-colors bg-black/40 rounded-2xl p-8 text-center relative group">
+        <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group">
           <input 
             type="file" 
             accept=".zip,.geojson,.kml,.gpkg,.shp"
@@ -122,7 +122,7 @@ export default function ShapefileUploader() {
                 <FileArchive className="w-4 h-4" /> {file.name}
               </div>
             ) : (
-              <div className="text-sm text-slate-400">
+              <div className="text-sm text-slate-300">
                 Arrastra tu archivo <span className="text-cyan-400 font-bold">.ZIP (Shapefile)</span> o haz clic para explorar.
               </div>
             )}
@@ -133,7 +133,7 @@ export default function ShapefileUploader() {
         <button
           onClick={uploadFile}
           disabled={!file || status === "UPLOADING" || status === "PROCESSING"}
-          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white font-bold tracking-widest text-xs uppercase rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.2)] disabled:shadow-none flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white font-bold tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 active:brightness-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer"
         >
           {status === "IDLE" && "Iniciar Análisis Topológico"}
           {status === "UPLOADING" && <><Loader2 className="w-4 h-4 animate-spin" /> Subiendo archivo...</>}
@@ -143,9 +143,9 @@ export default function ShapefileUploader() {
 
         {/* Mensaje de Error */}
         {status === "ERROR" && (
-          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3">
+          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3 animate-in fade-in duration-300">
             <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
-            <div className="text-sm text-red-200">{errorMsg}</div>
+            <div className="text-sm text-red-100">{errorMsg}</div>
           </div>
         )}
 
@@ -159,11 +159,11 @@ export default function ShapefileUploader() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-black/50 p-4 rounded-xl border border-slate-800">
-                <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Total Predios</div>
+                <div className="text-[10px] text-slate-300 uppercase tracking-wider mb-1">Total Predios</div>
                 <div className="text-2xl font-black text-white">{result.qaqc_metrics?.total_features || 0}</div>
               </div>
               <div className="bg-black/50 p-4 rounded-xl border border-slate-800">
-                <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Errores (Slivers/Overlaps)</div>
+                <div className="text-[10px] text-slate-300 uppercase tracking-wider mb-1">Errores (Slivers/Overlaps)</div>
                 <div className="text-2xl font-black text-amber-400">
                   {(result.qaqc_metrics?.slivers_val?.slivers_count || 0) + (result.qaqc_metrics?.topology_val?.overlaps_count || 0)}
                 </div>
@@ -175,7 +175,7 @@ export default function ShapefileUploader() {
                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></div>
                 Reporte LLM de Inteligencia
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 {result.geo_llm_intelligence_report}
               </p>
             </div>

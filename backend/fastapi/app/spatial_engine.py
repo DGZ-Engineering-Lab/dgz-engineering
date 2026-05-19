@@ -92,7 +92,7 @@ import polars as pl
 from pathlib import Path
 
 # Path to the enriched analytics dataset
-ANALYTICS_DB_PATH = Path(__file__).parent.parent.parent / "enriched_parcels_analytics.parquet"
+ANALYTICS_DB_PATH = Path(__file__).parent.parent.parent / "enriched_parcels_analytics"
 
 def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     """
@@ -116,8 +116,10 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     # 🚀 ENHANCED: Query local analytics using DuckDB + Polars
     if codigo and ANALYTICS_DB_PATH.exists():
         try:
+            # Convertir ruta a formato posix compatible con DuckDB para soportar comodines
+            query_path = (ANALYTICS_DB_PATH / "**" / "*.parquet").as_posix()
             # Query DuckDB for enriched data
-            query = f"SELECT * FROM '{ANALYTICS_DB_PATH}' WHERE codigo = '{codigo}'"
+            query = f"SELECT * FROM '{query_path}' WHERE codigo = '{codigo}'"
             df_analytics = duckdb.query(query).to_df()
             
             if not df_analytics.empty:

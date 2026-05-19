@@ -1,15 +1,49 @@
+import sys
+import os
+sys.path.insert(0, r"c:\Users\AlbertG\IGGA.SAS\PERSONAL\DEV\REPOS\dgz-engineering\backend\qa_engine")
+
 import asyncio
 from typing import List, Dict, Any
+import geopandas as gpd
+from shapely.geometry import shape, mapping
 from mcp.server.fastmcp import FastMCP
 from schemas import GeoJSONFeature
 from spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis
 from vur_service import vur_service
+from core_validator import GeoQAValidator
 
 # Initialize FastMCP Server
 mcp = FastMCP(
     "DGZ Spatial Intelligence Engine",
     description="Sovereign Multipurpose Cadastre & Spatial Intelligence Tools"
 )
+
+@mcp.tool()
+def heal_topology(geometry: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Expert topological healing engine.
+    Receives a GeoJSON geometry, loads it into a GeoDataFrame in EPSG:4326 or EPSG:3116,
+    heals the geometry using GeoQAValidator, and returns the healed GeoJSON geometry.
+    
+    Args:
+        geometry: GeoJSON geometry dictionary to heal.
+    """
+    geom = shape(geometry)
+    
+    # Determine CRS based on geometry bounds
+    bounds = geom.bounds
+    if all(-180 <= val <= 180 for val in bounds):
+        crs = "EPSG:4326"
+    else:
+        crs = "EPSG:3116"
+        
+    gdf = gpd.GeoDataFrame(geometry=[geom], crs=crs)
+    
+    validator = GeoQAValidator(epsg_crs=crs)
+    validator.validate_geometries(gdf)
+    
+    healed_geom = gdf.geometry.iloc[0]
+    return mapping(healed_geom)
 
 @mcp.tool()
 def validate_topology(features: List[Dict[str, Any]]) -> Dict[str, Any]:

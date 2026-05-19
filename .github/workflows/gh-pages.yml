@@ -30,6 +30,22 @@ jobs:
       - name: Syntax Check (Basic HTML validation)
         run: |
           find . -name "*.html" -exec tidy -e {} + || echo "Minor warnings found, but proceeding."
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'backend/qa_engine/requirements.txt'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/qa_engine/requirements.txt
+          pip install pytest
+      - name: Run unit tests
+        working-directory: backend/qa_engine
+        run: |
+          pytest test_core_validator.py
+
 
   # Deployment Job
   deploy:

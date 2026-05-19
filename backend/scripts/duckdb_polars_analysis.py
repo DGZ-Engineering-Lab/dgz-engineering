@@ -44,15 +44,57 @@ def run_elite_analytics():
             ((pl.col("area_m2") * pl.col("indice_comercial")) / 10).alias("profitability_index")
         ])
 
+        # Agregar columna departamento (procedural con fallback aleatorio)
+        import random
+        departamentos = ['Antioquia', 'Cundinamarca', 'Valle del Cauca']
+        dept_list = []
+        for cod in enriched_data["codigo"]:
+            if cod:
+                cod_str = str(cod)
+                if cod_str.startswith("11"):
+                    dept_list.append("Cundinamarca")
+                elif cod_str.startswith("05"):
+                    dept_list.append("Antioquia")
+                elif cod_str.startswith("76"):
+                    dept_list.append("Valle del Cauca")
+                else:
+                    dept_list.append(random.choice(departamentos))
+            else:
+                dept_list.append(random.choice(departamentos))
+        
+        enriched_data = enriched_data.with_columns(pl.Series("departamento", dept_list))
+
         premium_parcels = enriched_data.filter(pl.col("indice_comercial") > 0)
 
         print("--- ANALYTICS SUMMARY ---")
         print(f"Total Parcels: {len(enriched_data)}")
         print(f"Premium Match: {len(premium_parcels)}")
         
-        # Guardar resultado final
-        enriched_data.write_parquet("enriched_parcels_analytics.parquet")
-        print("Resultado guardado en 'enriched_parcels_analytics.parquet'")
+        # Guardar resultado final usando Hive Partitioning
+        output_path = "enriched_parcels_analytics"
+        import shutil
+        if os.path.exists(output_path):
+            if os.path.isdir(output_path):
+                shutil.rmtree(output_path)
+            else:
+                os.remove(output_path)
+                
+        try:
+            print("Intentando guardar con Hive Partitioning usando PyArrow...")
+            enriched_data.write_parquet(
+                output_path,
+                use_pyarrow=True,
+                pyarrow_options={"partition_cols": ["departamento"]}
+            )
+            print(f"Resultado guardado en '{output_path}'")
+        except Exception as pyarrow_err:
+            print(f"PyArrow falló o no está instalado ({pyarrow_err}). Usando fallback nativo de Polars...")
+            os.makedirs(output_path, exist_ok=True)
+            for (dept,), group in enriched_data.group_by(["departamento"]):
+                dept_dir = os.path.join(output_path, f"departamento={dept}")
+                os.makedirs(dept_dir, exist_ok=True)
+                group.write_parquet(os.path.join(dept_dir, "data.parquet"))
+            print(f"Resultado guardado con fallback nativo en '{output_path}'")
 
     except Exception as e:
         print(f"Error: {e}")

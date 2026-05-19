@@ -77,7 +77,7 @@ export default function ProjectsPage() {
       <section className="bg-white">
         <div className="max-w-7xl mx-auto">
           {PROJECTS.map((project, idx) => (
-            <Link key={project.id} href={`/projects/${project.id}`} className="group block border-b border-slate-100 last:border-0 overflow-hidden">
+            <Link key={project.id} href={`/projects/${project.id}`} prefetch={false} className="group block border-b border-slate-100 last:border-0 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
                 {/* Text Info */}
                 <div className={`lg:col-span-6 p-12 lg:p-20 flex flex-col justify-center space-y-10 ${idx % 2 !== 0 ? 'lg:order-2 lg:border-l border-slate-100' : 'lg:border-r border-slate-100'}`}>
