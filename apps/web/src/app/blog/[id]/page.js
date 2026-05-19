@@ -88,7 +88,7 @@ const LidarLab = () => {
       </div>
       <div className="relative h-[400px] bg-slate-100 overflow-hidden rounded-sm border border-slate-200">
         <img 
-          src="https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=1200" 
+          src="/assets/img/geoai_after.png" 
           className="absolute inset-0 w-full h-full object-cover" 
           alt="LiDAR View"
         />
@@ -97,8 +97,8 @@ const LidarLab = () => {
           style={{ clipPath: `inset(0 ${100 - slider}% 0 0)` }}
         >
           <img 
-            src="https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=1200" 
-            className="w-full h-full object-cover grayscale brightness-50" 
+            src="/assets/img/geoai_before.png" 
+            className="w-full h-full object-cover grayscale brightness-70" 
             alt="Satellite View"
           />
         </div>
@@ -131,7 +131,7 @@ const BLOG_DATA = {
     date: "12 Mayo, 2026",
     author: "Dirección de Ciberseguridad",
     readTime: "12 min",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-cybersecurity.png",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -159,7 +159,7 @@ const BLOG_DATA = {
     date: "10 Mayo, 2026",
     author: "Ingeniería Territorial",
     readTime: "8 min",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-ladm-col.png",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -187,7 +187,7 @@ const BLOG_DATA = {
     date: "05 Mayo, 2026",
     author: "Laboratorio Geo-AI",
     readTime: "10 min",
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/geoai_after.png",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">

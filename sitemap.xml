@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://gaviriaz.github.io/dgz-engineering/index.html</loc>
+        <loc>https://devgiz.vercel.app/index.html</loc>
         <lastmod>2026-02-26T09:00:00-05:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://gaviriaz.github.io/dgz-engineering/lab/map.html</loc>
+        <loc>https://devgiz.vercel.app/lab/map.html</loc>
         <lastmod>2026-02-26T09:00:00-05:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>

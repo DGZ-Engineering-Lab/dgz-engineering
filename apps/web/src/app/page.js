@@ -152,7 +152,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <Link href="/blog/1" className="group space-y-6">
               <div className="aspect-video bg-slate-100 overflow-hidden rounded-sm">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="LADM-COL" />
+                <img src="/assets/img/blog-ladm-col.png" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="LADM-COL" />
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-black tracking-tight group-hover:text-slate-600 transition-colors">La Nueva Era del Catastro Multipropósito</h3>
@@ -161,7 +161,7 @@ export default function Home() {
             </Link>
             <Link href="/blog/2" className="group space-y-6">
               <div className="aspect-video bg-slate-100 overflow-hidden rounded-sm">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Cybersecurity" />
+                <img src="/assets/img/blog-cybersecurity.png" className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Cybersecurity" />
               </div>
               <div className="space-y-2">
                 <h3 className="text-xl font-black tracking-tight group-hover:text-slate-600 transition-colors">Ciberseguridad Geográfica</h3>

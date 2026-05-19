@@ -15,7 +15,7 @@ const BLOG_POSTS = [
     date: "12 Mayo, 2026",
     readTime: "12 min",
     complexity: "Nivel Institucional",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+    image: "/assets/img/blog-cybersecurity.png",
     featured: true
   },
   {
@@ -26,7 +26,7 @@ const BLOG_POSTS = [
     date: "10 Mayo, 2026",
     readTime: "8 min",
     complexity: "Técnico Avanzado",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    image: "/assets/img/blog-ladm-col.png",
     featured: false
   },
   {
@@ -37,7 +37,7 @@ const BLOG_POSTS = [
     date: "05 Mayo, 2026",
     readTime: "10 min",
     complexity: "Reporte de Ingeniería",
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=800",
+    image: "/assets/img/geoai_after.png",
     featured: false
   },
   {
@@ -48,7 +48,7 @@ const BLOG_POSTS = [
     date: "28 Abril, 2026",
     readTime: "7 min",
     complexity: "Estratégico",
-    image: "https://images.unsplash.com/photo-1454165833767-027ffea9e778?auto=format&fit=crop&q=80&w=800",
+    image: "/assets/img/topo-bg.png",
     featured: false
   }
 ];
