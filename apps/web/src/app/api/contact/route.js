@@ -1,13 +1,32 @@
 import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "../../../lib/upstash";
 
 export const runtime = 'edge';
 
 export async function POST(req) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:contact:${ip}`);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many contact submissions. Please wait before retrying." },
+        { 
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": limit.toString(),
+            "X-RateLimit-Remaining": remaining.toString(),
+            "X-RateLimit-Reset": reset.toString()
+          }
+        }
+      );
+    }
+
     const { name, email, message, company } = await req.json();
 
     if (!name || !email || !message) {
+
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 

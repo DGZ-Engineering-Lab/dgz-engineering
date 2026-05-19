@@ -13,6 +13,8 @@ from schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
 from spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis
 from database import get_db
 from vur_service import vur_service
+from upstash import rate_limiter, cache_response
+
 
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN", "https://930a7dd3e1c00e4cb8ce7deb6f4da906@o4511416986238976.ingest.us.sentry.io/4511416995545088"),
@@ -70,6 +72,7 @@ async def get_system_status():
     }
 
 @app.get("/parcels", tags=["Cadastre"])
+@cache_response(ttl_seconds=300)
 async def get_ingested_parcels(db: Session = Depends(get_db)):
     """
     Retrieves real cadastral data ingested from IGAC.
@@ -102,17 +105,17 @@ async def get_ingested_parcels(db: Session = Depends(get_db)):
             "note": "FALLBACK_DEMO_DATA"
         }
 
-@app.post("/validate", tags=["Topology"])
+@app.post("/validate", tags=["Topology"], dependencies=[Depends(rate_limiter(limit=15, window=60))])
 async def validate_topology(request: ValidationRequest):
     """Expert-level topological validation engine."""
     return validate_collection_topology(request.features)
 
-@app.post("/intelligence/parcel_score", tags=["AI"])
+@app.post("/intelligence/parcel_score", tags=["AI"], dependencies=[Depends(rate_limiter(limit=15, window=60))])
 async def calculate_parcel_intelligence(feature: GeoJSONFeature):
     """Calculates the 'Spatial Intelligence Score' for a parcel."""
     return calculate_parcel_score(feature)
 
-@app.post("/intelligence/analyze_context", tags=["GeoAI"])
+@app.post("/intelligence/analyze_context", tags=["GeoAI"], dependencies=[Depends(rate_limiter(limit=15, window=60))])
 async def analyze_context(feature: GeoJSONFeature):
     """
     Advanced Environmental Analysis using Polars and DuckDB Simulation.
@@ -135,8 +138,10 @@ async def analyze_context(feature: GeoJSONFeature):
             "polars_performance_ms": 12.4
         }
 
-@app.get("/api/vur/query", tags=["Legal Tech"])
+@app.get("/api/vur/query", tags=["Legal Tech"], dependencies=[Depends(rate_limiter(limit=10, window=60))])
+@cache_response(ttl_seconds=600)
 async def query_vur(matricula: str):
+
     """
     Real-time query to SNR/VUR for property status.
     Uses institutional credentials for handshake.
