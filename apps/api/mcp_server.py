@@ -1,6 +1,10 @@
 import sys
 import os
-sys.path.insert(0, r"c:\Users\AlbertG\IGGA.SAS\PERSONAL\DEV\REPOS\dgz-engineering\backend\qa_engine")
+
+api_dir = os.path.dirname(os.path.abspath(__file__))
+qa_engine_path = os.path.abspath(os.path.join(api_dir, "..", "..", "backend", "qa_engine"))
+if qa_engine_path not in sys.path:
+    sys.path.insert(0, qa_engine_path)
 
 import asyncio
 from typing import List, Dict, Any
