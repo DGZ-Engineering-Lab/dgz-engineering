@@ -518,8 +518,15 @@ export default function SpatialIntelligenceDashboard() {
             }
         });
 
+        m.on("webglcontextlost", (e) => {
+            console.warn("WebGL Context Lost. Switching to Sovereign 2D Simulator.");
+            setIsMapboxSupported(false);
+            addLog("WEBGL_CONTEXT_LOST: Activando Simulador Soberano 2D", "error");
+        });
+
     } catch (err) {
         console.error("Map initialization failed", err);
+        setIsMapboxSupported(false);
     }
 
     return () => {
