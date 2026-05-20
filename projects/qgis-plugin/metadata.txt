@@ -1,0 +1,16 @@
+[general]
+name=DGZ LADM-COL Depurator & Dispatcher
+qgisMinimumVersion=3.0
+qgisMaximumVersion=3.99
+description=Plugin profesional para Depuración Catastral Multiproósito, integración real-time VUR/SNR, subdivisión municipal y despacho de tareas offline conforme a LADM-COL.
+version=1.0.0
+author=DevGiz Engineering Lab
+email=engineering@devgiz.com
+about=Plugin avanzado para el operador catastral colombiano. Automatiza la depuración física-jurídica, particionamiento territorial, asignación de tareas a reconocedores/digitalizadores e interoperabilidad INTERLIS (.xtf).
+tracker=https://github.com/DGZ-Engineering-Lab/dgz-engineering/issues
+repository=https://github.com/DGZ-Engineering-Lab/dgz-engineering
+category=Vector
+tags=LADM-COL, SNR, VUR, Catastro, IGAC, Colombia, Depuracion, Planificacion
+experimental=False
+deprecated=False
+icon=icon.png
