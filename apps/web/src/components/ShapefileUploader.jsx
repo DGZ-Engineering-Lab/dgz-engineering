@@ -10,15 +10,66 @@ export default function ShapefileUploader() {
   const [status, setStatus] = useState("IDLE"); // IDLE, UPLOADING, PROCESSING, COMPLETED, ERROR
   const [result, setResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
 
-  // Manejar la selección del archivo
+  // Helper para procesar y validar archivos
+  const processFile = (selectedFile) => {
+    setStatus("IDLE");
+    setResult(null);
+    setErrorMsg("");
+    setJobId(null);
+
+    if (!selectedFile) return;
+
+    // Validación de límite de tamaño: 20MB
+    const maxSize = 20 * 1024 * 1024;
+    if (selectedFile.size > maxSize) {
+      setErrorMsg(`El archivo excede el límite de 20MB (Tamaño: ${(selectedFile.size / (1024 * 1024)).toFixed(2)}MB). Por favor reduzca el dataset catastral o filtre por zona.`);
+      setStatus("ERROR");
+      setFile(null);
+      return;
+    }
+
+    // Validación de extensiones permitidas
+    const allowedExtensions = ["zip", "geojson", "kml", "gpkg", "shp"];
+    const extension = selectedFile.name.split(".").pop().toLowerCase();
+    if (!allowedExtensions.includes(extension)) {
+      setErrorMsg("Formato no soportado. Cargue un archivo .zip (Shapefile de predios), .geojson, .kml o .gpkg.");
+      setStatus("ERROR");
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
+  };
+
+  // Manejar la selección del archivo por botón
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-      setStatus("IDLE");
-      setResult(null);
-      setErrorMsg("");
-      setJobId(null);
+      processFile(e.target.files[0]);
+    }
+  };
+
+  // Manejadores de Drag and Drop
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    if (status !== "UPLOADING" && status !== "PROCESSING") {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (status === "UPLOADING" || status === "PROCESSING") return;
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -105,7 +156,16 @@ export default function ShapefileUploader() {
         </div>
 
         {/* Zona de Drop/Upload */}
-        <div className="border-2 border-dashed border-slate-700 hover:border-cyan-500/50 transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group">
+        <div 
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          className={`border-2 border-dashed transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group ${
+            isDragging 
+              ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-[1.02]" 
+              : "border-slate-700 hover:border-cyan-500/50"
+          }`}
+        >
           <input 
             type="file" 
             accept=".zip,.geojson,.kml,.gpkg,.shp"
@@ -114,12 +174,16 @@ export default function ShapefileUploader() {
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
           />
           <div className="flex flex-col items-center gap-3 pointer-events-none">
-            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <UploadCloud className="w-6 h-6 text-cyan-400" />
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+              isDragging 
+                ? "bg-cyan-500/20 scale-110 shadow-[0_0_15px_rgba(6,182,212,0.5)]" 
+                : "bg-slate-800 group-hover:scale-110"
+            }`}>
+              <UploadCloud className={`w-6 h-6 ${isDragging ? "text-cyan-300 animate-bounce" : "text-cyan-400"}`} />
             </div>
             {file ? (
               <div className="text-sm font-bold text-emerald-400 flex items-center gap-2">
-                <FileArchive className="w-4 h-4" /> {file.name}
+                <FileArchive className="w-4 h-4" /> {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
               </div>
             ) : (
               <div className="text-sm text-slate-300">
@@ -128,6 +192,42 @@ export default function ShapefileUploader() {
             )}
           </div>
         </div>
+
+        {/* Tarjeta Educativa para Shapefiles */}
+        {file && file.name.endsWith(".zip") && (
+          <div className="p-5 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="flex items-center gap-2">
+              <FileArchive className="w-4 h-4 text-cyan-400" />
+              <div className="text-[10px] text-slate-300 uppercase tracking-widest font-mono font-bold">
+                Estructura de Shapefile Detectada (.zip)
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 font-light">
+              Nuestro motor catastral procesará este contenedor. Para cumplir con la normativa <strong>LADM-COL (ISO 19152)</strong> e <strong>INTERLIS</strong>, asegúrese de incluir los siguientes componentes obligatorios:
+            </p>
+            <div className="grid grid-cols-2 gap-3 text-[11px] font-mono">
+              <div className="flex items-center gap-2 p-2 bg-slate-900/60 rounded border border-emerald-500/20 text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>.shp (Geometría)</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-slate-900/60 rounded border border-emerald-500/20 text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>.dbf (Atributos)</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-slate-900/60 rounded border border-emerald-500/20 text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>.shx (Índices)</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 bg-slate-900/60 rounded border border-cyan-500/20 text-cyan-400">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                <span>.prj (Proyección CTM12)</span>
+              </div>
+            </div>
+            <div className="text-[10px] text-slate-500 italic pl-1">
+              * Nota: CTM12 (Origen Único Nacional, EPSG:9377) es el estándar de proyección oficial para Colombia.
+            </div>
+          </div>
+        )}
 
         {/* Botón de Acción */}
         <button

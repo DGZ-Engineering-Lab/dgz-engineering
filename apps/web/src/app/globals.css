@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #02040a;
-  --foreground: #f8fafc;
+  /* Paleta de Lujo Noir y Ciber-Soberanía */
+  --background: #030712;       /* Base ultra profunda */
+  --foreground: #f9fafb;       /* Texto editorial limpio */
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
   --cyan-500: #06b6d4;
+  --cyan-400: #22d3ee;
   --blue-500: #3b82f6;
   --emerald-500: #10b981;
+  --emerald-400: #34d399;
+  --accent-glow: rgba(6, 182, 212, 0.15);
+  --border-glass: rgba(255, 255, 255, 0.05);
+  --bg-glass: rgba(3, 7, 18, 0.6);
 }
 
 @theme inline {
@@ -17,6 +25,8 @@
 
 * {
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -25,22 +35,24 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar for a Cyberpunk aesthetic */
+/* Custom Scrollbar - Minimalista Premium */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #02040a;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  transition: background 0.3s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
+  background: var(--cyan-500);
 }
 
 /* Custom animations */
@@ -72,6 +84,85 @@ body {
   animation: reveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+/* Clases de Mapeo de Cristal de Élite (Glassmorphism) */
+.glass-card-premium {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-nav-premium {
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Micro-interacciones e Iluminación Activa */
+.glow-cyan-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-cyan-hover:hover {
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.glow-emerald-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-emerald-hover:hover {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Botones Premium con Efecto Brillo Deslizable */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-premium::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.btn-premium:hover::after {
+  left: 150%;
+  transition: all 0.8s ease-in-out;
+}
+
+.border-glow {
+  position: relative;
+}
+.border-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(6, 182, 212, 0.3), rgba(255,255,255,0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .glass-card {
   background: rgba(15, 23, 42, 0.6);
   -webkit-backdrop-filter: blur(12px);
@@ -83,4 +174,131 @@ body {
   text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
 }
 
+/* ===================================================================
+   Modern Web Guidance — Best Practices (2026)
+   Based on: scroll-entry-exit-effects, css, performance guides
+   =================================================================== */
+
+/* --- 1. Render Performance: content-visibility for heavy sections --- */
+.section-deferred {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 50rem;
+}
+
+/* --- 2. Accessibility: Reduced motion preference --- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .animate-scan,
+  .animate-pulse-soft {
+    animation: none !important;
+  }
+
+  /* Disable Framer Motion managed transitions via class hook */
+  [data-framer-motion] {
+    transition: none !important;
+  }
+}
+
+/* --- 3. Typography: balanced headings, pretty body text --- */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p, blockquote, li {
+  text-wrap: pretty;
+}
+
+/* --- 4. Scroll-Driven Entry Animations (Native CSS, Progressive Enhancement) --- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes scroll-fade-up {
+      from {
+        opacity: 0;
+        translate: 0 2rem;
+      }
+    }
+
+    @keyframes scroll-fade-out {
+      to {
+        opacity: 0;
+        translate: 0 -1rem;
+      }
+    }
+
+    .scroll-reveal {
+      animation: scroll-fade-up auto ease backwards;
+      animation-timeline: view();
+      animation-range: entry 5% cover 25%;
+    }
+
+    .scroll-reveal-entry-only {
+      animation: scroll-fade-up auto ease backwards;
+      animation-timeline: view();
+      animation-range: entry;
+    }
+  }
+}
+
+/* --- 5. Focus Management: visible focus rings --- */
+:focus-visible {
+  outline: 2px solid var(--cyan-500);
+  outline-offset: 2px;
+}
+
+/* --- 6. Cross-browser scrollbar (standards-based) --- */
+html {
+  scrollbar-color: rgba(255, 255, 255, 0.1) var(--background);
+  scrollbar-width: thin;
+}
+
+/* --- 7. Touch targets: enforce minimum interactive size --- */
+@media (pointer: coarse) {
+  button, a, [role="button"] {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}
+
+/* --- 8. Squircle corners (progressive enhancement) --- */
+@supports (corner-shape: squircle) {
+  .squircle {
+    corner-shape: squircle;
+  }
+}
+
+/* --- 9. Container isolation for interactive panels --- */
+.contain-paint {
+  contain: layout style paint;
+}
+
+/* --- 10. oklch Gradient Interpolation (Richer Gradients) --- */
+:root {
+  --in-oklch: ;
+  --in-oklab: ;
+}
+
+@supports (background: linear-gradient(in oklch, white, black)) {
+  :root {
+    --in-oklch: in oklch;
+    --in-oklab: in oklab;
+  }
+}
+
+/* Utility classes for oklch-powered gradients */
+.glow-gradient-cyan {
+  background: radial-gradient(var(--in-oklch), oklch(0.7 0.15 200 / 0.08), transparent 70%);
+}
+
+.glow-gradient-emerald {
+  background: radial-gradient(var(--in-oklch), oklch(0.7 0.15 160 / 0.08), transparent 70%);
+}
+
+/* --- 11. Soft edge content fade for overflowing panels --- */
+.fade-edge-bottom {
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+.fade-edge-top {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
+}
 

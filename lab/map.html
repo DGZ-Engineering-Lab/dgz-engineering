@@ -19,6 +19,8 @@
     <link href="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.css" rel="stylesheet">
     <script src="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.js"></script>
     <script src="../assets/js/dgz-core.js"></script>
+    <!-- DGZ Audio Synth -->
+    <script src="../assets/js/dgz-audio.js"></script>
 
     <style>
         :root {
@@ -167,14 +169,29 @@
         /* LEFT PANEL */
         .left-panel {
             width: 280px;
-            background: rgba(5, 5, 7, 0.92);
-            border-right: 1px solid var(--border-glass);
+            background: rgba(8, 8, 12, 0.75);
+            border-right: 1px solid rgba(0, 229, 255, 0.15);
             display: flex;
             flex-direction: column;
             z-index: 100;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(35px) saturate(180%);
+            -webkit-backdrop-filter: blur(35px) saturate(180%);
             overflow-y: auto;
             scrollbar-width: none;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, transparent 50%, rgba(0, 229, 255, 0.4) 50%);
+            pointer-events: none;
+            opacity: 0.85;
         }
 
         .left-panel::-webkit-scrollbar {
@@ -557,6 +574,73 @@
             border-radius: 2px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             flex-shrink: 0;
+        }
+
+        /* ═══ PREMIUM SCAN-LINE ANIMATION — LEFT PANEL ═══ */
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 10%, rgba(0, 229, 255, 0.5) 50%, transparent 90%);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.4), 0 0 30px rgba(0, 229, 255, 0.15);
+            animation: panelScanBeam 8s ease-in-out infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes panelScanBeam {
+            0%, 100% { top: 0; opacity: 0.3; }
+            50% { top: calc(100% - 2px); opacity: 0.7; }
+        }
+
+        /* ═══ NEON TOP DIVIDER — HUD CARDS ═══ */
+        .hud-card {
+            position: relative;
+        }
+
+        .hud-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-electric), transparent);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* ═══ CYBERPUNK MAP ATTRIBUTION ═══ */
+        .maplibregl-ctrl-attrib {
+            background: rgba(5, 5, 8, 0.85) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(0, 229, 255, 0.1) !important;
+            border-radius: 4px !important;
+            font-size: 0.5rem !important;
+            color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .maplibregl-ctrl-attrib a {
+            color: rgba(0, 229, 255, 0.5) !important;
+        }
+
+        /* ═══ GLOBAL TEXT SELECTION ═══ */
+        ::selection {
+            background: rgba(0, 229, 255, 0.3);
+            color: #fff;
+        }
+
+        /* ═══ LAYER TOGGLE HOVER GLOW ═══ */
+        .layer-toggle:hover .layer-name {
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+        }
+
+        /* ═══ PANEL SECTION DIVIDER GLOW ═══ */
+        .panel-section {
+            border-image: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent) 1;
         }
     </style>
 </head>
@@ -988,6 +1072,7 @@
 
             // CLICK — Parcel Info
             map.on('click', 'predios-fill', (e) => {
+                if (window.dgzSynth) window.dgzSynth.playClick();
                 if (!e.features.length) return;
                 const props = e.features[0].properties;
                 showParcelInfo(props);
@@ -1055,6 +1140,7 @@
         };
 
         function toggleLayer(name) {
+            if (window.dgzSynth) window.dgzSynth.playClick();
             layerVisible[name] = !layerVisible[name];
             const vis = layerVisible[name] ? 'visible' : 'none';
             const sw = document.getElementById(`switch-${name}`);
@@ -1075,6 +1161,7 @@
         };
 
         function switchBasemap(type, el) {
+            if (window.dgzSynth) window.dgzSynth.playClick();
             document.querySelectorAll('.basemap-option').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
 
@@ -1086,6 +1173,7 @@
         // --- NEURAL SCAN ---
         let scanCircle = null;
         function runScan() {
+            if (window.dgzSynth) window.dgzSynth.playScanAlert();
             let r = 0;
             const center = map.getCenter();
 

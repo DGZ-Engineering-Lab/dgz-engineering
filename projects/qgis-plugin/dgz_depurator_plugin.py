@@ -19,6 +19,7 @@ from .core.vur_depurator import DgzVurDepurator
 from .core.partitioning_engine import MunicipalSpatialPartitioner
 from .core.task_assigner import DgzTaskAssigner
 from .core.ladm_engine import DgzLadmColEngine
+from .ui.main_dockwidget import DgzMainDockWidget
 
 class DgzDepuratorPlugin(QObject):
     """
@@ -83,7 +84,31 @@ class DgzDepuratorPlugin(QObject):
         self.iface.addPluginToVectorMenu(self.menu_name, self.action_export)
         self.actions.append(self.action_export)
 
+        # Create Action 4: Mostrar Dock Widget de Depuración
+        self.action_show_dock = QAction(
+            QIcon(icon_path),
+            "Mostrar Panel de Depuración VUR",
+            self.iface.mainWindow()
+        )
+        self.action_show_dock.triggered.connect(self.show_dock_widget)
+        self.iface.addPluginToVectorMenu(self.menu_name, self.action_show_dock)
+        self.actions.append(self.action_show_dock)
+
         logging.info("DGZ QGIS Plugin toolbar and menu loaded successfully.")
+
+    def show_dock_widget(self):
+        """
+        Displays or toggles the custom QDockWidget lateral panel HUD in QGIS.
+        """
+        if not QGIS_AVAILABLE or not self.iface:
+            QMessageBox.information(None, "Headless DGZ", "Panel de Depuración lateral simulado.")
+            return
+
+        if not self.dock_widget:
+            self.dock_widget = DgzMainDockWidget(self.iface.mainWindow(), self)
+            self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dock_widget)
+        
+        self.dock_widget.show()
 
     def unload(self):
         """
@@ -97,7 +122,12 @@ class DgzDepuratorPlugin(QObject):
         self.actions.clear()
         
         if self.dock_widget:
-            self.iface.mainWindow().removeDockWidget(self.dock_widget)
+            try:
+                self.iface.mainWindow().removeDockWidget(self.dock_widget)
+                self.dock_widget.deleteLater()
+            except Exception:
+                pass
+            self.dock_widget = None
         logging.info("DGZ QGIS Plugin unloaded cleanly.")
 
     def run_cruce_vur(self):

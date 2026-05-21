@@ -37,6 +37,7 @@ export default function RootLayout({ children }) {
           <Background />
           <SystemStatusHeader />
           <Navbar />
+          <FloatingTelemetry />
           <main className="relative z-10 flex flex-col min-h-screen">
             {children}
           </main>

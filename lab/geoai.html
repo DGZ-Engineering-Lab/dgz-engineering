@@ -6,6 +6,7 @@
     <title>GeoAI Change Detection Node | DGZ Spatial OS</title>
     <meta name="description" content="Urban change detection engine using multitemporal Sentinel-2 imagery and deep learning. An advanced GeoAI prototype by DevGiz.">
     <link rel="stylesheet" href="../assets/css/index.css">
+    <script src="../assets/js/dgz-audio.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -452,6 +453,45 @@
             justify-content: center;
             margin-top: 4rem;
         }
+
+        /* --- GLASSMORPHISM DATA CARD PANEL --- */
+        .demo-section {
+            background: rgba(10, 10, 15, 0.2) !important;
+            backdrop-filter: blur(25px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.02) !important;
+        }
+
+        /* --- SCI-FI OPTICAL SLIDER HANDLE --- */
+        .slider-divider {
+            background: #00e5ff !important;
+            box-shadow: 0 0 20px #00e5ff, 0 0 40px rgba(0,229,255,0.4) !important;
+            width: 2px !important;
+        }
+
+        .slider-knob {
+            width: 54px !important;
+            height: 54px !important;
+            background: rgba(4, 4, 6, 0.8) !important;
+            border: 2px solid #00e5ff !important;
+            color: #00e5ff !important;
+            font-size: 1.2rem !important;
+            border-radius: 50% !important;
+            backdrop-filter: blur(10px) !important;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        .canvas-slider-wrapper:hover .slider-knob {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.7);
+        }
     </style>
 </head>
 <body>
@@ -795,6 +835,7 @@
         // Slider interaction
         let sliderPos = 50; // percentage
         let isDragging = false;
+        let lastPlayTime = 0;
 
         function updateSlider(x) {
             const rect = wrapper.getBoundingClientRect();
@@ -804,6 +845,14 @@
             afterCanvas.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
             divider.style.left = `${pct}%`;
             knob.style.left = `${pct}%`;
+
+            const now = performance.now();
+            if (now - lastPlayTime > 50) {
+                if (window.dgzSynth) {
+                    window.dgzSynth.playSliderHum(pct / 100);
+                }
+                lastPlayTime = now;
+            }
         }
 
         wrapper.addEventListener('mousedown', e => { isDragging = true; updateSlider(e.clientX); });

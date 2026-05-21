@@ -1,95 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise GIS Dashboard | DevGiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise GIS Command Deck | DevGiz</title>
+    <meta name="description" content="Tactical territorial analysis command deck with real-time PostGIS sync metrics and LADM-COL discrepancy monitoring.">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="../../assets/js/dgz-audio.js"></script>
     <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        :root{--mono:'JetBrains Mono',monospace;--gold:#ffb400;--electric:#00e5ff}
-        body{background:#020205;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:8rem 5% 5rem}
-        .noise{position:fixed;inset:0;background-image:url('https://grainy-gradients.vercel.app/noise.svg');opacity:.03;pointer-events:none;z-index:0}
-        .orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,255,.06),transparent);top:5%;right:-10%}
-        .back-link{position:fixed;top:1.5rem;left:5%;font-family:var(--mono);font-size:.6rem;color:rgba(0,229,255,.7);text-decoration:none;display:flex;align-items:center;gap:.5rem;z-index:100;letter-spacing:.08em}
-        .back-link:hover{color:var(--electric)}
-        .sys-label{font-family:var(--mono);font-size:.55rem;color:rgba(0,229,255,.5);letter-spacing:.2em;margin-bottom:1rem;text-transform:uppercase;position:relative;z-index:1}
-        h1{font-size:clamp(2rem,5vw,4rem);font-weight:900;letter-spacing:-.04em;margin-bottom:1.5rem;line-height:1;position:relative;z-index:1}
-        .lead{color:rgba(255,255,255,.5);max-width:700px;font-size:1rem;line-height:1.8;margin-bottom:3rem;position:relative;z-index:1}
-        /* Zone selector mockup */
-        .zone-demo{background:rgba(255,255,255,.02);border:1px solid rgba(0,229,255,.15);border-radius:20px;padding:2rem;margin-bottom:3rem;position:relative;z-index:1}
-        .zone-label{font-family:var(--mono);font-size:.5rem;color:rgba(0,229,255,.4);letter-spacing:.15em;margin-bottom:1rem}
-        .zone-btns{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.5rem}
-        .zone-btn{font-family:var(--mono);font-size:.55rem;padding:.3rem .8rem;border-radius:6px;border:1px solid rgba(0,229,255,.2);background:rgba(0,229,255,.05);color:rgba(0,229,255,.6);cursor:pointer;letter-spacing:.08em;transition:all .2s}
-        .zone-btn.active,.zone-btn:hover{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.5);color:var(--electric)}
-        .zone-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem}
-        .zs-card{background:rgba(0,0,0,.3);border-radius:10px;padding:1rem;text-align:center}
-        .zs-num{font-size:1.5rem;font-weight:900;color:var(--electric)}
-        .zs-label{font-family:var(--mono);font-size:.45rem;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;margin-top:.3rem}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        :root {
+            --mono: 'JetBrains Mono', monospace;
+            --font: 'Inter', sans-serif;
+            --orbitron: 'Orbitron', sans-serif;
+            --bg-deep: #020205;
+            --bg-panel: rgba(8, 8, 16, 0.85);
+            --accent-electric: #00e5ff;
+            --accent-pink: #ff007f;
+            --accent-gold: #ffb400;
+            --accent-success: #10b981;
+            --border-neon: rgba(0, 229, 255, 0.15);
+            --border-pink: rgba(255, 0, 127, 0.15);
+            --text-secondary: rgba(226, 232, 240, 0.6);
+        }
+        body {
+            background: var(--bg-deep);
+            color: #fff;
+            font-family: var(--font);
+            min-height: 100vh;
+            padding: 2rem 5% 5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .noise {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: .015;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            pointer-events: none;
+            z-index: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.07), rgba(255, 0, 127, 0.03), transparent);
+            top: 5%;
+            right: -10%;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 5%;
+            font-family: var(--mono);
+            font-size: .65rem;
+            color: rgba(0, 229, 255, 0.7);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            z-index: 100;
+            letter-spacing: .15em;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: rgba(0, 229, 255, 0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .back-link:hover {
+            color: var(--accent-electric);
+            border-color: var(--accent-electric);
+            background: rgba(0, 229, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+        }
+        .sound-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 5%;
+            font-family: var(--mono);
+            font-size: .65rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            border: 1px solid var(--border-neon);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: rgba(8, 8, 16, 0.85);
+            transition: all 0.3s;
+        }
+        .sound-toggle:hover {
+            color: var(--accent-electric);
+            border-color: var(--accent-electric);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+        }
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 4.5rem auto 0;
+        }
+        .sys-label {
+            font-family: var(--mono);
+            font-size: .6rem;
+            color: var(--accent-electric);
+            letter-spacing: .25em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .sys-label .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-electric);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-electric);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+        }
+        h1 {
+            font-family: var(--orbitron);
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.2rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-electric) 70%, var(--accent-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        .lead {
+            color: var(--text-secondary);
+            max-width: 800px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 3.5rem;
+        }
+        
+        /* Tactical Panel Trims */
+        .tactical-panel {
+            position: relative;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-neon);
+            border-radius: 4px;
+            padding: 2rem;
+            backdrop-filter: blur(25px);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+            box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.03),
+                        0 10px 40px rgba(0, 0, 0, 0.85);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 3.5rem;
+        }
+        .tactical-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 20px; height: 20px;
+            background: linear-gradient(135deg, transparent 50%, var(--accent-electric) 50%);
+            pointer-events: none;
+        }
+        .tactical-panel:hover {
+            border-color: rgba(0, 229, 255, 0.35);
+            box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.08),
+                        0 15px 50px rgba(0, 229, 255, 0.1);
+        }
+        
+        .zone-label {
+            font-family: var(--mono);
+            font-size: .6rem;
+            color: rgba(0, 229, 255, 0.5);
+            letter-spacing: .2em;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(0, 229, 255, 0.15);
+            padding-bottom: 0.6rem;
+            text-transform: uppercase;
+        }
+        .zone-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+            margin-bottom: 2rem;
+        }
+        .zone-btn {
+            font-family: var(--mono);
+            font-size: .65rem;
+            padding: .5rem 1.4rem;
+            border-radius: 3px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            background: rgba(0, 229, 255, 0.03);
+            color: rgba(0, 229, 255, 0.7);
+            cursor: pointer;
+            letter-spacing: .15em;
+            transition: all 0.25s;
+            text-transform: uppercase;
+        }
+        .zone-btn.active, .zone-btn:hover {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: var(--accent-electric);
+            color: var(--accent-electric);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            text-shadow: 0 0 5px var(--accent-electric);
+        }
+        .zone-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .zs-card {
+            background: rgba(2, 2, 5, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .zs-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--accent-electric);
+        }
+        .zs-card.success::before { background: var(--accent-success); }
+        .zs-card.error::before { background: var(--accent-pink); }
+        .zs-card.warning::before { background: var(--accent-gold); }
+        
+        .zs-num {
+            font-family: var(--orbitron);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-electric);
+            letter-spacing: 0.05em;
+        }
+        .zs-card.success .zs-num { color: var(--accent-success); }
+        .zs-card.error .zs-num { color: var(--accent-pink); }
+        .zs-card.warning .zs-num { color: var(--accent-gold); }
+        
+        .zs-label {
+            font-family: var(--mono);
+            font-size: .55rem;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-top: .5rem;
+        }
+        
+        /* Mini Sparkline canvas style */
+        .sparkline-box {
+            height: 35px;
+            margin-top: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Diagnostic Boot Logger Panel */
+        .terminal-panel {
+            background: rgba(2, 2, 5, 0.95);
+            border: 1px solid var(--border-pink);
+            border-radius: 4px;
+            padding: 1.5rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: #d1d5db;
+            height: 180px;
+            overflow-y: auto;
+            margin-bottom: 3.5rem;
+            box-shadow: inset 0 0 15px rgba(255, 0, 127, 0.03);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 0, 127, 0.3) transparent;
+        }
+        .terminal-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 0, 127, 0.3);
+            border-radius: 2px;
+        }
+        .term-header {
+            color: var(--accent-pink);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px dashed rgba(255, 0, 127, 0.15);
+            padding-bottom: 0.4rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .term-line {
+            line-height: 1.6;
+            margin-bottom: 0.2rem;
+        }
+        .term-cyan { color: var(--accent-electric); }
+        .term-pink { color: var(--accent-pink); }
+        .term-green { color: var(--accent-success); }
+        .term-gold { color: var(--accent-gold); }
+
         /* Feature grid */
-        .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:3rem;position:relative;z-index:1}
-        .feat-card{background:rgba(255,255,255,.02);border:1px solid rgba(0,229,255,.1);border-radius:14px;padding:1.4rem}
-        .feat-icon{font-size:1.6rem;margin-bottom:.6rem}
-        .feat-title{font-weight:800;margin-bottom:.4rem;color:var(--electric);font-size:.9rem}
-        .feat-desc{color:rgba(255,255,255,.4);font-size:.8rem;line-height:1.6}
-        /* CTA */
-        .cta-row{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1}
-        .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.8rem 1.5rem;border-radius:10px;text-decoration:none;transition:all .3s}
-        .btn-cyan{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:var(--electric)}
-        .btn-cyan:hover{background:rgba(0,229,255,.2);transform:translateY(-2px)}
-        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
-        .btn-outline:hover{border-color:rgba(255,255,255,.2);color:#fff}
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+        .feat-card {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            padding: 1.8rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(to right, var(--accent-electric), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feat-card:hover {
+            background: rgba(0, 229, 255, 0.02);
+            border-color: rgba(0, 229, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        .feat-card:hover::before {
+            opacity: 1;
+        }
+        .feat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.2));
+        }
+        .feat-title {
+            font-family: var(--orbitron);
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: .6rem;
+            color: var(--accent-electric);
+            letter-spacing: 0.05em;
+        }
+        .feat-desc {
+            color: var(--text-secondary);
+            font-size: .85rem;
+            line-height: 1.7;
+        }
+        
+        /* CTA Row */
+        .cta-row {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .6rem;
+            font-family: var(--mono);
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            padding: 1rem 2rem;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+        }
+        .btn-cyan {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-electric);
+            color: var(--accent-electric);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+        }
+        .btn-cyan:hover {
+            background: var(--accent-electric);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .btn-outline:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
     <div class="noise"></div>
+    <div class="grid-bg"></div>
     <div class="orb"></div>
-    <a href="../index.html" class="back-link"><i class="ph ph-arrow-left"></i> PROJECTS_HUB</a>
+    
+    <a href="../../index.html" class="back-link" id="nav-back-btn" onclick="if(window.dgzSynth) window.dgzSynth.playClick();"><i class="ph ph-arrow-left"></i> PROJECTS_HUB</a>
+    <div class="sound-toggle" id="sound-toggle-btn" onclick="toggleMute();">
+        <i class="ph ph-speaker-high" id="sound-icon"></i> <span id="sound-text">SOUND: ON</span>
+    </div>
 
-    <div class="sys-label">// SYSTEM_ID: GIS_DASHBOARD_01 // STATUS: LIVE // POSTGIS + MAPLIBRE</div>
-    <h1>Enterprise GIS<br>Territorial Dashboard</h1>
-    <p class="lead">Real-time territorial analytics platform for multipurpose cadastre operations. Filter by geographic zone, track SLA compliance, monitor field team progress, and visualize topology errors on an interactive map.</p>
-
-    <!-- Zone filter mockup -->
-    <div class="zone-demo">
-        <div class="zone-label">ZONE_FILTER_DEMO // CLICK TO SIMULATE</div>
-        <div class="zone-btns">
-            <div class="zone-btn active" onclick="selectZone(this,'Norte',12450,94,3,1.2)">NORTE</div>
-            <div class="zone-btn" onclick="selectZone(this,'Centro',8930,87,7,0.8)">CENTRO</div>
-            <div class="zone-btn" onclick="selectZone(this,'Sur',15600,98,1,2.1)">SUR</div>
-            <div class="zone-btn" onclick="selectZone(this,'Oriente',6780,91,5,0.6)">ORIENTE</div>
+    <main class="main-container">
+        <div class="sys-label">
+            <div class="pulse-dot"></div>
+            SYSTEM_ID: DEVGIZ_GIS_DASHBOARD // STATUS: LIVE // SECURE CONNECTION [OK]
         </div>
-        <div class="zone-stats">
-            <div class="zs-card"><div class="zs-num" id="zs-parcels">12,450</div><div class="zs-label">Parcels</div></div>
-            <div class="zs-card"><div class="zs-num color-success" id="zs-sla">94%</div><div class="zs-label">SLA Compliance</div></div>
-            <div class="zs-card"><div class="zs-num color-error" id="zs-errors">3</div><div class="zs-label">Topology Errors</div></div>
-            <div class="zs-card"><div class="zs-num color-warning" id="zs-progress">1.2k</div><div class="zs-label">Processed Today</div></div>
+        
+        <h1>Enterprise GIS<br>Command Deck</h1>
+        <p class="lead">Tactical, real-time spatial analytics dashboard specialized for multi-purpose cadastre audits (LADM-COL Colombia). Cross-correlates local digitalized vector layers with official SNR/VUR registries, monitoring SLA compliance, geometry integrity, and recognizing field operations automatically.</p>
+
+        <!-- Simulated Tactical metrics control console -->
+        <section class="tactical-panel" aria-label="Geographic Zone Simulator">
+            <div class="zone-label">GEOGRAPHIC_ZONE_SIMULATOR_HUB // CLICK TO POLL ZONE TELEMETRY</div>
+            
+            <div class="zone-btns" role="tablist">
+                <button class="zone-btn active" id="btn-zone-norte" role="tab" aria-selected="true" onclick="selectZone(this,'Norte',12450,96.4,2,1.25)">NORTE (MEDELLÍN CENTRO)</button>
+                <button class="zone-btn" id="btn-zone-centro" role="tab" aria-selected="false" onclick="selectZone(this,'Centro',8930,88.1,7,0.82)">CENTRO (ORIP BOGOTA NORTE)</button>
+                <button class="zone-btn" id="btn-zone-sur" role="tab" aria-selected="false" onclick="selectZone(this,'Sur',15600,99.2,0,2.15)">SUR (ZONA CAUCA RURAL)</button>
+                <button class="zone-btn" id="btn-zone-oriente" role="tab" aria-selected="false" onclick="selectZone(this,'Oriente',6780,92.5,5,0.61)">ORIENTE (ORIP CALI)</button>
+            </div>
+            
+            <div class="zone-stats">
+                <div class="zs-card">
+                    <div>
+                        <div class="zs-num" id="zs-parcels">12,450</div>
+                        <div class="zs-label">Predios Registrados</div>
+                    </div>
+                    <div class="sparkline-box">
+                        <svg width="100%" height="30" viewBox="0 0 200 30" preserveAspectRatio="none">
+                            <path d="M 0 25 L 30 15 L 60 22 L 90 8 L 120 18 L 150 12 L 180 20 L 200 10" fill="none" stroke="#00e5ff" stroke-width="1.5"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="zs-card success" id="sla-card">
+                    <div>
+                        <div class="zs-num" id="zs-sla">96.4%</div>
+                        <div class="zs-label">SLA Compliance</div>
+                    </div>
+                    <div class="sparkline-box">
+                        <svg width="100%" height="30" viewBox="0 0 200 30" preserveAspectRatio="none">
+                            <path d="M 0 20 L 30 18 L 60 16 L 90 12 L 120 14 L 150 9 L 180 5 L 200 2" fill="none" stroke="#10b981" stroke-width="1.5"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="zs-card error" id="errors-card">
+                    <div>
+                        <div class="zs-num" id="zs-errors">2</div>
+                        <div class="zs-label">Topological Errors</div>
+                    </div>
+                    <div class="sparkline-box">
+                        <svg width="100%" height="30" viewBox="0 0 200 30" preserveAspectRatio="none">
+                            <path d="M 0 5 L 30 12 L 60 8 L 90 22 L 120 12 L 150 18 L 180 8 L 200 25" fill="none" stroke="#ff007f" stroke-width="1.5"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="zs-card warning" id="progress-card">
+                    <div>
+                        <div class="zs-num" id="zs-progress">1.25k</div>
+                        <div class="zs-label">Audit Processed Today</div>
+                    </div>
+                    <div class="sparkline-box">
+                        <svg width="100%" height="30" viewBox="0 0 200 30" preserveAspectRatio="none">
+                            <path d="M 0 28 L 30 20 L 60 15 L 90 18 L 120 10 L 150 8 L 180 4 L 200 2" fill="none" stroke="#ffb400" stroke-width="1.5"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Boot Diagnostic Console Logger -->
+        <section class="terminal-panel" aria-label="System Terminal Log" id="terminal-log-panel">
+            <div class="term-header">> SYS_DIAGNOSTIC_LOGGER // BOOT_INGESTION</div>
+            <div class="term-line term-cyan">> Initializing terminal diagnostic bridge... [OK]</div>
+        </section>
+
+        <!-- System feature overview grid -->
+        <section class="feat-grid">
+            <article class="feat-card">
+                <div class="feat-icon">🛰️</div>
+                <div class="feat-title">High-Fidelity GIS Viewer</div>
+                <div class="feat-desc">Vector tile rendering engine using MapLibre GL for detailed spatial representation. Features neural scanning animation, hover focus state overlay, and fully formatted attribute inspectors.</div>
+            </article>
+            <article class="feat-card">
+                <div class="feat-icon">🔗</div>
+                <div class="feat-title">VUR Real-Time Bridge</div>
+                <div class="feat-desc">Dual secure authentication tunnels linking directly to Colombian SNR folios, crossing geographical parcel limits with legal registries inside a single HUD console.</div>
+            </article>
+            <article class="feat-card">
+                <div class="feat-icon">⚖️</div>
+                <div class="feat-title">LADM-COL Resolution Solver</div>
+                <div class="feat-desc">Strict compliance mapping matching the official standards of Resolución 1040/2023 and 746/2024. Flags discrepancies as Cruce Exitoso, Discrepancia Área, and Omisiones.</div>
+            </article>
+            <article class="feat-card">
+                <div class="feat-icon">🧠</div>
+                <div class="feat-title">Auto-Healing Topography</div>
+                <div class="feat-desc">Embedded backend LLM and Shapely geospatial validator that instantly repairs overlapping polygons, self-intersections, and gap limits under active CRS coordinate contexts.</div>
+            </article>
+        </section>
+
+        <!-- Action rows -->
+        <div class="cta-row">
+            <a href="../../lab/map.html" class="btn btn-cyan" id="cta-launch-demo" onclick="if(window.dgzSynth) window.dgzSynth.playClick();"><i class="ph ph-rocket-launch"></i> LAUNCH SPATIAL LAB</a>
+            <a href="../../index.html" class="btn btn-outline" id="cta-return-hub" onclick="if(window.dgzSynth) window.dgzSynth.playClick();"><i class="ph ph-cpu"></i> CORE NUCLEUS HUB</a>
         </div>
-    </div>
-
-    <div class="feat-grid">
-        <div class="feat-card"><div class="feat-icon">🗺️</div><div class="feat-title">Live Map</div><div class="feat-desc">Vector tile rendering with real-time parcel status overlays and clickable attribute inspection.</div></div>
-        <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Zone Analytics</div><div class="feat-desc">Filter by Norte, Centro, Sur, Oriente with instant animated chart transitions.</div></div>
-        <div class="feat-card"><div class="feat-icon">⚠️</div><div class="feat-title">SLA Alerts</div><div class="feat-desc">Automated threshold alerts for bottlenecks and deadline overruns with severity levels.</div></div>
-        <div class="feat-card"><div class="feat-icon">👤</div><div class="feat-title">Field Teams</div><div class="feat-desc">Track operator progress, assign parcels, and monitor daily production targets in real time.</div></div>
-    </div>
-
-    <div class="cta-row">
-        <a href="../../lab/map.html" class="btn btn-cyan"><i class="ph ph-rocket-launch"></i> LAUNCH LIVE DEMO</a>
-        <a href="../../index.html#map" class="btn btn-outline"><i class="ph ph-map-trifold"></i> GIS WORKSTATION</a>
-    </div>
+    </main>
 
     <script>
+        // Synchronized telemetry data updates
         function selectZone(el, name, parcels, sla, errors, progress) {
-            document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+            // Sound feedback
+            if (window.dgzSynth) {
+                window.dgzSynth.playClick();
+                if (errors > 3) {
+                    setTimeout(() => window.dgzSynth.playWarning(), 100);
+                }
+            }
+
+            // Button highlights
+            document.querySelectorAll('.zone-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             el.classList.add('active');
+            el.setAttribute('aria-selected', 'true');
+            
+            // Text values updates
             document.getElementById('zs-parcels').textContent = parcels.toLocaleString();
-            document.getElementById('zs-sla').textContent = sla + '%';
-            document.getElementById('zs-sla').style.color = sla >= 95 ? '#4ade80' : sla >= 85 ? '#ffb400' : '#ff4b2b';
-            document.getElementById('zs-errors').textContent = errors;
-            document.getElementById('zs-errors').style.color = errors === 0 ? '#4ade80' : errors <= 3 ? '#ffb400' : '#ff4b2b';
+            
+            const slaEl = document.getElementById('zs-sla');
+            slaEl.textContent = sla + '%';
+            
+            const errorsEl = document.getElementById('zs-errors');
+            errorsEl.textContent = errors;
+
             document.getElementById('zs-progress').textContent = progress + 'k';
+
+            // Custom border accents depending on critical limits
+            const slaCard = document.getElementById('sla-card');
+            if (sla >= 95) {
+                slaCard.style.borderLeftColor = 'var(--accent-success)';
+                slaEl.style.color = 'var(--accent-success)';
+            } else if (sla >= 85) {
+                slaCard.style.borderLeftColor = 'var(--accent-gold)';
+                slaEl.style.color = 'var(--accent-gold)';
+            } else {
+                slaCard.style.borderLeftColor = 'var(--accent-pink)';
+                slaEl.style.color = 'var(--accent-pink)';
+            }
+
+            const errorsCard = document.getElementById('errors-card');
+            if (errors === 0) {
+                errorsCard.style.borderLeftColor = 'var(--accent-success)';
+                errorsEl.style.color = 'var(--accent-success)';
+                logToTerminal(`[INFO] Switched context to Zone [${name.toUpperCase()}]: 0 critical topological errors. Compliance nominal.`, 'green');
+            } else if (errors <= 3) {
+                errorsCard.style.borderLeftColor = 'var(--accent-gold)';
+                errorsEl.style.color = 'var(--accent-gold)';
+                logToTerminal(`[WARNING] Switched context to Zone [${name.toUpperCase()}]: ${errors} topological intersections detected. Processing local auto-healing queues...`, 'gold');
+            } else {
+                errorsCard.style.borderLeftColor = 'var(--accent-pink)';
+                errorsEl.style.color = 'var(--accent-pink)';
+                logToTerminal(`[CRITICAL] Switched context to Zone [${name.toUpperCase()}]: ${errors} core overlap exceptions flagged in database! Alerting local recognizers.`, 'pink');
+            }
         }
+
+        // Mute state synchronizer
+        function toggleMute() {
+            if (window.dgzSynth) {
+                const isMuted = window.dgzSynth.toggleMute();
+                const icon = document.getElementById('sound-icon');
+                const text = document.getElementById('sound-text');
+                
+                if (isMuted) {
+                    icon.className = "ph ph-speaker-simple-slash";
+                    text.textContent = "SOUND: OFF";
+                } else {
+                    icon.className = "ph ph-speaker-high";
+                    text.textContent = "SOUND: ON";
+                    window.dgzSynth.playClick();
+                }
+            }
+        }
+
+        // Live boot logger simulation
+        const terminal = document.getElementById('terminal-log-panel');
+        function logToTerminal(message, colorClass = '') {
+            const time = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = 'term-line';
+            line.innerHTML = `<span>[${time}]</span> <span class="term-${colorClass}">${message}</span>`;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        const bootLogs = [
+            { text: "Fetching system architecture nodes...", color: "cyan", delay: 600 },
+            { text: "Connecting to PostGIS database: db_dgz_engineering... [OK]", color: "green", delay: 1100 },
+            { text: "Loading spatial partitions: Hive structure parsed (4 regions loaded)", color: "green", delay: 1700 },
+            { text: "Validating active CRS parameters: Origen Nacional (EPSG:9377) matching...", color: "gold", delay: 2400 },
+            { text: "SLA Monitor initialized. Ingestion rate nominal.", color: "cyan", delay: 3000 },
+            { text: "Auto-healer online. Shapely 2.0 validation library listening on queue.", color: "green", delay: 3500 },
+            { text: "WARNING: Zone CENTRO contains active overlaps on MATRÍCULA 50N-654321.", color: "pink", delay: 4200 },
+            { text: "Command Deck fully synced and operational.", color: "cyan", delay: 4900 }
+        ];
+
+        window.addEventListener('load', () => {
+            // Apply sound icon state from storage
+            if (window.dgzSynth) {
+                const icon = document.getElementById('sound-icon');
+                const text = document.getElementById('sound-text');
+                if (window.dgzSynth.muted) {
+                    icon.className = "ph ph-speaker-simple-slash";
+                    text.textContent = "SOUND: OFF";
+                } else {
+                    icon.className = "ph ph-speaker-high";
+                    text.textContent = "SOUND: ON";
+                }
+            }
+
+            bootLogs.forEach(log => {
+                setTimeout(() => {
+                    logToTerminal(`> ${log.text}`, log.color);
+                    if (log.color === 'pink' && window.dgzSynth) {
+                        window.dgzSynth.playWarning();
+                    }
+                }, log.delay);
+            });
+        });
     </script>
 </body>
 </html>

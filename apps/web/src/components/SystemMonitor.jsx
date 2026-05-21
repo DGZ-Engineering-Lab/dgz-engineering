@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Terminal, Database } from "lucide-react";
 
 export default function SystemMonitor() {
   const [apiStatus, setApiStatus] = useState("CONNECTING...");
@@ -8,16 +10,13 @@ export default function SystemMonitor() {
   const [dbVersion, setDbVersion] = useState("");
 
   useEffect(() => {
-    // Definimos la URL de nuestra API alojada en Render
     const API_URL = "https://devgiz-api.onrender.com";
 
     const checkSystem = async () => {
       try {
-        // Chequeo de salud general de la API
         const apiRes = await fetch(`${API_URL}/`);
         if (apiRes.ok) setApiStatus("ONLINE_NOMINAL");
 
-        // Chequeo de conexión con Neon DB
         const dbRes = await fetch(`${API_URL}/health/db`);
         const dbData = await dbRes.json();
         
@@ -34,42 +33,66 @@ export default function SystemMonitor() {
     };
 
     checkSystem();
-    // Re-check cada 30 segundos (opcional para mantener viva la instancia gratuita de Render)
     const interval = setInterval(checkSystem, 30000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="w-full max-w-md mx-auto mt-12 p-6 rounded-xl border border-slate-800 bg-black/40 backdrop-blur-md">
-      <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
-        <h3 className="text-slate-300 font-mono text-sm">SYSTEM_TELEMETRY</h3>
-        <div className={`w-2 h-2 rounded-full ${apiStatus.includes("ONLINE") ? "bg-cyan-400 animate-pulse" : "bg-red-500"}`} />
+    <motion.div 
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+      className="w-full max-w-md mx-auto mt-12 p-6 rounded-2xl border border-slate-800/60 bg-[#07070c]/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden group hover:border-cyan-500/30 transition-colors duration-500"
+    >
+      {/* Patrón de Rejilla de Fondo Táctico */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none rounded-2xl" />
+      
+      {/* Brillo de Luz Diagonal (Refraction Sweep) */}
+      <div className="absolute inset-0 w-full h-full -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out pointer-events-none bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent" />
+      
+      {/* Esquinas Tácticas Militares */}
+      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-500/40 rounded-tl-md group-hover:border-cyan-400 transition-colors duration-500" />
+      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-500/40 rounded-br-md group-hover:border-cyan-400 transition-colors duration-500" />
+
+      <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-800/60 relative z-10">
+        <div className="flex items-center gap-2">
+          <Terminal className="w-4 h-4 text-cyan-400 animate-pulse" />
+          <h3 className="text-slate-200 font-mono text-xs tracking-widest font-black uppercase">SYSTEM_TELEMETRY</h3>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[8px] font-mono text-cyan-400/60 uppercase">Live link</span>
+          <div className={`w-2 h-2 rounded-full ${apiStatus.includes("ONLINE") ? "bg-cyan-400 animate-ping" : "bg-red-500 animate-pulse"} shadow-[0_0_10px_rgba(6,182,212,0.5)]`} />
+        </div>
       </div>
       
-      <div className="space-y-4 font-mono text-xs">
-        <div className="flex justify-between items-center">
-          <span className="text-slate-500">RENDER_API_STATUS:</span>
-          <span className={apiStatus.includes("ONLINE") ? "text-cyan-400" : "text-red-400"}>
-            [{apiStatus}]
+      <div className="space-y-4 font-mono text-[10px] relative z-10">
+        <div className="flex justify-between items-center p-3 rounded-xl bg-black/40 border border-slate-900 group-hover:border-slate-800 transition-colors duration-300">
+          <span className="text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <Terminal className="w-3.5 h-3.5 text-slate-500" /> RENDER_API_STATUS:
+          </span>
+          <span className={`font-black tracking-widest ${apiStatus.includes("ONLINE") ? "text-cyan-400" : "text-red-400"}`}>
+            {apiStatus}
           </span>
         </div>
         
-        <div className="flex justify-between items-center">
-          <span className="text-slate-500">NEON_DB_LINK:</span>
-          <span className={dbStatus === "CONNECTED" ? "text-purple-400" : "text-amber-400"}>
-            [{dbStatus}]
+        <div className="flex justify-between items-center p-3 rounded-xl bg-black/40 border border-slate-900 group-hover:border-slate-800 transition-colors duration-300">
+          <span className="text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <Database className="w-3.5 h-3.5 text-slate-500" /> NEON_DB_LINK:
+          </span>
+          <span className={`font-black tracking-widest ${dbStatus === "CONNECTED" ? "text-purple-400" : "text-amber-400"}`}>
+            {dbStatus}
           </span>
         </div>
 
         {dbVersion && (
-          <div className="flex justify-between items-center">
-            <span className="text-slate-500">DB_KERNEL:</span>
-            <span className="text-slate-300 truncate max-w-[200px]" title={dbVersion}>
+          <div className="flex justify-between items-center p-3 rounded-xl bg-black/20 border border-dashed border-slate-800/50">
+            <span className="text-slate-500 uppercase tracking-wider">DB_KERNEL:</span>
+            <span className="text-slate-300 truncate max-w-[220px] font-bold" title={dbVersion}>
               {dbVersion}
             </span>
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
