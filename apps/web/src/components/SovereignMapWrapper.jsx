@@ -26,6 +26,17 @@ export default function SovereignMapWrapper() {
   const [isActivated, setIsActivated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState([]);
+  const [mapEngine, setMapEngine] = useState("mapbox");
+
+  // Read engine from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedEngine = localStorage.getItem("dgz_map_engine");
+      if (savedEngine === "sovereign" || savedEngine === "mapbox") {
+        setMapEngine(savedEngine);
+      }
+    }
+  }, []);
 
   // Boot logs simulation for the high-fidelity tactical skeleton
   const bootLogs = [
@@ -91,7 +102,15 @@ export default function SovereignMapWrapper() {
     >
       {/* 3D WebGL Live Dashboard */}
       {isActivated ? (
-        <SpatialIntelligenceDashboard />
+        <SpatialIntelligenceDashboard
+          forceSovereign={mapEngine === "sovereign"}
+          onChangeEngine={(eng) => {
+            setMapEngine(eng);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("dgz_map_engine", eng);
+            }
+          }}
+        />
       ) : (
         /* Tactical HUD Skeleton Screen */
         <div className="absolute inset-0 w-full h-full flex flex-col justify-between p-6 select-none bg-[#03050a]/95 relative">
@@ -135,16 +154,78 @@ export default function SovereignMapWrapper() {
               </p>
             </div>
 
+            {/* Indicator showing current selected engine */}
+            <div className="text-[8px] font-mono tracking-wider z-10 mt-1">
+              {mapEngine === "sovereign" ? (
+                <span className="text-amber-400 font-bold flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/25 px-2.5 py-1 rounded shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+                  <ShieldAlert className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
+                  SISTEMA DE SEGURIDAD 2D ACTIVO // EVITA CONGELAMIENTO
+                </span>
+              ) : (
+                <span className="text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/25 px-2.5 py-1 rounded shadow-[0_0_15px_rgba(6,182,212,0.05)]">
+                  <Globe className="w-3.5 h-3.5 text-cyan-400 animate-pulse shrink-0" />
+                  MODO ESTÁNDAR 3D ACTIVO // REQUIERE WEBGL HABILITADO
+                </span>
+              )}
+            </div>
+
+            {/* Premium Selector de Motor de Renderizado */}
+            <div className="z-10 mt-2 p-2 bg-slate-950/80 border border-slate-900 rounded-xl max-w-xs w-full flex flex-col gap-1.5">
+              <span className="text-[7px] font-mono text-slate-400/80 tracking-widest uppercase font-black text-center">
+                SELECCIONAR MOTOR DE RENDIMIENTO
+              </span>
+              <div className="flex gap-1 bg-black/60 p-0.5 rounded-lg border border-slate-900 font-mono text-[8px] tracking-wider uppercase">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMapEngine("mapbox");
+                    if (typeof window !== "undefined") {
+                      localStorage.setItem("dgz_map_engine", "mapbox");
+                    }
+                  }}
+                  className={`flex-1 py-1.5 rounded transition-all cursor-pointer font-bold ${
+                    mapEngine === "mapbox"
+                      ? "bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.25)]"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Mapbox 3D (WebGL)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMapEngine("sovereign");
+                    if (typeof window !== "undefined") {
+                      localStorage.setItem("dgz_map_engine", "sovereign");
+                    }
+                  }}
+                  className={`flex-1 py-1.5 rounded transition-all cursor-pointer font-bold ${
+                    mapEngine === "sovereign"
+                      ? "bg-amber-500/20 border border-amber-500/30 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.25)]"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Soberano 2D (Seguro)
+                </button>
+              </div>
+            </div>
+
             <button
               onClick={handleActivate}
               disabled={isLoading}
-              className="mt-4 pointer-events-auto px-8 py-3.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-[9px] font-black uppercase tracking-[0.25em] transition-all duration-300 shadow-[0_0_30px_rgba(6,182,212,0.2)] hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px]"
+              className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[9px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
+                mapEngine === "sovereign"
+                  ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.5)]"
+                  : "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.2)] hover:shadow-[0_0_40px_rgba(6,182,212,0.5)]"
+              }`}
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <span className="w-2 h-2 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></span>
                   CARGANDO ENGINE...
                 </span>
+              ) : mapEngine === "sovereign" ? (
+                "ACTIVAR VISOR 2D SEGURO"
               ) : (
                 "ACTIVAR VISOR 3D"
               )}

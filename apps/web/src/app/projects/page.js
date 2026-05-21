@@ -137,14 +137,11 @@ export default function ProjectsPage() {
 
                 {/* Visual */}
                 <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                  <Image 
+                  <img 
                     src={project.image} 
                     alt={project.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority={idx === 0}
-                    fetchpriority={idx === 0 ? "high" : undefined}
-                    className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                    fetchPriority={idx === 0 ? "high" : "low"}
+                    className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 w-full h-full absolute inset-0"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-10 right-10 p-6 bg-white/90 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">

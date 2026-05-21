@@ -250,7 +250,7 @@ const runLocalJoin = (spatialData, legalData, key) => {
   };
 };
 
-export default function SpatialIntelligenceDashboard() {
+export default function SpatialIntelligenceDashboard({ forceSovereign = false, onChangeEngine }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [activeAnalysis, setActiveAnalysis] = useState(null);
@@ -260,7 +260,11 @@ export default function SpatialIntelligenceDashboard() {
   const [polarsSpeed, setPolarsSpeed] = useState(0);
   const [vurData, setVurData] = useState(null);
   const [isVurLoading, setIsVurLoading] = useState(false);
-  const [isMapboxSupported, setIsMapboxSupported] = useState(true);
+  const [isMapboxSupported, setIsMapboxSupported] = useState(!forceSovereign);
+
+  useEffect(() => {
+    setIsMapboxSupported(!forceSovereign);
+  }, [forceSovereign]);
 
   // --- PHASE 2: ELITE EXPANSION STATE & LOGIC ---
   const [activeTab, setActiveTab] = useState("SIMULATOR"); // SIMULATOR, CROSS_REFERENCE
@@ -534,43 +538,47 @@ export default function SpatialIntelligenceDashboard() {
       const res = await fetch("/api/parcels");
       const data = await res.json();
       
-      if (map.current && data.features) {
-        if (map.current.getSource("parcels")) {
-            map.current.getSource("parcels").setData(data);
-        } else {
-            map.current.addSource("parcels", { 
-              type: "geojson", 
-              data,
-              generateId: true 
-            });
+      if (map.current && map.current.isStyleLoaded() && data.features) {
+        try {
+          if (map.current.getSource("parcels")) {
+              map.current.getSource("parcels").setData(data);
+          } else {
+              map.current.addSource("parcels", { 
+                type: "geojson", 
+                data,
+                generateId: true 
+              });
 
-            // 3D Extrusion for parcels
-            map.current.addLayer({
-              id: "parcels-layer",
-              type: "fill-extrusion",
-              source: "parcels",
-              paint: {
-                "fill-extrusion-color": [
-                  "case",
-                  ["boolean", ["feature-state", "hover"], false],
-                  "#22d3ee",
-                  "#0e7490"
-                ],
-                "fill-extrusion-height": 5,
-                "fill-extrusion-base": 0,
-                "fill-extrusion-opacity": 0.6
-              }
-            });
+              // 3D Extrusion for parcels
+              map.current.addLayer({
+                id: "parcels-layer",
+                type: "fill-extrusion",
+                source: "parcels",
+                paint: {
+                  "fill-extrusion-color": [
+                    "case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    "#22d3ee",
+                    "#0e7490"
+                  ],
+                  "fill-extrusion-height": 5,
+                  "fill-extrusion-base": 0,
+                  "fill-extrusion-opacity": 0.6
+                }
+              });
 
-            map.current.addLayer({
-              id: "parcels-outline",
-              type: "line",
-              source: "parcels",
-              paint: {
-                "line-color": "#06b6d4",
-                "line-width": 1
-              }
-            });
+              map.current.addLayer({
+                id: "parcels-outline",
+                type: "line",
+                source: "parcels",
+                paint: {
+                  "line-color": "#06b6d4",
+                  "line-width": 1
+                }
+              });
+          }
+        } catch (e) {
+          console.warn("Could not load parcels layer dynamically:", e);
         }
         addLog(`SYNC_COMPLETE: ${data.features.length} nodos catastrales sincronizados`, "success");
       }
@@ -630,13 +638,25 @@ export default function SpatialIntelligenceDashboard() {
     addLog("INGESTION: Extrayendo XTF del Nodo Oficial IGAC...", "info");
     addLog("STACK_INIT: Inicializando hilos Polars & DuckDB", "info");
     
-    if (map.current && map.current.getSource("parcels")) {
-      map.current.getSource("parcels").setData(DEMO_PARCELS);
-      map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", [
-        "case",
-        ["==", ["get", "status"], "DIRTY"], "#ef4444",
-        "#0e7490"
-      ]);
+    if (map.current && map.current.isStyleLoaded()) {
+      if (map.current.getSource("parcels")) {
+        try {
+          map.current.getSource("parcels").setData(DEMO_PARCELS);
+        } catch (e) {
+          console.warn("Could not set simulation source data:", e);
+        }
+      }
+      if (map.current.getLayer("parcels-layer")) {
+        try {
+          map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", [
+            "case",
+            ["==", ["get", "status"], "DIRTY"], "#ef4444",
+            "#0e7490"
+          ]);
+        } catch (e) {
+          console.warn("Could not set simulation paint property:", e);
+        }
+      }
     }
 
     await new Promise(r => setTimeout(r, 1200));
@@ -646,7 +666,11 @@ export default function SpatialIntelligenceDashboard() {
     addLog("DUCKDB_SQL: Ejecutando spatial joins LADM-COL...", "info");
     
     if (map.current) {
+      try {
         map.current.flyTo({ center: [-75.567, 6.244], zoom: 17, pitch: 45, duration: 1500 });
+      } catch (e) {
+        console.warn("Could not animate simulation camera:", e);
+      }
     }
 
     await new Promise(r => setTimeout(r, 1500));
@@ -655,9 +679,13 @@ export default function SpatialIntelligenceDashboard() {
     addLog("PYPROJ: Reproyectando a MAGNA-SIRGAS Origen Nacional (EPSG:9377)", "info");
     addLog("POLARS_ENGINE: Corrección topológica en paralelo finalizada (0.02ms)", "success");
     
-    if (map.current) {
-      map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", "#22d3ee");
-      map.current.setPaintProperty("parcels-layer", "fill-extrusion-height", 25);
+    if (map.current && map.current.isStyleLoaded() && map.current.getLayer("parcels-layer")) {
+      try {
+        map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", "#22d3ee");
+        map.current.setPaintProperty("parcels-layer", "fill-extrusion-height", 25);
+      } catch (e) {
+        console.warn("Could not set dynamic healing paint properties:", e);
+      }
     }
 
     // Complete the snap
@@ -678,27 +706,36 @@ export default function SpatialIntelligenceDashboard() {
     });
 
     if (map.current) {
-      map.current.flyTo({ zoom: 18, pitch: 75, bearing: 120, duration: 2500 });
+      try {
+        map.current.flyTo({ zoom: 18, pitch: 75, bearing: 120, duration: 2500 });
+      } catch (e) {
+        console.warn("Could not animate simulation final camera:", e);
+      }
     }
 
     setIsSimulating(false);
   };
 
   useEffect(() => {
-    if (!mapboxgl.accessToken) {
-      console.warn("Mapbox Token missing. Enabling Sovereign Interactive Simulator Fallback.");
-      let active = true;
-      Promise.resolve().then(() => {
-        if (active) {
-          setIsMapboxSupported(false);
-          addLog("MAPBOX_TOKEN_MISSING: Sovereign Simulation Active", "success");
-        }
-      });
-      return () => {
-        active = false;
-      };
+    if (!isMapboxSupported) return;
+
+    if (forceSovereign) {
+      setIsMapboxSupported(false);
+      addLog("ENGINE_MODE: Sovereign 2D Vector Engine Active (Safe Mode)", "success");
+      return;
     }
 
+    const token = mapboxgl.accessToken;
+    const isTokenValid = token && typeof token === "string" && token.trim() !== "" && token !== "undefined" && token !== "null" && token.startsWith("pk.");
+
+    if (!isTokenValid) {
+      console.warn("Mapbox Token missing or invalid. Enabling Sovereign Interactive Simulator Fallback.");
+      setIsMapboxSupported(false);
+      addLog("MAPBOX_TOKEN_MISSING: Sovereign Simulation Active", "success");
+      return;
+    }
+
+    if (!mapContainer.current) return;
     if (map.current) return;
 
     try {
@@ -778,8 +815,9 @@ export default function SpatialIntelligenceDashboard() {
         });
 
         m.on("error", (e) => {
-            if (e.error?.status === 401) {
-                addLog("MAPBOX_AUTH_FAILED: Token Invalid", "error");
+            if (e.error?.status === 401 || e.error?.message?.includes("restric") || e.error?.message?.includes("token")) {
+                setIsMapboxSupported(false);
+                addLog("MAPBOX_AUTH_FAILED: Token inválido o restringido. Activando motor Soberano 2D.", "error");
             }
         });
 
@@ -789,18 +827,20 @@ export default function SpatialIntelligenceDashboard() {
         });
 
     } catch (err) {
-        Promise.resolve().then(() => {
-            setIsMapboxSupported(false);
-        });
+        setIsMapboxSupported(false);
     }
 
     return () => {
       if (map.current) {
-        map.current.remove();
+        try {
+          map.current.remove();
+        } catch (e) {
+          console.warn("Error removing map instance during unmount:", e);
+        }
         map.current = null;
       }
     };
-  }, [fetchParcels]);
+  }, [fetchParcels, forceSovereign, isMapboxSupported]);
 
   // Isometric SVG points calculator helpers
   const heightA = parcelAStatus === "CLEAN" ? 45 : parcelAStatus === "HEALING" ? 25 : 12;
@@ -888,15 +928,51 @@ export default function SpatialIntelligenceDashboard() {
             </button>
           </div>
           
-          {/* Hybrid Storage Sync Banner */}
-          <div className="flex items-center gap-2 px-3.5 py-1.5 bg-black/60 border border-slate-800 rounded-xl backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500 shadow-[0_0_10px_#10b981]" />
-            <span className="text-[9px] font-mono tracking-wider uppercase text-slate-400">
-              Sincronización Híbrida:
-            </span>
-            <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded ${syncMode === "CACHED" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30" : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse"}`}>
-              {syncMode === "CACHED" ? "⚡ CACHÉ ACTIVO (0ms)" : "🌐 ONLINE DIRECTO"}
-            </span>
+          {/* Engine Selector & Hybrid Storage Sync Banner */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Live Engine Hot Switcher */}
+            <div className="flex items-center gap-1 bg-slate-950/60 p-0.5 border border-slate-900 rounded-xl backdrop-blur-md font-mono text-[8px] uppercase tracking-wider">
+              <span className="text-slate-500 font-bold px-2">MOTOR:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (onChangeEngine) onChangeEngine("mapbox");
+                  addLog("HOT_SWITCH: Conmutando a motor Mapbox 3D (WebGL)...", "info");
+                }}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer font-bold ${
+                  !forceSovereign
+                    ? "bg-cyan-500/20 border border-cyan-500/35 text-cyan-400 font-black shadow-[0_0_8px_rgba(6,182,212,0.2)]"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                3D (WebGL)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (onChangeEngine) onChangeEngine("sovereign");
+                  addLog("HOT_SWITCH: Activando Motor Seguro Soberano 2D (Safe Mode)...", "warn");
+                }}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer font-bold ${
+                  forceSovereign
+                    ? "bg-amber-500/20 border border-amber-500/35 text-amber-400 font-black shadow-[0_0_8px_rgba(245,158,11,0.2)]"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                2D (Seguro)
+              </button>
+            </div>
+
+            {/* Hybrid Storage Sync Banner */}
+            <div className="flex items-center gap-2 px-3.5 py-1.5 bg-black/60 border border-slate-800 rounded-xl backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500 shadow-[0_0_10px_#10b981]" />
+              <span className="text-[9px] font-mono tracking-wider uppercase text-slate-400">
+                Sincronización Híbrida:
+              </span>
+              <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded ${syncMode === "CACHED" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30" : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse"}`}>
+                {syncMode === "CACHED" ? "⚡ CACHÉ ACTIVO (0ms)" : "🌐 ONLINE DIRECTO"}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -1405,13 +1481,24 @@ export default function SpatialIntelligenceDashboard() {
             <div className="lg:col-span-8 relative min-h-[400px]">
               <div className="absolute inset-0 bg-slate-900 animate-pulse rounded-[2rem] -z-10"></div>
               {!isMapboxSupported ? (
-                <div className="absolute inset-0 rounded-[2rem] border border-cyan-500/15 bg-[#040810] overflow-hidden flex flex-col items-center justify-center p-6 select-none shadow-[0_0_60px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(0,229,255,0.08)] animate-none" style={{ boxShadow: '0 0 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(0,229,255,0.08), 0 0 1px rgba(0,229,255,0.15)' }}>
+                <div 
+                  className={`absolute inset-0 rounded-[2rem] border overflow-hidden flex flex-col items-center justify-center p-6 select-none animate-none ${
+                    forceSovereign 
+                      ? "border-amber-500/20 bg-[#060402]" 
+                      : "border-cyan-500/15 bg-[#040810]"
+                  }`} 
+                  style={{ 
+                    boxShadow: forceSovereign
+                      ? '0 0 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(245,158,11,0.08), 0 0 1px rgba(245,158,11,0.15)'
+                      : '0 0 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(0,229,255,0.08), 0 0 1px rgba(0,229,255,0.15)' 
+                  }}
+                >
                   {/* Grid background */}
                   <div className="absolute inset-0 bg-[linear-gradient(to_right,#091426_1px,transparent_1px),linear-gradient(to_bottom,#091426_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-70 pointer-events-none" />
                   
                   {/* Radar pulse */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-cyan-500/10 rounded-full animate-ping pointer-events-none" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-cyan-500/20 rounded-full pointer-events-none" />
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border rounded-full animate-ping pointer-events-none ${forceSovereign ? "border-amber-500/10" : "border-cyan-500/10"}`} />
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border rounded-full pointer-events-none ${forceSovereign ? "border-amber-500/15" : "border-cyan-500/20"}`} />
 
                   {/* Dynamic Layer Widgets */}
                   <div className="absolute top-4 left-4 z-20 flex gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800 backdrop-blur-md">
@@ -1682,13 +1769,15 @@ export default function SpatialIntelligenceDashboard() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, type: 'spring', stiffness: 120, damping: 15 }}
-                    className="absolute bottom-6 right-6 p-4 bg-slate-950/95 border border-cyan-500/20 rounded-xl font-mono text-[9px] text-cyan-300 z-20 space-y-1 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md"
+                    className={`absolute bottom-6 right-6 p-4 bg-slate-950/95 rounded-xl font-mono text-[9px] z-20 space-y-1 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md border ${forceSovereign ? "border-amber-500/30 text-amber-300" : "border-cyan-500/20 text-cyan-300"}`}
                   >
                     {/* Neon accent line */}
-                    <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
-                    <div className="flex items-center gap-1.5 text-emerald-400 font-bold mb-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                      <span style={{ textShadow: '0 0 8px rgba(16,185,129,0.5)' }}>SOVEREIGN SIMULATION ACTIVE</span>
+                    <div className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent to-transparent ${forceSovereign ? "via-amber-500/40" : "via-cyan-500/40"}`} />
+                    <div className={`flex items-center gap-1.5 font-bold mb-1 ${forceSovereign ? "text-amber-400" : "text-emerald-400"}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full animate-ping ${forceSovereign ? "bg-amber-500" : "bg-emerald-500"}`} />
+                      <span style={{ textShadow: forceSovereign ? '0 0 8px rgba(245,158,11,0.5)' : '0 0 8px rgba(16,185,129,0.5)' }}>
+                        {forceSovereign ? "MOTOR RESILIENTE 2D SEGURO ACTIVO" : "FALLBACK SOBERANO ACTIVO"}
+                      </span>
                     </div>
                     <div>COORD: MAGNA-SIRGAS (EPSG:9377)</div>
                     <div>QUERY RATE: neon.postgis.stream.ok</div>
