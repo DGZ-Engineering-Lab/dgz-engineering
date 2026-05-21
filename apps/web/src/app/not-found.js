@@ -26,6 +26,7 @@ export default function NotFound() {
 
   // Generate floating particles
   useEffect(() => {
+    let active = true;
     const generated = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -34,7 +35,14 @@ export default function NotFound() {
       duration: Math.random() * 10 + 10,
       delay: Math.random() * 5,
     }));
-    setParticles(generated);
+    Promise.resolve().then(() => {
+      if (active) {
+        setParticles(generated);
+      }
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   // Track mouse

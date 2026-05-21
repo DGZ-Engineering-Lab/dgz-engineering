@@ -29,9 +29,9 @@ export default function OperatorProfileSection() {
               </div>
               <h3 className="text-xl font-bold text-white mb-2 tracking-wide">ALBERT DANIEL<br />GAVIRIA ZAPATA</h3>
               <div className="font-mono text-[10px] text-slate-500 mb-4 leading-relaxed tracking-wider">
-                ID: COLOMBIANO // HQ: MEDELLÍN<br />
-                V5.2_SYSTEM // 25A<br />
-                STATUS: <span className="text-emerald-400">ACTIVO</span> // DESPLIEGUE INMEDIATO
+                ID: COLOMBIANO {"//"} HQ: MEDELLÍN<br />
+                V5.2_SYSTEM {"//"} 25A<br />
+                STATUS: <span className="text-emerald-400">ACTIVO</span> {"//"} DESPLIEGUE INMEDIATO
               </div>
               <p className="text-sm text-slate-400 leading-relaxed mb-6">
                 Profesional SIG con una visión integral que fusiona la excelencia técnica en Sistemas de Información Geográfica con maestría en arquitectura de bases de datos y desarrollo de software.
@@ -99,7 +99,7 @@ export default function OperatorProfileSection() {
                   <div key={i} className="relative pl-6">
                     <div className="absolute w-2 h-2 bg-slate-600 rounded-full -left-[4px] top-1.5"></div>
                     <h5 className="text-sm font-bold text-slate-200">{exp.role}</h5>
-                    <div className="text-[10px] font-mono text-cyan-500 mt-1">{exp.company} // {exp.date}</div>
+                    <div className="text-[10px] font-mono text-cyan-500 mt-1">{exp.company} {"//"} {exp.date}</div>
                   </div>
                 ))}
 

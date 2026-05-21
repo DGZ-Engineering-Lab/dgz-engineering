@@ -492,7 +492,7 @@ export default function AboutPage() {
               </div>
               <div className="mt-16 pt-16 border-t border-slate-100">
                 <blockquote className="text-2xl font-light italic text-slate-400 leading-relaxed">
-                  "Nuestra misión es convertir la complejidad geográfica en activos estratégicos de valor nacional."
+                  &quot;Nuestra misión es convertir la complejidad geográfica en activos estratégicos de valor nacional.&quot;
                 </blockquote>
               </div>
             </motion.div>
@@ -1121,8 +1121,8 @@ export default function AboutPage() {
                     backgroundSize: '16px 16px'
                   }}></div>
 
-                  <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} // {activeDirector.coordinates}</span>
-                  <span className="absolute bottom-4 right-4 font-mono text-[8px] text-slate-500 tracking-wider">DEVGIZ // CATASTRO MULTIPROPÓSITO</span>
+                  <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} {"//"} {activeDirector.coordinates}</span>
+                  <span className="absolute bottom-4 right-4 font-mono text-[8px] text-slate-500 tracking-wider">DEVGIZ {"//"} CATASTRO MULTIPROPÓSITO</span>
                   
                   {/* Verification Banner */}
                   {verifiedSignatures[activeDirector.name] && (

@@ -1,6 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
+// Simulation Data
+const REGIONS = ["CUNDINAMARCA_HUB", "ANTIOQUIA_NODE", "VALLE_SENSORS", "ATLANTICO_GATE"];
+const TASKS = ["LADM_VALIDATION", "GEOSPATIAL_INDEXING", "TOPOLOGICAL_FIX", "IOT_SYNC"];
+
 export default function OperationSimulator() {
   const [logs, setLogs] = useState([]);
   const [activeNodes, setActiveNodes] = useState([]);
@@ -11,15 +15,11 @@ export default function OperationSimulator() {
   });
   const scrollRef = useRef(null);
 
-  // Simulation Data
-  const regions = ["CUNDINAMARCA_HUB", "ANTIOQUIA_NODE", "VALLE_SENSORS", "ATLANTICO_GATE"];
-  const tasks = ["LADM_VALIDATION", "GEOSPATIAL_INDEXING", "TOPOLOGICAL_FIX", "IOT_SYNC"];
-
   useEffect(() => {
     const interval = setInterval(() => {
       // Add Log
-      const region = regions[Math.floor(Math.random() * regions.length)];
-      const task = tasks[Math.floor(Math.random() * tasks.length)];
+      const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
+      const task = TASKS[Math.floor(Math.random() * TASKS.length)];
       const coord = `${(Math.random() * 10 + 4).toFixed(4)}°N, ${(Math.random() * 10 + 74).toFixed(4)}°W`;
       
       const newLog = {

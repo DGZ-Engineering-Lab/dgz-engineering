@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -686,7 +686,7 @@ function PipelineMonitor() {
           <div className="flex-1 overflow-y-auto space-y-1">
             {logs.length === 0 ? (
               <div className="text-slate-500 italic">
-                Esperando comando de ejecución. Presione 'Iniciar Orquestación' para arrancar el pipeline de alto rendimiento.
+                Esperando comando de ejecución. Presione &quot;Iniciar Orquestación&quot; para arrancar el pipeline de alto rendimiento.
               </div>
             ) : (
               logs.filter(Boolean).map((log, i) => {
@@ -786,7 +786,7 @@ function PipelineMonitor() {
 }
 
 function AiChatLab() {
-  const queries = [
+  const queries = useMemo(() => [
     {
       q: "¿Cuáles predios se traslapan con la ronda de río de 30m?",
       answer: "Analizando capas catastrales y de rondas hídricas en Valle del Cauca. Se identificaron 12 predios con traslapes superiores al límite de tolerancia legal. A continuación, el reporte y código de consulta espacial:",
@@ -818,7 +818,7 @@ WHERE ABS(p.area_registro - ST_Area(p.geom)) / p.area_registro > 0.10
 LIMIT 5;`,
       metrics: { "Predios con Desviación": "1,412", "Porcentaje Máximo": "42.15%", "Confianza LiDAR": "99.8%" }
     }
-  ];
+  ], []);
 
   const [activeQueryIndex, setActiveQueryIndex] = useState(null);
   const [typedText, setTypedText] = useState("");
@@ -843,7 +843,7 @@ LIMIT 5;`,
       }
     }, 15);
     return () => clearInterval(interval);
-  }, [activeQueryIndex]);
+  }, [activeQueryIndex, queries]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-slate-950 p-6 rounded-xl border border-slate-800 text-slate-200">
@@ -988,6 +988,7 @@ export default function ProjectDetailPage() {
             </div>
 
             <div className="aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2]" />
             </div>
 

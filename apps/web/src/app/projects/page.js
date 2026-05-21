@@ -141,6 +141,7 @@ export default function ProjectsPage() {
 
                 {/* Visual */}
                 <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={project.image} 
                     alt={project.title}

@@ -49,7 +49,10 @@ export default function RealityShowcase() {
   const [progress, setProgress] = useState(0);
 
   const randomOpacities = useMemo(() => {
-    return Array.from({ length: 36 }, () => Math.random() * 0.4);
+    return Array.from({ length: 36 }, (_, i) => {
+      const x = Math.sin(i + 1) * 10000;
+      return (x - Math.floor(x)) * 0.4;
+    });
   }, []);
 
   useEffect(() => {

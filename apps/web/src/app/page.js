@@ -266,6 +266,7 @@ export default function Home() {
               <Link href="/blog/1" prefetch={false} className="group space-y-6 block">
                 <div className="aspect-video bg-slate-900 border border-slate-850 overflow-hidden rounded-[2rem] relative shadow-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-40 z-10"></div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src="/assets/img/blog-ladm-col.png" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
@@ -290,6 +291,7 @@ export default function Home() {
               <Link href="/blog/2" prefetch={false} className="group space-y-6 block">
                 <div className="aspect-video bg-slate-900 border border-slate-850 overflow-hidden rounded-[2rem] relative shadow-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-40 z-10"></div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src="/assets/img/blog-cybersecurity.png" 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 

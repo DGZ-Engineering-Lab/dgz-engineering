@@ -19,7 +19,9 @@ export default function Navbar() {
 
   // Close mobile menu on path changes
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    Promise.resolve().then(() => {
+      setIsMobileMenuOpen(false);
+    });
   }, [pathname]);
 
   const isDarkPage = pathname?.startsWith("/lab") || pathname?.startsWith("/diagnostic");

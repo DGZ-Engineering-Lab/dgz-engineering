@@ -14,7 +14,7 @@ export default function GeoAISection() {
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-emerald-500/30 bg-emerald-500/10 rounded-full text-emerald-400 font-mono text-xs tracking-widest uppercase">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-            // GEOAI_MODULE
+            {"// GEOAI_MODULE"}
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
             GeoAI Intelligence
