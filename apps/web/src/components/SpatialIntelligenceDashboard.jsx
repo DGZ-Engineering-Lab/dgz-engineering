@@ -272,6 +272,75 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const [parcelAStatus, setParcelAStatus] = useState("DIRTY"); // DIRTY, HEALING, CLEAN
   const [isHealing, setIsHealing] = useState(false);
 
+  // Phase A & B Premium Uploader, Real-Time Coordinates & Flash States
+  const [uploadedGeoJSON, setUploadedGeoJSON] = useState(null);
+  const uploadedGeoJSONRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFileMeta, setUploadedFileMeta] = useState(null);
+  const [isFlashingClean, setIsFlashingClean] = useState(false);
+  const [parcelsGeoJSON, setParcelsGeoJSON] = useState(DEMO_PARCELS);
+  const parcelsGeoJSONRef = useRef(DEMO_PARCELS);
+
+  const updateParcelsGeoJSON = (newData) => {
+    setParcelsGeoJSON(newData);
+    parcelsGeoJSONRef.current = newData;
+    if (map.current && map.current.isStyleLoaded() && map.current.getSource("parcels")) {
+      try {
+        map.current.getSource("parcels").setData(newData);
+      } catch (e) {
+        console.warn("Error updating Mapbox parcels source:", e);
+      }
+    }
+  };
+
+  // Dynamic projection for uploadedGeoJSON in Sovereign SVG
+  const getUploadedSVGCoords = () => {
+    if (!uploadedGeoJSON) return null;
+    
+    // Find all coords to build a bounding box and scale/project
+    let rawCoords = [];
+    try {
+      if (uploadedGeoJSON.type === "FeatureCollection" && Array.isArray(uploadedGeoJSON.features)) {
+        uploadedGeoJSON.features.forEach(f => {
+          if (f.geometry?.type === "Polygon") {
+            f.geometry.coordinates[0].forEach(pt => rawCoords.push(pt));
+          }
+        });
+      } else if (uploadedGeoJSON.type === "Feature" && uploadedGeoJSON.geometry?.type === "Polygon") {
+        uploadedGeoJSON.geometry.coordinates[0].forEach(pt => rawCoords.push(pt));
+      } else if (uploadedGeoJSON.type === "Polygon") {
+        uploadedGeoJSON.coordinates[0].forEach(pt => rawCoords.push(pt));
+      }
+    } catch (e) {
+      console.error("Error parsing GeoJSON coords for SVG:", e);
+    }
+    
+    if (rawCoords.length === 0) return null;
+    
+    // Bounding box
+    let minLon = Infinity, maxLon = -Infinity;
+    let minLat = Infinity, maxLat = -Infinity;
+    rawCoords.forEach(([lon, lat]) => {
+      if (lon < minLon) minLon = lon;
+      if (lon > maxLon) maxLon = lon;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    });
+    
+    const lonRange = maxLon - minLon || 1;
+    const latRange = maxLat - minLat || 1;
+    
+    // Map coords to isometric space centered on canvas (460, 230)
+    return rawCoords.map(([lon, lat]) => {
+      const u = (lon - minLon) / lonRange;
+      const v = (lat - minLat) / latRange;
+      
+      const x = 460 + (u - v) * 100;
+      const y = 230 + (u + v) * 50;
+      return [x, y];
+    });
+  };
+
   // HUD & Layer States
   const [activeLayer, setActiveLayer] = useState("TERRENO"); // TERRENO, LIDAR, AMBIENTAL, ORTO
   const [snappedVertex, setSnappedVertex] = useState(false);
@@ -324,6 +393,154 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
 
   // --- ACTIONS ---
 
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setIsDragActive(true);
+    } else if (e.type === "dragleave") {
+      setIsDragActive(false);
+    }
+  };
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      if (file.name.endsWith(".geojson") || file.name.endsWith(".json")) {
+        setIsUploading(true);
+        addLog(`BLOB_UPLOADER: Procesando archivo catastral ${file.name}...`, "info");
+        await handleGeoJSONUpload(file);
+      } else {
+        addLog("BLOB_UPLOADER: Formato inválido. Suba un archivo .geojson o .json", "error");
+      }
+    }
+  };
+
+  const handleFileInputChange = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setIsUploading(true);
+      addLog(`BLOB_UPLOADER: Procesando archivo catastral ${file.name}...`, "info");
+      await handleGeoJSONUpload(file);
+    }
+  };
+
+  const handleGeoJSONUpload = async (file) => {
+    if (!file) return;
+    setIsUploading(true);
+    addLog(`BLOB_UPLOADER: Subiendo capa catastral ${file.name}...`, "info");
+    
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      
+      const res = await fetch("/api/blob/upload", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        addLog(`BLOB_UPLOADER: Capa subida con éxito a ${data.storage}`, "success");
+        setUploadedFileMeta({
+          filename: data.filename,
+          url: data.url,
+          size: data.size,
+          storage: data.storage
+        });
+        
+        if (data.geojson) {
+          setUploadedGeoJSON(data.geojson);
+          uploadedGeoJSONRef.current = data.geojson;
+          addLog("BLOB_UPLOADER: GeoJSON cargado e hidratado en el mapa catastral.", "success");
+          
+          // Hydrate Mapbox if active
+          if (map.current && map.current.isStyleLoaded()) {
+            try {
+              // Remove old source/layer if exists
+              if (map.current.getLayer("uploaded-layer")) {
+                map.current.removeLayer("uploaded-layer");
+              }
+              if (map.current.getLayer("uploaded-outline")) {
+                map.current.removeLayer("uploaded-outline");
+              }
+              if (map.current.getSource("uploaded-source")) {
+                map.current.removeSource("uploaded-source");
+              }
+              
+              map.current.addSource("uploaded-source", {
+                type: "geojson",
+                data: data.geojson
+              });
+              
+              map.current.addLayer({
+                id: "uploaded-layer",
+                type: "fill-extrusion",
+                source: "uploaded-source",
+                paint: {
+                  "fill-extrusion-color": "#f97316", // neon orange
+                  "fill-extrusion-height": 20,
+                  "fill-extrusion-base": 0,
+                  "fill-extrusion-opacity": 0.8
+                }
+              });
+              
+              map.current.addLayer({
+                id: "uploaded-outline",
+                type: "line",
+                source: "uploaded-source",
+                paint: {
+                  "line-color": "#ea580c",
+                  "line-width": 2
+                }
+              });
+              
+              // Let's fly map center to the uploaded coordinates
+              let coords = [];
+              if (data.geojson.type === "FeatureCollection" && data.geojson.features?.length > 0) {
+                const feat = data.geojson.features[0];
+                if (feat.geometry?.type === "Polygon") {
+                  coords = feat.geometry.coordinates[0][0];
+                } else if (feat.geometry?.type === "Point") {
+                  coords = feat.geometry.coordinates;
+                }
+              } else if (data.geojson.type === "Feature" && data.geojson.geometry?.type === "Polygon") {
+                coords = data.geojson.geometry.coordinates[0][0];
+              }
+              
+              if (coords && coords.length >= 2) {
+                map.current.flyTo({
+                  center: [coords[0], coords[1]],
+                  zoom: 17,
+                  pitch: 65,
+                  duration: 2000
+                });
+              }
+            } catch (mapboxErr) {
+              console.warn("Failed to add uploaded GeoJSON to Mapbox GL:", mapboxErr);
+            }
+          }
+        } else {
+          addLog("BLOB_UPLOADER: Archivo subido, pero no contenía GeoJSON/JSON válido.", "warn");
+        }
+      } else {
+        throw new Error(data.error || "Upload failed");
+      }
+    } catch (uploadErr) {
+      console.error(uploadErr);
+      addLog(`BLOB_UPLOADER Error: ${uploadErr.message}`, "error");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleAutoHeal = async (geometry) => {
     setIsHealing(true);
     setParcelAStatus("HEALING");
@@ -345,10 +562,57 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       
       await new Promise(r => setTimeout(r, 1200));
       
-      if (res.ok && data.status === "HEALED") {
+      if (res.ok && data.status === "HEALED" && data.geometry) {
         setParcelAStatus("CLEAN");
         setSnappedVertex(true);
         addLog("MCP_HEALER: ¡Auto-sanación exitosa! LADM-COL v3.0 alineado.", "success");
+        
+        // Update parcels data in place
+        const updatedFeatures = parcelsGeoJSONRef.current.features.map(f => {
+          if (f.id === 1 || f.properties.status === "DIRTY") {
+            return {
+              ...f,
+              properties: { ...f.properties, status: "CLEAN", error: "None" },
+              geometry: data.geometry
+            };
+          }
+          return f;
+        });
+        const newParcels = {
+          ...parcelsGeoJSONRef.current,
+          features: updatedFeatures
+        };
+        updateParcelsGeoJSON(newParcels);
+
+        // Emerald pulse flash
+        setIsFlashingClean(true);
+        if (map.current && map.current.isStyleLoaded()) {
+          try {
+            if (map.current.getLayer("parcels-layer")) {
+              map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", "#10b981");
+            }
+          } catch (e) {
+            console.warn(e);
+          }
+        }
+        setTimeout(() => {
+          setIsFlashingClean(false);
+          if (map.current && map.current.isStyleLoaded()) {
+            try {
+              if (map.current.getLayer("parcels-layer")) {
+                map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  "#22d3ee",
+                  "#0e7490"
+                ]);
+              }
+            } catch (e) {
+              console.warn(e);
+            }
+          }
+        }, 2000);
+
         setActiveAnalysis(prev => prev ? {
           ...prev,
           score: 100.0,
@@ -364,6 +628,56 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       setParcelAStatus("CLEAN");
       setSnappedVertex(true);
       addLog("MCP_HEALER: Sanación completada localmente (Resiliencia Offline).", "success");
+      
+      const fallbackGeo = {
+        type: "Polygon",
+        coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+      };
+      
+      const updatedFeatures = parcelsGeoJSONRef.current.features.map(f => {
+        if (f.id === 1 || f.properties.status === "DIRTY") {
+          return {
+            ...f,
+            properties: { ...f.properties, status: "CLEAN", error: "None" },
+            geometry: fallbackGeo
+          };
+        }
+        return f;
+      });
+      const newParcels = {
+        ...parcelsGeoJSONRef.current,
+        features: updatedFeatures
+      };
+      updateParcelsGeoJSON(newParcels);
+
+      setIsFlashingClean(true);
+      if (map.current && map.current.isStyleLoaded()) {
+        try {
+          if (map.current.getLayer("parcels-layer")) {
+            map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", "#10b981");
+          }
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      setTimeout(() => {
+        setIsFlashingClean(false);
+        if (map.current && map.current.isStyleLoaded()) {
+          try {
+            if (map.current.getLayer("parcels-layer")) {
+              map.current.setPaintProperty("parcels-layer", "fill-extrusion-color", [
+                "case",
+                ["boolean", ["feature-state", "hover"], false],
+                "#22d3ee",
+                "#0e7490"
+              ]);
+            }
+          } catch (e) {
+            console.warn(e);
+          }
+        }
+      }, 2000);
+
       setActiveAnalysis(prev => prev ? {
         ...prev,
         score: 100.0,
@@ -549,6 +863,10 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       const res = await fetch("/api/parcels");
       const data = await res.json();
       
+      if (data && data.features) {
+        updateParcelsGeoJSON(data);
+      }
+      
       if (map.current && map.current.isStyleLoaded() && data.features) {
         try {
           if (map.current.getSource("parcels")) {
@@ -645,6 +963,8 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const runSimulation = async () => {
     setIsSimulating(true);
     setSimulationStage("INGESTING");
+    setParcelAStatus("DIRTY");
+    setSnappedVertex(false);
     
     addLog("INGESTION: Extrayendo XTF del Nodo Oficial IGAC...", "info");
     addLog("STACK_INIT: Inicializando hilos Polars & DuckDB", "info");
@@ -652,7 +972,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
     if (map.current && map.current.isStyleLoaded()) {
       if (map.current.getSource("parcels")) {
         try {
-          map.current.getSource("parcels").setData(DEMO_PARCELS);
+          updateParcelsGeoJSON(DEMO_PARCELS);
         } catch (e) {
           console.warn("Could not set simulation source data:", e);
         }
@@ -812,7 +1132,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
           if (!map.current.getSource("parcels")) {
             map.current.addSource("parcels", { 
               type: "geojson", 
-              data: DEMO_PARCELS,
+              data: parcelsGeoJSONRef.current || DEMO_PARCELS,
               generateId: true 
             });
 
@@ -826,6 +1146,41 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                 "fill-extrusion-opacity": 0.6
               }
             });
+          }
+
+          if (uploadedGeoJSONRef.current) {
+            try {
+              if (map.current.getSource("uploaded-source")) {
+                map.current.getSource("uploaded-source").setData(uploadedGeoJSONRef.current);
+              } else {
+                map.current.addSource("uploaded-source", {
+                  type: "geojson",
+                  data: uploadedGeoJSONRef.current
+                });
+                map.current.addLayer({
+                  id: "uploaded-layer",
+                  type: "fill-extrusion",
+                  source: "uploaded-source",
+                  paint: {
+                    "fill-extrusion-color": "#f97316", // neon orange
+                    "fill-extrusion-height": 20,
+                    "fill-extrusion-base": 0,
+                    "fill-extrusion-opacity": 0.8
+                  }
+                });
+                map.current.addLayer({
+                  id: "uploaded-outline",
+                  type: "line",
+                  source: "uploaded-source",
+                  paint: {
+                    "line-color": "#ea580c",
+                    "line-width": 2
+                  }
+                });
+              }
+            } catch (err) {
+              console.warn("Failed to restore uploaded layers on map load:", err);
+            }
           }
         });
 
@@ -1478,6 +1833,51 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     <ShieldCheck className={`w-3.5 h-3.5 ${isVurLoading ? "animate-pulse" : ""}`} />
                     {isVurLoading ? "QUERYING SNR..." : "VUR LEGAL AUDIT (SNR)"}
                   </button>
+
+                  {/* Cyberpunk Drag-and-Drop Uploader (Phase A) */}
+                  <div
+                    onDragEnter={handleDrag}
+                    onDragOver={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDrop={handleDrop}
+                    className={`relative border rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 ${
+                      isDragActive
+                        ? "border-orange-500 bg-orange-950/20 shadow-[0_0_20px_rgba(249,115,22,0.3)]"
+                        : "border-slate-800 bg-black/40 hover:border-orange-500/50 hover:bg-orange-950/5"
+                    }`}
+                  >
+                    {/* Top indicator glowing LED bar */}
+                    <div className={`absolute top-0 left-[25%] right-[25%] h-[1px] bg-gradient-to-r from-transparent ${uploadedGeoJSON ? 'via-orange-500' : 'via-slate-700'} to-transparent`} />
+                    
+                    <input
+                      type="file"
+                      id="geojson-file-input"
+                      className="hidden"
+                      accept=".geojson,.json"
+                      onChange={handleFileInputChange}
+                      disabled={isUploading}
+                    />
+                    
+                    <label
+                      htmlFor="geojson-file-input"
+                      className="cursor-pointer flex flex-col items-center gap-1 text-[9px] font-mono text-center select-none w-full"
+                    >
+                      <Upload className={`w-4 h-4 ${isUploading ? "animate-bounce text-orange-500" : uploadedGeoJSON ? "text-orange-500 animate-pulse" : "text-slate-500"}`} />
+                      {isUploading ? (
+                        <span className="text-orange-400 font-bold">SUBIENDO CAPA...</span>
+                      ) : uploadedGeoJSON ? (
+                        <div className="space-y-1 w-full">
+                          <span className="text-orange-400 font-bold block">CAPA HIDRATADA (ORANGE)</span>
+                          <span className="text-slate-500 text-[8px] block max-w-full truncate">{uploadedFileMeta?.filename} ({Math.round((uploadedFileMeta?.size || 0) / 1024 * 10) / 10} KB)</span>
+                        </div>
+                      ) : (
+                        <div className="space-y-0.5">
+                          <span className="text-slate-300 font-bold block hover:text-orange-400 transition-colors">CARGAR CAPA CATASTRAL</span>
+                          <span className="text-slate-550 text-[8px] block">Arrastra o haz clic (.geojson / .json)</span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
                   
                   {/* Telemetry Log */}
                   <div className="bg-black/60 rounded-xl p-3 font-mono text-[9px] h-28 overflow-hidden border border-slate-800/50 relative" style={{ boxShadow: 'inset 0 1px 0 rgba(0,229,255,0.1)' }}>
@@ -1560,6 +1960,10 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                         <stop offset="0%" stopColor="#152f54" stopOpacity="0.85" />
                         <stop offset="100%" stopColor="#091424" stopOpacity="0.95" />
                       </linearGradient>
+                      <linearGradient id="wall-grad-uploaded" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#7c2d12" stopOpacity="0.85" />
+                        <stop offset="100%" stopColor="#431407" stopOpacity="0.95" />
+                      </linearGradient>
                     </defs>
 
                     {/* Winding neon river & environmental corridor (🌳 Capa Ambiental) */}
@@ -1605,6 +2009,34 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     )}
 
                     <g className="transition-all duration-700">
+                      
+                      {/* --- UPLOADED GEOJSON (Phase A) --- */}
+                      {uploadedGeoJSON && getUploadedSVGCoords() && (() => {
+                        const baseUploaded = getUploadedSVGCoords();
+                        const heightUploaded = 20;
+                        return (
+                          <g className="cursor-pointer group/uploaded" onClick={() => {
+                            addLog(`FOCUS_UPLOADED: Enfocando capa importada ${uploadedFileMeta?.filename}`, "info");
+                          }}>
+                            {/* Side walls */}
+                            <polygon 
+                              points={`${baseUploaded[0][0]},${baseUploaded[0][1]} ${baseUploaded[baseUploaded.length - 1][0]},${baseUploaded[baseUploaded.length - 1][1]} ${baseUploaded[baseUploaded.length - 1][0]},${baseUploaded[baseUploaded.length - 1][1] - heightUploaded} ${baseUploaded[0][0]},${baseUploaded[0][1] - heightUploaded}`}
+                              fill="url(#wall-grad-uploaded)"
+                              stroke="#f97316"
+                              strokeOpacity="0.4"
+                            />
+                            {/* Roof */}
+                            <polygon
+                              points={pointsStr(roofCoords(baseUploaded, heightUploaded))}
+                              fill="#f97316"
+                              fillOpacity="0.75"
+                              stroke="#ea580c"
+                              strokeWidth="2"
+                              className="animate-pulse"
+                            />
+                          </g>
+                        );
+                      })()}
                       
                       {/* --- PARCEL C (Base ground block) --- */}
                       <g>
@@ -1667,23 +2099,25 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                         <polygon 
                           points={`${baseA[0][0]},${baseA[0][1]} ${baseA[3][0]},${baseA[3][1]} ${baseA[3][0]},${baseA[3][1] - heightA} ${baseA[0][0]},${baseA[0][1] - heightA}`}
                           fill="url(#wall-grad-left)"
-                          stroke={parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444"}
+                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
                           strokeOpacity="0.4"
+                          className={isFlashingClean ? "emerald-pulse-flash-animation" : ""}
                         />
                         <polygon 
                           points={`${baseA[3][0]},${baseA[3][1]} ${baseA[2][0]},${baseA[2][1]} ${baseA[2][0]},${baseA[2][1] - heightA} ${baseA[3][0]},${baseA[3][1] - heightA}`}
                           fill="url(#wall-grad-right)"
-                          stroke={parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444"}
+                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
                           strokeOpacity="0.4"
+                          className={isFlashingClean ? "emerald-pulse-flash-animation" : ""}
                         />
                         {/* Roof */}
                         <polygon
                           points={pointsStr(roofCoords(baseA, heightA))}
-                          fill={parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444"}
+                          fill={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
                           fillOpacity={selectedParcel === "PREDIO_001" ? "0.85" : "0.45"}
-                          stroke={parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444"}
+                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
                           strokeWidth="2.5"
-                          className="transition-all duration-500"
+                          className={isFlashingClean ? "emerald-pulse-flash-animation" : "transition-all duration-500"}
                         />
                       </g>
 
@@ -2042,6 +2476,24 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
         @keyframes neonBorderPulse {
           0%, 100% { border-color: rgba(0,229,255,0.12); }
           50% { border-color: rgba(0,229,255,0.25); }
+        }
+
+        @keyframes emeraldPulseFlash {
+          0%, 100% {
+            stroke: #10b981;
+            fill: #10b981;
+            fill-opacity: 0.85;
+            filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.4));
+          }
+          50% {
+            stroke: #34d399;
+            fill: #34d399;
+            fill-opacity: 0.95;
+            filter: drop-shadow(0 0 15px rgba(52, 211, 153, 0.9));
+          }
+        }
+        .emerald-pulse-flash-animation {
+          animation: emeraldPulseFlash 0.5s ease-in-out infinite;
         }
       `}</style>
     </section>
