@@ -8,7 +8,6 @@ import {
   Search, 
   Trash2, 
   RefreshCw, 
-  SlidersHorizontal, 
   Cpu, 
   CheckCircle, 
   ExternalLink,
@@ -17,8 +16,9 @@ import {
   Clock,
   Briefcase,
   Terminal,
-  User,
-  LogOut
+  LogOut,
+  Download,
+  AlertTriangle
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -38,9 +38,9 @@ export default function AdminPage() {
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Load passcode from local storage on mount to preserve session
+  // Load passcode from session storage on mount to preserve session
   useEffect(() => {
-    const savedPasscode = localStorage.getItem("dgz_admin_passcode");
+    const savedPasscode = sessionStorage.getItem("dgz_admin_passcode");
     if (savedPasscode) {
       verifyAndFetch(savedPasscode);
     }
@@ -50,7 +50,7 @@ export default function AdminPage() {
     setToast({ show: true, message, type });
     setTimeout(() => {
       setToast({ show: false, message: "", type: "success" });
-    }, 3000);
+    }, 4000);
   };
 
   const verifyAndFetch = async (codeToVerify) => {
@@ -70,14 +70,14 @@ export default function AdminPage() {
         setStorageType(data.storage);
         setIsAuthorized(true);
         setPasscode(codeToVerify);
-        localStorage.setItem("dgz_admin_passcode", codeToVerify);
-        showToast("Acceso Concedido. Enlace táctico establecido.", "success");
+        sessionStorage.setItem("dgz_admin_passcode", codeToVerify);
+        showToast("Access Granted. Secure connection established.", "success");
       } else {
-        setAuthError(data.error || "Código incorrecto.");
-        localStorage.removeItem("dgz_admin_passcode");
+        setAuthError(data.error || "Incorrect Passcode.");
+        sessionStorage.removeItem("dgz_admin_passcode");
       }
     } catch (err) {
-      setAuthError("Fallo de conexión con la pasarela.");
+      setAuthError("Gateway connection failed.");
     } finally {
       setIsLoading(false);
     }
@@ -102,7 +102,7 @@ export default function AdminPage() {
   const handleKeypadSubmit = (e) => {
     if (e) e.preventDefault();
     if (!passcode) {
-      setAuthError("Ingrese el passcode de encriptación.");
+      setAuthError("Please enter your passcode.");
       return;
     }
     verifyAndFetch(passcode);
@@ -112,12 +112,12 @@ export default function AdminPage() {
     setPasscode("");
     setIsAuthorized(false);
     setMessages([]);
-    localStorage.removeItem("dgz_admin_passcode");
-    showToast("Consola cerrada y encriptada.", "info");
+    sessionStorage.removeItem("dgz_admin_passcode");
+    showToast("Session safely terminated.", "info");
   };
 
   const handleDeleteMessage = async (id) => {
-    if (!confirm("¿Está seguro de depurar/eliminar permanentemente este registro del log?")) {
+    if (!confirm("Are you sure you want to permanently resolve and delete this inquiry?")) {
       return;
     }
     
@@ -132,19 +132,19 @@ export default function AdminPage() {
 
       if (res.ok && data.success) {
         setMessages(prev => prev.filter(msg => msg.id !== id));
-        showToast("Mensaje depurado con éxito.", "success");
+        showToast("Inquiry successfully resolved and deleted.", "success");
       } else {
-        showToast(data.error || "No se pudo depurar el mensaje.", "error");
+        showToast(data.error || "Failed to delete inquiry.", "error");
       }
     } catch (err) {
-      showToast("Error de conexión al depurar.", "error");
+      showToast("Connection error during deletion.", "error");
     }
   };
 
   const handleDeleteAll = async () => {
-    const confirmation = prompt("Para confirmar la eliminación total de la base catastral temporal, escriba 'dgz-wipe-all':");
+    const confirmation = prompt("To confirm a complete wipe of the database, type 'dgz-wipe-all':");
     if (confirmation !== "dgz-wipe-all") {
-      showToast("Acción cancelada. Código incorrecto.", "error");
+      showToast("Action cancelled. Incorrect security code.", "error");
       return;
     }
 
@@ -159,12 +159,12 @@ export default function AdminPage() {
 
       if (res.ok && data.success) {
         setMessages([]);
-        showToast("Base de datos vaciada con éxito.", "success");
+        showToast("Database successfully wiped.", "success");
       } else {
-        showToast(data.error || "Error al vaciar base de datos.", "error");
+        showToast(data.error || "Failed to wipe database.", "error");
       }
     } catch (err) {
-      showToast("Fallo de comunicación con la pasarela.", "error");
+      showToast("Gateway communication failed.", "error");
     }
   };
 
@@ -175,7 +175,7 @@ export default function AdminPage() {
   // CSV Exporter for Tabulated Catastral Dataset
   const handleExportCSV = () => {
     if (filteredMessages.length === 0) {
-      showToast("No hay registros para exportar.", "error");
+      showToast("No data available to export.", "error");
       return;
     }
 
@@ -200,11 +200,11 @@ export default function AdminPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `devgiz_catastro_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute("download", `devgiz_crm_export_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showToast("Dataset CSV descargado con éxito.", "success");
+    showToast("CSV dataset successfully downloaded.", "success");
   };
 
   // AI Response Draft Generation using Groq Llama-3.3
@@ -216,7 +216,10 @@ export default function AdminPage() {
 
     try {
       const sector = getSector(msg);
-      const promptText = `Genera una plantilla de correo electrónico formal de respuesta para ${msg.name} de ${msg.company === "N/A" || !msg.company ? "su consulta individual" : msg.company} (Sector: ${sector}), respondiendo a su mensaje catastral: "${msg.message}". Firma profesionalmente como el Equipo de Ingeniería de DevGiz Engineering, ofreciendo una sesión técnica de demostración de linderos y catastro multipropósito LADM-COL v3.0. Mantén un tono corporativo premium y técnico en español.`;
+      const promptText = `Genera un correo formal de respuesta para ${msg.name} de ${msg.company === "N/A" || !msg.company ? "su consulta independiente" : msg.company} (Sector: ${sector}), que nos escribió lo siguiente: "${msg.message}". 
+      Firma profesionalmente como el "Equipo de Operaciones de DevGiz Engineering".
+      Muestra disposición para agendar una sesión de demostración técnica (demo) sobre nuestra plataforma de catastro LADM-COL v3.0 e inteligencia espacial. 
+      Mantén un tono muy profesional, corporativo y persuasivo. Escribe el correo listo para copiar y pegar (no agregues saludos o descripciones extras tuyas, solo el cuerpo del correo).`;
 
       const res = await fetch("/api/ai", {
         method: "POST",
@@ -239,10 +242,10 @@ export default function AdminPage() {
       if (res.ok && data.success) {
         setAiDraftText(data.text);
       } else {
-        setAiDraftText(`[ERROR] No se pudo generar la respuesta inteligente: ${data.error || "Error de respuesta del servidor de IA."}`);
+        setAiDraftText(`[Error System] ${data.error || "The AI Engine failed to respond."}`);
       }
     } catch (err) {
-      setAiDraftText(`[ERROR] Fallo de red al conectar con el motor Groq Llama-3.3: ${err.message}`);
+      setAiDraftText(`[Network Error] Unable to connect to Groq Llama-3.3: ${err.message}`);
     } finally {
       setIsGeneratingAI(false);
     }
@@ -251,7 +254,7 @@ export default function AdminPage() {
   const handleCopyDraft = () => {
     if (!aiDraftText) return;
     navigator.clipboard.writeText(aiDraftText);
-    showToast("Borrador copiado al portapapeles con éxito.", "success");
+    showToast("Draft successfully copied to clipboard.", "success");
   };
 
   // Helper to categorize sector by email domain or company name
@@ -262,10 +265,15 @@ export default function AdminPage() {
     if (email.endsWith(".gov.co") || email.endsWith(".gov") || comp.includes("alcaldia") || comp.includes("gobierno") || comp.includes("ministerio") || comp.includes("igac")) {
       return "GOV";
     }
-    if (comp.includes("s.a.") || comp.includes("sas") || comp.includes("constructora") || comp.includes("engineering") || comp.includes("corporativo") || comp.includes("coporation") || msg.company !== "N/A" && msg.company !== "") {
+    if (comp.includes("s.a.") || comp.includes("sas") || comp.includes("constructora") || comp.includes("engineering") || comp.includes("corporativo") || comp.includes("coporation") || (msg.company && msg.company !== "N/A")) {
       return "CORP";
     }
     return "PUBLIC";
+  };
+
+  const getInitials = (name) => {
+    if (!name) return "?";
+    return name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
   };
 
   // Filter and search logic
@@ -290,75 +298,74 @@ export default function AdminPage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-slate-100 flex flex-col font-sans relative overflow-hidden pb-12">
-      {/* Background neon grid effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#091426_1px,transparent_1px),linear-gradient(to_bottom,#091426_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-30 pointer-events-none" />
+    <div className="min-h-screen bg-[#0a0c10] text-slate-200 font-sans relative overflow-hidden pb-12 selection:bg-cyan-500/30 selection:text-cyan-100">
+      
+      {/* Background Soft Gradients */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-indigo-900/10 blur-[100px] rounded-full pointer-events-none" />
       
       {/* Toast Alert */}
       {toast.show && (
-        <div className={`fixed top-6 right-6 z-50 px-4 py-3 rounded-xl border font-mono text-[10px] uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all ${
+        <div className={`fixed top-6 right-6 z-50 px-5 py-3.5 rounded-2xl border flex items-center gap-3 shadow-2xl backdrop-blur-xl transition-all animate-in fade-in slide-in-from-top-4 duration-300 ${
           toast.type === "success" 
-            ? "bg-emerald-950/90 border-emerald-500/50 text-emerald-400"
+            ? "bg-emerald-950/80 border-emerald-500/30 text-emerald-300"
             : toast.type === "error"
-            ? "bg-red-950/90 border-red-500/50 text-red-400"
-            : "bg-cyan-950/90 border-cyan-500/50 text-cyan-400"
+            ? "bg-red-950/80 border-red-500/30 text-red-300"
+            : "bg-slate-900/80 border-slate-700 text-slate-300"
         }`}>
-          <span className={`w-1.5 h-1.5 rounded-full animate-ping ${toast.type === "success" ? "bg-emerald-400" : toast.type === "error" ? "bg-red-400" : "bg-cyan-400"}`} />
-          {toast.message}
+          {toast.type === "success" ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+          <span className="text-sm font-medium">{toast.message}</span>
         </div>
       )}
 
       {/* Lock Screen View */}
       {!isAuthorized ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10 min-h-[80vh]">
-          <div className="w-full max-w-md p-6 rounded-[2rem] border border-slate-800/60 bg-slate-900/30 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] space-y-6 relative overflow-hidden group">
-            {/* Holographic light reflection */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-500/[0.03] to-transparent pointer-events-none" />
+        <div className="flex-1 flex flex-col items-center justify-center min-h-screen p-6 relative z-10">
+          <div className="w-full max-w-sm p-8 rounded-[2rem] border border-slate-800/60 bg-slate-900/40 backdrop-blur-2xl shadow-2xl space-y-8 relative overflow-hidden">
             
-            {/* Sleek Top LED bar */}
-            <div className="absolute top-0 left-[20%] right-[20%] h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
-
             {/* Header */}
-            <div className="text-center space-y-2">
-              <div className="mx-auto w-12 h-12 bg-cyan-950/50 border border-cyan-500/30 rounded-2xl flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                <Lock className="w-5 h-5 animate-pulse" />
+            <div className="text-center space-y-3 relative z-10">
+              <div className="mx-auto w-14 h-14 bg-gradient-to-tr from-cyan-950 to-slate-900 border border-slate-700/50 rounded-2xl flex items-center justify-center text-slate-300 shadow-inner">
+                <Lock className="w-6 h-6" />
               </div>
-              <h1 className="text-lg font-mono font-black uppercase tracking-widest text-white">Console Lock System</h1>
-              <p className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">DevGiz Engineering // Protected Gate</p>
+              <div>
+                <h1 className="text-xl font-bold tracking-tight text-white">DevGiz Gateway</h1>
+                <p className="text-sm text-slate-400 font-medium">Please authenticate to continue</p>
+              </div>
             </div>
 
             {/* Input Dial Screen */}
-            <form onSubmit={handleKeypadSubmit} className="space-y-4">
+            <form onSubmit={handleKeypadSubmit} className="space-y-6 relative z-10">
               <div className="relative">
                 <input 
                   type="password"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="••••••••••••"
-                  className="w-full px-4 py-3 bg-black/60 border border-slate-800 rounded-2xl text-center text-lg font-mono font-bold tracking-widest text-cyan-400 focus:outline-none focus:border-cyan-500 transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"
+                  placeholder="Enter passcode"
+                  className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-center text-xl font-mono tracking-[0.2em] text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-slate-600 placeholder:tracking-normal placeholder:font-sans"
                 />
                 {isLoading && (
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                    <Activity className="w-4 h-4 text-cyan-400 animate-spin" />
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2">
+                    <Activity className="w-5 h-5 text-slate-400 animate-spin" />
                   </div>
                 )}
               </div>
 
               {authError && (
-                <div className="p-2.5 bg-red-500/10 border border-red-500/25 rounded-xl text-red-400 text-[9px] font-mono text-center flex items-center justify-center gap-1.5">
-                  <ShieldAlert className="w-3.5 h-3.5" />
-                  {authError.toUpperCase()}
+                <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-medium flex items-center justify-center gap-2">
+                  <ShieldAlert className="w-4 h-4" />
+                  {authError}
                 </div>
               )}
 
               {/* Tactical Numeric Keypad Matrix */}
-              <div className="grid grid-cols-3 gap-2.5 max-w-[280px] mx-auto">
+              <div className="grid grid-cols-3 gap-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                   <button
                     key={num}
                     type="button"
                     onClick={() => handleKeypadPress(String(num))}
-                    className="py-3 bg-slate-900/60 hover:bg-cyan-950/20 border border-slate-800/80 active:scale-95 rounded-xl font-mono font-bold text-slate-200 hover:text-cyan-400 hover:border-cyan-500/40 transition-all cursor-pointer text-xs"
+                    className="py-4 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-800/80 active:scale-95 rounded-xl font-medium text-lg text-slate-300 transition-all cursor-pointer"
                   >
                     {num}
                   </button>
@@ -366,23 +373,23 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={handleKeypadClear}
-                  className="py-3 bg-red-950/10 hover:bg-red-950/30 border border-slate-800/80 active:scale-95 rounded-xl font-mono text-[9px] font-bold text-red-400 hover:border-red-500/40 transition-all cursor-pointer"
+                  className="py-4 bg-slate-800/30 hover:bg-red-500/20 border border-slate-800/80 active:scale-95 rounded-xl font-semibold text-xs text-slate-400 hover:text-red-400 transition-all cursor-pointer uppercase tracking-wider"
                 >
-                  CLEAR
+                  Clear
                 </button>
                 <button
                   type="button"
                   onClick={() => handleKeypadPress("0")}
-                  className="py-3 bg-slate-900/60 hover:bg-cyan-950/20 border border-slate-800/80 active:scale-95 rounded-xl font-mono font-bold text-slate-200 hover:text-cyan-400 hover:border-cyan-500/40 transition-all cursor-pointer text-xs"
+                  className="py-4 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-800/80 active:scale-95 rounded-xl font-medium text-lg text-slate-300 transition-all cursor-pointer"
                 >
                   0
                 </button>
                 <button
                   type="button"
                   onClick={handleKeypadDelete}
-                  className="py-3 bg-slate-900/60 hover:bg-cyan-950/20 border border-slate-800/80 active:scale-95 rounded-xl font-mono text-[9px] font-bold text-slate-400 hover:text-cyan-400 hover:border-cyan-500/40 transition-all cursor-pointer"
+                  className="py-4 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-800/80 active:scale-95 rounded-xl font-semibold text-xs text-slate-400 transition-all cursor-pointer uppercase tracking-wider"
                 >
-                  DEL
+                  Del
                 </button>
               </div>
 
@@ -390,133 +397,122 @@ export default function AdminPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] text-white font-bold font-mono tracking-widest text-[10px] uppercase rounded-xl transition-all cursor-pointer hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
+                  className="w-full py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm rounded-xl transition-all cursor-pointer active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                 >
-                  ESTABLECER ENLACE
+                  Unlock Dashboard
+                  <Unlock className="w-4 h-4" />
                 </button>
               </div>
             </form>
-
-            <div className="text-center pt-2">
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">
-                Hint: passcode is defined in env (default: dgz2026)
-              </span>
-            </div>
           </div>
         </div>
       ) : (
         /* Authorized Administration Console View */
-        <div className="flex-1 w-full max-w-[1500px] mx-auto px-6 py-8 space-y-6 relative z-10">
+        <div className="flex-1 w-full max-w-7xl mx-auto px-6 py-10 space-y-8 relative z-10">
           
           {/* Header Panel */}
-          <div className="p-4 bg-slate-900/30 backdrop-blur-md border border-slate-850 rounded-[2rem] flex flex-wrap justify-between items-center gap-4 shadow-2xl relative">
-            <div className="absolute top-0 left-[10%] right-[10%] h-[1.5px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
-            
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-cyan-950/40 border border-cyan-500/40 rounded-2xl flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
-                <Unlock className="w-4 h-4" />
-              </div>
-              <div>
-                <h1 className="text-lg font-black text-white tracking-tighter uppercase flex items-center gap-2">
-                  Tactical Console Terminal
-                  <span className="px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/25 rounded text-[8px] font-mono font-bold tracking-widest text-cyan-400 shrink-0">ADMIN PORTAL</span>
-                </h1>
-                <p className="text-[9px] font-mono text-slate-400 uppercase tracking-wider">Gestión soberana de correspondencia territorial LADM-COL v3.0</p>
-              </div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+            <div className="space-y-1">
+              <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+                Command Center
+                <span className="px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-md text-xs font-semibold tracking-wide text-cyan-400">
+                  ADMIN
+                </span>
+              </h1>
+              <p className="text-slate-400 text-sm font-medium">Manage inquiries, operations, and territorial correspondence.</p>
             </div>
 
-            {/* Database & Logout Actions */}
-            <div className="flex flex-wrap items-center gap-3 font-mono text-[9px]">
-              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-black/60 border border-slate-800 rounded-xl backdrop-blur-md">
-                <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${storageType.includes("Simulation") ? "bg-amber-500 shadow-[0_0_8px_#f59e0b]" : "bg-emerald-500 shadow-[0_0_8px_#10b981]"}`} />
-                <span className="text-slate-400">STATUS ALMACÉN:</span>
-                <span className={`font-bold uppercase ${storageType.includes("Simulation") ? "text-amber-400" : "text-emerald-400"}`}>
-                  {storageType}
-                </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm font-medium">
+                <span className={`w-2 h-2 rounded-full ${storageType.includes("Simulation") ? "bg-amber-400 shadow-[0_0_8px_#fbbf24]" : "bg-emerald-400 shadow-[0_0_8px_#34d399]"}`} />
+                <span className="text-slate-400">Database:</span>
+                <span className="text-slate-200">{storageType.includes("Simulation") ? "Local Buffer" : "Vercel KV"}</span>
               </div>
 
               <button
                 onClick={handleRefresh}
                 disabled={isLoading}
-                className="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-300 hover:text-cyan-400 cursor-pointer transition-all flex items-center gap-1.5"
+                className="p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-300 hover:text-white cursor-pointer transition-all shadow-sm"
+                title="Refresh Data"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
-                SINC
+                <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
               </button>
 
               <button
                 onClick={handleLogout}
-                className="p-2 bg-red-950/10 hover:bg-red-950/30 border border-red-500/30 hover:border-red-500/50 rounded-xl text-red-400 cursor-pointer transition-all flex items-center gap-1.5"
+                className="p-2.5 bg-slate-900 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/30 rounded-xl text-slate-400 hover:text-red-400 cursor-pointer transition-all shadow-sm"
+                title="Secure Logout"
               >
-                <LogOut className="w-3.5 h-3.5" />
-                CERRAR
+                <LogOut className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* Metrics Telemetry HUD */}
+          {/* Metrics Telemetry HUD (Bento Grid) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Stat 1: Total Messages */}
-            <div className="p-4 bg-slate-900/20 border border-slate-850 rounded-2xl relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-cyan-500/60" />
+            <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-3xl backdrop-blur-sm shadow-sm flex flex-col gap-4 group">
               <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black block">Total Inquiries</span>
-                  <span className="text-3xl font-black font-mono text-white tracking-tighter block">{totalCount}</span>
+                <div className="w-10 h-10 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-cyan-500/10 group-hover:text-cyan-400 transition-colors">
+                  <Inbox className="w-5 h-5" />
                 </div>
-                <Inbox className="w-5 h-5 text-cyan-400/50" />
               </div>
-              <div className="text-[8px] font-mono text-slate-400 mt-2">Peticiones registradas en el buffer de red.</div>
+              <div>
+                <div className="text-4xl font-bold tracking-tight text-white mb-1">{totalCount}</div>
+                <div className="text-sm text-slate-400 font-medium">Total Inquiries</div>
+              </div>
             </div>
 
-            {/* Stat 2: Gov Sector count */}
-            <div className="p-4 bg-slate-900/20 border border-slate-850 rounded-2xl relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500/60" />
+            <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-3xl backdrop-blur-sm shadow-sm flex flex-col gap-4 group">
               <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black block">Sector Gobierno</span>
-                  <span className="text-3xl font-black font-mono text-white tracking-tighter block">{govCount}</span>
+                <div className="w-10 h-10 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-amber-500/10 group-hover:text-amber-400 transition-colors">
+                  <Clock className="w-5 h-5" />
                 </div>
-                <Clock className="w-5 h-5 text-amber-400/50" />
               </div>
-              <div className="text-[8px] font-mono text-slate-400 mt-2">Alcaldías, Ministerios y entes territoriales ({totalCount > 0 ? Math.round((govCount / totalCount) * 100) : 0}%).</div>
+              <div>
+                <div className="text-4xl font-bold tracking-tight text-white mb-1">{govCount}</div>
+                <div className="text-sm text-slate-400 font-medium flex items-center gap-2">
+                  Government <span className="text-xs bg-slate-800 px-2 py-0.5 rounded-full">{totalCount > 0 ? Math.round((govCount / totalCount) * 100) : 0}%</span>
+                </div>
+              </div>
             </div>
 
-            {/* Stat 3: Corporate sector count */}
-            <div className="p-4 bg-[#091510]/10 border border-slate-850 rounded-2xl relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-500/60" />
+            <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-3xl backdrop-blur-sm shadow-sm flex flex-col gap-4 group">
               <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black block">Sector Corporativo</span>
-                  <span className="text-3xl font-black font-mono text-white tracking-tighter block">{corpCount}</span>
+                <div className="w-10 h-10 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 transition-colors">
+                  <Briefcase className="w-5 h-5" />
                 </div>
-                <Briefcase className="w-5 h-5 text-emerald-400/50" />
               </div>
-              <div className="text-[8px] font-mono text-slate-400 mt-2">Constructoras y consultoras privadas ({totalCount > 0 ? Math.round((corpCount / totalCount) * 100) : 0}%).</div>
+              <div>
+                <div className="text-4xl font-bold tracking-tight text-white mb-1">{corpCount}</div>
+                <div className="text-sm text-slate-400 font-medium flex items-center gap-2">
+                  Corporate <span className="text-xs bg-slate-800 px-2 py-0.5 rounded-full">{totalCount > 0 ? Math.round((corpCount / totalCount) * 100) : 0}%</span>
+                </div>
+              </div>
             </div>
 
-            {/* Stat 4: Avg Message Length */}
-            <div className="p-4 bg-slate-900/20 border border-slate-850 rounded-2xl relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-purple-500/60" />
+            <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-3xl backdrop-blur-sm shadow-sm flex flex-col gap-4 group">
               <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black block">Prom. Longitud</span>
-                  <span className="text-3xl font-black font-mono text-white tracking-tighter block">{avgMessageLen} <span className="text-slate-500 text-xs">letras</span></span>
+                <div className="w-10 h-10 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-colors">
+                  <Terminal className="w-5 h-5" />
                 </div>
-                <Terminal className="w-5 h-5 text-purple-400/50" />
               </div>
-              <div className="text-[8px] font-mono text-slate-400 mt-2">Profundidad del requerimiento descriptivo promedio.</div>
+              <div>
+                <div className="text-4xl font-bold tracking-tight text-white mb-1 flex items-baseline gap-1">
+                  {avgMessageLen} <span className="text-base font-normal text-slate-500">chars</span>
+                </div>
+                <div className="text-sm text-slate-400 font-medium">Avg Request Depth</div>
+              </div>
             </div>
           </div>
 
-          {/* Neon SVG Allocation Charts Grid */}
+          {/* Refined SVG Allocation Charts */}
           {totalCount > 0 && (() => {
             const publicCount = totalCount - govCount - corpCount;
             const govPct = govCount / totalCount;
             const corpPct = corpCount / totalCount;
             const publicPct = publicCount / totalCount;
 
-            const r = 36;
+            const r = 40;
             const circ = 2 * Math.PI * r;
             const govStrokeDash = govPct * circ;
             const corpStrokeDash = corpPct * circ;
@@ -527,160 +523,78 @@ export default function AdminPage() {
             const publicStrokeOffset = -(govStrokeDash + corpStrokeDash);
 
             return (
-              <div className="p-6 bg-slate-900/30 border border-slate-850 rounded-[2rem] shadow-2xl relative grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+              <div className="p-8 bg-slate-900/40 border border-slate-800 rounded-[2.5rem] shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative overflow-hidden backdrop-blur-md">
                 
                 {/* Donut Chart - 4 cols */}
-                <div className="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-800/80 pb-6 md:pb-0 pr-0 md:pr-6">
+                <div className="md:col-span-3 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-800/80 pb-6 md:pb-0 relative">
                   <div className="relative w-40 h-40 flex items-center justify-center">
-                    <svg width="140" height="140" viewBox="0 0 100 100" className="drop-shadow-[0_0_12px_rgba(34,211,238,0.15)]">
-                      {/* Background track */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r={r}
-                        fill="transparent"
-                        stroke="#0f172a"
-                        strokeWidth="8"
-                      />
-                      {/* Gobierno (Amber) */}
+                    <svg width="160" height="160" viewBox="0 0 100 100" className="drop-shadow-lg">
+                      <circle cx="50" cy="50" r={r} fill="transparent" stroke="#1e293b" strokeWidth="10" />
                       {govStrokeDash > 0 && (
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r={r}
-                          fill="transparent"
-                          stroke="#f59e0b"
-                          strokeWidth="8"
-                          strokeDasharray={`${govStrokeDash} ${circ}`}
-                          strokeDashoffset={govStrokeOffset}
-                          strokeLinecap="round"
-                          className="transition-all duration-1000 ease-out"
-                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-                        />
+                        <circle cx="50" cy="50" r={r} fill="transparent" stroke="#fbbf24" strokeWidth="10" strokeDasharray={`${govStrokeDash} ${circ}`} strokeDashoffset={govStrokeOffset} strokeLinecap="round" className="transition-all duration-1000 ease-out" style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }} />
                       )}
-                      {/* Corporación (Emerald) */}
                       {corpStrokeDash > 0 && (
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r={r}
-                          fill="transparent"
-                          stroke="#10b981"
-                          strokeWidth="8"
-                          strokeDasharray={`${corpStrokeDash} ${circ}`}
-                          strokeDashoffset={corpStrokeOffset}
-                          strokeLinecap="round"
-                          className="transition-all duration-1000 ease-out"
-                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-                        />
+                        <circle cx="50" cy="50" r={r} fill="transparent" stroke="#34d399" strokeWidth="10" strokeDasharray={`${corpStrokeDash} ${circ}`} strokeDashoffset={corpStrokeOffset} strokeLinecap="round" className="transition-all duration-1000 ease-out" style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }} />
                       )}
-                      {/* Público (Cyan) */}
                       {publicStrokeDash > 0 && (
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r={r}
-                          fill="transparent"
-                          stroke="#22d3ee"
-                          strokeWidth="8"
-                          strokeDasharray={`${publicStrokeDash} ${circ}`}
-                          strokeDashoffset={publicStrokeOffset}
-                          strokeLinecap="round"
-                          className="transition-all duration-1000 ease-out"
-                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-                        />
+                        <circle cx="50" cy="50" r={r} fill="transparent" stroke="#22d3ee" strokeWidth="10" strokeDasharray={`${publicStrokeDash} ${circ}`} strokeDashoffset={publicStrokeOffset} strokeLinecap="round" className="transition-all duration-1000 ease-out" style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }} />
                       )}
                     </svg>
-                    {/* Text inside donut */}
-                    <div className="absolute text-center space-y-0.5">
-                      <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block font-black">Muestras</span>
-                      <span className="text-xl font-black font-mono text-white tracking-tighter block">{totalCount}</span>
+                    <div className="absolute text-center">
+                      <span className="text-2xl font-bold tracking-tight text-white block leading-none">{totalCount}</span>
+                      <span className="text-xs font-medium text-slate-500 uppercase tracking-wider block mt-1">Total</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Bar Chart & Legends - 8 cols */}
-                <div className="md:col-span-8 space-y-5">
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-[9px] font-mono font-bold tracking-wider text-slate-400 uppercase">
-                      <span>Distribución de Carga Catastral</span>
-                      <span className="text-cyan-400 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                        TELEMETRÍA DIGITAL DE SECTORES
-                      </span>
-                    </div>
+                <div className="md:col-span-9 space-y-6">
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-slate-300">Sector Distribution</h3>
                     
                     {/* Stacked Bar Meter */}
-                    <div className="h-4 rounded-full overflow-hidden shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] border border-slate-800 flex">
-                      {/* Gobierno */}
+                    <div className="h-3 rounded-full overflow-hidden flex bg-slate-800">
                       {govPct > 0 && (
-                        <div 
-                          className="h-full bg-gradient-to-r from-amber-600 to-amber-400 relative group transition-all duration-1000 ease-out"
-                          style={{ width: `${govPct * 100}%` }}
-                          title={`Gobierno: ${Math.round(govPct * 100)}%`}
-                        >
-                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
+                        <div className="h-full bg-amber-400 transition-all duration-1000 ease-out" style={{ width: `${govPct * 100}%` }} title={`Government: ${Math.round(govPct * 100)}%`} />
                       )}
-                      {/* Corporación */}
                       {corpPct > 0 && (
-                        <div 
-                          className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 relative group transition-all duration-1000 ease-out"
-                          style={{ width: `${corpPct * 100}%` }}
-                          title={`Corporativo: ${Math.round(corpPct * 100)}%`}
-                        >
-                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
+                        <div className="h-full bg-emerald-400 transition-all duration-1000 ease-out" style={{ width: `${corpPct * 100}%` }} title={`Corporate: ${Math.round(corpPct * 100)}%`} />
                       )}
-                      {/* Público */}
                       {publicPct > 0 && (
-                        <div 
-                          className="h-full bg-gradient-to-r from-cyan-600 to-cyan-400 relative group transition-all duration-1000 ease-out"
-                          style={{ width: `${publicPct * 100}%` }}
-                          title={`Público: ${Math.round(publicPct * 100)}%`}
-                        >
-                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
+                        <div className="h-full bg-cyan-400 transition-all duration-1000 ease-out" style={{ width: `${publicPct * 100}%` }} title={`Public: ${Math.round(publicPct * 100)}%`} />
                       )}
                     </div>
                   </div>
 
-                  {/* Elegant legend with glowing indicators and stats */}
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {/* Gov */}
-                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-amber-500/30 transition-all group">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b] group-hover:animate-ping" />
-                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">GOBIERNO</span>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+                        <span className="w-3 h-3 rounded-full bg-amber-400" />
                       </div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="text-base font-black font-mono text-white">{govCount}</span>
-                        <span className="text-[8px] font-mono text-amber-400 font-bold">({Math.round(govPct * 100)}%)</span>
+                      <div>
+                        <div className="text-sm font-medium text-slate-400">Government</div>
+                        <div className="text-lg font-bold text-white">{govCount} <span className="text-xs text-slate-500 font-medium">({Math.round(govPct * 100)}%)</span></div>
                       </div>
                     </div>
-
                     {/* Corp */}
-                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-emerald-500/30 transition-all group">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] group-hover:animate-ping" />
-                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">CORPORATIVO</span>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
+                        <span className="w-3 h-3 rounded-full bg-emerald-400" />
                       </div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="text-base font-black font-mono text-white">{corpCount}</span>
-                        <span className="text-[8px] font-mono text-emerald-400 font-bold">({Math.round(corpPct * 100)}%)</span>
+                      <div>
+                        <div className="text-sm font-medium text-slate-400">Corporate</div>
+                        <div className="text-lg font-bold text-white">{corpCount} <span className="text-xs text-slate-500 font-medium">({Math.round(corpPct * 100)}%)</span></div>
                       </div>
                     </div>
-
                     {/* Public */}
-                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-cyan-500/30 transition-all group">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#22d3ee] group-hover:animate-ping" />
-                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">PÚBLICO</span>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                        <span className="w-3 h-3 rounded-full bg-cyan-400" />
                       </div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="text-base font-black font-mono text-white">{publicCount}</span>
-                        <span className="text-[8px] font-mono text-cyan-400 font-bold">({Math.round(publicPct * 100)}%)</span>
+                      <div>
+                        <div className="text-sm font-medium text-slate-400">Public</div>
+                        <div className="text-lg font-bold text-white">{publicCount} <span className="text-xs text-slate-500 font-medium">({Math.round(publicPct * 100)}%)</span></div>
                       </div>
                     </div>
                   </div>
@@ -689,167 +603,134 @@ export default function AdminPage() {
             );
           })()}
 
-          {/* Filtering and Search Controls */}
-          <div className="p-4 bg-slate-900/30 border border-slate-850 rounded-2xl flex flex-wrap items-center justify-between gap-4 shadow-lg">
-            <div className="flex items-center gap-2 bg-black/40 px-3.5 py-1.5 rounded-xl border border-slate-800 w-full sm:max-w-md">
-              <Search className="w-4 h-4 text-slate-500 shrink-0" />
-              <input 
-                type="text" 
+          {/* Operations Toolbar */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="relative w-full md:w-96">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-slate-500" />
+              </div>
+              <input
+                type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscar por cliente, email, compañía o palabra clave..." 
-                className="w-full bg-transparent text-xs font-mono text-white placeholder-slate-500 focus:outline-none"
+                className="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-sm text-slate-200 focus:outline-none focus:border-slate-600 focus:ring-1 focus:ring-slate-600 transition-all placeholder:text-slate-500"
+                placeholder="Search by name, company, or keyword..."
               />
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 font-mono text-[8px] uppercase font-bold shrink-0">
-                <button
-                  onClick={() => setSectorFilter("ALL")}
-                  className={`px-3 py-1.5 rounded-lg cursor-pointer ${sectorFilter === "ALL" ? "bg-cyan-500/20 border border-cyan-500/30 text-cyan-400" : "text-slate-400 hover:text-white"}`}
-                >
-                  TODOS
-                </button>
-                <button
-                  onClick={() => setSectorFilter("GOV")}
-                  className={`px-3 py-1.5 rounded-lg cursor-pointer ${sectorFilter === "GOV" ? "bg-amber-500/20 border border-amber-500/30 text-amber-400" : "text-slate-400 hover:text-white"}`}
-                >
-                  GOBIERNO
-                </button>
-                <button
-                  onClick={() => setSectorFilter("CORP")}
-                  className={`px-3 py-1.5 rounded-lg cursor-pointer ${sectorFilter === "CORP" ? "bg-emerald-500/20 border border-emerald-500/30 text-emerald-400" : "text-slate-400 hover:text-white"}`}
-                >
-                  CORPORATIVO
-                </button>
-                <button
-                  onClick={() => setSectorFilter("PUBLIC")}
-                  className={`px-3 py-1.5 rounded-lg cursor-pointer ${sectorFilter === "PUBLIC" ? "bg-slate-800 border border-slate-700 text-slate-300" : "text-slate-400 hover:text-white"}`}
-                >
-                  PÚBLICO
-                </button>
+            <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+              <div className="flex bg-slate-900/50 p-1 rounded-2xl border border-slate-800 mr-2">
+                {['ALL', 'GOV', 'CORP', 'PUBLIC'].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => setSectorFilter(filter)}
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      sectorFilter === filter 
+                      ? 'bg-slate-700 text-white shadow-sm' 
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
               </div>
 
               {filteredMessages.length > 0 && (
                 <button
                   onClick={handleExportCSV}
-                  className="px-3.5 py-2 bg-cyan-950/30 hover:bg-cyan-500/20 border border-cyan-500/40 hover:border-cyan-500 rounded-xl text-cyan-400 hover:text-white font-mono font-bold text-[8px] tracking-wider uppercase transition-all cursor-pointer shadow-[0_0_12px_rgba(6,182,212,0.1)] hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] flex items-center gap-1.5"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-white text-slate-900 hover:bg-slate-100 border border-transparent rounded-xl text-xs font-bold transition-all shadow-sm shrink-0 cursor-pointer"
                 >
-                  ⚡ EXPORTAR DATASET ({filteredMessages.length})
-                </button>
-              )}
-
-              {messages.length > 0 && (
-                <button
-                  onClick={handleDeleteAll}
-                  className="px-3.5 py-2 bg-red-950/20 hover:bg-red-950/40 border border-red-500/30 hover:border-red-500/50 rounded-xl text-red-400 font-mono font-bold text-[8px] tracking-wider uppercase transition-all cursor-pointer"
-                >
-                  WIPE ALL
+                  <Download className="w-4 h-4" />
+                  Export Data
                 </button>
               )}
             </div>
           </div>
 
-          {/* Tactical Logs Table View */}
-          <div className="p-4 bg-slate-900/30 border border-slate-850 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col">
-            <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full text-left font-mono text-xs border-collapse">
+          {/* Premium CRM Table View */}
+          <div className="bg-slate-900/40 border border-slate-800 rounded-[2rem] overflow-hidden shadow-xl backdrop-blur-md">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm whitespace-nowrap md:whitespace-normal">
                 <thead>
-                  <tr className="bg-slate-950/80 text-slate-500 uppercase tracking-widest font-black text-[8px] border-b border-slate-850 sticky top-0 z-10">
-                    <th className="p-4 w-1/4">CLIENTE / REMITENTE</th>
-                    <th className="p-4 w-1/5">COMPAÑÍA / SECTOR</th>
-                    <th className="p-4 w-2/5">MENSAJE REQUERIDO</th>
-                    <th className="p-4 w-1/6 text-right">FECHA</th>
-                    <th className="p-4 w-12 text-center">ACCIONES</th>
+                  <tr className="bg-slate-900/60 border-b border-slate-800 text-slate-400 font-semibold">
+                    <th className="px-6 py-4">Contact</th>
+                    <th className="px-6 py-4">Organization</th>
+                    <th className="px-6 py-4 w-1/3">Inquiry Details</th>
+                    <th className="px-6 py-4 text-right">Date</th>
+                    <th className="px-6 py-4 text-center">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-850">
+                <tbody className="divide-y divide-slate-800/50">
                   {filteredMessages.map((msg, index) => {
                     const sector = getSector(msg);
                     return (
-                      <tr key={msg.id || index} className="hover:bg-slate-950/40 transition-all group/row border-b border-slate-850/50">
-                        {/* Client details */}
-                        <td className="p-4 space-y-1">
-                          <div className="font-bold text-white flex items-center gap-1.5">
-                            <User className="w-3.5 h-3.5 text-slate-500" />
-                            {msg.name}
-                          </div>
-                          <div className="text-[10px] text-slate-400 font-mono flex items-center gap-1">
-                            {msg.email}
-                            <a 
-                              href={`mailto:${msg.email}`}
-                              className="text-cyan-500 hover:text-cyan-400 p-0.5 opacity-0 group-hover/row:opacity-100 transition-opacity"
-                              title="Responder por correo"
-                            >
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          </div>
-                        </td>
-
-                        {/* Company & Sector Badges */}
-                        <td className="p-4 space-y-1.5">
-                          <div className="text-white font-semibold truncate max-w-[160px]" title={msg.company}>
-                            {msg.company === "N/A" || !msg.company ? "Persona Natural" : msg.company}
-                          </div>
-                          <div>
-                            {sector === "GOV" ? (
-                              <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/25 rounded text-[7px] font-bold text-amber-400 uppercase tracking-widest">
-                                🏛️ Gobierno
-                              </span>
-                            ) : sector === "CORP" ? (
-                              <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded text-[7px] font-bold text-emerald-400 uppercase tracking-widest">
-                                💼 Corporación
-                              </span>
-                            ) : (
-                              <span className="px-2 py-0.5 bg-slate-850 border border-slate-800 rounded text-[7px] font-bold text-slate-400 uppercase tracking-widest">
-                                👤 Público
-                              </span>
-                            )}
+                      <tr key={msg.id || index} className="hover:bg-slate-800/30 transition-colors group">
+                        
+                        {/* Contact Col */}
+                        <td className="px-6 py-5">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border border-slate-700 flex items-center justify-center font-bold text-slate-300 text-sm shadow-inner shrink-0">
+                              {getInitials(msg.name)}
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                              <span className="text-slate-200 font-bold truncate block">{msg.name}</span>
+                              <div className="flex items-center gap-1.5 text-slate-500 group-hover:text-cyan-400 transition-colors">
+                                <span className="text-xs truncate block">{msg.email}</span>
+                                <a href={`mailto:${msg.email}`} className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                              </div>
+                            </div>
                           </div>
                         </td>
 
-                        {/* Message Content */}
-                        <td className="p-4">
-                          <div className="text-slate-300 text-[10px] leading-relaxed break-words font-medium pr-4 select-text">
-                            &quot;{msg.message}&quot;
+                        {/* Org Col */}
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col gap-2 items-start">
+                            <span className="text-slate-300 font-medium truncate max-w-[200px]" title={msg.company}>
+                              {msg.company === "N/A" || !msg.company ? "Independent" : msg.company}
+                            </span>
+                            {sector === "GOV" && <span className="px-2.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-[10px] font-bold uppercase tracking-wider">Government</span>}
+                            {sector === "CORP" && <span className="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-[10px] font-bold uppercase tracking-wider">Corporate</span>}
+                            {sector === "PUBLIC" && <span className="px-2.5 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded-full text-[10px] font-bold uppercase tracking-wider">Public</span>}
                           </div>
                         </td>
 
-                        {/* Relative / Formatted Timestamp */}
-                        <td className="p-4 text-right">
-                          <div className="text-slate-400 font-mono text-[10px] font-bold">
-                            {msg.timestamp ? new Date(msg.timestamp).toLocaleDateString("es-CO", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric"
-                            }) : "S/F"}
+                        {/* Message Col */}
+                        <td className="px-6 py-5">
+                          <p className="text-slate-400 text-sm line-clamp-2 pr-4 leading-relaxed font-normal" title={msg.message}>
+                            {msg.message}
+                          </p>
+                        </td>
+
+                        {/* Date Col */}
+                        <td className="px-6 py-5 text-right whitespace-nowrap">
+                          <div className="text-slate-300 font-medium">
+                            {msg.timestamp ? new Date(msg.timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "N/A"}
                           </div>
-                          <div className="text-[9px] text-slate-500 font-mono">
-                            {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString("es-CO", {
-                              hour: "2-digit",
-                              minute: "2-digit"
-                            }) : "S/H"}
+                          <div className="text-xs font-mono text-slate-500 mt-0.5">
+                            {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }) : ""}
                           </div>
                         </td>
 
-                        {/* Row Actions */}
-                        <td className="p-4 text-center">
-                          <div className="flex items-center justify-center gap-2">
+                        {/* Actions Col */}
+                        <td className="px-6 py-5">
+                          <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => handleGenerateAIDraft(msg)}
-                              className="p-2 bg-slate-950 border border-slate-850 rounded-xl text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all cursor-pointer hover:shadow-[0_0_12px_rgba(6,182,212,0.2)] flex items-center justify-center gap-1 font-mono text-[9px]"
-                              title="Redactar Respuesta Formal con IA"
+                              className="px-3 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 rounded-xl transition-all font-medium text-xs flex items-center gap-2 cursor-pointer"
+                              title="Draft AI Response"
                             >
-                              <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                              <span className="hidden group-hover/row:inline">IA</span>
+                              <Cpu className="w-4 h-4" />
+                              <span className="hidden lg:inline">AI Draft</span>
                             </button>
 
                             <button
                               onClick={() => handleDeleteMessage(msg.id)}
-                              className="p-2 bg-slate-950 border border-slate-850 rounded-xl text-slate-500 hover:text-red-400 hover:border-red-500/30 transition-all cursor-pointer hover:shadow-[0_0_12px_rgba(239,68,68,0.2)]"
-                              title="Resolver e Inactivar"
+                              className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all cursor-pointer"
+                              title="Delete Record"
                             >
-                              <Trash2 className="w-3.5 h-3.5" />
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -859,13 +740,13 @@ export default function AdminPage() {
 
                   {filteredMessages.length === 0 && (
                     <tr>
-                      <td colSpan="5" className="p-12 text-center text-slate-500">
-                        <div className="max-w-xs mx-auto space-y-2">
-                          <Inbox className="w-8 h-8 mx-auto text-slate-700 animate-pulse" />
-                          <div className="text-xs uppercase tracking-wider font-bold">No hay correspondencia</div>
-                          <div className="text-[10px] text-slate-400 leading-relaxed font-medium">
-                            No se encontraron peticiones de información catastral que coincidan con los filtros seleccionados.
+                      <td colSpan="5" className="px-6 py-16 text-center">
+                        <div className="max-w-xs mx-auto space-y-3">
+                          <div className="w-12 h-12 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto text-slate-600">
+                            <Inbox className="w-6 h-6" />
                           </div>
+                          <h3 className="text-slate-300 font-medium">No records found</h3>
+                          <p className="text-sm text-slate-500">Try adjusting your search query or filters.</p>
                         </div>
                       </td>
                     </tr>
@@ -874,90 +755,108 @@ export default function AdminPage() {
               </table>
             </div>
 
+            {/* Table Footer */}
             {filteredMessages.length > 0 && (
-              <div className="pt-4 border-t border-slate-850 flex justify-between items-center text-[9px] text-slate-500 font-mono">
-                <div>MOSTRANDO {filteredMessages.length} DE {totalCount} PETICIONES TOTALES</div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3.5 h-3.5 text-cyan-500/70" />
-                  <span>SISTEMA DE AUDITORÍA CATASTRAL SOBERANO OPERACIONAL</span>
-                </div>
+              <div className="px-6 py-4 border-t border-slate-800 bg-slate-900/40 text-xs font-medium text-slate-500 flex justify-between items-center">
+                <span>Showing {filteredMessages.length} of {totalCount} records</span>
+                <span className="flex items-center gap-2 text-slate-400">
+                  <span className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4] animate-pulse" />
+                  Systems Operational
+                </span>
               </div>
             )}
           </div>
 
-          {/* Premium Glassmorphic AI Response Modal Overlay */}
+          {/* Danger Zone */}
+          {messages.length > 0 && (
+            <div className="flex justify-end pt-4">
+              <button
+                onClick={handleDeleteAll}
+                className="text-xs font-medium text-slate-600 hover:text-red-400 underline decoration-slate-700 hover:decoration-red-500/50 transition-colors cursor-pointer"
+              >
+                Clear entire database
+              </button>
+            </div>
+          )}
+
+          {/* Premium Glassmorphic AI Response Modal */}
           {isModalOpen && aiDraftMsg && (
-            <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-500/[0.02] to-transparent pointer-events-none" />
-              <div className="border border-slate-800/60 bg-slate-950/95 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] max-w-2xl w-full rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group">
-                {/* Glowing border indicator */}
-                <div className="absolute top-0 left-[15%] right-[15%] h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+              <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => !isGeneratingAI && setIsModalOpen(false)} />
+              
+              <div className="relative w-full max-w-2xl bg-[#0f1117] border border-slate-800 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] overflow-hidden flex flex-col">
+                {/* Modal Header */}
+                <div className="px-6 py-5 border-b border-slate-800/60 flex justify-between items-center bg-slate-900/30">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-cyan-950/40 border border-cyan-500/30 rounded-2xl flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)]">
-                      <Cpu className="w-5 h-5 animate-spin" style={{ animationDuration: '4s' }} />
+                    <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+                      <Cpu className="w-4 h-4" />
                     </div>
                     <div>
-                      <h2 className="text-sm font-black font-mono uppercase tracking-widest text-white">Redactor Táctico Geo-IA</h2>
-                      <p className="text-[8px] font-mono text-slate-400 uppercase tracking-wider">
-                        Borrador Inteligente // Llama-3.3-70b-versatile
-                      </p>
+                      <h2 className="text-base font-bold text-slate-200">AI Response Assistant</h2>
+                      <p className="text-xs text-slate-500 font-medium">Powered by Llama-3.3-70b-versatile</p>
                     </div>
                   </div>
                   <button 
                     onClick={() => setIsModalOpen(false)}
-                    className="p-1 text-slate-500 hover:text-white hover:bg-slate-900 border border-transparent hover:border-slate-800 rounded-lg transition-all text-xs font-mono font-bold cursor-pointer"
+                    disabled={isGeneratingAI}
+                    className="p-2 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-xl transition-all cursor-pointer disabled:opacity-50"
                   >
-                    ESC ✕
+                    Close
                   </button>
                 </div>
 
-                <div className="border-t border-slate-850 my-1" />
-
-                {/* Context Metadata */}
-                <div className="p-3 bg-slate-900/30 border border-slate-850 rounded-2xl space-y-1 text-[9px] font-mono text-slate-400">
-                  <div><span className="text-slate-500">REMITENTE:</span> <strong className="text-white">{aiDraftMsg.name}</strong> ({aiDraftMsg.email})</div>
-                  <div><span className="text-slate-500">COMPAÑÍA:</span> <strong className="text-white">{aiDraftMsg.company === "N/A" || !aiDraftMsg.company ? "Persona Natural" : aiDraftMsg.company}</strong></div>
-                  <div className="truncate"><span className="text-slate-500">SOLICITUD:</span> &quot;{aiDraftMsg.message}&quot;</div>
-                </div>
-
-                {/* Output Panel */}
-                <div className="relative">
-                  {isGeneratingAI ? (
-                    <div className="h-60 bg-black/60 border border-slate-850 rounded-2xl flex flex-col items-center justify-center space-y-4">
-                      <div className="relative w-10 h-10 flex items-center justify-center">
-                        <span className="absolute w-full h-full rounded-full border-2 border-cyan-500/20 border-t-cyan-500 animate-spin" />
-                        <Cpu className="w-4 h-4 text-cyan-400 animate-pulse" />
-                      </div>
-                      <span className="text-[9px] font-mono text-cyan-400 font-bold uppercase tracking-widest animate-pulse">
-                        GENERANDO ESTRATEGIA DE RESPUESTA...
-                      </span>
+                {/* Modal Body */}
+                <div className="p-6 space-y-6 flex-1 overflow-y-auto">
+                  {/* Context Block */}
+                  <div className="bg-slate-900/50 rounded-2xl p-4 border border-slate-800/50">
+                    <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Replying To</div>
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="font-bold text-slate-300">{aiDraftMsg.name}</span>
+                      <span className="text-sm text-slate-500">&lt;{aiDraftMsg.email}&gt;</span>
                     </div>
-                  ) : (
-                    <textarea
-                      readOnly
-                      value={aiDraftText}
-                      className="w-full h-60 px-4 py-3 bg-black/60 border border-slate-850 rounded-2xl font-mono text-[10px] leading-relaxed text-slate-300 focus:outline-none focus:border-cyan-500/50 transition-all custom-scrollbar resize-none select-text"
-                    />
-                  )}
+                    <p className="text-sm text-slate-400 italic border-l-2 border-slate-700 pl-3 mt-3 py-1">
+                      "{aiDraftMsg.message}"
+                    </p>
+                  </div>
+
+                  {/* Editor Block */}
+                  <div className="space-y-2">
+                    <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Draft Content</div>
+                    <div className="relative">
+                      {isGeneratingAI ? (
+                        <div className="h-64 bg-[#0a0c10] rounded-2xl border border-slate-800 flex flex-col items-center justify-center space-y-4">
+                          <div className="flex gap-2">
+                            <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
+                            <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                            <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                          </div>
+                          <p className="text-sm font-medium text-slate-400">Synthesizing professional response...</p>
+                        </div>
+                      ) : (
+                        <textarea
+                          readOnly
+                          value={aiDraftText}
+                          className="w-full h-64 p-5 bg-[#0a0c10] border border-slate-800 rounded-2xl text-sm text-slate-300 leading-relaxed focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all custom-scrollbar resize-none selection:bg-indigo-500/30"
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex justify-end gap-3 font-mono text-[9px] font-bold uppercase">
+                {/* Modal Footer */}
+                <div className="px-6 py-5 border-t border-slate-800/60 bg-slate-900/30 flex justify-end gap-3">
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer"
+                    className="px-5 py-2.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
                   >
-                    CERRAR
+                    Cancel
                   </button>
                   <button
                     onClick={handleCopyDraft}
                     disabled={isGeneratingAI || !aiDraftText}
-                    className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] text-white rounded-xl transition-all hover:brightness-110 cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                    className="px-6 py-2.5 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-sm font-bold transition-all disabled:opacity-50 shadow-sm cursor-pointer"
                   >
-                    📋 COPIAR AL PORTAPAPELES
+                    Copy Draft
                   </button>
                 </div>
               </div>

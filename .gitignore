@@ -49,3 +49,4 @@ docker-compose.yml
 .env.production.local
 *.env
 .env*
+.vercel

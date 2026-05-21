@@ -47,6 +47,17 @@ const HIGH_FIDELITY_MOCKS = [
   }
 ];
 
+// Constant-time string comparison to prevent timing attacks
+function secureCompare(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  let mismatch = a.length === b.length ? 0 : 1;
+  let minLen = Math.min(a.length, b.length);
+  for (let i = 0; i < minLen; i++) {
+    mismatch |= (a.charCodeAt(i) ^ b.charCodeAt(i));
+  }
+  return mismatch === 0;
+}
+
 // Helper to authenticate passcode
 function authenticate(req) {
   const authHeader = req.headers.get("authorization");
@@ -55,14 +66,52 @@ function authenticate(req) {
   }
   const token = authHeader.substring(7).trim();
   const requiredPasscode = process.env.ADMIN_PASSCODE || "dgz2026";
-  return token === requiredPasscode;
+  return secureCompare(token, requiredPasscode);
+}
+
+// Security: Rate Limiter
+async function checkRateLimit(req) {
+  const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown_ip";
+  const rateLimitKey = `rate_limit:admin:${ip}`;
+
+  try {
+    const attempts = await kv.get(rateLimitKey) || 0;
+    if (attempts >= 5) {
+      return { isBlocked: true, ip, rateLimitKey };
+    }
+  } catch (e) {
+    // KV not available, proceed without strict rate limiting
+  }
+  return { isBlocked: false, ip, rateLimitKey };
+}
+
+async function handleFailedAuth(rateLimitKey) {
+  try {
+    await kv.incr(rateLimitKey);
+    // 15 minutes lockout
+    await kv.expire(rateLimitKey, 15 * 60);
+  } catch (e) {}
+  
+  // Artificial delay for fallback protection against automated tools
+  await new Promise(r => setTimeout(r, 2000));
+  
+  return NextResponse.json({ error: "Access Denied. Invalid security passcode." }, { status: 401 });
 }
 
 export async function GET(req) {
-  // Check authorization
-  if (!authenticate(req)) {
-    return NextResponse.json({ error: "No autorizado. Passcode incorrecto." }, { status: 401 });
+  // 1. Check Rate Limiting
+  const { isBlocked, rateLimitKey } = await checkRateLimit(req);
+  if (isBlocked) {
+    return NextResponse.json({ error: "Security Lockout. Too many failed attempts. Please try again in 15 minutes." }, { status: 429 });
   }
+
+  // 2. Check authorization
+  if (!authenticate(req)) {
+    return await handleFailedAuth(rateLimitKey);
+  }
+
+  // 3. Reset rate limit on success
+  try { await kv.del(rateLimitKey); } catch (e) {}
 
   try {
     // Read from Vercel KV
@@ -94,10 +143,19 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  // Check authorization
-  if (!authenticate(req)) {
-    return NextResponse.json({ error: "No autorizado. Passcode incorrecto." }, { status: 401 });
+  // 1. Check Rate Limiting
+  const { isBlocked, rateLimitKey } = await checkRateLimit(req);
+  if (isBlocked) {
+    return NextResponse.json({ error: "Security Lockout. Too many failed attempts. Please try again in 15 minutes." }, { status: 429 });
   }
+
+  // 2. Check authorization
+  if (!authenticate(req)) {
+    return await handleFailedAuth(rateLimitKey);
+  }
+
+  // 3. Reset rate limit on success
+  try { await kv.del(rateLimitKey); } catch (e) {}
 
   try {
     const { searchParams } = new URL(req.url);
