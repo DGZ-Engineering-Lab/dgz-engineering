@@ -62,7 +62,10 @@ export default function SovereignMapWrapper() {
     let currentLogIdx = 0;
     const interval = setInterval(() => {
       if (currentLogIdx < bootLogs.length) {
-        setConsoleLogs((prev) => [...prev, bootLogs[currentLogIdx]]);
+        const logEntry = bootLogs[currentLogIdx];
+        if (logEntry) {
+          setConsoleLogs((prev) => [...prev, logEntry]);
+        }
         currentLogIdx++;
       } else {
         clearInterval(interval);
@@ -155,17 +158,17 @@ export default function SovereignMapWrapper() {
                 key={index}
                 className="flex items-center gap-3 text-[8px] font-mono text-slate-500 justify-start select-none"
               >
-                <span className="text-[7px] text-slate-600">[{log.time || ""}]</span>
+                <span className="text-[7px] text-slate-600">[{log?.time || ""}]</span>
                 <span
                   className={
-                    log.type === "success"
+                    log?.type === "success"
                       ? "text-emerald-400 font-bold"
-                      : log.type === "warn"
+                      : log?.type === "warn"
                       ? "text-amber-400"
                       : "text-slate-400"
                   }
                 >
-                  {log.text || ""}
+                  {log?.text || ""}
                 </span>
               </div>
             ))}

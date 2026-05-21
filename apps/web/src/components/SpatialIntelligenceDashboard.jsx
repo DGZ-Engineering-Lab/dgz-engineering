@@ -518,7 +518,7 @@ export default function SpatialIntelligenceDashboard() {
   const fetchParcels = useCallback(async () => {
     addLog("INGESTING_DATA: Conectando Stream Neon/PostGIS...", "info");
     try {
-      const res = await fetch(`${GEOAPI_URL}/parcels`);
+      const res = await fetch("/api/parcels");
       const data = await res.json();
       
       if (map.current && data.features) {
@@ -1375,9 +1375,9 @@ export default function SpatialIntelligenceDashboard() {
                     </div>
                     <div className="mt-7 space-y-1 overflow-y-auto h-14 custom-scrollbar pr-1">
                       {telemetry.map((log, i) => log && (
-                        <div key={i} className={`flex gap-1.5 ${log.type === "error" ? "text-red-400" : log.type === "success" ? "text-emerald-400" : "text-cyan-400"}`}>
-                          <span className="opacity-50">[{log.time || ""}]</span>
-                          <span>{log.msg || ""}</span>
+                        <div key={i} className={`flex gap-1.5 ${log?.type === "error" ? "text-red-400" : log?.type === "success" ? "text-emerald-400" : "text-cyan-400"}`}>
+                          <span className="opacity-50">[{log?.time || ""}]</span>
+                          <span>{log?.msg || ""}</span>
                         </div>
                       ))}
                       {telemetry.length === 0 && <div className="text-slate-500 italic pt-1">Idle. Awaiting command...</div>}
