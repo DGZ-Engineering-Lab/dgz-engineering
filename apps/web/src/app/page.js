@@ -1,17 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import SovereignMapWrapper from "../components/SovereignMapWrapper";
+import Image from "next/image";
 import Logo from "../components/Logo";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
-
-const SpatialIntelligenceDashboard = dynamic(
-  () => import("../components/SpatialIntelligenceDashboard"),
-  { ssr: false }
-);
 
 // Configuración de variantes de animación premium
 const fadeInUp = {
@@ -214,7 +210,7 @@ export default function Home() {
             <div 
               className="lg:col-span-7 h-[540px] bg-slate-950/80 border border-slate-900 rounded-[2.5rem] overflow-hidden relative group shadow-3xl hover:border-slate-800 transition-all"
             >
-              <SpatialIntelligenceDashboard />
+              <SovereignMapWrapper />
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-white/5 z-20">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]"></div>
@@ -266,13 +262,12 @@ export default function Home() {
               <Link href="/blog/1" prefetch={false} className="group space-y-6 block">
                 <div className="aspect-video bg-slate-900 border border-slate-850 overflow-hidden rounded-[2rem] relative shadow-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-40 z-10"></div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
+                  <Image 
                     src="/assets/img/blog-ladm-col.png" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
                     alt="LADM-COL" 
-                    loading="lazy" 
-                    decoding="async"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
                   />
                 </div>
                 <div className="space-y-2 pl-4">
@@ -291,13 +286,12 @@ export default function Home() {
               <Link href="/blog/2" prefetch={false} className="group space-y-6 block">
                 <div className="aspect-video bg-slate-900 border border-slate-850 overflow-hidden rounded-[2rem] relative shadow-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-40 z-10"></div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
+                  <Image 
                     src="/assets/img/blog-cybersecurity.png" 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
                     alt="Cybersecurity" 
-                    loading="lazy" 
-                    decoding="async"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
                   />
                 </div>
                 <div className="space-y-2 pl-4">

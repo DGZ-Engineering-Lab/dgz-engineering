@@ -3,12 +3,8 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import dynamic from 'next/dynamic';
-
-const SpatialIntelligenceDashboard = dynamic(
-  () => import("../../components/SpatialIntelligenceDashboard"),
-  { ssr: false }
-);
+import SovereignMapWrapper from "../../components/SovereignMapWrapper";
+import Image from "next/image";
 
 const PROJECTS = [
   {
@@ -141,11 +137,14 @@ export default function ProjectsPage() {
 
                 {/* Visual */}
                 <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
+                  <Image 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={idx === 0}
+                    fetchpriority={idx === 0 ? "high" : undefined}
+                    className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-10 right-10 p-6 bg-white/90 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
@@ -174,7 +173,7 @@ export default function ProjectsPage() {
 
         <div className="max-w-7xl mx-auto px-6">
           <div className="w-full h-[680px] lg:h-[620px] rounded-[2.5rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-slate-900 bg-slate-950/80 relative group hover:border-cyan-500/20 transition-all duration-500">
-            <SpatialIntelligenceDashboard />
+            <SovereignMapWrapper />
           </div>
         </div>
       </section>
