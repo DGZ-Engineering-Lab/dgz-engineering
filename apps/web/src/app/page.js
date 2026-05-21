@@ -212,7 +212,7 @@ export default function Home() {
             </div>
             
             <div 
-              className="lg:col-span-7 h-[540px] bg-slate-950/80 border border-slate-900 rounded-[2.5rem] overflow-hidden relative group shadow-3xl hover:border-slate-800 transition-all scroll-reveal"
+              className="lg:col-span-7 h-[540px] bg-slate-950/80 border border-slate-900 rounded-[2.5rem] overflow-hidden relative group shadow-3xl hover:border-slate-800 transition-all"
             >
               <SpatialIntelligenceDashboard />
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-white/5 z-20">
