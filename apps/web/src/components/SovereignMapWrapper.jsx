@@ -150,12 +150,12 @@ export default function SovereignMapWrapper() {
 
           {/* HUD Footer Console Telemetry Log */}
           <div className="z-10 w-full border-t border-slate-900/60 pt-3 flex flex-col gap-1 min-h-[55px]">
-            {consoleLogs.map((log, index) => (
+            {consoleLogs.map((log, index) => log && (
               <div
                 key={index}
                 className="flex items-center gap-3 text-[8px] font-mono text-slate-500 justify-start select-none"
               >
-                <span className="text-[7px] text-slate-600">[{log.time}]</span>
+                <span className="text-[7px] text-slate-600">[{log.time || ""}]</span>
                 <span
                   className={
                     log.type === "success"
@@ -165,7 +165,7 @@ export default function SovereignMapWrapper() {
                       : "text-slate-400"
                   }
                 >
-                  {log.text}
+                  {log.text || ""}
                 </span>
               </div>
             ))}

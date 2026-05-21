@@ -1374,10 +1374,10 @@ export default function SpatialIntelligenceDashboard() {
                       <TerminalIcon className="w-3 h-3 text-cyan-500/50 animate-pulse" />
                     </div>
                     <div className="mt-7 space-y-1 overflow-y-auto h-14 custom-scrollbar pr-1">
-                      {telemetry.map((log, i) => (
+                      {telemetry.map((log, i) => log && (
                         <div key={i} className={`flex gap-1.5 ${log.type === "error" ? "text-red-400" : log.type === "success" ? "text-emerald-400" : "text-cyan-400"}`}>
-                          <span className="opacity-50">[{log.time}]</span>
-                          <span>{log.msg}</span>
+                          <span className="opacity-50">[{log.time || ""}]</span>
+                          <span>{log.msg || ""}</span>
                         </div>
                       ))}
                       {telemetry.length === 0 && <div className="text-slate-500 italic pt-1">Idle. Awaiting command...</div>}
