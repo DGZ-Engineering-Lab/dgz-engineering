@@ -27,6 +27,19 @@ import {
 // Mapbox Token from Environment
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
+if (typeof window !== "undefined") {
+  console.log(
+    "🗺️ [DEVGIZ MAP DIAGNOSTIC] Mapbox Token Status:",
+    process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+      ? `DEFINED (Starts with: ${process.env.NEXT_PUBLIC_MAPBOX_TOKEN.substring(0, 12)}...)`
+      : "UNDEFINED / EMPTY STRING ❌"
+  );
+  console.log(
+    "🌐 [DEVGIZ MAP DIAGNOSTIC] GeoAPI URL Status:",
+    process.env.NEXT_PUBLIC_GEOAPI_URL || "Using default (https://devgiz-api.onrender.com)"
+  );
+}
+
 const GEOAPI_URL = process.env.NEXT_PUBLIC_GEOAPI_URL || "https://devgiz-api.onrender.com";
 
 // Local GeoJSON Fallback for "Robustness" (Medellín Parcels Mock)
