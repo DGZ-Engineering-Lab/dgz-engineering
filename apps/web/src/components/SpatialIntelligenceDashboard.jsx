@@ -240,14 +240,62 @@ const runLocalJoin = (spatialData, legalData, key) => {
   });
   
   return {
-    total_catastro: spatialData.length,
-    total_registro: legalData.length,
-    match_count: match_count.length + area_discrepancies.length,
-    only_matched: match_count.length,
+    match_count: match_count.length,
     missing_in_registro,
     missing_in_catastro,
-    area_discrepancies
+    area_discrepancies,
+    total_catastro: spatialData.length,
+    total_registro: legalData.length
   };
+};
+
+// Calculate planar polygon area in square meters (estimation using average latitude)
+const calculatePlanarPolygonArea = (coords) => {
+  if (coords.length < 3) return 0;
+  let area = 0;
+  const avgLat = coords.reduce((acc, pt) => acc + pt[1], 0) / coords.length;
+  const latToMeters = 111320;
+  const lonToMeters = 111320 * Math.cos((avgLat * Math.PI) / 180);
+  
+  for (let i = 0; i < coords.length - 1; i++) {
+    const x1 = coords[i][0] * lonToMeters;
+    const y1 = coords[i][1] * latToMeters;
+    const x2 = coords[i + 1][0] * lonToMeters;
+    const y2 = coords[i + 1][1] * latToMeters;
+    area += (x1 * y2 - x2 * y1);
+  }
+  return Math.abs(area) / 2;
+};
+
+// Calculate exact BBox of GeoJSON
+const calculateBBox = (geojson) => {
+  let minLon = Infinity, maxLon = -Infinity;
+  let minLat = Infinity, maxLat = -Infinity;
+  
+  const processCoords = (coords) => {
+    if (Array.isArray(coords[0])) {
+      coords.forEach(processCoords);
+    } else if (typeof coords[0] === 'number' && typeof coords[1] === 'number') {
+      const [lon, lat] = coords;
+      if (lon < minLon) minLon = lon;
+      if (lon > maxLon) maxLon = lon;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    }
+  };
+  
+  if (geojson.type === "FeatureCollection" && Array.isArray(geojson.features)) {
+    geojson.features.forEach(f => {
+      if (f.geometry) processCoords(f.geometry.coordinates);
+    });
+  } else if (geojson.type === "Feature" && geojson.geometry) {
+    processCoords(geojson.geometry.coordinates);
+  } else if (geojson.coordinates) {
+    processCoords(geojson.coordinates);
+  }
+  
+  if (minLon === Infinity || minLat === Infinity) return null;
+  return [[minLon, minLat], [maxLon, maxLat]];
 };
 
 export default function SpatialIntelligenceDashboard({ forceSovereign = false, onChangeEngine }) {
@@ -277,9 +325,21 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const uploadedGeoJSONRef = useRef(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFileMeta, setUploadedFileMeta] = useState(null);
+  const [uploadedDiagnostics, setUploadedDiagnostics] = useState(null);
   const [isFlashingClean, setIsFlashingClean] = useState(false);
   const [parcelsGeoJSON, setParcelsGeoJSON] = useState(DEMO_PARCELS);
   const parcelsGeoJSONRef = useRef(DEMO_PARCELS);
+
+  const [offsetX, setOffsetX] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
+  const [activeLedger, setActiveLedger] = useState([
+    { time: new Date().toLocaleTimeString("es-CO", { hour12: false }), action: "SYS_INIT", message: "Kernel catastral inicializado." }
+  ]);
+
+  const addLedgerEntry = useCallback((action, message) => {
+    const time = new Date().toLocaleTimeString("es-CO", { hour12: false });
+    setActiveLedger(prev => [{ time, action, message }, ...prev].slice(0, 8));
+  }, []);
 
   const updateParcelsGeoJSON = (newData) => {
     setParcelsGeoJSON(newData);
@@ -459,8 +519,64 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
         if (data.geojson) {
           setUploadedGeoJSON(data.geojson);
           uploadedGeoJSONRef.current = data.geojson;
-          addLog("BLOB_UPLOADER: GeoJSON cargado e hidratado en el mapa catastral.", "success");
           
+          // Calculate client-side spatial diagnostics scanner
+          let minLon = Infinity, maxLon = -Infinity;
+          let minLat = Infinity, maxLat = -Infinity;
+          let verticesCount = 0;
+          let polygonsCount = 0;
+          let isClosed = true;
+          let areaSumSqM = 0;
+          
+          const processPolygon = (coordinates) => {
+            polygonsCount++;
+            coordinates.forEach((ring, ringIdx) => {
+              verticesCount += ring.length;
+              if (ring.length > 0) {
+                const first = ring[0];
+                const last = ring[ring.length - 1];
+                if (first[0] !== last[0] || first[1] !== last[1]) {
+                  isClosed = false;
+                }
+              }
+              if (ringIdx === 0) {
+                areaSumSqM += calculatePlanarPolygonArea(ring);
+              }
+              ring.forEach(([lon, lat]) => {
+                if (lon < minLon) minLon = lon;
+                if (lon > maxLon) maxLon = lon;
+                if (lat < minLat) minLat = lat;
+                if (lat > maxLat) maxLat = lat;
+              });
+            });
+          };
+
+          if (data.geojson.type === "FeatureCollection" && Array.isArray(data.geojson.features)) {
+            data.geojson.features.forEach(f => {
+              if (f.geometry?.type === "Polygon") {
+                processPolygon(f.geometry.coordinates);
+              } else if (f.geometry?.type === "MultiPolygon") {
+                f.geometry.coordinates.forEach(polyCoords => {
+                  processPolygon(polyCoords);
+                });
+              }
+            });
+          } else if (data.geojson.type === "Feature" && data.geojson.geometry?.type === "Polygon") {
+            processPolygon(data.geojson.geometry.coordinates);
+          } else if (data.geojson.type === "Polygon") {
+            processPolygon(data.geojson.coordinates);
+          }
+
+          const diagnostics = {
+            vertices: verticesCount,
+            polygons: polygonsCount,
+            isClosed: isClosed,
+            isValid: verticesCount >= 4 && isClosed,
+            areaSumSqM: Math.round(areaSumSqM * 10) / 10
+          };
+          setUploadedDiagnostics(diagnostics);
+          addLog(`BLOB_UPLOADER: GeoJSON validado. Vértices: ${verticesCount}, Cerrado: ${isClosed ? "SÍ" : "NO"}, Área Est: ${Math.round(areaSumSqM)}m²`, "success");
+
           // Hydrate Mapbox if active
           if (map.current && map.current.isStyleLoaded()) {
             try {
@@ -502,26 +618,15 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                 }
               });
               
-              // Let's fly map center to the uploaded coordinates
-              let coords = [];
-              if (data.geojson.type === "FeatureCollection" && data.geojson.features?.length > 0) {
-                const feat = data.geojson.features[0];
-                if (feat.geometry?.type === "Polygon") {
-                  coords = feat.geometry.coordinates[0][0];
-                } else if (feat.geometry?.type === "Point") {
-                  coords = feat.geometry.coordinates;
-                }
-              } else if (data.geojson.type === "Feature" && data.geojson.geometry?.type === "Polygon") {
-                coords = data.geojson.geometry.coordinates[0][0];
-              }
-              
-              if (coords && coords.length >= 2) {
-                map.current.flyTo({
-                  center: [coords[0], coords[1]],
-                  zoom: 17,
-                  pitch: 65,
+              // Automatically fit map camera to bounds
+              const bbox = calculateBBox(data.geojson);
+              if (bbox) {
+                map.current.fitBounds(bbox, {
+                  padding: 80,
+                  maxZoom: 18,
                   duration: 2000
                 });
+                addLog("BLOB_UPLOADER: Cámara enfocada en límites catastrales reales (fitBounds)", "success");
               }
             } catch (mapboxErr) {
               console.warn("Failed to add uploaded GeoJSON to Mapbox GL:", mapboxErr);
@@ -538,6 +643,43 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       addLog(`BLOB_UPLOADER Error: ${uploadErr.message}`, "error");
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleDismountLayer = () => {
+    setUploadedGeoJSON(null);
+    uploadedGeoJSONRef.current = null;
+    setUploadedDiagnostics(null);
+    setUploadedFileMeta(null);
+    addLog("BLOB_UPLOADER: Capa catastral desmontada del visor.", "info");
+    
+    if (map.current) {
+      try {
+        if (map.current.getLayer("uploaded-layer")) {
+          map.current.removeLayer("uploaded-layer");
+        }
+        if (map.current.getLayer("uploaded-outline")) {
+          map.current.removeLayer("uploaded-outline");
+        }
+        if (map.current.getSource("uploaded-source")) {
+          map.current.removeSource("uploaded-source");
+        }
+      } catch (e) {
+        console.warn("Failed to remove Mapbox layer on dismount:", e);
+      }
+    }
+  };
+
+  const handleFocusLayer = () => {
+    if (!uploadedGeoJSONRef.current) return;
+    const bbox = calculateBBox(uploadedGeoJSONRef.current);
+    if (bbox && map.current) {
+      map.current.fitBounds(bbox, {
+        padding: 80,
+        maxZoom: 18,
+        duration: 2000
+      });
+      addLog("BLOB_UPLOADER: Cámara re-enfocada en límites (fitBounds)", "success");
     }
   };
 
@@ -565,6 +707,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       if (res.ok && data.status === "HEALED" && data.geometry) {
         setParcelAStatus("CLEAN");
         setSnappedVertex(true);
+        setOffsetX(0);
+        setOffsetY(0);
+        addLedgerEntry("AUTO_HEAL", "Auto-sanación catastral exitosa. Desviación m² reseteada a 0.0.");
         addLog("MCP_HEALER: ¡Auto-sanación exitosa! LADM-COL v3.0 alineado.", "success");
         
         // Update parcels data in place
@@ -627,6 +772,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       // Sovereign interactive robust fallback
       setParcelAStatus("CLEAN");
       setSnappedVertex(true);
+      setOffsetX(0);
+      setOffsetY(0);
+      addLedgerEntry("AUTO_HEAL", "Sanación catastral offline completada. Desviación m² reseteada a 0.0.");
       addLog("MCP_HEALER: Sanación completada localmente (Resiliencia Offline).", "success");
       
       const fallbackGeo = {
@@ -1022,6 +1170,8 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
     // Complete the snap
     setSnappedVertex(true);
     setParcelAStatus("CLEAN");
+    setOffsetX(0);
+    setOffsetY(0);
 
     await new Promise(r => setTimeout(r, 1200));
 
@@ -1218,13 +1368,33 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const heightC = 16;
   const heightOmitted = 30;
 
-  // Base coordinates for Parcel A (changes dynamically when snapped)
+  // Base coordinates for Parcel A (changes dynamically when snapped and with interactive sliders)
   const baseA = [
     [180, 140], // P1
     [380, 120], // P2
     [410, 240], // P3
-    snappedVertex ? [210, 260] : [228, 238] // P4: offset/overlapped when not snapped
+    [
+      (snappedVertex ? 210 : 228) + Number(offsetX),
+      (snappedVertex ? 260 : 238) + Number(offsetY)
+    ] // P4: offset/overlapped when not snapped, shifts in real-time with sliders
   ];
+
+  const getPolygonPixelArea = (points) => {
+    let area = 0;
+    const n = points.length;
+    for (let i = 0; i < n; i++) {
+      const [x1, y1] = points[i];
+      const [x2, y2] = points[(i + 1) % n];
+      area += (x1 * y2 - x2 * y1);
+    }
+    return Math.abs(area) / 2;
+  };
+
+  const livePixelArea = getPolygonPixelArea(baseA);
+  // Snapping baseA coordinates (clean, snapped): [[180, 140], [380, 120], [410, 240], [210, 260]] has area of 24600 pixels.
+  const liveNominalArea = (livePixelArea / 24600) * 450;
+  const areaDelta = liveNominalArea - 450;
+  const areaDeltaPct = (areaDelta / 450) * 100;
 
   // Base coordinates for Parcel B
   const baseB = [
@@ -1879,6 +2049,65 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     </label>
                   </div>
                   
+                  {uploadedDiagnostics && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="border border-orange-500/30 bg-orange-950/10 rounded-xl p-3 space-y-2 font-mono text-[9px] relative overflow-hidden"
+                    >
+                      {/* Glow effects */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent pointer-events-none" />
+                      
+                      <div className="flex justify-between items-center border-b border-orange-500/20 pb-1.5">
+                        <span className="text-orange-400 font-bold uppercase tracking-wider">diagnóstico de capa</span>
+                        <span className={`px-1.5 py-0.5 rounded text-[7px] font-bold ${
+                          uploadedDiagnostics.isValid 
+                            ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400" 
+                            : "bg-red-500/10 border border-red-500/30 text-red-400 animate-pulse"
+                        }`}>
+                          {uploadedDiagnostics.isValid ? "SANO ✅" : "CON ANOMALÍAS ⚠️"}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-slate-300">
+                        <div>
+                          <span className="text-slate-550 block text-[8px] uppercase">Vértices</span>
+                          <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.vertices}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-550 block text-[8px] uppercase">Polígonos</span>
+                          <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.polygons}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-550 block text-[8px] uppercase">Lazo Cerrado</span>
+                          <span className={`font-bold text-[10px] ${uploadedDiagnostics.isClosed ? "text-emerald-400" : "text-red-400"}`}>
+                            {uploadedDiagnostics.isClosed ? "SÍ" : "NO"}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-slate-550 block text-[8px] uppercase">Área Calculada</span>
+                          <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.areaSumSqM.toLocaleString('es-CO')} m²</span>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 pt-1">
+                        <button
+                          onClick={handleFocusLayer}
+                          className="flex-1 py-1.5 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/40 rounded-lg text-orange-400 font-bold uppercase hover:scale-[1.01] active:scale-[0.98] transition-all cursor-pointer text-center"
+                        >
+                          🔍 Enfocar Capa
+                        </button>
+                        <button
+                          onClick={handleDismountLayer}
+                          className="flex-1 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/40 rounded-lg text-red-400 font-bold uppercase hover:scale-[1.01] active:scale-[0.98] transition-all cursor-pointer text-center"
+                        >
+                          🗑️ Desmontar Capa
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                  
                   {/* Telemetry Log */}
                   <div className="bg-black/60 rounded-xl p-3 font-mono text-[9px] h-28 overflow-hidden border border-slate-800/50 relative" style={{ boxShadow: 'inset 0 1px 0 rgba(0,229,255,0.1)' }}>
                     <div className="absolute top-0 left-0 w-full px-3 py-1.5 bg-black/60 border-b border-slate-800 flex justify-between items-center backdrop-blur-sm">
@@ -2272,13 +2501,69 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-[9px] font-mono">
                           <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
-                            <span className="text-slate-500 block">Área Física</span>
-                            <span className="text-white font-bold">{parcelAStatus === "CLEAN" ? "450 m²" : "512 m²"}</span>
+                            <span className="text-slate-500 block">Área Física (Live)</span>
+                            <span className="text-white font-bold">{liveNominalArea.toFixed(1)} m²</span>
                           </div>
                           <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
-                            <span className="text-slate-500 block">Avalúo COP</span>
-                            <span className="text-emerald-400 font-bold">{parcelAStatus === "CLEAN" ? "$480M" : "$540M"}</span>
+                            <span className="text-slate-500 block">Desviación Delta</span>
+                            <span className={`font-bold ${Math.abs(areaDelta) < 0.1 ? 'text-emerald-400' : 'text-rose-450'}`}>
+                              {areaDelta >= 0 ? "+" : ""}{areaDelta.toFixed(1)} m² ({areaDeltaPct >= 0 ? "+" : ""}{areaDeltaPct.toFixed(1)}%)
+                            </span>
                           </div>
+                        </div>
+
+                        {/* Sandbox de Vértices */}
+                        <div className="p-2.5 bg-black/60 border border-slate-850 rounded-xl space-y-2 text-[9px] font-mono">
+                          <span className="text-cyan-400 font-bold block">Sandbox: Desplazar Vértice P4</span>
+                          
+                          <div className="space-y-1">
+                            <div className="flex justify-between text-slate-400">
+                              <span>Eje X (Horizontal):</span>
+                              <span className="text-white">{offsetX}px</span>
+                            </div>
+                            <input 
+                              type="range" 
+                              min="-50" 
+                              max="50" 
+                              value={offsetX} 
+                              onChange={(e) => {
+                                const val = Number(e.target.value);
+                                setOffsetX(val);
+                                addLedgerEntry("VERTEX_MOVE", `Vértice P4 desplazado en X a ${val}px. Delta: ${areaDelta.toFixed(1)}m²`);
+                              }}
+                              className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="flex justify-between text-slate-400">
+                              <span>Eje Y (Vertical):</span>
+                              <span className="text-white">{offsetY}px</span>
+                            </div>
+                            <input 
+                              type="range" 
+                              min="-50" 
+                              max="50" 
+                              value={offsetY} 
+                              onChange={(e) => {
+                                const val = Number(e.target.value);
+                                setOffsetY(val);
+                                addLedgerEntry("VERTEX_MOVE", `Vértice P4 desplazado en Y a ${val}px. Delta: ${areaDelta.toFixed(1)}m²`);
+                              }}
+                              className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                            />
+                          </div>
+
+                          <button 
+                            onClick={() => {
+                              setOffsetX(0);
+                              setOffsetY(0);
+                              addLedgerEntry("VERTEX_RESET", "Desplazamiento manual restablecido a origen catastral.");
+                            }}
+                            className="w-full mt-1.5 py-1 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg hover:text-white transition-colors uppercase tracking-wider text-[8px]"
+                          >
+                            Restablecer Sandbox
+                          </button>
                         </div>
 
                         {parcelAStatus === "CLEAN" ? (
@@ -2301,6 +2586,22 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                             </button>
                           </div>
                         )}
+
+                        {/* Audit Ledger Terminal */}
+                        <div className="space-y-1.5 border-t border-slate-850 pt-2.5">
+                          <span className="text-[8px] font-mono text-slate-400 font-bold uppercase tracking-wider block">
+                            Bitácora Catastral:
+                          </span>
+                          <div className="h-20 overflow-y-auto bg-black/80 border border-slate-900 rounded-lg p-2 font-mono text-[7.5px] leading-tight space-y-1 scrollbar-thin scrollbar-thumb-cyan-500/25">
+                            {activeLedger.map((entry, idx) => (
+                              <div key={idx} className="flex gap-1.5 text-slate-400">
+                                <span className="text-cyan-500/70 shrink-0 font-bold">[{entry.time}]</span>
+                                <span className="text-amber-500 font-bold uppercase shrink-0">{entry.action}:</span>
+                                <span className="text-slate-350 break-words">{entry.message}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     ) : selectedParcel === "PREDIO_002" ? (
                       <div className="space-y-3">

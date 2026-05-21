@@ -32,6 +32,12 @@ export default function AdminPage() {
   const [storageType, setStorageType] = useState("Retrieving...");
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
+  // AI Response Draft States
+  const [aiDraftMsg, setAiDraftMsg] = useState(null);
+  const [aiDraftText, setAiDraftText] = useState("");
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Load passcode from local storage on mount to preserve session
   useEffect(() => {
     const savedPasscode = localStorage.getItem("dgz_admin_passcode");
@@ -164,6 +170,88 @@ export default function AdminPage() {
 
   const handleRefresh = () => {
     verifyAndFetch(passcode);
+  };
+
+  // CSV Exporter for Tabulated Catastral Dataset
+  const handleExportCSV = () => {
+    if (filteredMessages.length === 0) {
+      showToast("No hay registros para exportar.", "error");
+      return;
+    }
+
+    const headers = ["ID", "Fecha", "Remitente", "Email", "Compania", "Sector", "Mensaje"];
+    const rows = filteredMessages.map(msg => [
+      msg.id || "",
+      msg.timestamp ? new Date(msg.timestamp).toISOString() : "",
+      `"${(msg.name || "").replace(/"/g, '""')}"`,
+      `"${(msg.email || "").replace(/"/g, '""')}"`,
+      `"${(msg.company || "").replace(/"/g, '""')}"`,
+      getSector(msg),
+      `"${(msg.message || "").replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    // Add UTF-8 BOM for perfect Excel compatibility with Spanish characters
+    const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `devgiz_catastro_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Dataset CSV descargado con éxito.", "success");
+  };
+
+  // AI Response Draft Generation using Groq Llama-3.3
+  const handleGenerateAIDraft = async (msg) => {
+    setAiDraftMsg(msg);
+    setAiDraftText("");
+    setIsGeneratingAI(true);
+    setIsModalOpen(true);
+
+    try {
+      const sector = getSector(msg);
+      const promptText = `Genera una plantilla de correo electrónico formal de respuesta para ${msg.name} de ${msg.company === "N/A" || !msg.company ? "su consulta individual" : msg.company} (Sector: ${sector}), respondiendo a su mensaje catastral: "${msg.message}". Firma profesionalmente como el Equipo de Ingeniería de DevGiz Engineering, ofreciendo una sesión técnica de demostración de linderos y catastro multipropósito LADM-COL v3.0. Mantén un tono corporativo premium y técnico en español.`;
+
+      const res = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          prompt: promptText,
+          context: {
+            name: msg.name,
+            email: msg.email,
+            company: msg.company,
+            sector: sector,
+            message: msg.message
+          }
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setAiDraftText(data.text);
+      } else {
+        setAiDraftText(`[ERROR] No se pudo generar la respuesta inteligente: ${data.error || "Error de respuesta del servidor de IA."}`);
+      }
+    } catch (err) {
+      setAiDraftText(`[ERROR] Fallo de red al conectar con el motor Groq Llama-3.3: ${err.message}`);
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  const handleCopyDraft = () => {
+    if (!aiDraftText) return;
+    navigator.clipboard.writeText(aiDraftText);
+    showToast("Borrador copiado al portapapeles con éxito.", "success");
   };
 
   // Helper to categorize sector by email domain or company name
@@ -421,6 +509,186 @@ export default function AdminPage() {
             </div>
           </div>
 
+          {/* Neon SVG Allocation Charts Grid */}
+          {totalCount > 0 && (() => {
+            const publicCount = totalCount - govCount - corpCount;
+            const govPct = govCount / totalCount;
+            const corpPct = corpCount / totalCount;
+            const publicPct = publicCount / totalCount;
+
+            const r = 36;
+            const circ = 2 * Math.PI * r;
+            const govStrokeDash = govPct * circ;
+            const corpStrokeDash = corpPct * circ;
+            const publicStrokeDash = publicPct * circ;
+
+            const govStrokeOffset = 0;
+            const corpStrokeOffset = -govStrokeDash;
+            const publicStrokeOffset = -(govStrokeDash + corpStrokeDash);
+
+            return (
+              <div className="p-6 bg-slate-900/30 border border-slate-850 rounded-[2rem] shadow-2xl relative grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+                
+                {/* Donut Chart - 4 cols */}
+                <div className="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-800/80 pb-6 md:pb-0 pr-0 md:pr-6">
+                  <div className="relative w-40 h-40 flex items-center justify-center">
+                    <svg width="140" height="140" viewBox="0 0 100 100" className="drop-shadow-[0_0_12px_rgba(34,211,238,0.15)]">
+                      {/* Background track */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r={r}
+                        fill="transparent"
+                        stroke="#0f172a"
+                        strokeWidth="8"
+                      />
+                      {/* Gobierno (Amber) */}
+                      {govStrokeDash > 0 && (
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r={r}
+                          fill="transparent"
+                          stroke="#f59e0b"
+                          strokeWidth="8"
+                          strokeDasharray={`${govStrokeDash} ${circ}`}
+                          strokeDashoffset={govStrokeOffset}
+                          strokeLinecap="round"
+                          className="transition-all duration-1000 ease-out"
+                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+                        />
+                      )}
+                      {/* Corporación (Emerald) */}
+                      {corpStrokeDash > 0 && (
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r={r}
+                          fill="transparent"
+                          stroke="#10b981"
+                          strokeWidth="8"
+                          strokeDasharray={`${corpStrokeDash} ${circ}`}
+                          strokeDashoffset={corpStrokeOffset}
+                          strokeLinecap="round"
+                          className="transition-all duration-1000 ease-out"
+                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+                        />
+                      )}
+                      {/* Público (Cyan) */}
+                      {publicStrokeDash > 0 && (
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r={r}
+                          fill="transparent"
+                          stroke="#22d3ee"
+                          strokeWidth="8"
+                          strokeDasharray={`${publicStrokeDash} ${circ}`}
+                          strokeDashoffset={publicStrokeOffset}
+                          strokeLinecap="round"
+                          className="transition-all duration-1000 ease-out"
+                          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+                        />
+                      )}
+                    </svg>
+                    {/* Text inside donut */}
+                    <div className="absolute text-center space-y-0.5">
+                      <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block font-black">Muestras</span>
+                      <span className="text-xl font-black font-mono text-white tracking-tighter block">{totalCount}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bar Chart & Legends - 8 cols */}
+                <div className="md:col-span-8 space-y-5">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center text-[9px] font-mono font-bold tracking-wider text-slate-400 uppercase">
+                      <span>Distribución de Carga Catastral</span>
+                      <span className="text-cyan-400 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                        TELEMETRÍA DIGITAL DE SECTORES
+                      </span>
+                    </div>
+                    
+                    {/* Stacked Bar Meter */}
+                    <div className="h-4 rounded-full overflow-hidden shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] border border-slate-800 flex">
+                      {/* Gobierno */}
+                      {govPct > 0 && (
+                        <div 
+                          className="h-full bg-gradient-to-r from-amber-600 to-amber-400 relative group transition-all duration-1000 ease-out"
+                          style={{ width: `${govPct * 100}%` }}
+                          title={`Gobierno: ${Math.round(govPct * 100)}%`}
+                        >
+                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      )}
+                      {/* Corporación */}
+                      {corpPct > 0 && (
+                        <div 
+                          className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 relative group transition-all duration-1000 ease-out"
+                          style={{ width: `${corpPct * 100}%` }}
+                          title={`Corporativo: ${Math.round(corpPct * 100)}%`}
+                        >
+                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      )}
+                      {/* Público */}
+                      {publicPct > 0 && (
+                        <div 
+                          className="h-full bg-gradient-to-r from-cyan-600 to-cyan-400 relative group transition-all duration-1000 ease-out"
+                          style={{ width: `${publicPct * 100}%` }}
+                          title={`Público: ${Math.round(publicPct * 100)}%`}
+                        >
+                          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Elegant legend with glowing indicators and stats */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {/* Gov */}
+                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-amber-500/30 transition-all group">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b] group-hover:animate-ping" />
+                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">GOBIERNO</span>
+                      </div>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-black font-mono text-white">{govCount}</span>
+                        <span className="text-[8px] font-mono text-amber-400 font-bold">({Math.round(govPct * 100)}%)</span>
+                      </div>
+                    </div>
+
+                    {/* Corp */}
+                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-emerald-500/30 transition-all group">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] group-hover:animate-ping" />
+                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">CORPORATIVO</span>
+                      </div>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-black font-mono text-white">{corpCount}</span>
+                        <span className="text-[8px] font-mono text-emerald-400 font-bold">({Math.round(corpPct * 100)}%)</span>
+                      </div>
+                    </div>
+
+                    {/* Public */}
+                    <div className="p-2.5 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1 hover:border-cyan-500/30 transition-all group">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#22d3ee] group-hover:animate-ping" />
+                        <span className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-wider">PÚBLICO</span>
+                      </div>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-black font-mono text-white">{publicCount}</span>
+                        <span className="text-[8px] font-mono text-cyan-400 font-bold">({Math.round(publicPct * 100)}%)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* Filtering and Search Controls */}
           <div className="p-4 bg-slate-900/30 border border-slate-850 rounded-2xl flex flex-wrap items-center justify-between gap-4 shadow-lg">
             <div className="flex items-center gap-2 bg-black/40 px-3.5 py-1.5 rounded-xl border border-slate-800 w-full sm:max-w-md">
@@ -461,6 +729,15 @@ export default function AdminPage() {
                   PÚBLICO
                 </button>
               </div>
+
+              {filteredMessages.length > 0 && (
+                <button
+                  onClick={handleExportCSV}
+                  className="px-3.5 py-2 bg-cyan-950/30 hover:bg-cyan-500/20 border border-cyan-500/40 hover:border-cyan-500 rounded-xl text-cyan-400 hover:text-white font-mono font-bold text-[8px] tracking-wider uppercase transition-all cursor-pointer shadow-[0_0_12px_rgba(6,182,212,0.1)] hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] flex items-center gap-1.5"
+                >
+                  ⚡ EXPORTAR DATASET ({filteredMessages.length})
+                </button>
+              )}
 
               {messages.length > 0 && (
                 <button
@@ -557,13 +834,24 @@ export default function AdminPage() {
 
                         {/* Row Actions */}
                         <td className="p-4 text-center">
-                          <button
-                            onClick={() => handleDeleteMessage(msg.id)}
-                            className="p-2 bg-slate-950 border border-slate-850 rounded-xl text-slate-500 hover:text-red-400 hover:border-red-500/30 transition-all cursor-pointer hover:shadow-[0_0_12px_rgba(239,68,68,0.2)]"
-                            title="Resolver e Inactivar"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                          <div className="flex items-center justify-center gap-2">
+                            <button
+                              onClick={() => handleGenerateAIDraft(msg)}
+                              className="p-2 bg-slate-950 border border-slate-850 rounded-xl text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all cursor-pointer hover:shadow-[0_0_12px_rgba(6,182,212,0.2)] flex items-center justify-center gap-1 font-mono text-[9px]"
+                              title="Redactar Respuesta Formal con IA"
+                            >
+                              <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                              <span className="hidden group-hover/row:inline">IA</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleDeleteMessage(msg.id)}
+                              className="p-2 bg-slate-950 border border-slate-850 rounded-xl text-slate-500 hover:text-red-400 hover:border-red-500/30 transition-all cursor-pointer hover:shadow-[0_0_12px_rgba(239,68,68,0.2)]"
+                              title="Resolver e Inactivar"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -596,6 +884,85 @@ export default function AdminPage() {
               </div>
             )}
           </div>
+
+          {/* Premium Glassmorphic AI Response Modal Overlay */}
+          {isModalOpen && aiDraftMsg && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-500/[0.02] to-transparent pointer-events-none" />
+              <div className="border border-slate-800/60 bg-slate-950/95 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] max-w-2xl w-full rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group">
+                {/* Glowing border indicator */}
+                <div className="absolute top-0 left-[15%] right-[15%] h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+                
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-cyan-950/40 border border-cyan-500/30 rounded-2xl flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+                      <Cpu className="w-5 h-5 animate-spin" style={{ animationDuration: '4s' }} />
+                    </div>
+                    <div>
+                      <h2 className="text-sm font-black font-mono uppercase tracking-widest text-white">Redactor Táctico Geo-IA</h2>
+                      <p className="text-[8px] font-mono text-slate-400 uppercase tracking-wider">
+                        Borrador Inteligente // Llama-3.3-70b-versatile
+                      </p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setIsModalOpen(false)}
+                    className="p-1 text-slate-500 hover:text-white hover:bg-slate-900 border border-transparent hover:border-slate-800 rounded-lg transition-all text-xs font-mono font-bold cursor-pointer"
+                  >
+                    ESC ✕
+                  </button>
+                </div>
+
+                <div className="border-t border-slate-850 my-1" />
+
+                {/* Context Metadata */}
+                <div className="p-3 bg-slate-900/30 border border-slate-850 rounded-2xl space-y-1 text-[9px] font-mono text-slate-400">
+                  <div><span className="text-slate-500">REMITENTE:</span> <strong className="text-white">{aiDraftMsg.name}</strong> ({aiDraftMsg.email})</div>
+                  <div><span className="text-slate-500">COMPAÑÍA:</span> <strong className="text-white">{aiDraftMsg.company === "N/A" || !aiDraftMsg.company ? "Persona Natural" : aiDraftMsg.company}</strong></div>
+                  <div className="truncate"><span className="text-slate-500">SOLICITUD:</span> &quot;{aiDraftMsg.message}&quot;</div>
+                </div>
+
+                {/* Output Panel */}
+                <div className="relative">
+                  {isGeneratingAI ? (
+                    <div className="h-60 bg-black/60 border border-slate-850 rounded-2xl flex flex-col items-center justify-center space-y-4">
+                      <div className="relative w-10 h-10 flex items-center justify-center">
+                        <span className="absolute w-full h-full rounded-full border-2 border-cyan-500/20 border-t-cyan-500 animate-spin" />
+                        <Cpu className="w-4 h-4 text-cyan-400 animate-pulse" />
+                      </div>
+                      <span className="text-[9px] font-mono text-cyan-400 font-bold uppercase tracking-widest animate-pulse">
+                        GENERANDO ESTRATEGIA DE RESPUESTA...
+                      </span>
+                    </div>
+                  ) : (
+                    <textarea
+                      readOnly
+                      value={aiDraftText}
+                      className="w-full h-60 px-4 py-3 bg-black/60 border border-slate-850 rounded-2xl font-mono text-[10px] leading-relaxed text-slate-300 focus:outline-none focus:border-cyan-500/50 transition-all custom-scrollbar resize-none select-text"
+                    />
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end gap-3 font-mono text-[9px] font-bold uppercase">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white rounded-xl transition-all cursor-pointer"
+                  >
+                    CERRAR
+                  </button>
+                  <button
+                    onClick={handleCopyDraft}
+                    disabled={isGeneratingAI || !aiDraftText}
+                    className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] text-white rounded-xl transition-all hover:brightness-110 cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                  >
+                    📋 COPIAR AL PORTAPAPELES
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
