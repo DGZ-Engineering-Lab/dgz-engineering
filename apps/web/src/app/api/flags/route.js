@@ -12,8 +12,18 @@ export async function GET() {
     };
 
     try {
-      const edgeFlags = await get("devgiz_flags");
-      if (edgeFlags) flags = { ...flags, ...edgeFlags };
+      // Support both the user's existing Vercel Edge Config 'features' field and the template fields
+      const features = await get("features");
+      if (features) {
+        flags = {
+          premium_viewer: !!features.gis_viewer_premium,
+          experimental_gestures: true,
+          ai_audit_mode: !!features.ai_analysis_node
+        };
+      } else {
+        const edgeFlags = await get("devgiz_flags");
+        if (edgeFlags) flags = { ...flags, ...edgeFlags };
+      }
     } catch (e) {
       // Fallback
     }
