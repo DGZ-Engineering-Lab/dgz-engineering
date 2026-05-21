@@ -824,14 +824,24 @@ LIMIT 5;`,
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
+  // Estados del Modo en Vivo con Groq
+  const [isLiveMode, setIsLiveMode] = useState(false);
+  const [customQuery, setCustomQuery] = useState("");
+  const [liveResponse, setLiveResponse] = useState(null);
+  const [isSearchingLive, setIsSearchingLive] = useState(false);
+  const [liveLogs, setLiveLogs] = useState([]);
+  const [liveError, setLiveError] = useState(null);
+
   const selectQuery = (index) => {
+    setIsLiveMode(false);
+    setLiveResponse(null);
     setActiveQueryIndex(index);
     setTypedText("");
     setIsTyping(true);
   };
 
   useEffect(() => {
-    if (activeQueryIndex === null) return;
+    if (activeQueryIndex === null || isLiveMode) return;
     const fullText = queries[activeQueryIndex].answer;
     let i = 0;
     const interval = setInterval(() => {
@@ -843,55 +853,293 @@ LIMIT 5;`,
       }
     }, 15);
     return () => clearInterval(interval);
-  }, [activeQueryIndex, queries]);
+  }, [activeQueryIndex, queries, isLiveMode]);
+
+  // Simulador de logs de telemetría táctica
+  const simulateLogs = () => {
+    setLiveLogs([]);
+    const logsList = [
+      "📡 Conectando al nodo seguro de Groq en el Edge...",
+      "🔑 Validando credenciales y headers de DGZ Engineering...",
+      "🤖 Enrutando petición a Llama-3.3-70b-versatile...",
+      "🧭 Analizando el diccionario territorial y capas del catastro...",
+      "📊 Compilando sentencias SQL espacial avanzadas (PostGIS)...",
+      "📝 Estructurando respuesta semántica en español..."
+    ];
+    let currentLogIndex = 0;
+    const logInterval = setInterval(() => {
+      if (currentLogIndex < logsList.length) {
+        setLiveLogs(prev => [...prev, logsList[currentLogIndex]]);
+        currentLogIndex++;
+      } else {
+        clearInterval(logInterval);
+      }
+    }, 380);
+    return logInterval;
+  };
+
+  // Función principal para enviar consultas en vivo a /api/ai
+  const handleLiveQuery = async (queryText) => {
+    if (!queryText.trim()) return;
+    setIsLiveMode(true);
+    setIsSearchingLive(true);
+    setLiveError(null);
+    setLiveResponse(null);
+
+    const logInterval = simulateLogs();
+    const startTime = performance.now();
+
+    try {
+      const res = await fetch("/api/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: queryText,
+          context: {
+            project: "geo-llm",
+            clientLocation: "Colombia"
+          }
+        })
+      });
+
+      if (!res.ok) {
+        if (res.status === 429) {
+          throw new Error("Límite de peticiones de análisis espacial excedido. Por favor, espera un momento antes de volver a consultar.");
+        }
+        throw new Error(`Error en el servidor de IA (Código ${res.status}). Verifica tus variables de entorno.`);
+      }
+
+      const data = await res.json();
+      const endTime = performance.now();
+      const latency = ((endTime - startTime) / 1000).toFixed(2);
+
+      clearInterval(logInterval);
+      setLiveLogs(prev => [
+        ...prev,
+        "✅ Inferencia completada con éxito.",
+        `⏱️ Latencia del servicio de Groq: ${latency}s`
+      ]);
+
+      setLiveResponse({
+        text: data.text,
+        model: data.model || "llama-3.3-70b-versatile",
+        simulated: !!data.simulated,
+        latency: latency,
+        tokens: Math.round(queryText.length * 0.45 + data.text.length * 0.35)
+      });
+    } catch (err) {
+      clearInterval(logInterval);
+      setLiveError(err.message);
+    } finally {
+      setIsSearchingLive(false);
+    }
+  };
+
+  // Renderizador robusto de markdown básico (bloques de código SQL)
+  const renderLiveResponseContent = (text) => {
+    if (!text) return null;
+    const parts = text.split("```");
+    return parts.map((part, index) => {
+      if (index % 2 === 1) {
+        const lines = part.split("\n");
+        let language = "sql";
+        let code = part;
+        if (lines[0] === "sql" || lines[0] === "javascript" || lines[0] === "json" || lines[0] === "bash") {
+          language = lines[0];
+          code = lines.slice(1).join("\n");
+        }
+        return (
+          <div key={index} className="my-3 space-y-1.5">
+            <div className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
+            <div className="bg-[#030712] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[9px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
+              {code.trim()}
+            </div>
+          </div>
+        );
+      }
+      return (
+        <p key={index} className="text-[10px] text-slate-300 leading-relaxed font-light whitespace-pre-line my-2">
+          {part}
+        </p>
+      );
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-slate-950 p-6 rounded-xl border border-slate-800 text-slate-200">
-      <div className="md:col-span-5 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            Preguntas Geoespaciales
-          </h4>
-          <span className="text-[8px] font-mono text-slate-500">Geo-LLM Core v2</span>
+      {/* Columna Izquierda: Presets y Entrada Personalizada */}
+      <div className="md:col-span-5 flex flex-col justify-between gap-4">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h4 className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              Preguntas Geoespaciales
+            </h4>
+            <span className="text-[8px] font-mono text-slate-500">Geo-LLM Core v2</span>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            {queries.map((q, i) => (
+              <button
+                key={i}
+                onClick={() => selectQuery(i)}
+                disabled={isTyping || isSearchingLive}
+                className={`text-left p-3 text-[10px] font-bold rounded-lg border leading-tight transition-all active:scale-95 cursor-pointer ${
+                  !isLiveMode && activeQueryIndex === i
+                    ? "bg-cyan-500/10 border-cyan-500/80 text-cyan-400"
+                    : "bg-slate-900 border-slate-800/60 text-slate-300 hover:border-slate-700"
+                }`}
+              >
+                {q.q}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          {queries.map((q, i) => (
+
+        {/* Campo de Consulta Personalizada (Llama 3.3) */}
+        <div className="border-t border-slate-900 pt-4">
+          <label className="text-[9px] font-mono text-slate-400 block mb-2 flex items-center gap-1.5 uppercase tracking-wider">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            Consola Libre (Llama 3.3)
+          </label>
+          <div className="relative">
+            <textarea
+              value={customQuery}
+              onChange={(e) => setCustomQuery(e.target.value)}
+              placeholder="Haz una pregunta catastral o de SQL espacial libre..."
+              disabled={isSearchingLive || isTyping}
+              className="w-full bg-[#030712] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
+            />
             <button
-              key={i}
-              onClick={() => selectQuery(i)}
-              disabled={isTyping}
-              className={`text-left p-3.5 text-[10px] font-bold rounded-lg border leading-tight transition-all active:scale-95 cursor-pointer ${
-                activeQueryIndex === i
-                  ? "bg-cyan-500/10 border-cyan-500/80 text-cyan-400"
-                  : "bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700"
-              }`}
+              onClick={() => handleLiveQuery(customQuery)}
+              disabled={isSearchingLive || isTyping || !customQuery.trim()}
+              className="absolute right-2.5 bottom-3.5 p-1.5 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-30 disabled:hover:bg-cyan-500 flex items-center justify-center cursor-pointer shadow-lg shadow-cyan-500/10"
+              title="Preguntar a Llama 3.3"
             >
-              {q.q}
+              <Send className="w-3 h-3" />
             </button>
-          ))}
+          </div>
         </div>
       </div>
 
-      <div className="md:col-span-7 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6 min-h-[300px]">
-        {activeQueryIndex === null ? (
+      {/* Columna Derecha: Consola de Diagnóstico / Respuestas */}
+      <div className="md:col-span-7 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6 min-h-[340px]">
+        {/* Caso A: Cargando Inferencia con Telemetría Animada */}
+        {isSearchingLive ? (
+          <div className="flex-1 flex flex-col justify-center space-y-4 py-4">
+            <div className="flex items-center gap-3">
+              <div className="w-4 h-4 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin shrink-0" />
+              <div className="text-[10px] font-mono font-bold text-cyan-400 tracking-wider uppercase animate-pulse">
+                Ejecutando Inferencia en Vivo
+              </div>
+            </div>
+            <div className="bg-[#030712] border border-slate-900 rounded-lg p-4 font-mono text-[9px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
+              {liveLogs.map((log, index) => (
+                <div key={index} className="flex items-center gap-1.5">
+                  <span className="text-[7px] text-slate-600">[{index * 0.4}s]</span>
+                  <span>{log}</span>
+                </div>
+              ))}
+              <div className="inline-block w-1 h-3 bg-cyan-400 animate-pulse ml-1" />
+            </div>
+          </div>
+        ) : isLiveMode ? (
+          /* Caso B: Modo en Vivo (Con Respuesta o Error) */
+          <div className="flex-1 flex flex-col justify-between space-y-4">
+            {liveError ? (
+              <div className="flex-1 flex flex-col justify-center items-center text-center p-6 space-y-3 bg-rose-500/5 border border-rose-500/10 rounded-xl">
+                <AlertTriangle className="w-8 h-8 text-rose-500 animate-bounce" />
+                <div className="text-[11px] font-bold text-rose-400 font-mono uppercase">Error de Conexión</div>
+                <p className="text-[10px] text-slate-400 max-w-[280px] leading-relaxed">
+                  {liveError}
+                </p>
+                <button
+                  onClick={() => handleLiveQuery(customQuery || queries[activeQueryIndex]?.q)}
+                  className="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/25 rounded-md text-[9px] font-mono text-rose-400 cursor-pointer transition-all"
+                >
+                  Reintentar Operación
+                </button>
+              </div>
+            ) : liveResponse ? (
+              <div className="flex-1 flex flex-col justify-between space-y-4">
+                {/* Badge de Diagnóstico según estado real de API */}
+                {liveResponse.simulated ? (
+                  <div className="bg-amber-500/5 border border-amber-500/20 text-amber-400 rounded-lg p-3 text-[9px] flex items-start gap-2.5 shadow-md">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold uppercase tracking-wide">Modo Simulación Activo</div>
+                      <div className="text-[8.5px] text-amber-400/70 leading-normal mt-0.5">
+                        GROQ_API_KEY no detectada en la variable local. Mostrando respuesta inteligente simulada.
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 rounded-lg p-3 text-[9px] flex items-start gap-2.5 shadow-md shadow-emerald-950/20">
+                    <Zap className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
+                    <div>
+                      <div className="font-bold uppercase tracking-wide flex items-center gap-1.5">
+                        Llama 3.3 Conectado
+                        <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
+                      </div>
+                      <div className="text-[8.5px] text-emerald-400/70 leading-normal mt-0.5">
+                        Inferencia espacial real ejecutada con éxito en el clúster de cómputo ultraveloz de Groq.
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
+                    <Terminal className="w-3.5 h-3.5" />
+                    RESPUESTA GEO-AI EN VIVO
+                  </div>
+                  <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-900 max-h-[220px] overflow-y-auto custom-scrollbar">
+                    {renderLiveResponseContent(liveResponse.text)}
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-900 text-[8px] font-mono text-slate-500 flex items-center justify-between">
+                  <span className="flex items-center gap-1">
+                    <Cpu className="w-2.5 h-2.5 text-slate-600" />
+                    Modelo: {liveResponse.model}
+                  </span>
+                  <span>Latencia: {liveResponse.latency}s</span>
+                  <span>Tokens: ~{liveResponse.tokens}</span>
+                </div>
+              </div>
+            ) : null}
+
+            <button
+              onClick={() => {
+                setIsLiveMode(false);
+                setLiveResponse(null);
+                setLiveError(null);
+              }}
+              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
+            >
+              ← Volver al Centro de Demostración
+            </button>
+          </div>
+        ) : activeQueryIndex === null ? (
+          /* Caso C: Estado Inicial Sin Pregunta Seleccionada */
           <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4">
-            <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">
-              ?
+            <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 text-xs font-mono shadow-inner">
+              GEO
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400">Geo-LLM Intelligence Lab</div>
+              <div className="text-xs font-bold text-slate-400 tracking-wide">Geo-LLM Intelligence Lab</div>
               <div className="text-[10px] text-slate-500 leading-normal max-w-[220px] mx-auto mt-1">
-                Seleccione una pregunta para ver la interpretación semántica y la generación de Spatial SQL.
+                Selecciona una pregunta de demostración catastral o redacta una libre en la consola para ver el análisis de Spatial SQL.
               </div>
             </div>
           </div>
         ) : (
+          /* Caso D: Vista de Presets Estáticos (Con Opción de Inferencia en Vivo) */
           <div className="flex-1 flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
                 <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
-                GEO-LLM AGENT RESPONSE
+                DEMO PRE-RENDERIZADA
               </div>
               <p className="text-[10px] text-slate-300 leading-relaxed font-light">
                 {typedText}
@@ -911,12 +1159,24 @@ LIMIT 5;`,
 
                 <div className="grid grid-cols-3 gap-2 border-t border-slate-900 pt-2.5">
                   {Object.entries(queries[activeQueryIndex].metrics).map(([key, val]) => (
-                    <div key={key} className="bg-slate-900/60 p-2 rounded border border-slate-900 text-center">
-                      <div className="text-[7px] text-slate-500 uppercase tracking-widest">{key}</div>
-                      <div className="text-[10px] font-bold text-white mt-0.5">{val}</div>
+                    <div key={key} className="bg-slate-900/60 p-2 rounded border border-slate-900 text-center shadow-inner">
+                      <div className="text-[7px] text-slate-500 uppercase tracking-widest leading-none">{key}</div>
+                      <div className="text-[10px] font-bold text-white mt-1 leading-none">{val}</div>
                     </div>
                   ))}
                 </div>
+
+                {/* Botón táctico para re-ejecutar en vivo contra Groq */}
+                <button
+                  onClick={() => {
+                    setCustomQuery(queries[activeQueryIndex].q);
+                    handleLiveQuery(queries[activeQueryIndex].q);
+                  }}
+                  className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded-lg py-2 text-[9px] font-mono text-cyan-400 hover:text-cyan-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Zap className="w-3.5 h-3.5 text-cyan-400" />
+                  Ejecutar Análisis en Vivo con Groq Llama-3.3
+                </button>
               </motion.div>
             )}
 
@@ -929,6 +1189,7 @@ LIMIT 5;`,
       </div>
     </div>
   );
+
 }
 
 function ProjectLabComponent({ labType }) {
