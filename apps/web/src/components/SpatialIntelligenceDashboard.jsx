@@ -330,11 +330,16 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
     setSnappedVertex(false);
     addLog("MCP_HEALER: Invocando auto-sanación en caliente...", "info");
     
+    const finalGeometry = geometry && typeof geometry === 'object' && geometry.type ? geometry : {
+      type: "Polygon",
+      coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+    };
+    
     try {
       const res = await fetch(`${GEOAPI_URL}/api/v1/heal-topology`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(geometry)
+        body: JSON.stringify(finalGeometry)
       });
       const data = await res.json();
       
@@ -448,7 +453,13 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       risk_assessment: "Bajo",
       stack_used: `DuckDB Hive: ${item.departamento}`,
       category: item.category,
-      codigo: item.codigo
+      codigo: item.codigo,
+      geometry: {
+        type: "Polygon",
+        coordinates: item.departamento === "Antioquia"
+          ? [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+          : [[[-74.0592, 4.6486], [-74.0602, 4.6486], [-74.0602, 4.6496], [-74.0592, 4.6496], [-74.0592, 4.6486]]]
+      }
     });
     
     if (map.current) {
@@ -702,7 +713,11 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       score: 100.0,
       impact_radius_m: 450,
       risk_assessment: "Bajo",
-      stack_used: "Polars + DuckDB + PostGIS (Sovereign)"
+      stack_used: "Polars + DuckDB + PostGIS (Sovereign)",
+      geometry: {
+        type: "Polygon",
+        coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+      }
     });
 
     if (map.current) {
@@ -1201,7 +1216,11 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                                             risk_assessment: "ALTO (No SNR)",
                                             stack_used: "Polars join core",
                                             category: "ANOMALÍA_FISICA",
-                                            codigo: x.codigo || "050011100000000030006"
+                                            codigo: x.codigo || "050011100000000030006",
+                                            geometry: {
+                                              type: "Polygon",
+                                              coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+                                            }
                                           });
                                           setParcelAStatus("DIRTY");
                                           setSnappedVertex(false);
@@ -1290,7 +1309,11 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                                               risk_assessment: `DESFASE CRÍTICO (${x.diferencia_pct}%)`,
                                               stack_used: "Polars Core join",
                                               category: "DESFASE_AREA",
-                                              codigo: x.codigo || "050011100000000030006"
+                                              codigo: x.codigo || "050011100000000030006",
+                                              geometry: {
+                                                type: "Polygon",
+                                                coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
+                                              }
                                             });
                                             setParcelAStatus("DIRTY");
                                             setSnappedVertex(false);
