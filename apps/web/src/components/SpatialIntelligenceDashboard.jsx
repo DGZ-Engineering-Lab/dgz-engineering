@@ -29,6 +29,16 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
 const GEOAPI_URL = process.env.NEXT_PUBLIC_GEOAPI_URL || "https://devgiz-api.onrender.com";
 
+// Local GeoJSON Fallback for "Robustness" (Medellín Parcels Mock)
+const DEMO_PARCELS = {
+  type: "FeatureCollection",
+  features: [
+    { id: 1, type: "Feature", properties: { status: "DIRTY", error: "Overlap" }, geometry: { type: "Polygon", coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]] } },
+    { id: 2, type: "Feature", properties: { status: "DIRTY", error: "Gap" }, geometry: { type: "Polygon", coordinates: [[[-75.566, 6.244], [-75.567, 6.244], [-75.567, 6.245], [-75.566, 6.245], [-75.566, 6.244]]] } },
+    { id: 3, type: "Feature", properties: { status: "CLEAN", error: "None" }, geometry: { type: "Polygon", coordinates: [[[-75.565, 6.244], [-75.566, 6.244], [-75.566, 6.245], [-75.565, 6.245], [-75.565, 6.244]]] } }
+  ]
+};
+
 export default function SpatialIntelligenceDashboard() {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -309,15 +319,7 @@ export default function SpatialIntelligenceDashboard() {
     }
   };
 
-  // Local GeoJSON Fallback for "Robustness" (Medellín Parcels Mock)
-  const DEMO_PARCELS = {
-    type: "FeatureCollection",
-    features: [
-      { id: 1, type: "Feature", properties: { status: "DIRTY", error: "Overlap" }, geometry: { type: "Polygon", coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]] } },
-      { id: 2, type: "Feature", properties: { status: "DIRTY", error: "Gap" }, geometry: { type: "Polygon", coordinates: [[[-75.566, 6.244], [-75.567, 6.244], [-75.567, 6.245], [-75.566, 6.245], [-75.566, 6.244]]] } },
-      { id: 3, type: "Feature", properties: { status: "CLEAN", error: "None" }, geometry: { type: "Polygon", coordinates: [[[-75.565, 6.244], [-75.566, 6.244], [-75.566, 6.245], [-75.565, 6.245], [-75.565, 6.244]]] } }
-    ]
-  };
+
 
   const addLog = (msg, type = "info") => {
     const time = new Date().toLocaleTimeString();
@@ -483,9 +485,16 @@ export default function SpatialIntelligenceDashboard() {
   useEffect(() => {
     if (!mapboxgl.accessToken) {
       console.warn("Mapbox Token missing. Enabling Sovereign Interactive Simulator Fallback.");
-      setIsMapboxSupported(false);
-      addLog("MAPBOX_TOKEN_MISSING: Sovereign Simulation Active", "success");
-      return;
+      let active = true;
+      Promise.resolve().then(() => {
+        if (active) {
+          setIsMapboxSupported(false);
+          addLog("MAPBOX_TOKEN_MISSING: Sovereign Simulation Active", "success");
+        }
+      });
+      return () => {
+        active = false;
+      };
     }
 
     if (map.current) return;
