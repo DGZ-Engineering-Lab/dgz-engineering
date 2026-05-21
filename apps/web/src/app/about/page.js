@@ -397,7 +397,7 @@ export default function AboutPage() {
     <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200">
       
       {/* Editorial Header */}
-      <section className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden scroll-reveal">
+      <section className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
             <motion.div 

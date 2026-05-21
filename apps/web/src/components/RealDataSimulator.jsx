@@ -48,18 +48,34 @@ export default function RealDataSimulator() {
   const sample = REAL_DATA_SAMPLES[currentIndex];
 
   useEffect(() => {
-    setIsValidating(true);
-    setLogs(["[INIT] Connecting to ICDE/IGAC Node...", `[FETCH] Pulling XTF record ${sample.id}`]);
+    let active = true;
+    Promise.resolve().then(() => {
+      if (active) {
+        setIsValidating(true);
+        setLogs(["[INIT] Connecting to ICDE/IGAC Node...", `[FETCH] Pulling XTF record ${sample.id}`]);
+      }
+    });
     
     const timers = [
-      setTimeout(() => setLogs(prev => [...prev, "[PARSING] Extracting LADM-COL packages..."]), 500),
-      setTimeout(() => setLogs(prev => [...prev, "[VALIDATION] Checking topology integrity..."]), 1000),
-      setTimeout(() => setLogs(prev => [...prev, `[SUCCESS] Spatial Unit validated: ${sample.nupre}`]), 2000),
-      setTimeout(() => setIsValidating(false), 2500)
+      setTimeout(() => {
+        if (active) setLogs(prev => [...prev, "[PARSING] Extracting LADM-COL packages..."]);
+      }, 500),
+      setTimeout(() => {
+        if (active) setLogs(prev => [...prev, "[VALIDATION] Checking topology integrity..."]);
+      }, 1000),
+      setTimeout(() => {
+        if (active) setLogs(prev => [...prev, `[SUCCESS] Spatial Unit validated: ${sample.nupre}`]);
+      }, 2000),
+      setTimeout(() => {
+        if (active) setIsValidating(false);
+      }, 2500)
     ];
 
-    return () => timers.forEach(t => clearTimeout(t));
-  }, [currentIndex]);
+    return () => {
+      active = false;
+      timers.forEach(t => clearTimeout(t));
+    };
+  }, [currentIndex, sample.id, sample.nupre]);
 
   return (
     <section className="relative w-full py-12 lg:py-16 bg-[#02040a] overflow-hidden border-y border-slate-800/30">

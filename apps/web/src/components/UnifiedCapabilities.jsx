@@ -51,7 +51,13 @@ export default function UnifiedCapabilities() {
   const terminalRef = useRef(null);
 
   useEffect(() => {
-    setMounted(true);
+    let active = true;
+    Promise.resolve().then(() => {
+      if (active) setMounted(true);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {

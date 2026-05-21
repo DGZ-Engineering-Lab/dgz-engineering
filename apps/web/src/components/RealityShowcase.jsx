@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 const ASPECTS = [
   {
@@ -48,20 +48,34 @@ export default function RealityShowcase() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  const randomOpacities = useMemo(() => {
+    return Array.from({ length: 36 }, () => Math.random() * 0.4);
+  }, []);
+
   useEffect(() => {
-    setIsProcessing(true);
-    setProgress(0);
+    let active = true;
+    Promise.resolve().then(() => {
+      if (active) {
+        setIsProcessing(true);
+        setProgress(0);
+      }
+    });
+
     const timer = setInterval(() => {
       setProgress(p => {
         if (p >= 100) {
-          setIsProcessing(false);
+          if (active) setIsProcessing(false);
           clearInterval(timer);
           return 100;
         }
         return p + 2;
       });
     }, 30);
-    return () => clearInterval(timer);
+
+    return () => {
+      active = false;
+      clearInterval(timer);
+    };
   }, [activeTab]);
 
   return (
@@ -172,16 +186,16 @@ export default function RealityShowcase() {
                   <div className="absolute inset-0 p-12">
                     <div className="grid grid-cols-6 grid-rows-6 gap-2 h-full">
                        {Array.from({ length: 36 }).map((_, i) => (
-                         <div 
-                           key={i} 
-                           className="rounded-sm transition-colors duration-1000"
-                           style={{ 
-                             backgroundColor: isProcessing 
-                              ? `rgba(168, 85, 247, ${Math.random() * 0.4})` 
-                              : 'rgba(30, 41, 59, 0.2)' 
-                           }}
-                         ></div>
-                       ))}
+                          <div 
+                            key={i} 
+                            className="rounded-sm transition-colors duration-1000"
+                            style={{ 
+                              backgroundColor: isProcessing 
+                               ? `rgba(168, 85, 247, ${randomOpacities[i]})` 
+                               : 'rgba(30, 41, 59, 0.2)' 
+                            }}
+                          ></div>
+                        ))}
                     </div>
                   </div>
                 )}
