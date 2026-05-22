@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { 
   Globe, 
   BarChart3, 
@@ -98,7 +99,6 @@ const COLOR_THEMES = {
     dot: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
   }
 };
-
 const STRATEGIC_CAPAS = [
   {
     id: "capa-1",
@@ -108,6 +108,7 @@ const STRATEGIC_CAPAS = [
     services: [
       {
         id: "SVC-C1-01",
+        slug: "gis-geointelligence",
         title: "GIS & GEOINTELLIGENCE",
         concept: "Convertimos datos geográficos en inteligencia territorial mediante análisis espacial, plataformas geoespaciales y visualización avanzada.",
         theme: "cyan",
@@ -126,6 +127,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C1-02",
+        slug: "data-analytics-bi",
         title: "DATA ANALYTICS & BI",
         concept: "Transformamos datos en decisiones mediante analítica avanzada, visualización estratégica y modelos estadísticos predictivos.",
         theme: "indigo",
@@ -144,6 +146,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C1-03",
+        slug: "ia-automatizacion",
         title: "IA & AUTOMATIZACIÓN",
         concept: "Diseñamos soluciones inteligentes basadas en IA para optimizar procesos complejos, reducir tiempos y anticipar escenarios territoriales.",
         theme: "purple",
@@ -170,6 +173,7 @@ const STRATEGIC_CAPAS = [
     services: [
       {
         id: "SVC-C2-01",
+        slug: "arquitectura-inteligente",
         title: "ARQUITECTURA INTELIGENTE",
         concept: "Diseñamos proyectos arquitectónicos integrando modelación digital avanzada, datos del territorio y análisis geoespacial.",
         theme: "blue",
@@ -188,6 +192,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C2-02",
+        slug: "infraestructura-vial-digital",
         title: "INFRAESTRUCTURA VIAL DIGITAL",
         concept: "Optimizamos proyectos de infraestructura mediante análisis geoespacial estratégico, captura de datos de alta precisión y monitoreo continuo.",
         theme: "emerald",
@@ -206,6 +211,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C2-03",
+        slug: "agricultura-precision",
         title: "AGRICULTURA DE PRECISIÓN",
         concept: "Mejoramos el rendimiento y rentabilidad agrícola mediante monitoreo remoto de cultivos, análisis territorial e índices biofísicos.",
         theme: "teal",
@@ -224,6 +230,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C2-04",
+        slug: "gestion-ambiental-inteligente",
         title: "GESTIÓN AMBIENTAL INTELIGENTE",
         concept: "Apoyamos la sostenibilidad y resiliencia de proyectos mediante análisis de vulnerabilidad, monitoreo ambiental y cumplimiento normativo.",
         theme: "teal",
@@ -250,6 +257,7 @@ const STRATEGIC_CAPAS = [
     services: [
       {
         id: "SVC-C3-01",
+        slug: "devops-cloud-engineering",
         title: "DEVOPS & CLOUD ENGINEERING",
         concept: "Diseñamos e implementamos infraestructuras tecnológicas sumamente robustas, automatizadas, resilientes y escalables.",
         theme: "orange",
@@ -268,6 +276,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C3-02",
+        slug: "drones-earth-data",
         title: "DRONES & EARTH DATA",
         concept: "Capturamos datos geoespaciales precisos del mundo real utilizando sensores aerotransportados de última generación.",
         theme: "red",
@@ -286,6 +295,7 @@ const STRATEGIC_CAPAS = [
       },
       {
         id: "SVC-C3-03",
+        slug: "desarrollo-software",
         title: "DESARROLLO DE SOFTWARE",
         concept: "Desarrollamos aplicaciones web, plataformas robustas y sistemas integrados a la medida orientados a datos y automatización.",
         theme: "pink",
@@ -564,13 +574,13 @@ export default function ServicesSection() {
                         </div>
 
                         {/* CTA Button */}
-                        <a 
-                          href="#contact"
+                        <Link 
+                          href={`/services/${svc.slug}`}
                           className="w-full py-3.5 bg-slate-950 hover:bg-[#070b15] border border-slate-850 hover:border-cyan-500/40 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-md"
                         >
-                          <span>Consultar Solución</span>
+                          <span>Explorar Solución</span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </a>
+                        </Link>
                       </motion.div>
                     );
                   })}
