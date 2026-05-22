@@ -27,76 +27,76 @@ import {
 // Mapeo estratégico de colores para Tailwind v4
 const COLOR_THEMES = {
   cyan: {
-    text: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-    border: "border-slate-800 hover:border-cyan-500/40",
-    glow: "bg-cyan-500/5 group-hover:bg-cyan-500/15",
-    badge: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
-    dot: "bg-cyan-400 shadow-[0_0_8px_#22d3ee]",
+    text: "text-cyan-600",
+    bg: "bg-cyan-50/70",
+    border: "border-slate-200 hover:border-cyan-400/40",
+    glow: "bg-cyan-500/5 group-hover:bg-cyan-500/10",
+    badge: "text-cyan-600 bg-cyan-50 border-cyan-200",
+    dot: "bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.3)]",
   },
   indigo: {
-    text: "text-indigo-400",
-    bg: "bg-indigo-500/10",
-    border: "border-slate-800 hover:border-indigo-500/40",
-    glow: "bg-indigo-500/5 group-hover:bg-indigo-500/15",
-    badge: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20",
-    dot: "bg-indigo-400 shadow-[0_0_8px_#818cf8]",
+    text: "text-indigo-600",
+    bg: "bg-indigo-50/70",
+    border: "border-slate-200 hover:border-indigo-400/40",
+    glow: "bg-indigo-500/5 group-hover:bg-indigo-500/10",
+    badge: "text-indigo-600 bg-indigo-50 border-indigo-200",
+    dot: "bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.3)]",
   },
   purple: {
-    text: "text-purple-400",
-    bg: "bg-purple-500/10",
-    border: "border-slate-800 hover:border-purple-500/40",
-    glow: "bg-purple-500/5 group-hover:bg-purple-500/15",
-    badge: "text-purple-400 bg-purple-500/10 border-purple-500/20",
-    dot: "bg-purple-400 shadow-[0_0_8px_#c084fc]",
+    text: "text-purple-600",
+    bg: "bg-purple-50/70",
+    border: "border-slate-200 hover:border-purple-400/40",
+    glow: "bg-purple-500/5 group-hover:bg-purple-500/10",
+    badge: "text-purple-600 bg-purple-50 border-purple-200",
+    dot: "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.3)]",
   },
   blue: {
-    text: "text-blue-400",
-    bg: "bg-blue-500/10",
-    border: "border-slate-800 hover:border-blue-500/40",
-    glow: "bg-blue-500/5 group-hover:bg-blue-500/15",
-    badge: "text-blue-400 bg-blue-500/10 border-blue-500/20",
-    dot: "bg-blue-400 shadow-[0_0_8px_#60a5fa]",
+    text: "text-blue-600",
+    bg: "bg-blue-50/70",
+    border: "border-slate-200 hover:border-blue-500/40",
+    glow: "bg-blue-500/5 group-hover:bg-blue-500/10",
+    badge: "text-blue-600 bg-blue-50 border-blue-200",
+    dot: "bg-blue-505 shadow-[0_0_8px_rgba(59,130,246,0.3)]",
   },
   emerald: {
-    text: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-slate-800 hover:border-emerald-500/40",
-    glow: "bg-emerald-500/5 group-hover:bg-emerald-500/15",
-    badge: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    dot: "bg-emerald-400 shadow-[0_0_8px_#34d399]",
+    text: "text-emerald-600",
+    bg: "bg-emerald-50/70",
+    border: "border-slate-200 hover:border-emerald-500/40",
+    glow: "bg-emerald-500/5 group-hover:bg-emerald-500/10",
+    badge: "text-emerald-600 bg-emerald-50 border-emerald-200",
+    dot: "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]",
   },
   teal: {
-    text: "text-teal-400",
-    bg: "bg-teal-500/10",
-    border: "border-slate-800 hover:border-teal-500/40",
-    glow: "bg-teal-500/5 group-hover:bg-teal-500/15",
-    badge: "text-teal-400 bg-teal-500/10 border-teal-500/20",
-    dot: "bg-teal-400 shadow-[0_0_8px_#2dd4bf]",
+    text: "text-teal-600",
+    bg: "bg-teal-50/70",
+    border: "border-slate-200 hover:border-teal-500/40",
+    glow: "bg-teal-500/5 group-hover:bg-teal-500/10",
+    badge: "text-teal-600 bg-teal-50 border-teal-200",
+    dot: "bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.3)]",
   },
   orange: {
-    text: "text-orange-400",
-    bg: "bg-orange-500/10",
-    border: "border-slate-800 hover:border-orange-500/40",
-    glow: "bg-orange-500/5 group-hover:bg-orange-500/15",
-    badge: "text-orange-400 bg-orange-500/10 border-orange-500/20",
-    dot: "bg-orange-400 shadow-[0_0_8px_#fb923c]",
+    text: "text-orange-600",
+    bg: "bg-orange-50/70",
+    border: "border-slate-200 hover:border-orange-500/40",
+    glow: "bg-orange-500/5 group-hover:bg-orange-500/10",
+    badge: "text-orange-600 bg-orange-50 border-orange-200",
+    dot: "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)]",
   },
   red: {
-    text: "text-rose-400",
-    bg: "bg-rose-500/10",
-    border: "border-slate-800 hover:border-rose-500/40",
-    glow: "bg-rose-500/5 group-hover:bg-rose-500/15",
-    badge: "text-rose-400 bg-rose-500/10 border-rose-500/20",
-    dot: "bg-rose-400 shadow-[0_0_8px_#fb7185]",
+    text: "text-rose-600",
+    bg: "bg-rose-50/70",
+    border: "border-slate-200 hover:border-rose-500/40",
+    glow: "bg-rose-500/5 group-hover:bg-rose-500/10",
+    badge: "text-rose-600 bg-rose-50 border-rose-200",
+    dot: "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.3)]",
   },
   pink: {
-    text: "text-pink-400",
-    bg: "bg-pink-500/10",
-    border: "border-slate-800 hover:border-pink-500/40",
-    glow: "bg-pink-500/5 group-hover:bg-pink-500/15",
-    badge: "text-pink-400 bg-pink-500/10 border-pink-500/20",
-    dot: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
+    text: "text-pink-600",
+    bg: "bg-pink-50/70",
+    border: "border-slate-200 hover:border-pink-500/40",
+    glow: "bg-pink-500/5 group-hover:bg-pink-500/10",
+    badge: "text-pink-600 bg-pink-50 border-pink-200",
+    dot: "bg-pink-505 shadow-[0_0_8px_rgba(236,72,153,0.3)]",
   }
 };
 const STRATEGIC_CAPAS = [
@@ -322,7 +322,7 @@ export default function ServicesSection() {
   const currentCapaData = STRATEGIC_CAPAS.find(c => c.id === activeCapa);
 
   return (
-    <section id="services" className="relative w-full py-32 z-10 bg-[#020408] border-t border-slate-900/60 overflow-hidden">
+    <section id="services" className="relative w-full py-32 z-10 bg-transparent border-t border-slate-100 overflow-hidden">
       {/* Luces y brillos decorativos premium en background */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[160px] pointer-events-none"></div>
@@ -339,7 +339,7 @@ export default function ServicesSection() {
             className="flex items-center gap-4 mb-6"
           >
             <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-cyan-500"></div>
-            <span className="text-cyan-400 font-mono text-xs tracking-[0.4em] uppercase font-bold">Modelo Estratégico</span>
+            <span className="text-cyan-600 font-mono text-xs tracking-[0.4em] uppercase font-bold">Modelo Estratégico</span>
             <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-cyan-500"></div>
           </motion.div>
           
@@ -348,10 +348,10 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-[1.05] max-w-5xl"
+            className="text-5xl md:text-7xl font-black text-slate-950 tracking-tighter leading-[1.05] max-w-5xl"
           >
             Ecosistema de Soluciones <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 italic drop-shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 italic">
               Soberanía Territorial
             </span>
           </motion.h2>
@@ -361,7 +361,7 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="mt-6 text-slate-400 text-base md:text-lg font-light leading-relaxed max-w-2xl"
+            className="mt-6 text-slate-600 text-base md:text-lg font-light leading-relaxed max-w-2xl"
           >
             No vendemos servicios sueltos. Desplegamos un sistema completo de valor estructurado en tres capas operacionales para transformar el territorio.
           </motion.p>
@@ -369,15 +369,15 @@ export default function ServicesSection() {
 
         {/* PIPELINE DE VALOR ("CÓMO TRABAJAMOS") */}
         <div className="mb-28 relative z-20">
-          <div className="bg-[#050914] border border-slate-900 rounded-[2.5rem] p-10 md:p-12 relative overflow-hidden shadow-3xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+          <div className="glass-card-premium rounded-[2.5rem] p-10 md:p-12 relative overflow-hidden shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/3 via-transparent to-purple-500/3 pointer-events-none"></div>
             
             <div className="text-center md:text-left mb-10 flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
-                <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest block mb-2">OPERATIONAL WORKFLOW</span>
-                <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">El Ecosistema Completo de Valor</h3>
+                <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest block mb-2">OPERATIONAL WORKFLOW</span>
+                <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight">El Ecosistema Completo de Valor</h3>
               </div>
-              <div className="px-5 py-2.5 bg-cyan-950/20 border border-cyan-500/20 rounded-full text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-black">
+              <div className="px-5 py-2.5 bg-cyan-50 border border-cyan-200 rounded-full text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                 End-To-End Pipeline
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function ServicesSection() {
             {/* Pipeline Stepper Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
               {/* Línea conectora entre pasos (Desktop Only) */}
-              <div className="absolute top-[35px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-red-500/30 via-orange-500/30 via-cyan-500/30 to-emerald-500/30 hidden md:block z-0"></div>
+              <div className="absolute top-[35px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-rose-200 via-orange-200 via-cyan-200 to-emerald-200 hidden md:block z-0"></div>
 
               {[
                 { 
@@ -393,44 +393,44 @@ export default function ServicesSection() {
                   title: "CAPTURA DE DATOS", 
                   desc: "A través de sensores aerotransportados LiDAR, Drones y datos satelitales calibrados.", 
                   badge: "CAPA 3",
-                  color: "border-rose-500/20 text-rose-400",
-                  bg: "bg-rose-500/5"
+                  color: "border-rose-200 text-rose-600",
+                  bg: "bg-rose-50/50"
                 },
                 { 
                   step: "02", 
                   title: "PROCESAMIENTO", 
                   desc: "Soporte de software robusto y arquitecturas cloud seguras de escala masiva.", 
                   badge: "CAPA 3",
-                  color: "border-orange-500/20 text-orange-400",
-                  bg: "bg-orange-500/5"
+                  color: "border-orange-200 text-orange-600",
+                  bg: "bg-orange-50/50"
                 },
                 { 
                   step: "03", 
                   title: "INTELIGENCIA", 
                   desc: "Analítica geoespacial compleja con Polars y algoritmos predictivos con IA.", 
                   badge: "CAPA 1",
-                  color: "border-cyan-500/20 text-cyan-400",
-                  bg: "bg-cyan-500/5"
+                  color: "border-cyan-200 text-cyan-600",
+                  bg: "bg-cyan-50/50"
                 },
                 { 
                   step: "04", 
                   title: "DECISIÓN", 
                   desc: "Sectores optimizados con soluciones técnicas y de cumplimiento normativo.", 
                   badge: "CAPA 2",
-                  color: "border-emerald-500/20 text-emerald-400",
-                  bg: "bg-emerald-500/5"
+                  color: "border-emerald-200 text-emerald-600",
+                  bg: "bg-emerald-50/50"
                 }
               ].map((item, idx) => (
                 <div 
                   key={idx}
-                  className={`group relative p-6 rounded-2xl border bg-black/60 z-10 transition-all duration-300 hover:border-cyan-500/40 hover:-translate-y-1 shadow-lg ${item.color} ${item.bg}`}
+                  className={`group relative p-6 rounded-2xl border bg-white/60 z-10 transition-all duration-300 hover:border-cyan-500/40 hover:-translate-y-1 shadow-sm ${item.color} ${item.bg}`}
                 >
                   <div className="flex justify-between items-center mb-6">
-                    <span className="font-mono text-2xl font-black">{item.step}</span>
+                    <span className="font-mono text-2xl font-black text-slate-800">{item.step}</span>
                     <span className="px-3 py-1 rounded-full border text-[8px] font-mono font-bold tracking-widest">{item.badge}</span>
                   </div>
-                  <h4 className="text-sm font-black tracking-wider text-white mb-3 group-hover:text-cyan-400 transition-colors uppercase">{item.title}</h4>
-                  <p className="text-slate-400 text-xs font-light leading-relaxed">{item.desc}</p>
+                  <h4 className="text-sm font-black tracking-wider text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors uppercase">{item.title}</h4>
+                  <p className="text-slate-500 text-xs font-light leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -442,7 +442,7 @@ export default function ServicesSection() {
           
           {/* Columna Izquierda: Botones de Pestaña */}
           <div className="lg:w-1/3 flex flex-col gap-4">
-            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em] mb-2 border-b border-slate-900 pb-3">
+            <div className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-100 pb-3">
               Arquitectura de Negocio
             </div>
 
@@ -455,41 +455,41 @@ export default function ServicesSection() {
                   onClick={() => setActiveCapa(capa.id)}
                   className={`w-full text-left p-6 rounded-3xl border transition-all duration-500 group relative overflow-hidden flex flex-col justify-between ${
                     isSelected 
-                      ? "bg-[#070b15] border-cyan-500/40 shadow-[0_0_30px_rgba(6,182,212,0.1)] scale-[1.01]" 
-                      : "bg-[#03060c] border-slate-900/80 hover:border-slate-800 hover:bg-[#060a12]"
+                      ? "bg-white border-cyan-500/30 shadow-[0_8px_30px_rgba(6,182,212,0.05)] scale-[1.01]" 
+                      : "bg-white/50 border-slate-200/80 hover:border-slate-350 hover:bg-slate-50/70"
                   }`}
                 >
                   {/* Sliding Background Glow */}
                   {isSelected && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none animate-[pulse_3s_infinite]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none animate-[pulse_3s_infinite]"></div>
                   )}
 
                   <div className="relative z-10 flex flex-col gap-3">
                     <div className="flex justify-between items-center">
-                      <span className={`text-[10px] font-mono font-bold tracking-[0.25em] ${isSelected ? "text-cyan-400" : "text-slate-500"}`}>
+                      <span className={`text-[10px] font-mono font-bold tracking-[0.25em] ${isSelected ? "text-cyan-600" : "text-slate-400"}`}>
                         {capa.label}
                       </span>
                       {isSelected && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>
                       )}
                     </div>
-                    <div className={`text-xl font-black tracking-tight leading-none ${isSelected ? "text-white" : "text-slate-400 group-hover:text-slate-200 transition-colors"}`}>
+                    <div className={`text-xl font-black tracking-tight leading-none ${isSelected ? "text-slate-950" : "text-slate-400 group-hover:text-slate-650 transition-colors"}`}>
                       {capa.tagline}
                     </div>
                   </div>
 
                   {/* Shimmer line indicator */}
                   {isSelected && (
-                    <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 w-full z-20"></div>
+                    <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-500 to-blue-600 w-full z-20"></div>
                   )}
                 </button>
               );
             })}
 
             {/* Cuadro de resumen estratégico */}
-            <div className="bg-[#050914]/40 border border-slate-900/60 rounded-3xl p-6 mt-4 hidden lg:block">
-              <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block mb-3">CONCEPTO MAESTRO</span>
-              <p className="text-xs text-slate-400 font-light leading-relaxed">
+            <div className="bg-slate-50/60 border border-slate-200/80 rounded-3xl p-6 mt-4 hidden lg:block">
+              <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block mb-3">CONCEPTO MAESTRO</span>
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
                 El valor estratégico real surge al integrar las 3 capas: capturamos la realidad con tecnología, la organizamos y modelamos con inteligencia analítica, y ejecutamos soluciones específicas para cada sector económico del país.
               </p>
             </div>
@@ -497,13 +497,13 @@ export default function ServicesSection() {
 
           {/* Columna Derecha: Contenido Dinámico (Cards Grid) */}
           <div className="lg:w-2/3 flex flex-col">
-            <div className="bg-[#050914]/50 border border-slate-900/80 rounded-[2rem] p-8 lg:p-10 flex-1 flex flex-col">
+            <div className="glass-card-premium rounded-[2rem] p-8 lg:p-10 flex-1 flex flex-col">
               
               {/* Encabezado del contenido de la capa */}
-              <div className="mb-10 pb-8 border-b border-slate-900/80">
-                <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-[0.2em] font-black block mb-2">ACTIVE ARCHITECTURE LAYER</span>
-                <h3 className="text-2xl font-black text-white tracking-tight mb-4">{currentCapaData.label}</h3>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
+              <div className="mb-10 pb-8 border-b border-slate-200/80">
+                <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.2em] font-black block mb-2">ACTIVE ARCHITECTURE LAYER</span>
+                <h3 className="text-2xl font-black text-slate-950 tracking-tight mb-4">{currentCapaData.label}</h3>
+                <p className="text-slate-500 text-sm font-light leading-relaxed">
                   {currentCapaData.description}
                 </p>
               </div>

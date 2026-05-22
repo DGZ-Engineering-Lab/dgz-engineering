@@ -8,7 +8,7 @@ const INSTITUTIONS = [
   { name: "IGAC", sub: "AUTORIDAD CATASTRAL", color: "emerald", logo: "https://www.igac.gov.co/sites/default/files/2023-05/Logo%20IGAC%2003.svg" },
   { name: "SNR", sub: "REGISTRO INMOBILIARIO", color: "red", logo: "https://www.vur.gov.co/portal/resources/images/LogoSNR.png" },
   { name: "DNP", sub: "PLANEACIÓN NACIONAL", color: "blue", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYtFZUqE_-Syl04f9K4xSypL0WTaJZscWtrw&s" },
-  { name: "ANT", sub: "AGENCIA DE TIERRAS", color: "green", logo: "https://observatorio.ant.gov.co/sites/default/files/2025-02/imagenes/svgs/logo-agencia-nacional-de-tierras.svg" },
+  { name: "ANT", sub: "AGENCIA DE TIERRAS", color: "emerald", logo: "https://observatorio.ant.gov.co/sites/default/files/2025-02/imagenes/svgs/logo-agencia-nacional-de-tierras.svg" },
   { name: "UPRA", sub: "PLANIFICACIÓN RURAL", color: "orange", logo: "https://www.icde.gov.co/sites/default/files/ides/logo%20upra.png" },
   { name: "DANE", sub: "INFORMACIÓN ESTADÍSTICA", color: "indigo", logo: "https://www.dane.gov.co/images/logo-portal-dane.svg" }
 ];
@@ -32,44 +32,88 @@ const STANDARDS = [
 ];
 
 export default function GlobalPartners() {
+  // Combinar listas para dar volumen al carrusel infinito
+  const fullPartnerList = [...INSTITUTIONS, ...CLIENTS, ...INSTITUTIONS, ...CLIENTS];
+
   return (
-    <section className="py-24 bg-[#02040a] border-t border-slate-900 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-6 mb-16">
-         <h2 className="text-3xl font-black text-white tracking-tighter mb-2">
-            Alianzas & <span className="text-slate-500 italic">Ecosistema</span>
+    <section className="py-24 bg-transparent border-t border-slate-100 overflow-hidden relative">
+      {/* Glow sutil en el fondo claro */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-r from-cyan-500/5 to-indigo-500/5 blur-[100px] pointer-events-none rounded-full"></div>
+
+      <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
+         <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-3">
+            Nuestros Clientes & <span className="text-slate-400 font-light italic">Aliados Estratégicos</span>
          </h2>
-         <p className="text-slate-500 text-sm font-light">Interoperabilidad técnica y estratégica con los líderes del sector.</p>
+         <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
+            Interoperabilidad técnica, regulatoria y operativa con los líderes públicos y corporativos del desarrollo territorial en Colombia.
+         </p>
       </div>
 
-      {/* Institutional Ticker */}
-      <div className="relative mb-20">
+      {/* Infinite Horizontal Carousel */}
+      <div className="relative mb-20 z-10 w-full overflow-hidden">
         <motion.div 
-          className="flex gap-16 items-center whitespace-nowrap"
-          animate={{ x: [0, -1500] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex gap-8 items-center whitespace-nowrap"
+          animate={{ x: [0, -2000] }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+          style={{ width: "fit-content" }}
         >
-          {[...INSTITUTIONS, ...CLIENTS, ...INSTITUTIONS, ...CLIENTS].map((partner, i) => (
-            <div key={i} className="flex flex-col items-center gap-4 group cursor-pointer grayscale hover:grayscale-0 transition-all duration-700">
-               <div className="h-16 w-32 flex items-center justify-center p-2 bg-white/5 border border-white/10 rounded-2xl group-hover:border-cyan-500/50 group-hover:bg-white/10 transition-all">
-                  <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+          {fullPartnerList.map((partner, i) => (
+            <div 
+              key={i} 
+              className="flex flex-col items-center gap-3 group cursor-pointer inline-flex shrink-0 transition-all duration-300"
+            >
+               <div className="h-20 w-36 flex items-center justify-center p-3 bg-white border border-slate-200/80 rounded-2xl shadow-[0_4px_16px_-4px_rgba(15,23,42,0.05)] hover:shadow-[0_12px_24px_-8px_rgba(15,23,42,0.12)] hover:border-cyan-500/30 group-hover:scale-105 transition-all duration-300 relative overflow-hidden">
+                  {/* Para logos de fondo oscuro (como IGGA) colocamos un overlay oscuro translúcido o los mostramos normales */}
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.name} 
+                    className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 contrast-125 group-hover:contrast-100 transition-all duration-500" 
+                    onError={(e) => {
+                      // Fallback en caso de link roto
+                      e.target.style.display = 'none';
+                    }}
+                  />
                </div>
-               <div className="flex flex-col items-center">
-                  <span className="text-[10px] font-black text-white tracking-tighter opacity-50 group-hover:opacity-100">{partner.name}</span>
-                  {partner.sub && <span className="text-[7px] font-bold text-slate-500 uppercase tracking-widest">{partner.sub}</span>}
+               <div className="flex flex-col items-center text-center">
+                  <span className="text-[10px] font-black text-slate-800 tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity">
+                    {partner.name}
+                  </span>
+                  {partner.sub ? (
+                    <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+                      {partner.sub}
+                    </span>
+                  ) : (
+                    <span className="text-[7px] font-bold text-cyan-600 uppercase tracking-widest mt-0.5">
+                      Socio Corporativo
+                    </span>
+                  )}
                </div>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Standards Bar */}
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 px-6">
-        {STANDARDS.map((std, i) => (
-          <div key={i} className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-slate-900/50 border border-slate-800 hover:border-slate-600 transition-all shadow-lg backdrop-blur-md cursor-default group">
-            <div className={`w-1.5 h-1.5 rounded-full bg-${std.color}-500 animate-pulse`}></div>
-            <span className="text-[10px] font-mono text-slate-400 group-hover:text-white transition-colors uppercase tracking-wider">{std.text}</span>
-          </div>
-        ))}
+      {/* Standards Compliance Badges */}
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 px-6 relative z-10">
+        {STANDARDS.map((std, i) => {
+          let badgeDotColor = "bg-cyan-500";
+          if (std.color === "emerald") badgeDotColor = "bg-emerald-500";
+          if (std.color === "blue") badgeDotColor = "bg-blue-500";
+          if (std.color === "amber") badgeDotColor = "bg-amber-500";
+          if (std.color === "red") badgeDotColor = "bg-red-500";
+
+          return (
+            <div 
+              key={i} 
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm hover:border-cyan-500/30 transition-all duration-300 cursor-default group"
+            >
+              <div className={`w-2 h-2 rounded-full ${badgeDotColor} animate-pulse`}></div>
+              <span className="text-[10px] font-mono text-slate-600 group-hover:text-slate-900 transition-colors uppercase tracking-wider">
+                {std.text}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col text-slate-100 bg-[#02040a]" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col text-[var(--foreground)] bg-[var(--background)]" suppressHydrationWarning>
         <PostHogProvider>
           <Background />
           <SystemStatusHeader />
