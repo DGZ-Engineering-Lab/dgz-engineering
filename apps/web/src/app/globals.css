@@ -21,6 +21,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-brand-500: #1e6f9f;
+  --color-brand-900: #0f132f;
+  --color-accent-300: #7dd9ff;
+  --color-accent-400: #f59e4b;
+  --color-accent-500: #e07a1f;
 }
 
 * {

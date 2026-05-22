@@ -509,19 +509,22 @@ export default function ServicesSection() {
               </div>
 
               {/* Grid de servicios activos */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 items-stretch">
-                <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCapa}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 items-stretch"
+                >
                   {currentCapaData.services.map((svc) => {
                     const theme = COLOR_THEMES[svc.theme];
                     const IconComponent = svc.icon;
 
                     return (
-                      <motion.div
+                      <div
                         key={svc.id}
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -15 }}
-                        transition={{ duration: 0.4 }}
                         className={`group relative flex flex-col p-8 rounded-3xl bg-[#03060c] border ${theme.border} transition-all duration-500 hover:-translate-y-1.5 shadow-2xl overflow-hidden`}
                       >
                         {/* Glow de fondo animado en hover */}
@@ -581,11 +584,11 @@ export default function ServicesSection() {
                           <span>Explorar Solución</span>
                           <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </Link>
-                      </motion.div>
+                      </div>
                     );
                   })}
-                </AnimatePresence>
-              </div>
+                </motion.div>
+              </AnimatePresence>
 
             </div>
           </div>
