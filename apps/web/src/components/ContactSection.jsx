@@ -270,7 +270,7 @@ export default function ContactSection() {
                           onBlur={handleBlur}
                           required
                           placeholder="Ing. Carlos Pérez" 
-                          className={`w-full bg-[#fcfcfc] border-b p-4 text-xs focus:outline-none transition-colors ${
+                          className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                             touched.name 
                               ? validateName(formData.name)
                                 ? "border-emerald-500/50 focus:border-emerald-500"
@@ -305,7 +305,7 @@ export default function ContactSection() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder="Entidad / Empresa" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs focus:outline-none transition-colors ${
+                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                           touched.company && formData.company.trim()
                             ? "border-emerald-500/30 focus:border-emerald-500"
                             : "border-slate-100 focus:border-[#1a1a1a]"
@@ -342,7 +342,7 @@ export default function ContactSection() {
                         onBlur={handleBlur}
                         required
                         placeholder="cperez@organizacion.com" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs focus:outline-none transition-colors ${
+                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                           touched.email 
                             ? !validateEmail(formData.email)
                               ? "border-red-500/50 focus:border-red-500"
@@ -403,7 +403,7 @@ export default function ContactSection() {
                       value={formData.subject}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full bg-[#fcfcfc] border-b border-slate-100 p-4 text-xs focus:outline-none focus:border-[#1a1a1a] transition-colors appearance-none"
+                      className="w-full bg-[#fcfcfc] border-b border-slate-100 p-4 text-xs text-[#1a1a1a] font-medium focus:outline-none focus:border-[#1a1a1a] transition-colors appearance-none"
                     >
                       <option>Auditoría de Datos LADM-COL</option>
                       <option>Implementación de Digital Twin</option>
@@ -430,7 +430,7 @@ export default function ContactSection() {
                         required
                         rows="4" 
                         placeholder="Breve descripción del alcance del proyecto (por ejemplo, el área del levantamiento LiDAR, requisitos de precisión catastral)..." 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs focus:outline-none transition-colors resize-none ${
+                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors resize-none ${
                           touched.description
                             ? validateDescription(formData.description)
                               ? "border-emerald-500/50 focus:border-emerald-500"
