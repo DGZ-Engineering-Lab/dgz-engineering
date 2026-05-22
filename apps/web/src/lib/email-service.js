@@ -66,7 +66,7 @@ class EmailService {
       const response = await this.resend.emails.send({
         from: this.fromEmail,
         to: [email],
-        subject: \`¡Gracias por contactar a DevGiz, \${name}!\`,
+        subject: `¡Gracias por contactar a DevGiz, ${name}!`,
         html: emailHtml
       });
 
