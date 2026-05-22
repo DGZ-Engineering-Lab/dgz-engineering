@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { getAdminNotificationTemplate, getUserConfirmationTemplate } from "./email-templates";
+import { getAdminNotificationTemplate, getUserConfirmationTemplate } from "./email-templates.js";
 
 class EmailService {
   constructor() {
@@ -8,7 +8,7 @@ class EmailService {
     
     // On Free Tier, fromEmail MUST be onboarding@resend.dev
     this.fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-    this.adminEmail = process.env.RESEND_ADMIN_EMAIL || "Albertg2109@gmail.com";
+    this.adminEmail = process.env.RESEND_ADMIN_EMAIL || "albertg2109@gmail.com";
     
     this.resend = this.resendApiKey ? new Resend(this.resendApiKey) : null;
 
