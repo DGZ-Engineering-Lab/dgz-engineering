@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { 
@@ -16,15 +16,19 @@ import {
   Code, 
   Check, 
   ArrowUpRight,
-  Compass,
   Zap,
-  ArrowRight,
-  Shield,
-  Activity,
-  Award
+  Play,
+  RotateCw,
+  Droplet,
+  Layers,
+  Terminal,
+  Clock,
+  Compass,
+  Database,
+  Cpu
 } from "lucide-react";
 
-// Mapeo estratégico de colores para Tailwind v4
+// Mapeo estratégico de colores para Tailwind
 const COLOR_THEMES = {
   cyan: {
     text: "text-cyan-600",
@@ -99,6 +103,7 @@ const COLOR_THEMES = {
     dot: "bg-pink-505 shadow-[0_0_8px_rgba(236,72,153,0.3)]",
   }
 };
+
 const STRATEGIC_CAPAS = [
   {
     id: "capa-1",
@@ -316,27 +321,64 @@ const STRATEGIC_CAPAS = [
   }
 ];
 
+// Flujo operacional con mapeos
+const OPERATIONAL_STEPS = [
+  { step: "01", title: "CAPTURA DE DATOS", slug: "drones-earth-data", capa: "capa-3", color: "from-rose-500 to-orange-500", desc: "Sensores LiDAR y drones." },
+  { step: "02", title: "PROCESAMIENTO", slug: "devops-cloud-engineering", capa: "capa-3", color: "from-orange-500 to-cyan-500", desc: "Software robusto y cloud." },
+  { step: "03", title: "INTELIGENCIA", slug: "gis-geointelligence", capa: "capa-1", color: "from-cyan-500 to-indigo-500", desc: "Analítica geoespacial e IA." },
+  { step: "04", title: "DECISIÓN", slug: "arquitectura-inteligente", capa: "capa-2", color: "from-indigo-500 to-emerald-500", desc: "Soluciones y cumplimiento." }
+];
+
 export default function ServicesSection() {
   const [activeCapa, setActiveCapa] = useState("capa-1");
-
+  const [activeServiceSlug, setActiveServiceSlug] = useState("gis-geointelligence");
+  
+  // Buscar datos activos
   const currentCapaData = STRATEGIC_CAPAS.find(c => c.id === activeCapa);
+  const activeService = currentCapaData?.services.find(s => s.slug === activeServiceSlug) || STRATEGIC_CAPAS.flatMap(c => c.services).find(s => s.slug === activeServiceSlug);
+
+  // Al cambiar la capa, activar el primer servicio de esta
+  const handleCapaChange = (capaId) => {
+    setActiveCapa(capaId);
+    const targetCapa = STRATEGIC_CAPAS.find(c => c.id === capaId);
+    if (targetCapa && targetCapa.services.length > 0) {
+      setActiveServiceSlug(targetCapa.services[0].slug);
+    }
+  };
+
+  // Determinar en qué paso del Pipeline de Valor cae el servicio activo
+  const getPipelineActiveStep = () => {
+    if (!activeServiceSlug) return 0;
+    if (activeServiceSlug === "drones-earth-data") return 0;
+    if (activeServiceSlug === "devops-cloud-engineering" || activeServiceSlug === "desarrollo-software") return 1;
+    if (activeServiceSlug === "gis-geointelligence" || activeServiceSlug === "data-analytics-bi" || activeServiceSlug === "ia-automatizacion") return 2;
+    return 3; // Soluciones
+  };
+
+  const activePipelineStep = getPipelineActiveStep();
+
+  const handlePipelineClick = (step) => {
+    const targetCapa = step.capa;
+    setActiveCapa(targetCapa);
+    setActiveServiceSlug(step.slug);
+  };
 
   return (
-    <section id="services" className="relative w-full py-32 z-10 bg-transparent border-t border-slate-100 overflow-hidden">
-      {/* Luces y brillos decorativos premium en background */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[160px] pointer-events-none"></div>
+    <section id="services" className="relative w-full py-20 lg:py-28 z-10 bg-transparent border-t border-slate-100 overflow-hidden">
+      {/* Luces y brillos decorativos en background */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Encabezado Principal */}
-        <div className="flex flex-col items-center text-center mb-24 relative z-10">
+        <div className="flex flex-col items-center text-center mb-12 lg:mb-16 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-6"
+            className="flex items-center gap-4 mb-4"
           >
             <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-cyan-500"></div>
             <span className="text-cyan-600 font-mono text-xs tracking-[0.4em] uppercase font-bold">Modelo Estratégico</span>
@@ -348,7 +390,7 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-black text-slate-950 tracking-tighter leading-[1.05] max-w-5xl"
+            className="text-4xl md:text-6xl font-black text-slate-950 tracking-tighter leading-[1.1] max-w-5xl"
           >
             Ecosistema de Soluciones <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 italic">
@@ -361,236 +403,284 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="mt-6 text-slate-600 text-base md:text-lg font-light leading-relaxed max-w-2xl"
+            className="mt-4 text-slate-600 text-sm md:text-base font-light leading-relaxed max-w-2xl"
           >
             No vendemos servicios sueltos. Desplegamos un sistema completo de valor estructurado en tres capas operacionales para transformar el territorio.
           </motion.p>
         </div>
 
-        {/* PIPELINE DE VALOR ("CÓMO TRABAJAMOS") */}
-        <div className="mb-28 relative z-20">
-          <div className="glass-card-premium rounded-[2.5rem] p-10 md:p-12 relative overflow-hidden shadow-xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/3 via-transparent to-purple-500/3 pointer-events-none"></div>
-            
-            <div className="text-center md:text-left mb-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        {/* CONTENEDOR UNIFICADO DEL DASHBOARD (CENTRO DE CONTROL) */}
+        <div className="glass-card-premium rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/80 shadow-2xl relative overflow-hidden bg-white/70 backdrop-blur-md z-20 flex flex-col">
+          
+          {/* Fila Superior: Pipeline de Valor Integrado */}
+          <div className="p-6 md:p-8 border-b border-slate-200/80 bg-slate-50/40">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div>
-                <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest block mb-2">OPERATIONAL WORKFLOW</span>
-                <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight">El Ecosistema Completo de Valor</h3>
+                <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest block mb-1">OPERATIONAL PIPELINE</span>
+                <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight">Flujo de Valor Territorial</h3>
               </div>
-              <div className="px-5 py-2.5 bg-cyan-50 border border-cyan-200 rounded-full text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+              <div className="px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                 End-To-End Pipeline
               </div>
             </div>
 
-            {/* Pipeline Stepper Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-              {/* Línea conectora entre pasos (Desktop Only) */}
-              <div className="absolute top-[35px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-rose-200 via-orange-200 via-cyan-200 to-emerald-200 hidden md:block z-0"></div>
+            {/* Stepper Horizontal Interactivo */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+              {/* Línea conectora base */}
+              <div className="absolute top-[22px] left-[12%] right-[12%] h-[2px] bg-slate-200 hidden md:block z-0"></div>
+              {/* Línea de progreso de color gradiente */}
+              <div 
+                className="absolute top-[22px] left-[12%] h-[2px] bg-gradient-to-r from-cyan-500 to-indigo-500 hidden md:block z-0 transition-all duration-700 ease-in-out"
+                style={{ width: `${activePipelineStep * 25 + 2}%` }}
+              ></div>
 
-              {[
-                { 
-                  step: "01", 
-                  title: "CAPTURA DE DATOS", 
-                  desc: "A través de sensores aerotransportados LiDAR, Drones y datos satelitales calibrados.", 
-                  badge: "CAPA 3",
-                  color: "border-rose-200 text-rose-600",
-                  bg: "bg-rose-50/50"
-                },
-                { 
-                  step: "02", 
-                  title: "PROCESAMIENTO", 
-                  desc: "Soporte de software robusto y arquitecturas cloud seguras de escala masiva.", 
-                  badge: "CAPA 3",
-                  color: "border-orange-200 text-orange-600",
-                  bg: "bg-orange-50/50"
-                },
-                { 
-                  step: "03", 
-                  title: "INTELIGENCIA", 
-                  desc: "Analítica geoespacial compleja con Polars y algoritmos predictivos con IA.", 
-                  badge: "CAPA 1",
-                  color: "border-cyan-200 text-cyan-600",
-                  bg: "bg-cyan-50/50"
-                },
-                { 
-                  step: "04", 
-                  title: "DECISIÓN", 
-                  desc: "Sectores optimizados con soluciones técnicas y de cumplimiento normativo.", 
-                  badge: "CAPA 2",
-                  color: "border-emerald-200 text-emerald-600",
-                  bg: "bg-emerald-50/50"
-                }
-              ].map((item, idx) => (
-                <div 
-                  key={idx}
-                  className={`group relative p-6 rounded-2xl border bg-white/60 z-10 transition-all duration-300 hover:border-cyan-500/40 hover:-translate-y-1 shadow-sm ${item.color} ${item.bg}`}
-                >
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="font-mono text-2xl font-black text-slate-800">{item.step}</span>
-                    <span className="px-3 py-1 rounded-full border text-[8px] font-mono font-bold tracking-widest">{item.badge}</span>
-                  </div>
-                  <h4 className="text-sm font-black tracking-wider text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors uppercase">{item.title}</h4>
-                  <p className="text-slate-500 text-xs font-light leading-relaxed">{item.desc}</p>
+              {OPERATIONAL_STEPS.map((step, idx) => {
+                const isActive = activePipelineStep === idx;
+                const isPassed = activePipelineStep >= idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handlePipelineClick(step)}
+                    className="flex items-center gap-3 p-3 rounded-xl border border-slate-200/60 bg-white/50 text-left hover:border-slate-350 hover:bg-white z-10 transition-all group"
+                  >
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-black transition-all ${
+                      isActive 
+                        ? `bg-gradient-to-r ${step.color} text-white shadow-md shadow-cyan-500/20 scale-105` 
+                        : isPassed
+                          ? "bg-slate-800 text-white"
+                          : "bg-slate-100 text-slate-400"
+                    }`}>
+                      {step.step}
+                    </div>
+                    <div className="min-w-0">
+                      <div className={`text-[10px] font-black tracking-wider transition-colors ${
+                        isActive ? "text-slate-900" : "text-slate-500 group-hover:text-slate-700"
+                      }`}>
+                        {step.title}
+                      </div>
+                      <div className="text-[9px] text-slate-400 truncate hidden sm:block">
+                        {step.desc}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Fila Principal: Panel Izquierdo (Selección) & Panel Derecho (Visualizador + Simulador) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[500px] lg:min-h-[640px]">
+            
+            {/* Panel Izquierdo: Selectores de Capa y de Servicios (col-span-4) */}
+            <div className="col-span-12 lg:col-span-4 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200/80 flex flex-col gap-6 bg-slate-50/20">
+              
+              {/* Segmented Control de Capas */}
+              <div>
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block mb-3">
+                  Capa Operacional
+                </span>
+                <div className="flex bg-slate-100 p-1 rounded-xl relative">
+                  {STRATEGIC_CAPAS.map((capa) => {
+                    const isSelected = activeCapa === capa.id;
+                    return (
+                      <button
+                        key={capa.id}
+                        onClick={() => handleCapaChange(capa.id)}
+                        className={`flex-1 text-center py-2 text-[10px] font-bold rounded-lg relative z-10 transition-colors uppercase tracking-wider ${
+                          isSelected ? "text-slate-900" : "text-slate-500 hover:text-slate-800"
+                        }`}
+                      >
+                        {isSelected && (
+                          <motion.div
+                            layoutId="activeCapaBg"
+                            className="absolute inset-0 bg-white rounded-lg shadow-sm -z-10"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        Capa {capa.id.split("-")[1]}
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* CONTENEDOR DE PESTAÑAS (TAB SELECTOR) */}
-        <div className="flex flex-col lg:flex-row gap-12 items-stretch relative z-10">
-          
-          {/* Columna Izquierda: Botones de Pestaña */}
-          <div className="lg:w-1/3 flex flex-col gap-4">
-            <div className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-100 pb-3">
-              Arquitectura de Negocio
-            </div>
-
-            {STRATEGIC_CAPAS.map((capa) => {
-              const isSelected = activeCapa === capa.id;
-              
-              return (
-                <button
-                  key={capa.id}
-                  onClick={() => setActiveCapa(capa.id)}
-                  className={`w-full text-left p-6 rounded-3xl border transition-all duration-500 group relative overflow-hidden flex flex-col justify-between ${
-                    isSelected 
-                      ? "bg-white border-cyan-500/30 shadow-[0_8px_30px_rgba(6,182,212,0.05)] scale-[1.01]" 
-                      : "bg-white/50 border-slate-200/80 hover:border-slate-350 hover:bg-slate-50/70"
-                  }`}
-                >
-                  {/* Sliding Background Glow */}
-                  {isSelected && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none animate-[pulse_3s_infinite]"></div>
-                  )}
-
-                  <div className="relative z-10 flex flex-col gap-3">
-                    <div className="flex justify-between items-center">
-                      <span className={`text-[10px] font-mono font-bold tracking-[0.25em] ${isSelected ? "text-cyan-600" : "text-slate-400"}`}>
-                        {capa.label}
-                      </span>
-                      {isSelected && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping"></span>
-                      )}
-                    </div>
-                    <div className={`text-xl font-black tracking-tight leading-none ${isSelected ? "text-slate-950" : "text-slate-400 group-hover:text-slate-650 transition-colors"}`}>
-                      {capa.tagline}
-                    </div>
-                  </div>
-
-                  {/* Shimmer line indicator */}
-                  {isSelected && (
-                    <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-500 to-blue-600 w-full z-20"></div>
-                  )}
-                </button>
-              );
-            })}
-
-            {/* Cuadro de resumen estratégico */}
-            <div className="bg-slate-50/60 border border-slate-200/80 rounded-3xl p-6 mt-4 hidden lg:block">
-              <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block mb-3">CONCEPTO MAESTRO</span>
-              <p className="text-xs text-slate-500 font-light leading-relaxed">
-                El valor estratégico real surge al integrar las 3 capas: capturamos la realidad con tecnología, la organizamos y modelamos con inteligencia analítica, y ejecutamos soluciones específicas para cada sector económico del país.
-              </p>
-            </div>
-          </div>
-
-          {/* Columna Derecha: Contenido Dinámico (Cards Grid) */}
-          <div className="lg:w-2/3 flex flex-col">
-            <div className="glass-card-premium rounded-[2rem] p-8 lg:p-10 flex-1 flex flex-col">
-              
-              {/* Encabezado del contenido de la capa */}
-              <div className="mb-10 pb-8 border-b border-slate-200/80">
-                <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.2em] font-black block mb-2">ACTIVE ARCHITECTURE LAYER</span>
-                <h3 className="text-2xl font-black text-slate-950 tracking-tight mb-4">{currentCapaData.label}</h3>
-                <p className="text-slate-500 text-sm font-light leading-relaxed">
-                  {currentCapaData.description}
-                </p>
               </div>
 
-              {/* Grid de servicios activos */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeCapa}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 items-stretch"
-                >
-                  {currentCapaData.services.map((svc) => {
+              {/* Lista Vertical de Servicios de la Capa Activa */}
+              <div className="flex-1 flex flex-col gap-3">
+                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block">
+                  Servicios en la Capa
+                </span>
+                
+                <div className="space-y-2.5">
+                  {currentCapaData?.services.map((svc) => {
+                    const isSelected = activeServiceSlug === svc.slug;
                     const theme = COLOR_THEMES[svc.theme];
                     const IconComponent = svc.icon;
 
                     return (
-                      <div
-                        key={svc.id}
-                        className={`group relative flex flex-col p-8 rounded-3xl bg-[#03060c] border ${theme.border} transition-all duration-500 hover:-translate-y-1.5 shadow-2xl overflow-hidden`}
+                      <button
+                        key={svc.slug}
+                        onClick={() => setActiveServiceSlug(svc.slug)}
+                        className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 flex items-center gap-4 relative overflow-hidden ${
+                          isSelected
+                            ? "bg-white border-slate-200 shadow-md shadow-slate-100 scale-[1.01]"
+                            : "bg-white/40 border-slate-200/60 hover:bg-white/80 hover:border-slate-300"
+                        }`}
                       >
-                        {/* Glow de fondo animado en hover */}
-                        <div className={`absolute -top-24 -right-24 w-44 h-44 blur-[50px] transition-all duration-700 rounded-full pointer-events-none ${theme.glow}`}></div>
+                        {/* Indicador de borde dinámico izquierdo */}
+                        {isSelected && (
+                          <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${theme.dot}`} />
+                        )}
 
-                        {/* Top ID & Badge */}
-                        <div className="flex justify-between items-start mb-6">
-                          <span className="font-mono text-[9px] text-slate-500 tracking-[0.2em]">{svc.id}</span>
-                          <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-[8px] font-black tracking-[0.1em] ${theme.badge}`}>
-                            <span className={`w-1.2 h-1.2 rounded-full ${theme.dot}`}></span>
-                            {activeCapa === "capa-1" ? "CORE SYSTEM" : activeCapa === "capa-2" ? "SECTOR SOLUTION" : "TECH PLATFORM"}
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+                          isSelected ? theme.bg : "bg-slate-100/80 text-slate-400"
+                        }`}>
+                          <IconComponent className={`w-4.5 h-4.5 ${isSelected ? theme.text : ""}`} />
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <div className="flex justify-between items-center mb-0.5">
+                            <span className="text-[8px] font-mono text-slate-400 tracking-wider">
+                              {svc.id}
+                            </span>
+                            {isSelected && (
+                              <span className={`w-1.5 h-1.5 rounded-full ${theme.dot} animate-pulse`} />
+                            )}
+                          </div>
+                          <div className={`text-xs font-bold leading-tight truncate ${
+                            isSelected ? "text-slate-900" : "text-slate-650"
+                          }`}>
+                            {svc.title}
                           </div>
                         </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-                        {/* Icon Container */}
-                        <div className={`mb-6 p-4 rounded-xl border border-slate-800 group-hover:border-cyan-500/30 group-hover:bg-[#070b15] transition-all duration-500 inline-flex items-center justify-center self-start text-cyan-400 ${theme.bg}`}>
-                          <IconComponent className={`w-6 h-6 ${theme.text}`} />
-                        </div>
+              {/* Caja de Concepto Maestro Contextual */}
+              <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm hidden lg:block">
+                <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-1.5">CONCEPTO CAPA</span>
+                <p className="text-[11px] text-slate-500 font-light leading-relaxed">
+                  {currentCapaData?.description}
+                </p>
+              </div>
 
-                        {/* Title & Concept */}
-                        <h4 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-cyan-400 transition-colors">
-                          {svc.title}
-                        </h4>
-                        <p className="text-slate-400 text-xs font-light leading-relaxed mb-6">
-                          {svc.concept}
-                        </p>
+            </div>
 
-                        {/* Capacidades Específicas */}
-                        <div className="space-y-2 border-t border-slate-900/80 pt-6 mb-8 flex-1">
-                          <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block mb-3">SERVICIOS DE VALOR</span>
-                          {svc.capacidades.slice(0, 4).map((cap, cIdx) => (
-                            <div key={cIdx} className="flex gap-2 items-start text-[11px] text-slate-400 font-light leading-snug">
-                              <Check className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${theme.text}`} />
+            {/* Panel Derecho: Detalles del Servicio + Simulador Interactivo (col-span-8) */}
+            <div className="col-span-12 lg:col-span-8 p-6 md:p-8 flex flex-col gap-8 bg-slate-50/10 justify-between">
+              
+              {activeService ? (
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch h-full">
+                  
+                  {/* Sub-columna Izquierda: Información de Detalles (col-span-5) */}
+                  <div className="md:col-span-5 flex flex-col justify-between gap-6">
+                    
+                    <div className="space-y-4">
+                      {/* Badge superior */}
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 bg-slate-100 border border-slate-200 text-[8px] font-mono font-bold tracking-wider rounded-md text-slate-500 uppercase">
+                          {activeService.id}
+                        </span>
+                        <span className="text-[8px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+                          {activeCapa === "capa-1" ? "Inteligencia" : activeCapa === "capa-2" ? "Soluciones" : "Tecnología"}
+                        </span>
+                      </div>
+
+                      {/* Título y Concepto */}
+                      <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight leading-tight">
+                        {activeService.title}
+                      </h3>
+                      
+                      <p className="text-slate-500 text-xs font-light leading-relaxed">
+                        {activeService.concept}
+                      </p>
+
+                      {/* Capacidades */}
+                      <div className="pt-4 border-t border-slate-200/60 space-y-2">
+                        <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
+                          Servicios de Valor
+                        </span>
+                        <div className="space-y-1.5">
+                          {activeService.capacidades.slice(0, 4).map((cap, cIdx) => (
+                            <div key={cIdx} className="flex gap-2 items-start text-[11px] text-slate-650 font-light leading-snug">
+                              <Check className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-cyan-600`} />
                               <span>{cap}</span>
                             </div>
                           ))}
-                          {svc.capacidades.length > 4 && (
-                            <div className="text-[9px] font-mono text-slate-500 pl-5 pt-1">
-                              + {svc.capacidades.length - 4} capacidades adicionales
-                            </div>
-                          )}
                         </div>
-
-                        {/* Enfoque Diferencial */}
-                        <div className="bg-[#050914] border border-slate-900/60 p-4 rounded-xl mb-6">
-                          <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block mb-1">ENFOQUE DIFERENCIAL</span>
-                          <p className="text-[10px] text-slate-300 font-light leading-relaxed">
-                            {svc.enfoque}
-                          </p>
-                        </div>
-
-                        {/* CTA Button */}
-                        <Link 
-                          href={`/services/${svc.slug}`}
-                          className="w-full py-3.5 bg-slate-950 hover:bg-[#070b15] border border-slate-850 hover:border-cyan-500/40 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-md"
-                        >
-                          <span>Explorar Solución</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </Link>
                       </div>
-                    );
-                  })}
-                </motion.div>
-              </AnimatePresence>
+                    </div>
+
+                    {/* Enfoque Diferencial y Botón */}
+                    <div className="space-y-4 pt-4 border-t border-slate-200/60">
+                      <div className="bg-slate-100/50 border border-slate-200 p-3.5 rounded-xl">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block mb-1">
+                          Enfoque Diferencial
+                        </span>
+                        <p className="text-[10px] text-slate-500 font-light leading-relaxed">
+                          {activeService.enfoque}
+                        </p>
+                      </div>
+
+                      <Link 
+                        href={`/services/${activeService.slug}`}
+                        className="w-full py-3 bg-slate-900 hover:bg-slate-950 border border-slate-800 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all flex items-center justify-center gap-2 group shadow-md"
+                      >
+                        <span>Explorar Solución</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </Link>
+                    </div>
+
+                  </div>
+
+                  {/* Sub-columna Derecha: Simulador Interactivo (col-span-7) */}
+                  <div className="md:col-span-7 flex flex-col bg-[#02050a] border border-slate-800 rounded-2xl relative overflow-hidden h-[360px] md:h-auto min-h-[360px] shadow-2xl p-4">
+                    
+                    {/* Header de la consola de simulación */}
+                    <div className="flex justify-between items-center pb-3 border-b border-slate-900 mb-3 text-slate-400">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                        <span className="font-mono text-[9px] uppercase tracking-wider text-slate-300 font-bold">
+                          Simulador Real // Activo
+                        </span>
+                      </div>
+                      <div className="flex gap-1.5">
+                        <div className="w-2 h-2 rounded-full bg-slate-800"></div>
+                        <div className="w-2 h-2 rounded-full bg-slate-800"></div>
+                        <div className="w-2 h-2 rounded-full bg-slate-800"></div>
+                      </div>
+                    </div>
+
+                    {/* Cuerpo dinámico del simulador */}
+                    <div className="flex-1 flex flex-col justify-between overflow-hidden">
+                      <AnimatePresence mode="wait">
+                        <motion.div 
+                          key={activeServiceSlug}
+                          initial={{ opacity: 0, scale: 0.98 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.98 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex-1 flex flex-col justify-between overflow-hidden"
+                        >
+                          <ActiveSimulator slug={activeServiceSlug} theme={COLOR_THEMES[activeService.theme]} />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+
+                  </div>
+
+                </div>
+              ) : (
+                <div className="flex-1 flex items-center justify-center text-slate-400 text-sm font-light">
+                  Selecciona un servicio para visualizar detalles.
+                </div>
+              )}
 
             </div>
+
           </div>
 
         </div>
@@ -598,4 +688,884 @@ export default function ServicesSection() {
       </div>
     </section>
   );
+}
+
+// COMPONENTE CONTENEDOR DE TODOS LOS SIMULADORES EN CÓDIGO PURO
+function ActiveSimulator({ slug, theme }) {
+  // Estados genéricos
+  const [logs, setLogs] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const logEndRef = useRef(null);
+
+  // Helper para añadir logs
+  const addLog = (text) => {
+    const time = new Date().toLocaleTimeString().split(" ")[0];
+    setLogs(prev => [...prev.slice(-4), `[${time}] ${text}`]);
+  };
+
+  useEffect(() => {
+    if (logEndRef.current) {
+      logEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [logs]);
+
+  // ==========================================
+  // SIMULADOR 1: DRONES & EARTH DATA (Capa 3 - Captura)
+  // ==========================================
+  if (slug === "drones-earth-data") {
+    const [dronePos, setDronePos] = useState({ x: 10, y: 10 });
+    const [scanGrid, setScanGrid] = useState(Array(16).fill(false));
+    
+    useEffect(() => {
+      let step = 0;
+      const interval = setInterval(() => {
+        const path = [
+          { x: 10, y: 10, g: 0 }, { x: 35, y: 10, g: 1 }, { x: 60, y: 10, g: 2 }, { x: 85, y: 10, g: 3 },
+          { x: 85, y: 35, g: 7 }, { x: 60, y: 35, g: 6 }, { x: 35, y: 35, g: 5 }, { x: 10, y: 35, g: 4 },
+          { x: 10, y: 60, g: 8 }, { x: 35, y: 60, g: 9 }, { x: 60, y: 60, g: 10 }, { x: 85, y: 60, g: 11 },
+          { x: 85, y: 85, g: 15 }, { x: 60, y: 85, g: 14 }, { x: 35, y: 85, g: 13 }, { x: 10, y: 85, g: 12 }
+        ];
+        const nextPos = path[step % path.length];
+        setDronePos({ x: nextPos.x, y: nextPos.y });
+        setScanGrid(prev => {
+          const nextGrid = [...prev];
+          nextGrid[nextPos.g] = true;
+          return nextGrid;
+        });
+        
+        if (step % 4 === 0) {
+          addLog(`Dron barriendo sector ${nextPos.g + 1}...`);
+        } else if (step % 4 === 2) {
+          addLog(`LiDAR: Capturando a ${1400 + Math.floor(Math.random()*200)} pts/m²`);
+        }
+        
+        step++;
+      }, 900);
+      return () => clearInterval(interval);
+    }, []);
+
+    const resetScan = () => {
+      setScanGrid(Array(16).fill(false));
+      addLog("Limpiando mapa y reiniciando misión");
+    };
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Telemetría en vivo */}
+        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+          <div>ALTITUD: <span className="text-cyan-400">120.4 m</span></div>
+          <div>BATERÍA: <span className="text-emerald-400">92%</span></div>
+          <div>ESTADO: <span className="text-rose-400 animate-pulse">ESCANEO</span></div>
+        </div>
+
+        {/* Ventana de visualización */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[160px] flex items-center justify-center">
+          {/* Rejilla de fondo */}
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
+          <div className="relative w-44 h-44 border border-slate-800 rounded bg-[#03060c]/80 p-1 grid grid-cols-4 gap-1.5">
+            {scanGrid.map((scanned, i) => (
+              <div 
+                key={i} 
+                className={`rounded-sm transition-all duration-700 flex flex-col justify-between p-1 ${
+                  scanned 
+                    ? "bg-cyan-500/20 border border-cyan-400/40 text-cyan-300" 
+                    : "bg-slate-900/30 border border-slate-950 text-slate-800"
+                }`}
+              >
+                <span>S{i+1}</span>
+                {scanned && <span className="text-[7px] text-cyan-400 self-end">LiDAR</span>}
+              </div>
+            ))}
+
+            {/* Drone Icon */}
+            <div 
+              className="absolute w-5 h-5 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 pointer-events-none"
+              style={{ left: `${dronePos.x}%`, top: `${dronePos.y}%` }}
+            >
+              <div className="relative w-full h-full flex items-center justify-center">
+                {/* Cono de escaneo */}
+                <div className="absolute w-12 h-12 bg-cyan-400/25 blur-sm rounded-full -z-10 animate-ping"></div>
+                <div className="absolute w-4 h-4 bg-cyan-500 rounded-full flex items-center justify-center border border-white">
+                  <Plane className="w-2.5 h-2.5 text-black" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Consola de logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
+          <div className="text-slate-500 font-bold mb-1.5 uppercase text-[9px]">Log Drones:</div>
+          <div className="space-y-0.5 min-h-[48px]">
+            {logs.map((log, i) => (
+              <div key={i} className="text-cyan-400/80 truncate">{log}</div>
+            ))}
+          </div>
+          <button 
+            onClick={resetScan}
+            className="mt-2 w-full py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white uppercase text-[8px] tracking-wider transition-colors"
+          >
+            Reiniciar Escaneo
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 2: DEVOPS & CLOUD ENGINEERING (Capa 3 - Procesamiento)
+  // ==========================================
+  if (slug === "devops-cloud-engineering") {
+    const [pods, setPods] = useState([
+      { name: "pod-gis-1", status: "Running", cpu: "12%" },
+      { name: "pod-gis-2", status: "Running", cpu: "28%" },
+      { name: "pod-auth-1", status: "Running", cpu: "4%" },
+      { name: "pod-db-1", status: "Running", cpu: "42%" }
+    ]);
+    const [latency, setLatency] = useState(Array(15).fill(40));
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        // Ticking pod metrics
+        setPods(prev => prev.map(p => ({
+          ...p,
+          cpu: `${Math.floor(Math.random() * 45) + 3}%`
+        })));
+
+        // Ticking Latency sparkline
+        setLatency(prev => [...prev.slice(1), Math.floor(Math.random() * 60) + 15]);
+
+        if (Math.random() > 0.6) {
+          addLog(`Kubernetes auto-scaler: Healthy, cluster load average 31%`);
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Kubernetes Cluster diagram */}
+        <div className="flex-1 grid grid-cols-2 gap-4 min-h-[160px]">
+          {/* Node 1 */}
+          <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+            <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
+              <span className="font-bold text-cyan-400">NODE-MASTER</span>
+              <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
+            </div>
+            <div className="space-y-1.5">
+              {pods.slice(0, 2).map((pod, i) => (
+                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-slate-300 font-bold">{pod.name}</span>
+                  </div>
+                  <span className="text-slate-500">CPU: {pod.cpu}</span>
+                </div>
+              ))}
+            </div>
+            <div className="text-[8px] text-slate-500 pt-2 text-right">MAGNA-SIRGAS Origin API</div>
+          </div>
+
+          {/* Node 2 */}
+          <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+            <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
+              <span className="font-bold text-indigo-400">NODE-COMPUTE</span>
+              <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
+            </div>
+            <div className="space-y-1.5">
+              {pods.slice(2, 4).map((pod, i) => (
+                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-slate-300 font-bold">{pod.name}</span>
+                  </div>
+                  <span className="text-slate-500">CPU: {pod.cpu}</span>
+                </div>
+              ))}
+            </div>
+            <div className="text-[8px] text-slate-500 pt-2 text-right">LADM-COL Parser Node</div>
+          </div>
+        </div>
+
+        {/* Latency Sparkline Graph */}
+        <div className="mt-3 bg-[#03070f] border border-slate-900 p-2.5 rounded-lg flex flex-col">
+          <div className="flex justify-between text-slate-500 text-[8px] mb-1 font-bold">
+            <span>LATENCIA DEL PROCESADOR (ms)</span>
+            <span className="text-emerald-400 font-mono">PROM: 32ms</span>
+          </div>
+          <div className="h-10 w-full flex items-end gap-0.5">
+            {latency.map((val, i) => (
+              <div 
+                key={i} 
+                className="flex-1 bg-cyan-500/30 border border-cyan-400/40 rounded-t-sm transition-all duration-300 hover:bg-cyan-400"
+                style={{ height: `${val}%` }}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg space-y-0.5 min-h-[40px]">
+          {logs.map((log, i) => (
+            <div key={i} className="text-emerald-400/80 truncate">{log}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 3: DESARROLLO DE SOFTWARE (Capa 3 - Procesamiento)
+  // ==========================================
+  if (slug === "desarrollo-software") {
+    const [status, setStatus] = useState("idle");
+    const [payload, setPayload] = useState(null);
+
+    const executeQuery = () => {
+      setStatus("loading");
+      addLog("POST /api/v1/spatial/ladm-col/validate - Solicitud enviada...");
+      
+      setTimeout(() => {
+        setStatus("success");
+        setPayload({
+          status: "success",
+          timestamp: new Date().toISOString(),
+          record: "NUPRE-1100101010012",
+          validation: {
+            topology: "VALID",
+            overlaps: "0_DETECTED",
+            magna_sirgas: "Magna-Sirgas / Origen-Unico"
+          },
+          polygon: {
+            area_m2: 348.91,
+            vertices: 4
+          }
+        });
+        addLog("Response status: 200 OK. Estructura validada correctamente.");
+      }, 1000);
+    };
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Request Input Area */}
+        <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 space-y-2">
+          <div className="flex justify-between items-center text-slate-500 text-[8px] font-bold uppercase">
+            <span>Query Console (API Sandbox)</span>
+            <span className="text-cyan-400">HTTPS POST</span>
+          </div>
+          <div className="bg-black/60 border border-slate-900 p-2 rounded text-slate-300 text-[9px] leading-relaxed">
+            <div><span className="text-rose-400">endpoint</span>: <span className="text-emerald-400">&quot;https://api.dgz.co/v1/spatial/validate&quot;</span></div>
+            <div><span className="text-rose-400">headers</span>: &#123; Authorization: <span className="text-yellow-400">&quot;Bearer dgz_live_key_92c3...&quot;</span> &#125;</div>
+            <div><span className="text-rose-400">body</span>: &#123; id: <span className="text-indigo-400">&quot;PARCEL-BOG-CHAPINERO&quot;</span>, format: <span className="text-indigo-400">&quot;LADM-COL-XTF&quot;</span> &#125;</div>
+          </div>
+          <button 
+            onClick={executeQuery}
+            disabled={status === "loading"}
+            className="w-full py-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-black font-bold uppercase text-[9px] tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10 disabled:opacity-50"
+          >
+            <Play className="w-2.5 h-2.5 fill-black" />
+            {status === "loading" ? "Procesando..." : "Ejecutar Consulta API"}
+          </button>
+        </div>
+
+        {/* JSON Response Area */}
+        <div className="flex-1 mt-3 bg-slate-950 border border-slate-900 rounded-xl p-3 overflow-hidden flex flex-col min-h-[120px]">
+          <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2 text-slate-500 text-[8px] font-bold uppercase">
+            <span>API Response Body</span>
+            {status === "idle" && <span className="text-slate-600">ESPERANDO EJECUCIÓN</span>}
+            {status === "loading" && <span className="text-yellow-400 animate-pulse">CARGANDO DATA...</span>}
+            {status === "success" && <span className="text-emerald-400">HTTP 200 OK</span>}
+          </div>
+          
+          <div className="flex-1 overflow-auto scrollbar-hide text-[9px] leading-relaxed">
+            {status === "success" && payload ? (
+              <pre className="text-emerald-400/90 whitespace-pre">
+                {JSON.stringify(payload, null, 2)}
+              </pre>
+            ) : (
+              <div className="h-full flex items-center justify-center text-slate-600 italic">
+                {status === "loading" ? "Validando topología XML/XTF..." : "Haz clic arriba para simular la petición"}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2 rounded text-cyan-400/80 min-h-[30px] truncate">
+          {logs[logs.length - 1] || "[Sistema] Listo para recibir consultas catastrales estructuradas."}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 4: GIS & GEOINTELLIGENCE (Capa 1 - Inteligencia)
+  // ==========================================
+  if (slug === "gis-geointelligence") {
+    const [layerCatastro, setLayerCatastro] = useState(true);
+    const [layerVias, setLayerVias] = useState(false);
+    const [layerZonas, setLayerZonas] = useState(true);
+    const [coords, setCoords] = useState({ x: "1,024,842.12", y: "854,921.43" });
+    const [selectedParcel, setSelectedParcel] = useState(null);
+
+    const handleMouseMove = (e) => {
+      const bounds = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - bounds.left;
+      const y = e.clientY - bounds.top;
+      
+      const geoX = (1000000 + x * 125.43).toFixed(2);
+      const geoY = (850000 + y * 92.15).toFixed(2);
+      setCoords({ x: geoX, y: geoY });
+    };
+
+    const handleParcelClick = (name, area, owner) => {
+      setSelectedParcel({ name, area, owner });
+      addLog(`Detalle Catastral: Seleccionada parcela ${name} (${area})`);
+    };
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Controles de Capas GIS */}
+        <div className="flex gap-2 mb-3">
+          <button 
+            onClick={() => { setLayerCatastro(!layerCatastro); addLog(`Capa Catastro: ${!layerCatastro ? 'Visible' : 'Oculta'}`); }}
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+              layerCatastro ? "bg-rose-500/10 border-rose-500/30 text-rose-400" : "bg-slate-950 border-slate-800 text-slate-500"
+            }`}
+          >
+            [X] CATASTRO
+          </button>
+          <button 
+            onClick={() => { setLayerVias(!layerVias); addLog(`Capa Red Vial: ${!layerVias ? 'Visible' : 'Oculta'}`); }}
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+              layerVias ? "bg-yellow-500/10 border-yellow-500/30 text-yellow-400" : "bg-slate-950 border-slate-800 text-slate-500"
+            }`}
+          >
+            [X] VÍAS
+          </button>
+          <button 
+            onClick={() => { setLayerZonas(!layerZonas); addLog(`Capa Zonas Restringidas: ${!layerZonas ? 'Visible' : 'Oculta'}`); }}
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+              layerZonas ? "bg-purple-500/10 border-purple-500/30 text-purple-400" : "bg-slate-950 border-slate-800 text-slate-500"
+            }`}
+          >
+            [X] ZONAS
+          </button>
+        </div>
+
+        {/* Visor de Mapa Interactivo */}
+        <div 
+          onMouseMove={handleMouseMove}
+          className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[180px] flex items-center justify-center cursor-crosshair group"
+        >
+          {/* Rejilla de Fondo GIS */}
+          <div className="absolute inset-0 opacity-[0.08] stroke-slate-800" style={{ backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+          
+          <svg viewBox="0 0 200 200" className="w-48 h-48 relative z-10">
+            {/* Capa Zonas */}
+            {layerZonas && (
+              <polygon 
+                points="20,40 180,20 160,180 50,150" 
+                className="fill-purple-500/10 stroke-purple-500/30 stroke-[1] stroke-dasharray-[3,3]"
+              />
+            )}
+
+            {/* Capa Catastro (Parcelas clickables) */}
+            {layerCatastro && (
+              <>
+                <polygon 
+                  points="30,50 90,60 80,120 25,110" 
+                  onClick={() => handleParcelClick("PRCL-C1", "345 m²", "Soberania Terr. SAS")}
+                  className="fill-rose-500/10 hover:fill-rose-500/30 stroke-rose-500 stroke-[1.2] transition-colors cursor-pointer"
+                />
+                <polygon 
+                  points="90,60 160,50 150,130 80,120" 
+                  onClick={() => handleParcelClick("PRCL-C2", "580 m²", "Nación Sector 4")}
+                  className="fill-rose-500/10 hover:fill-rose-500/30 stroke-rose-500 stroke-[1.2] transition-colors cursor-pointer"
+                />
+              </>
+            )}
+
+            {/* Capa Vías */}
+            {layerVias && (
+              <path 
+                d="M 10,140 Q 100,80 190,140" 
+                className="fill-none stroke-yellow-500 stroke-[3] stroke-opacity-70"
+              />
+            )}
+          </svg>
+
+          {/* Telemetría y Coordenadas Flotantes */}
+          <div className="absolute bottom-2 left-2 bg-black/85 border border-slate-800 p-2 rounded text-[8px] text-slate-300">
+            <div>ESTE: <span className="text-cyan-400">{coords.x}</span></div>
+            <div>NORTE: <span className="text-cyan-400">{coords.y}</span></div>
+            <div className="text-[7px] text-slate-500 mt-1">SISTEMA: MAGNA-SIRGAS (Origen Unico)</div>
+          </div>
+
+          {/* Info de Parcela Seleccionada */}
+          {selectedParcel && (
+            <div className="absolute top-2 right-2 bg-black/90 border border-slate-800 p-2 rounded text-[8px] text-slate-300 max-w-[120px]">
+              <div className="font-bold text-rose-400 mb-1">{selectedParcel.name}</div>
+              <div>Área: {selectedParcel.area}</div>
+              <div className="truncate">Titular: {selectedParcel.owner}</div>
+              <button 
+                onClick={() => setSelectedParcel(null)}
+                className="mt-1 text-[7px] text-slate-500 underline hover:text-white"
+              >
+                Cerrar
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Consola de logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2 rounded text-cyan-400/80 min-h-[30px] truncate">
+          {logs[logs.length - 1] || "[Sistema] Mueve el cursor por el visor para leer coordenadas Magna-Sirgas."}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 5: DATA ANALYTICS & BI (Capa 1 - Inteligencia)
+  // ==========================================
+  if (slug === "data-analytics-bi") {
+    const [activeTab, setActiveTab] = useState("territory");
+    const [counter, setCounter] = useState(1480290);
+    const [kpis, setKpis] = useState({ fiscal: "94.2%", efficiency: "88.1%", compliance: "99.8%" });
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCounter(prev => prev + Math.floor(Math.random() * 8) + 1);
+      }, 1500);
+      return () => clearInterval(timer);
+    }, []);
+
+    const chartData = {
+      territory: [40, 65, 85, 55, 95, 75],
+      fiscal: [80, 50, 45, 90, 60, 78],
+      sectors: [35, 45, 75, 60, 50, 92]
+    };
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* KPI Counters */}
+        <div className="grid grid-cols-2 gap-3 mb-3">
+          <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl">
+            <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Registros Procesados</span>
+            <span className="text-lg font-black text-white tracking-tight">{counter.toLocaleString()}</span>
+          </div>
+          <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl">
+            <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Estándar LADM-COL</span>
+            <span className="text-lg font-black text-emerald-400 tracking-tight">100% CUMPLIDO</span>
+          </div>
+        </div>
+
+        {/* Chart Container */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl p-3.5 flex flex-col justify-between min-h-[140px]">
+          <div className="flex justify-between items-center border-b border-slate-900 pb-2 mb-3">
+            <span className="text-slate-400 text-[8px] font-bold uppercase">Tableros de Mando Ejecutivos</span>
+            <div className="flex gap-1.5 bg-slate-900 p-0.5 rounded-md">
+              <button 
+                onClick={() => { setActiveTab("territory"); addLog("Cargando métricas de Territorio"); }}
+                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                  activeTab === "territory" ? "bg-indigo-500 text-white" : "text-slate-500"
+                }`}
+              >
+                TERRITORIO
+              </button>
+              <button 
+                onClick={() => { setActiveTab("fiscal"); addLog("Cargando optimización catastral"); }}
+                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                  activeTab === "fiscal" ? "bg-indigo-500 text-white" : "text-slate-500"
+                }`}
+              >
+                RECAUDO
+              </button>
+              <button 
+                onClick={() => { setActiveTab("sectors"); addLog("Cargando impacto sectorial"); }}
+                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                  activeTab === "sectors" ? "bg-indigo-500 text-white" : "text-slate-500"
+                }`}
+              >
+                SECTORES
+              </button>
+            </div>
+          </div>
+
+          {/* Gráfico de barras puro CSS */}
+          <div className="flex-1 flex items-end gap-3 h-24 pt-2">
+            {chartData[activeTab].map((val, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
+                <span className="text-[7px] text-slate-400 font-bold">{val}%</span>
+                <div 
+                  className="w-full bg-indigo-500/25 border border-indigo-400/40 rounded-t-sm transition-all duration-500 hover:bg-indigo-400"
+                  style={{ height: `${val * 0.7}px` }}
+                ></div>
+                <span className="text-[7px] text-slate-500">M{i+1}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2 rounded text-cyan-400/80 min-h-[30px] truncate">
+          {logs[logs.length - 1] || "[Sistema] Selecciona las pestañas para auditar las analíticas territoriales."}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 6: IA & AUTOMATIZACIÓN (Capa 1 - Inteligencia)
+  // ==========================================
+  if (slug === "ia-automatizacion") {
+    const [boxes, setBoxes] = useState([
+      { label: "BOSQUE", confidence: "97.4%", points: "M 20,40 L 90,30 L 100,90 L 30,100 Z", color: "stroke-emerald-400 fill-emerald-500/10", tagX: 25, tagY: 35 },
+      { label: "CONSTR", confidence: "94.8%", points: "M 110,60 L 170,50 L 160,110 L 100,120 Z", color: "stroke-cyan-400 fill-cyan-500/10", tagX: 105, tagY: 45 }
+    ]);
+    const [modelState, setModelState] = useState("running");
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        // Ticking confidence randomly
+        setBoxes(prev => prev.map(b => ({
+          ...b,
+          confidence: `${(94 + Math.random() * 5).toFixed(1)}%`
+        })));
+
+        if (Math.random() > 0.7) {
+          addLog("Computer Vision: Segmentando coberturas de terreno multiespectral...");
+        }
+      }, 1200);
+      return () => clearInterval(timer);
+    }, []);
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Status bar */}
+        <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl flex justify-between items-center mb-3">
+          <span className="text-slate-500 text-[8px] font-bold">MODELO DE IA: SEGMENTATION_NET_V2</span>
+          <span className="text-[8px] text-purple-400 font-bold animate-pulse">INFERENCIA ACTIVA</span>
+        </div>
+
+        {/* Imagen del satélite simulada con SVG */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden flex items-center justify-center min-h-[160px]">
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
+          
+          <svg viewBox="0 0 200 200" className="w-44 h-44 relative z-10 border border-slate-800 rounded bg-[#03060c]">
+            {boxes.map((box, i) => (
+              <g key={i}>
+                <polygon points={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
+                <rect x={box.tagX} y={box.tagY} width="50" height="12" rx="2" className="fill-black border border-slate-850" />
+                <text x={box.tagX + 4} y={box.tagY + 9} className="fill-white text-[7px] font-bold font-mono">
+                  {box.label} {box.confidence}
+                </text>
+              </g>
+            ))}
+
+            {/* Neural scan line */}
+            <line x1="0" y1="10" x2="200" y2="10" className="stroke-purple-500 stroke-[1.5] opacity-50" style={{ animation: 'pipeline-scan 4s linear infinite' }} />
+          </svg>
+        </div>
+
+        {/* Logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg space-y-0.5 min-h-[44px]">
+          {logs.map((log, i) => (
+            <div key={i} className="text-purple-400/80 truncate">{log}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 7: ARQUITECTURA INTELIGENTE (Capa 2 - Soluciones)
+  // ==========================================
+  if (slug === "arquitectura-inteligente") {
+    const [rotY, setRotY] = useState(45);
+    const [activeSpec, setActiveSpec] = useState("LOD-400");
+
+    useEffect(() => {
+      let interval;
+      if (isPlaying) {
+        interval = setInterval(() => {
+          setRotY(prev => (prev + 2) % 360);
+        }, 60);
+      }
+      return () => clearInterval(interval);
+    }, [isPlaying]);
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* BIM Specs Header */}
+        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2 rounded-lg text-slate-400 mb-3">
+          <div className="truncate">TIPO: <span className="text-blue-400">GEMELO_DIGITAL</span></div>
+          <div className="truncate">ESTÁNDAR: <span className="text-blue-400">BIM_IFC</span></div>
+          <div className="truncate">ESTADO: <span className="text-emerald-400 font-bold">OK</span></div>
+        </div>
+
+        {/* 3D Wireframe Canvas */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[160px] flex items-center justify-center">
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
+          {/* Proyección isométrica con SVG en rotación */}
+          <div 
+            className="w-32 h-32 relative flex items-center justify-center transition-transform duration-300"
+            style={{ transform: `rotateX(60deg) rotateZ(${rotY}deg)` }}
+          >
+            {/* Box wireframe 1 */}
+            <svg viewBox="0 0 100 100" className="w-full h-full stroke-blue-500 fill-none stroke-[1.2]">
+              <rect x="15" y="15" width="70" height="70" className="stroke-blue-400" />
+              <rect x="25" y="25" width="50" height="50" className="stroke-blue-600/70" />
+              <line x1="15" y1="15" x2="25" y2="25" />
+              <line x1="85" y1="15" x2="75" y2="25" />
+              <line x1="15" y1="85" x2="25" y2="75" />
+              <line x1="85" y1="85" x2="75" y2="75" />
+
+              {/* Animating height points */}
+              <circle cx="25" cy="25" r="2.5" className="fill-cyan-400 animate-ping" />
+              <circle cx="75" cy="75" r="2.5" className="fill-cyan-400" />
+            </svg>
+          </div>
+
+          <div className="absolute bottom-2 right-2 flex gap-2">
+            <button 
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="px-2 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white text-[8px]"
+            >
+              {isPlaying ? "PAUSAR GIRO" : "GIRAR"}
+            </button>
+          </div>
+        </div>
+
+        {/* Telemetría del gemelo digital */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
+          <div className="text-slate-500 font-bold mb-1 uppercase text-[8px]">Propiedades del Modelo:</div>
+          <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-350">
+            <div>• Nivel de Detalle: <span className="text-blue-400 font-bold">LOD 400</span></div>
+            <div>• Formato: <span className="text-blue-400 font-bold">IFC 4.3</span></div>
+            <div>• Interoperabilidad: <span className="text-blue-400 font-bold">GIS + BIM</span></div>
+            <div>• Clash Detection: <span className="text-emerald-400 font-bold">0 Errores</span></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 8: INFRAESTRUCTURA VIAL DIGITAL (Capa 2 - Soluciones)
+  // ==========================================
+  if (slug === "infraestructura-vial-digital") {
+    const [scanOffset, setScanOffset] = useState(0);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setScanOffset(prev => (prev + 5) % 100);
+        if (Math.random() > 0.7) {
+          addLog(`LiDAR vial: Analizando pendiente en K0+${120 + Math.floor(Math.random()*850)}`);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }, []);
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Telemetría vial */}
+        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+          <div>PENDIENTE: <span className="text-emerald-400">+3.12%</span></div>
+          <div>ESTACIÓN: <span className="text-cyan-400">K2+350</span></div>
+          <div>SEGURIDAD: <span className="text-emerald-400 font-bold">APROBADO</span></div>
+        </div>
+
+        {/* Visor de perfil de elevación */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[160px] flex items-center justify-center">
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
+          <svg viewBox="0 0 200 120" className="w-full h-36 relative z-10 px-4">
+            {/* Terreno natural */}
+            <path d="M 0,90 Q 60,60 110,85 T 200,40 L 200,120 L 0,120 Z" className="fill-slate-900 stroke-slate-800 stroke-[1]" />
+            {/* Vía diseñada */}
+            <path d="M 0,85 Q 60,55 110,80 T 200,35" className="fill-none stroke-emerald-500 stroke-[2]" />
+            
+            {/* Scanner line vertical */}
+            <line 
+              x1={`${scanOffset}%`} y1="0" 
+              x2={`${scanOffset}%`} y2="120" 
+              className="stroke-cyan-500 stroke-[1.5] opacity-50"
+            />
+            {/* Scanner intersection dot */}
+            <circle 
+              cx={`${scanOffset}%`} cy="70" r="2.5" 
+              className="fill-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]"
+            />
+          </svg>
+        </div>
+
+        {/* Logs */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg space-y-0.5 min-h-[44px]">
+          {logs.map((log, i) => (
+            <div key={i} className="text-emerald-400/80 truncate">{log}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 9: AGRICULTURA DE PRECISIÓN (Capa 2 - Soluciones)
+  // ==========================================
+  if (slug === "agricultura-precision") {
+    // Rejilla de parcelas NDVI
+    const [ndviGrid, setNdviGrid] = useState([
+      { id: 1, ndvi: 0.72, status: "Normal" }, { id: 2, ndvi: 0.45, status: "Seco" }, { id: 3, ndvi: 0.81, status: "Excelente" }, { id: 4, ndvi: 0.68, status: "Normal" },
+      { id: 5, ndvi: 0.38, status: "Crítico" }, { id: 6, ndvi: 0.74, status: "Normal" }, { id: 7, ndvi: 0.42, status: "Seco" }, { id: 8, ndvi: 0.83, status: "Excelente" },
+      { id: 9, ndvi: 0.79, status: "Excelente" }, { id: 10, ndvi: 0.70, status: "Normal" }, { id: 11, ndvi: 0.39, status: "Crítico" }, { id: 12, ndvi: 0.75, status: "Normal" }
+    ]);
+    const [selectedCell, setSelectedCell] = useState(null);
+
+    const handleIrrigate = () => {
+      if (selectedCell === null) return;
+      
+      setNdviGrid(prev => prev.map(cell => {
+        if (cell.id === selectedCell + 1) {
+          addLog(`Riego automático aplicado a Parcela S${cell.id}. NDVI incrementado.`);
+          return { ...cell, ndvi: 0.84, status: "Excelente" };
+        }
+        return cell;
+      }));
+
+      setSelectedCell(null);
+    };
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Telemetría ambiental del cultivo */}
+        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+          <div>HUMEDAD: <span className="text-cyan-400">42%</span></div>
+          <div>TEMPERATURA: <span className="text-orange-400">26.8°C</span></div>
+          <div>DOSIFICACIÓN: <span className="text-teal-400 font-bold">AUTOMÁTICA</span></div>
+        </div>
+
+        {/* Rejilla interactiva NDVI */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[140px] flex items-center justify-center p-4">
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
+          <div className="w-56 grid grid-cols-4 gap-2 relative z-10">
+            {ndviGrid.map((cell, i) => {
+              // Colorear dependiendo del NDVI
+              let colorClass = "bg-rose-500/25 border-rose-500/50 text-rose-300"; // Crítico (< 0.4)
+              if (cell.ndvi >= 0.4 && cell.ndvi < 0.6) colorClass = "bg-orange-500/20 border-orange-500/40 text-orange-300"; // Seco (0.4 - 0.6)
+              if (cell.ndvi >= 0.6 && cell.ndvi < 0.8) colorClass = "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"; // Normal (0.6 - 0.8)
+              if (cell.ndvi >= 0.8) colorClass = "bg-teal-500/30 border-teal-400/50 text-teal-300 animate-pulse"; // Excelente (>= 0.8)
+
+              const isSelected = selectedCell === i;
+
+              return (
+                <div 
+                  key={cell.id} 
+                  onClick={() => setSelectedCell(i)}
+                  className={`rounded-xl border p-2 cursor-pointer transition-all duration-300 flex flex-col justify-between h-12 relative ${colorClass} ${
+                    isSelected ? "scale-[1.08] ring-2 ring-white z-20 shadow-lg" : "hover:scale-[1.02]"
+                  }`}
+                >
+                  <span className="text-[7px] font-bold">S{cell.id}</span>
+                  <span className="text-[9px] font-black self-end font-mono">{(cell.ndvi).toFixed(2)}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Consola de Control de Riego */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
+          {selectedCell !== null ? (
+            <div className="flex justify-between items-center">
+              <div>
+                <div className="text-white font-bold">Parcela S{ndviGrid[selectedCell].id} Seleccionada</div>
+                <div className="text-[9px] text-slate-500">Estado: {ndviGrid[selectedCell].status} (NDVI: {ndviGrid[selectedCell].ndvi})</div>
+              </div>
+              <button 
+                onClick={handleIrrigate}
+                className="py-1.5 px-3 bg-teal-500 hover:bg-teal-400 text-black font-black uppercase text-[8px] tracking-wider rounded-lg transition-colors flex items-center gap-1 shadow-md shadow-teal-500/10"
+              >
+                <Droplet className="w-2.5 h-2.5 fill-black" />
+                Dosificar Riego
+              </button>
+            </div>
+          ) : (
+            <div className="text-slate-500 text-center py-1.5 italic text-[9px]">
+              Selecciona una parcela seca o crítica en el mapa para aplicarle riego.
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SIMULADOR 10: GESTIÓN AMBIENTAL INTELIGENTE (Capa 2 - Soluciones)
+  // ==========================================
+  if (slug === "gestion-ambiental-inteligente") {
+    const [sliderYear, setSliderYear] = useState(2026);
+    
+    // Proyección de métricas basadas en el año seleccionado
+    const reforestedArea = Math.min(100, Math.max(0, (sliderYear - 2026) * 22 + 10));
+    const co2Offsets = ((sliderYear - 2026) * 45.8 + 120.4).toFixed(1);
+    const carbonFootprint = Math.max(10, 100 - (sliderYear - 2026) * 18.5).toFixed(1);
+
+    return (
+      <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
+        {/* Telemetría ambiental */}
+        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+          <div>CO2 REMOVIDO: <span className="text-teal-400 font-bold">{co2Offsets} Ton</span></div>
+          <div>HUELLA DE CARBONO: <span className="text-rose-400">{carbonFootprint}%</span></div>
+          <div>REFORESTADO: <span className="text-emerald-400">{reforestedArea}%</span></div>
+        </div>
+
+        {/* Mapa de Cobertura de Bosques Reforestados */}
+        <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden min-h-[140px] flex items-center justify-center">
+          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+          
+          <svg viewBox="0 0 200 120" className="w-full h-32 relative z-10 px-6">
+            {/* Base de terreno */}
+            <polygon points="10,100 190,100 170,30 30,50" className="fill-slate-900 stroke-slate-800 stroke-[1]" />
+            
+            {/* Árboles que aparecen progresivamente dependiendo del año */}
+            {reforestedArea >= 10 && <circle cx="45" cy="75" r="4" className="fill-emerald-500/80 stroke-emerald-400 stroke-[1] animate-[pulse_3s_infinite]" />}
+            {reforestedArea >= 32 && <circle cx="75" cy="65" r="6" className="fill-emerald-600/80 stroke-emerald-400 stroke-[1]" />}
+            {reforestedArea >= 54 && <circle cx="115" cy="70" r="5" className="fill-emerald-500/90 stroke-emerald-400 stroke-[1] animate-[pulse_2s_infinite]" />}
+            {reforestedArea >= 76 && <circle cx="150" cy="55" r="4.5" className="fill-emerald-600/90 stroke-emerald-400 stroke-[1]" />}
+            {reforestedArea >= 98 && <circle cx="95" cy="50" r="7" className="fill-emerald-500 stroke-emerald-400 stroke-[1]" />}
+
+            <text x="15" y="20" className="fill-slate-500 text-[8px] font-bold">PROYECCIÓN FORESTAL {sliderYear}</text>
+          </svg>
+        </div>
+
+        {/* Timeline Slider Interactivo */}
+        <div className="mt-3 bg-black/60 border border-slate-900 p-3 rounded-lg flex flex-col gap-2">
+          <div className="flex justify-between items-center text-slate-400 text-[8px] font-bold uppercase">
+            <span>Control de Proyección Ambiental</span>
+            <span className="text-teal-400 font-bold">Año: {sliderYear}</span>
+          </div>
+          <input 
+            type="range" 
+            min="2026" 
+            max="2030" 
+            value={sliderYear} 
+            onChange={(e) => setSliderYear(parseInt(e.target.value))}
+            className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500 focus:outline-none"
+          />
+          <div className="flex justify-between text-[7px] text-slate-500 px-1 font-bold">
+            <span>2026 (Actual)</span>
+            <span>2028</span>
+            <span>2030 (Meta)</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 }

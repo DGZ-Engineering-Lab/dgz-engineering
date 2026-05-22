@@ -273,7 +273,7 @@ const ROW1 = [
   { name: "SNR", logo: "https://www.vur.gov.co/portal/resources/images/LogoSNR.png", type: "institution", isWhite: false },
   { name: "ANT", logo: "https://observatorio.ant.gov.co/sites/default/files/2025-02/imagenes/svgs/logo-agencia-nacional-de-tierras.svg", type: "institution", isWhite: false },
   { name: "DANE", logo: "https://www.dane.gov.co/images/logo-portal-dane.svg", type: "institution", isWhite: false },
-  { name: "CINTELI GROUP", logo: "https://cinteligroup.com/images/LOGOCINTELICIUDADES-removebg-preview.png", type: "client", isWhite: false },
+  { name: "CINTELI GROUP", logo: null, type: "client", isWhite: false },
   { name: "ISA ENERGÍA", logo: "https://colombia.isaenergia.com/wp-content/uploads/2025/12/Logo-ISA-Energia-1.svg", type: "client", isWhite: false },
   { name: "GEOSAT", logo: "https://geosat.com.co/logos/lockup-black-tight.svg", type: "client", isWhite: false },
   { name: "FNA", logo: "https://www.fna.gov.co/Style%20Library/fna/img/logo-fna.png", type: "client", isWhite: false },
