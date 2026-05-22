@@ -8,6 +8,8 @@ import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
+import ServicesSection from "../components/ServicesSection";
+
 
 // Configuración de variantes de animación premium
 const fadeInUp = {
@@ -175,6 +177,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ServicesSection />
 
       {/* Territorial Control - Interactive Section */}
       <section className="py-24 relative overflow-hidden section-deferred">
