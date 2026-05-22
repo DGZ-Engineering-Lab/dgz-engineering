@@ -1257,7 +1257,7 @@ function ActiveSimulator({ slug, theme }) {
           <svg viewBox="0 0 200 200" className="w-44 h-44 relative z-10 border border-slate-800 rounded bg-[#03060c]">
             {boxes.map((box, i) => (
               <g key={i}>
-                <polygon points={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
+                <path d={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
                 <rect x={box.tagX} y={box.tagY} width="50" height="12" rx="2" className="fill-black border border-slate-850" />
                 <text x={box.tagX + 4} y={box.tagY + 9} className="fill-white text-[7px] font-bold font-mono">
                   {box.label} {box.confidence}
