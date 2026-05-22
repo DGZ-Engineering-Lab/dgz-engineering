@@ -1,4 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#000"/>
-  <path d="M8 8h6v6H8zm10 0h6v6h-6zm0 10h6v6h-6zm-10 0h6v6H8z" fill="#00e5ff"/>
+<svg viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="400" height="100">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"></stop>
+      <stop offset="100%" stop-color="#8B5CF6"></stop>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+    </filter>
+  </defs>
+  
+  <g transform="translate(10, 0)">
+    <path d="M50 5 L89 27.5 V72.5 L50 95 L11 72.5 V27.5 L50 5Z" stroke-width="2" stroke="#1e293b" fill="#0B0F19"></path>
+    <path d="M50 5 V95 M11 27.5 L89 72.5 M11 72.5 L89 27.5" stroke-width="1" stroke="rgba(30, 41, 59, 0.3)"></path>
+    <path d="M50 12 L82 30 V70 L50 88 C50 88 22 72 22 50 C22 28 50 12 50 12Z" stroke="url(#logo-gradient)" stroke-width="6" stroke-linecap="round"></path>
+    <path d="M45 35 H65 V65 H35 V50 H58" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"></path>
+    <circle cx="55" cy="50" r="4" fill="#38BDF8" filter="url(#glow)"></circle>
+    <path d="M75 75 L85 85 M70 85 H85" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" opacity="1"></path>
+    <circle cx="50" cy="5" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+    <circle cx="89" cy="27.5" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+    <circle cx="89" cy="72.5" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+    <circle cx="50" cy="95" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+    <circle cx="11" cy="72.5" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+    <circle cx="11" cy="27.5" r="1.5" fill="#38BDF8" opacity="0.4"></circle>
+  </g>
+
+  <g transform="translate(130, 50)">
+    <text x="0" y="0" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="900" letter-spacing="-1">DevGiz</text>
+    <text x="3" y="24" fill="#94a3b8" font-family="monospace" font-size="12" font-weight="bold" letter-spacing="5">ENGINEERING</text>
+  </g>
 </svg>
