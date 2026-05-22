@@ -695,19 +695,12 @@ function ActiveSimulator({ slug, theme }) {
   // Estados genéricos
   const [logs, setLogs] = useState([]);
   const [isPlaying, setIsPlaying] = useState(true);
-  const logEndRef = useRef(null);
 
   // Helper para añadir logs
   const addLog = (text) => {
     const time = new Date().toLocaleTimeString().split(" ")[0];
     setLogs(prev => [...prev.slice(-4), `[${time}] ${text}`]);
   };
-
-  useEffect(() => {
-    if (logEndRef.current) {
-      logEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [logs]);
 
   // ==========================================
   // SIMULADOR 1: DRONES & EARTH DATA (Capa 3 - Captura)

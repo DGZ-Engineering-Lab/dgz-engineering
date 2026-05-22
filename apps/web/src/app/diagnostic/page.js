@@ -51,8 +51,9 @@ export default function DiagnosticPage() {
   
   // Scroll log console to bottom
   useEffect(() => {
-    if (consoleBottomRef.current) {
-      consoleBottomRef.current.scrollIntoView({ behavior: "smooth" });
+    const container = consoleBottomRef.current?.closest(".overflow-y-auto");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
     }
   }, [consoleLogs, auditTerminalLogs]);
 

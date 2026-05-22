@@ -459,8 +459,9 @@ export default function GlobalPartners() {
 
   // Scroll to bottom of developer console logs
   useEffect(() => {
-    if (consoleEndRef.current) {
-      consoleEndRef.current.scrollIntoView({ behavior: "smooth" });
+    const container = consoleEndRef.current?.closest(".overflow-y-auto");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
     }
   }, [logs]);
 
