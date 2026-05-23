@@ -5,9 +5,64 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   MapPin, Sliders, Shield, Zap, TrendingUp, Terminal, 
   FileText, Building2, AlertTriangle, CheckCircle2, 
-  ArrowRight, Lock, RefreshCw, Layers, Check 
+  ArrowRight, Lock, RefreshCw, Layers, Check, Globe 
 } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import RtkSatelliteHud from "../../components/RtkSatelliteHud";
+
+function BlueprintSkeleton() {
+  return (
+    <div className="w-full h-[450px] bg-[#020408] rounded-[2rem] border border-cyan-500/20 relative overflow-hidden p-6 flex flex-col justify-between select-none">
+      {/* Cyber Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#091426_1px,transparent_1px),linear-gradient(to_bottom,#091426_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-45" />
+      
+      {/* Moving Laser Scanner */}
+      <motion.div
+        initial={{ y: "-100%" }}
+        animate={{ y: "100%" }}
+        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+        className="absolute left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10 pointer-events-none"
+      />
+      
+      {/* Concentric blueprint lines */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        <div className="w-64 h-64 rounded-full border border-cyan-500/10 animate-pulse" />
+        <div className="w-40 h-40 rounded-full border border-cyan-500/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      </div>
+
+      <div className="flex items-center justify-between z-10">
+        <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest font-black flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
+          SYS // PARSING_BLUEPRINT
+        </span>
+        <span className="text-[7px] font-mono text-slate-500">EPSG:9377 COLOMBIA</span>
+      </div>
+
+      <div className="flex flex-col items-center justify-center gap-3 z-10 text-center my-auto">
+        <div className="text-xl font-mono tracking-[0.25em] text-cyan-400 font-bold uppercase animate-pulse">
+          Cargando Catastro 3D...
+        </div>
+        <p className="text-[10px] font-mono text-slate-500 uppercase tracking-wider max-w-xs leading-normal">
+          Ensamblando topología y descompilando capas de relieve vectorial
+        </p>
+      </div>
+
+      <div className="border-t border-slate-900/60 pt-3 z-10 flex justify-between text-[8px] font-mono text-slate-500 uppercase tracking-wider">
+        <span>SWARM CORE ACTIVE</span>
+        <span>LATENCY: 0.12ms</span>
+      </div>
+    </div>
+  );
+}
+
+const SpatialIntelligenceDashboard = dynamic(
+  () => import("../../components/SpatialIntelligenceDashboard"),
+  {
+    ssr: false,
+    loading: () => <BlueprintSkeleton />
+  }
+);
 
 // Predefined mock municipal parcels
 const INITIAL_PARCELS = [
@@ -24,6 +79,7 @@ export default function DiagnosticPage() {
   const [selectedPathology, setSelectedPathology] = useState(null); // null | TRASLAPES | MEJORAS | AMBIENTAL | REGISTRO
   const [engineExecuted, setEngineExecuted] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
+  const [viewAdvancedDashboard, setViewAdvancedDashboard] = useState(false);
   
   // Console logs
   const [consoleLogs, setConsoleLogs] = useState([
@@ -330,177 +386,197 @@ export default function DiagnosticPage() {
               <div id="validator" className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow min-h-[500px] relative overflow-hidden bg-slate-950/40">
                 <div className="flex items-center justify-between border-b border-slate-900 pb-4 mb-6">
                   <div className="space-y-1">
-                    <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
                       <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
                       Interactive GIS Canvas
                     </span>
                     <h3 className="text-lg font-bold text-white uppercase tracking-wider">Visor de Patologías en Vivo</h3>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        setViewAdvancedDashboard(!viewAdvancedDashboard);
+                        if (window.dgzSynth) {
+                          try { window.dgzSynth.playClick(); } catch (e) {}
+                        }
+                      }}
+                      className="px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono text-[8px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                    >
+                      <Globe className="w-3 h-3 animate-pulse" />
+                      {viewAdvancedDashboard ? "Consola Básica" : "Consola Avanzada 3D"}
+                    </button>
                     <span className="px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-[8px] tracking-widest rounded-sm font-bold uppercase">
                       CTM12 Single Origin
                     </span>
                   </div>
                 </div>
 
-                {/* The SVG Sandbox Canvas */}
-                <div className="flex-grow flex items-center justify-center bg-slate-950/80 rounded-2xl border border-slate-900/60 relative overflow-hidden p-8 min-h-[280px]">
-                  
-                  {/* Grid Lines Overlay */}
-                  <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-                    <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '25px 25px' }}></div>
+                {viewAdvancedDashboard ? (
+                  <div className="flex-grow flex flex-col rounded-2xl overflow-hidden min-h-[400px] border border-slate-900/60 bg-[#020408]">
+                    <SpatialIntelligenceDashboard forceSovereign={true} />
                   </div>
-
-                  {/* Laser Scan Beam */}
-                  {isScanning && (
-                    <motion.div
-                      initial={{ y: "-100%" }}
-                      animate={{ y: "100%" }}
-                      transition={{ duration: 2.2, ease: "easeInOut", repeat: 0 }}
-                      className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#06b6d4] z-20 pointer-events-none"
-                    />
-                  )}
-
-                  <svg viewBox="0 0 260 260" className="w-full max-w-[280px] h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
-                    {/* Environmental River Protection Layer */}
-                    <path
-                      d="M -10 160 C 60 160, 110 200, 270 200 L 270 270 L -10 270 Z"
-                      className={`transition-all duration-700 ${
-                        selectedPathology === "AMBIENTAL" 
-                          ? "fill-teal-500/10 stroke-teal-500/40 stroke-dasharray-[4_4] animate-pulse" 
-                          : "fill-slate-800/10 stroke-slate-800/20"
-                      }`}
-                    />
-                    
-                    {/* Environmental Buffer limit label */}
-                    {selectedPathology === "AMBIENTAL" && (
-                      <text x="10" y="195" className="fill-teal-400 font-mono text-[6px] tracking-wider font-bold">
-                        [LÍMITE DE CONSERVACIÓN CVC]
-                      </text>
-                    )}
-
-                    {/* Parcel rendering */}
-                    {INITIAL_PARCELS.map((parcel) => {
-                      let fillClass = "fill-slate-900/60 stroke-slate-700/60 hover:fill-slate-800/80";
-                      let strokeColor = "stroke-slate-700/60";
+                ) : (
+                  <>
+                    {/* The SVG Sandbox Canvas */}
+                    <div className="flex-grow flex items-center justify-center bg-slate-950/80 rounded-2xl border border-slate-900/60 relative overflow-hidden p-8 min-h-[280px]">
                       
-                      // Highlight depending on active pathology
-                      if (selectedPathology === "TRASLAPES" && parcel.id === "P-102") {
-                        fillClass = engineExecuted 
-                          ? "fill-cyan-950/40 stroke-cyan-500/80" 
-                          : "fill-amber-950/40 stroke-amber-500/80 animate-pulse";
-                      } else if (selectedPathology === "MEJORAS" && parcel.id === "P-103") {
-                        fillClass = engineExecuted 
-                          ? "fill-emerald-950/40 stroke-emerald-500/80" 
-                          : "fill-slate-900/60 stroke-slate-700/60 border-dashed";
-                      } else if (selectedPathology === "AMBIENTAL" && parcel.id === "P-104") {
-                        fillClass = engineExecuted
-                          ? "fill-teal-950/30 stroke-teal-500/80"
-                          : "fill-rose-950/40 stroke-rose-500/80 animate-pulse";
-                      } else if (selectedPathology === "REGISTRO" && parcel.id === "P-101") {
-                        fillClass = engineExecuted
-                          ? "fill-indigo-950/40 stroke-indigo-500/80"
-                          : "fill-indigo-950/10 stroke-indigo-500/30";
-                      }
+                      {/* Grid Lines Overlay */}
+                      <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+                        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '25px 25px' }}></div>
+                      </div>
 
-                      // Snapping morph coordinates for TRASLAPES
-                      const dPath = (selectedPathology === "TRASLAPES" && parcel.id === "P-102" && engineExecuted)
-                        ? parcel.fixedPath 
-                        : parcel.path;
+                      {/* Laser Scan Beam */}
+                      {isScanning && (
+                        <motion.div
+                          initial={{ y: "-100%" }}
+                          animate={{ y: "100%" }}
+                          transition={{ duration: 2.2, ease: "easeInOut", repeat: 0 }}
+                          className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#06b6d4] z-20 pointer-events-none"
+                        />
+                      )}
 
-                      return (
-                        <g key={parcel.id} className="cursor-pointer transition-all duration-300">
-                          <path
-                            d={dPath}
-                            className={`transition-all duration-700 stroke-2 ${fillClass}`}
-                          />
-                          
-                          {/* Inner labels */}
-                          <text 
-                            x={parcel.id === "P-101" ? 50 : parcel.id === "P-102" ? 160 : parcel.id === "P-103" ? 50 : 170} 
-                            y={parcel.id === "P-101" ? 70 : parcel.id === "P-102" ? 80 : parcel.id === "P-103" ? 180 : 190} 
-                            className="fill-slate-400 font-mono text-[7px] tracking-widest font-black pointer-events-none select-none text-center"
-                          >
-                            {parcel.id}
+                      <svg viewBox="0 0 260 260" className="w-full max-w-[280px] h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                        {/* Environmental River Protection Layer */}
+                        <path
+                          d="M -10 160 C 60 160, 110 200, 270 200 L 270 270 L -10 270 Z"
+                          className={`transition-all duration-700 ${
+                            selectedPathology === "AMBIENTAL" 
+                              ? "fill-teal-500/10 stroke-teal-500/40 stroke-dasharray-[4_4] animate-pulse" 
+                              : "fill-slate-800/10 stroke-slate-800/20"
+                          }`}
+                        />
+                        
+                        {/* Environmental Buffer limit label */}
+                        {selectedPathology === "AMBIENTAL" && (
+                          <text x="10" y="195" className="fill-teal-400 font-mono text-[6px] tracking-wider font-bold">
+                            [LÍMITE DE CONSERVACIÓN CVC]
                           </text>
+                        )}
 
-                          {/* Overlap highlighted conflict area */}
-                          {selectedPathology === "TRASLAPES" && parcel.id === "P-102" && !engineExecuted && (
-                            <path
-                              d="M 110 30 L 120 30 L 120 120 L 110 120 Z"
-                              className="fill-rose-600/40 stroke-rose-600/80 stroke-1 stroke-dasharray-[2_2] animate-pulse"
-                            />
-                          )}
+                        {/* Parcel rendering */}
+                        {INITIAL_PARCELS.map((parcel) => {
+                          let fillClass = "fill-slate-900/60 stroke-slate-700/60 hover:fill-slate-800/80";
+                          let strokeColor = "stroke-slate-700/60";
+                          
+                          // Highlight depending on active pathology
+                          if (selectedPathology === "TRASLAPES" && parcel.id === "P-102") {
+                            fillClass = engineExecuted 
+                              ? "fill-cyan-950/40 stroke-cyan-500/80" 
+                              : "fill-amber-950/40 stroke-amber-500/80 animate-pulse";
+                          } else if (selectedPathology === "MEJORAS" && parcel.id === "P-103") {
+                            fillClass = engineExecuted 
+                              ? "fill-emerald-950/40 stroke-emerald-500/80" 
+                              : "fill-slate-900/60 stroke-slate-700/60 border-dashed";
+                          } else if (selectedPathology === "AMBIENTAL" && parcel.id === "P-104") {
+                            fillClass = engineExecuted
+                              ? "fill-teal-950/30 stroke-teal-500/80"
+                              : "fill-rose-950/40 stroke-rose-500/80 animate-pulse";
+                          } else if (selectedPathology === "REGISTRO" && parcel.id === "P-101") {
+                            fillClass = engineExecuted
+                              ? "fill-indigo-950/40 stroke-indigo-500/80"
+                              : "fill-indigo-950/10 stroke-indigo-500/30";
+                          }
 
-                          {/* LiDAR structure representation */}
-                          {selectedPathology === "MEJORAS" && parcel.id === "P-103" && (
-                            <g className="pointer-events-none">
-                              {/* 3D Structure shape overlays representing undetected building */}
-                              <rect
-                                x="40" y="150" width="40" height="40"
-                                className={`transition-all duration-700 stroke-1 ${
-                                  engineExecuted 
-                                    ? "fill-emerald-500/20 stroke-emerald-400/80" 
-                                    : "fill-amber-500/10 stroke-amber-400/40 stroke-dasharray-[2_2] animate-pulse"
-                                }`}
+                          // Snapping morph coordinates for TRASLAPES
+                          const dPath = (selectedPathology === "TRASLAPES" && parcel.id === "P-102" && engineExecuted)
+                            ? parcel.fixedPath 
+                            : parcel.path;
+
+                          return (
+                            <g key={parcel.id} className="cursor-pointer transition-all duration-300">
+                              <path
+                                d={dPath}
+                                className={`transition-all duration-700 stroke-2 ${fillClass}`}
                               />
-                              <text x="43" y="162" className="fill-emerald-400 font-mono text-[5px] font-bold">
-                                {engineExecuted ? "LiDAR OK: +3 NIVELES" : "[LiDAR: EDIFICACIÓN]"}
+                              
+                              {/* Inner labels */}
+                              <text 
+                                x={parcel.id === "P-101" ? 50 : parcel.id === "P-102" ? 160 : parcel.id === "P-103" ? 50 : 170} 
+                                y={parcel.id === "P-101" ? 70 : parcel.id === "P-102" ? 80 : parcel.id === "P-103" ? 180 : 190} 
+                                className="fill-slate-400 font-mono text-[7px] tracking-widest font-black pointer-events-none select-none text-center"
+                              >
+                                {parcel.id}
                               </text>
+
+                              {/* Overlap highlighted conflict area */}
+                              {selectedPathology === "TRASLAPES" && parcel.id === "P-102" && !engineExecuted && (
+                                <path
+                                  d="M 110 30 L 120 30 L 120 120 L 110 120 Z"
+                                  className="fill-rose-600/40 stroke-rose-600/80 stroke-1 stroke-dasharray-[2_2] animate-pulse"
+                                />
+                              )}
+
+                              {/* LiDAR structure representation */}
+                              {selectedPathology === "MEJORAS" && parcel.id === "P-103" && (
+                                <g className="pointer-events-none">
+                                  {/* 3D Structure shape overlays representing undetected building */}
+                                  <rect
+                                    x="40" y="150" width="40" height="40"
+                                    className={`transition-all duration-700 stroke-1 ${
+                                      engineExecuted 
+                                        ? "fill-emerald-500/20 stroke-emerald-400/80" 
+                                        : "fill-amber-500/10 stroke-amber-400/40 stroke-dasharray-[2_2] animate-pulse"
+                                    }`}
+                                  />
+                                  <text x="43" y="162" className="fill-emerald-400 font-mono text-[5px] font-bold">
+                                    {engineExecuted ? "LiDAR OK: +3 NIVELES" : "[LiDAR: EDIFICACIÓN]"}
+                                  </text>
+                                </g>
+                              )}
                             </g>
-                          )}
-                        </g>
-                      );
-                    })}
-                  </svg>
+                          );
+                        })}
+                      </svg>
 
-                  {/* Absolute active alert labels overlay */}
-                  <div className="absolute top-4 left-4">
-                    <span className="text-[7px] font-mono bg-slate-900 border border-slate-800 text-slate-400 px-2 py-1 rounded-sm uppercase tracking-widest">
-                      Visualizador Dinámico
-                    </span>
-                  </div>
+                      {/* Absolute active alert labels overlay */}
+                      <div className="absolute top-4 left-4">
+                        <span className="text-[7px] font-mono bg-slate-900 border border-slate-800 text-slate-400 px-2 py-1 rounded-sm uppercase tracking-widest">
+                          Visualizador Dinámico
+                        </span>
+                      </div>
 
-                  {selectedPathology && (
-                    <div className="absolute bottom-4 right-4">
-                      <span className={`text-[8px] font-mono px-2 py-1 rounded-sm font-bold uppercase tracking-wider shadow-md ${
-                        engineExecuted 
-                          ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400"
-                          : "bg-amber-500/10 border border-amber-500/30 text-amber-400"
-                      }`}>
-                        {engineExecuted ? "Estado: Topología Corregida" : "Estado: Conflicto Detectado"}
-                      </span>
+                      {selectedPathology && (
+                        <div className="absolute bottom-4 right-4">
+                          <span className={`text-[8px] font-mono px-2 py-1 rounded-sm font-bold uppercase tracking-wider shadow-md ${
+                            engineExecuted 
+                              ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400"
+                              : "bg-amber-500/10 border border-amber-500/30 text-amber-400"
+                          }`}>
+                            {engineExecuted ? "Estado: Topología Corregida" : "Estado: Conflicto Detectado"}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
 
-                {/* Sub-terminal with active logs */}
-                <div className="mt-6 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
-                  <div className="flex items-center justify-between border-b border-slate-900 pb-2 mb-2">
-                    <span className="text-[7px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
-                      <Terminal className="w-3 h-3 text-cyan-400" />
-                      Live Terminal // DevGiz Spatial Core
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  </div>
-                  
-                  <div className="flex-grow space-y-1 max-h-[60px] overflow-y-auto pr-2 scrollbar-thin">
-                    {consoleLogs.filter(Boolean).map((log, idx) => {
-                      let color = "text-slate-400";
-                      if (log.startsWith("ALERT")) color = "text-rose-400 font-bold";
-                      if (log.startsWith("RESOLVED")) color = "text-emerald-400 font-bold font-black";
-                      if (log.startsWith("SYS")) color = "text-cyan-400";
-                      if (log.startsWith("ENGINE")) color = "text-slate-300";
-                      return (
-                        <p key={idx} className={color}>
-                          &gt; {log}
-                        </p>
-                      );
-                    })}
-                    <div ref={consoleBottomRef} />
-                  </div>
-                </div>
+                    {/* Sub-terminal with active logs */}
+                    <div className="mt-6 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
+                      <div className="flex items-center justify-between border-b border-slate-900 pb-2 mb-2">
+                        <span className="text-[7px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
+                          <Terminal className="w-3 h-3 text-cyan-400" />
+                          Live Terminal // DevGiz Spatial Core
+                        </span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      </div>
+                      
+                      <div className="flex-grow space-y-1 max-h-[60px] overflow-y-auto pr-2 scrollbar-thin">
+                        {consoleLogs.filter(Boolean).map((log, idx) => {
+                          let color = "text-slate-400";
+                          if (log.startsWith("ALERT")) color = "text-rose-400 font-bold";
+                          if (log.startsWith("RESOLVED")) color = "text-emerald-400 font-bold font-black";
+                          if (log.startsWith("SYS")) color = "text-cyan-400";
+                          if (log.startsWith("ENGINE")) color = "text-slate-300";
+                          return (
+                            <p key={idx} className={color}>
+                              &gt; {log}
+                            </p>
+                          );
+                        })}
+                        <div ref={consoleBottomRef} />
+                      </div>
+                    </div>
+                  </>
+                )}
 
               </div>
 
@@ -798,30 +874,18 @@ export default function DiagnosticPage() {
                   </div>
                 </div>
 
-                {/* Efficiency Comparison card */}
-                <div className="p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow bg-slate-950/40 space-y-6">
-                  <div className="flex items-center gap-3">
-                    <TrendingUp className="w-5 h-5 text-cyan-400" />
-                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Eficiencia de Ejecución</h4>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-[#050912] border border-slate-900 rounded-xl space-y-2">
-                      <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Métodos Manuales (Tradicional)</span>
-                      <div className="text-lg font-bold text-slate-400">180 Días</div>
-                      <span className="text-[9px] font-mono text-rose-400/80 uppercase block">82.5% Precisión</span>
-                    </div>
-
-                    <div className="p-4 bg-cyan-950/20 border border-cyan-500/20 rounded-xl space-y-2 shadow-[0_0_15px_rgba(6,182,212,0.05)]">
-                      <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest block">Pipeline DevGiz (Orquestado)</span>
-                      <div className="text-lg font-black text-cyan-400">48 Horas</div>
-                      <span className="text-[9px] font-mono text-emerald-400 uppercase block font-bold">99.8% Precisión</span>
-                    </div>
-                  </div>
-
+                {/* RTK GNSS Active Constellation HUD & Action */}
+                <div className="space-y-6">
+                  <RtkSatelliteHud />
+                  
                   <button
-                    onClick={() => setActiveTab("audit")}
-                    className="w-full py-4 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-lg flex items-center justify-center gap-3"
+                    onClick={() => {
+                      setActiveTab("audit");
+                      if (window.dgzSynth) {
+                        try { window.dgzSynth.playClick(); } catch (e) {}
+                      }
+                    }}
+                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer"
                   >
                     <span>Solicitar Auditoría de Municipio</span>
                     <ArrowRight className="w-4 h-4" />

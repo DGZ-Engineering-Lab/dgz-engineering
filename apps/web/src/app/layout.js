@@ -15,6 +15,7 @@ import Background from "../components/Background";
 import Navbar from "../components/Navbar";
 import FloatingTelemetry from "../components/FloatingTelemetry";
 import SystemStatusHeader from "../components/SystemStatusHeader";
+import AudioInitializer from "../components/AudioInitializer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "../components/PostHogProvider";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col text-[var(--foreground)] bg-[var(--background)]" suppressHydrationWarning>
         <PostHogProvider>
+          <AudioInitializer />
           <Background />
           <SystemStatusHeader />
           <Navbar />

@@ -21,8 +21,11 @@ import {
   Upload,
   Sparkles,
   Info,
-  CheckCircle2
+  CheckCircle2,
+  Mic,
+  MicOff
 } from "lucide-react";
+import SovereignMeshMap from "./SovereignMeshMap";
 
 // Mapbox Token from Environment
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -319,6 +322,56 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const [syncMode, setSyncMode] = useState("ONLINE"); // ONLINE, CACHED
   const [parcelAStatus, setParcelAStatus] = useState("DIRTY"); // DIRTY, HEALING, CLEAN
   const [isHealing, setIsHealing] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
+  const handleSpeechToText = () => {
+    if (typeof window === "undefined") return;
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      addLog("SPEECH_ERROR: Tu navegador no soporta control por voz.", "error");
+      return;
+    }
+    
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+    
+    const recognition = new SpeechRecognition();
+    recognition.lang = "es-CO";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    
+    recognition.onstart = () => {
+      setIsListening(true);
+      addLog("SPEECH_GIS: Escuchando consulta catastral en español...", "info");
+      if (window.dgzSynth) {
+        try { window.dgzSynth.playClick(); } catch (e) {}
+      }
+    };
+    
+    recognition.onresult = (event) => {
+      const text = event.results[0][0].transcript;
+      setSemanticQuery(text);
+      addLog(`SPEECH_GIS: Dictado recibido: "${text}"`, "success");
+      if (window.dgzSynth) {
+        try { window.dgzSynth.playSuccess(); } catch (e) {}
+      }
+    };
+    
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error", event.error);
+      addLog(`SPEECH_ERROR: Fallo en captura de voz (${event.error})`, "error");
+      setIsListening(false);
+    };
+    
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+    
+    recognition.start();
+  };
 
   // Phase A & B Premium Uploader, Real-Time Coordinates & Flash States
   const [uploadedGeoJSON, setUploadedGeoJSON] = useState(null);
@@ -1513,6 +1566,15 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                 {syncMode === "CACHED" ? "⚡ CACHÉ ACTIVO (0ms)" : "🌐 ONLINE DIRECTO"}
               </span>
             </div>
+
+            {!isMapboxSupported && (
+              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-amber-500/10 border border-amber-500/25 rounded-xl backdrop-blur-md shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-amber-500 shadow-[0_0_10px_#f59e0b]" />
+                <span className="text-[8px] font-mono font-bold text-amber-400 uppercase tracking-widest">
+                  VISOR CATASTRAL SOBERANO (OFFLINE_MODE)
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -1912,11 +1974,23 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       value={semanticQuery}
                       onChange={(e) => setSemanticQuery(e.target.value)}
                       placeholder="Buscador Geo-LLM (ej: premium en Antioquia)..."
-                      className="w-full pl-9 pr-9 py-2 bg-black/50 border border-slate-800 rounded-xl text-[10px] text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-mono"
+                      className="w-full pl-9 pr-16 py-2 bg-black/50 border border-slate-800 rounded-xl text-[10px] text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-mono"
                     />
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
                       <Search className="w-3.5 h-3.5" />
                     </div>
+                    <button 
+                      type="button"
+                      onClick={handleSpeechToText}
+                      className={`absolute right-8 top-1/2 -translate-y-1/2 p-1 border rounded-lg transition-all cursor-pointer ${
+                        isListening 
+                          ? "bg-red-500/20 border-red-500/40 text-red-400 animate-pulse" 
+                          : "bg-slate-800/20 border-slate-700/30 text-slate-400 hover:text-white"
+                      }`}
+                      title="Búsqueda por voz (Speech-to-GIS)"
+                    >
+                      {isListening ? <MicOff className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
+                    </button>
                     <button 
                       type="submit"
                       className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-cyan-600/20 hover:bg-cyan-600/40 border border-cyan-500/30 rounded-lg text-cyan-400 transition-all cursor-pointer"
@@ -1924,6 +1998,27 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       <Zap className={`w-3 h-3 ${isSearching ? "animate-spin" : ""}`} />
                     </button>
                   </form>
+
+                  {isListening && (
+                    <div className="flex items-center gap-1.5 justify-center py-1 mt-1 bg-cyan-950/20 border border-cyan-500/20 rounded-lg animate-pulse">
+                      <span className="text-[7.5px] font-mono text-cyan-400 uppercase tracking-widest">Transmitiendo Audio [es-CO]</span>
+                      <div className="flex gap-0.5 items-center h-2.5">
+                        {[1, 2, 3, 4, 5, 4, 3, 2, 1].map((val, idx) => (
+                          <motion.div
+                            key={idx}
+                            className="w-[2px] bg-cyan-400 rounded-full"
+                            animate={{ height: ["4px", `${val * 2 + 3}px`, "4px"] }}
+                            transition={{
+                              duration: 0.8,
+                              repeat: Infinity,
+                              delay: idx * 0.08,
+                              ease: "easeInOut"
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Search Results */}
                   {searchResults.length > 0 && (
@@ -2133,342 +2228,11 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
             <div className="lg:col-span-8 relative min-h-[400px]">
               <div className="absolute inset-0 bg-slate-900 animate-pulse rounded-[2rem] -z-10"></div>
               {!isMapboxSupported ? (
-                <div 
-                  className={`absolute inset-0 rounded-[2rem] border overflow-hidden flex flex-col items-center justify-center p-6 select-none animate-none ${
-                    forceSovereign 
-                      ? "border-amber-500/20 bg-[#060402]" 
-                      : "border-cyan-500/15 bg-[#040810]"
-                  }`} 
-                  style={{ 
-                    boxShadow: forceSovereign
-                      ? '0 0 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(245,158,11,0.08), 0 0 1px rgba(245,158,11,0.15)'
-                      : '0 0 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(0,229,255,0.08), 0 0 1px rgba(0,229,255,0.15)' 
-                  }}
-                >
-                  {/* Grid background */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#091426_1px,transparent_1px),linear-gradient(to_bottom,#091426_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-70 pointer-events-none" />
-                  
-                  {/* Radar pulse */}
-                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border rounded-full animate-ping pointer-events-none ${forceSovereign ? "border-amber-500/10" : "border-cyan-500/10"}`} />
-                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border rounded-full pointer-events-none ${forceSovereign ? "border-amber-500/15" : "border-cyan-500/20"}`} />
-
-                  {/* Dynamic Layer Widgets */}
-                  <div className="absolute top-4 left-4 z-20 flex gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800 backdrop-blur-md">
-                    {[
-                      { id: "TERRENO", label: "Terreno 3D" },
-                      { id: "LIDAR", label: "LiDAR Canales" },
-                      { id: "AMBIENTAL", label: "Reserva LADM" },
-                      { id: "ORTO", label: "Ortofoto" }
-                    ].map(layer => (
-                      <button
-                        key={layer.id}
-                        onClick={() => {
-                          setActiveLayer(layer.id);
-                          addLog(`HUD_LAYER: Conmutando a capa ${layer.label}`, "info");
-                        }}
-                        className={`px-3 py-1 rounded-lg text-[8px] font-bold uppercase transition-all cursor-pointer ${activeLayer === layer.id ? "bg-cyan-500/20 border border-cyan-500/40 text-cyan-400" : "text-slate-400 hover:text-white"}`}
-                      >
-                        {layer.id === "LIDAR" && "📡 "}
-                        {layer.id === "AMBIENTAL" && "🌳 "}
-                        {layer.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Cadastral digital twin 3D Isometric polygons */}
-                  <svg className="w-full h-full relative z-10 opacity-90 p-4" viewBox="0 0 800 500">
-                    <defs>
-                      <pattern id="hatch-pattern" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-                        <line x1="0" y1="0" x2="0" y2="10" stroke="#f59e0b" strokeWidth="2" strokeOpacity="0.4" />
-                      </pattern>
-                      <linearGradient id="wall-grad-left" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#0e1e38" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#050a12" stopOpacity="0.95" />
-                      </linearGradient>
-                      <linearGradient id="wall-grad-right" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#152f54" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#091424" stopOpacity="0.95" />
-                      </linearGradient>
-                      <linearGradient id="wall-grad-uploaded" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#7c2d12" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#431407" stopOpacity="0.95" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Winding neon river & environmental corridor (🌳 Capa Ambiental) */}
-                    {activeLayer === "AMBIENTAL" && (
-                      <g>
-                        {/* Environmental corridor hatch */}
-                        <path 
-                          d="M -50,470 C 200,430 400,380 850,340 L 850,400 C 400,440 200,490 -50,530 Z" 
-                          fill="url(#hatch-pattern)" 
-                        />
-                        {/* River path */}
-                        <path 
-                          d="M -50,490 C 200,450 400,400 850,360" 
-                          fill="none" 
-                          stroke="#06b6d4" 
-                          strokeWidth="12" 
-                          strokeLinecap="round" 
-                          strokeOpacity="0.8" 
-                          className="animate-pulse" 
-                        />
-                        <path 
-                          d="M -50,490 C 200,450 400,400 850,360" 
-                          fill="none" 
-                          stroke="#22d3ee" 
-                          strokeWidth="4" 
-                          strokeLinecap="round" 
-                          strokeOpacity="0.9" 
-                        />
-                        <text x="50" y="445" fill="#f59e0b" fontSize="8" fontFamily="monospace" className="font-bold">
-                          ⚠️ ZONA DE AMENAZA Y PROTECCIÓN DE RÍO (RESOL. 1040/2020)
-                        </text>
-                      </g>
-                    )}
-
-                    {/* Ortofoto blue grid overlay (📷 Capa Ortofoto) */}
-                    {activeLayer === "ORTO" && (
-                      <g opacity="0.3">
-                        <circle cx="200" cy="150" r="120" fill="none" stroke="#22d3ee" strokeWidth="0.5" strokeDasharray="5,5" />
-                        <circle cx="500" cy="250" r="180" fill="none" stroke="#22d3ee" strokeWidth="0.5" strokeDasharray="5,5" />
-                        <line x1="200" y1="0" x2="200" y2="500" stroke="#06b6d4" strokeWidth="0.5" strokeDasharray="3,6" />
-                        <line x1="0" y1="150" x2="800" y2="150" stroke="#06b6d4" strokeWidth="0.5" strokeDasharray="3,6" />
-                      </g>
-                    )}
-
-                    <g className="transition-all duration-700">
-                      
-                      {/* --- UPLOADED GEOJSON (Phase A) --- */}
-                      {uploadedGeoJSON && getUploadedSVGCoords() && (() => {
-                        const baseUploaded = getUploadedSVGCoords();
-                        const heightUploaded = 20;
-                        return (
-                          <g className="cursor-pointer group/uploaded" onClick={() => {
-                            addLog(`FOCUS_UPLOADED: Enfocando capa importada ${uploadedFileMeta?.filename}`, "info");
-                          }}>
-                            {/* Side walls */}
-                            <polygon 
-                              points={`${baseUploaded[0][0]},${baseUploaded[0][1]} ${baseUploaded[baseUploaded.length - 1][0]},${baseUploaded[baseUploaded.length - 1][1]} ${baseUploaded[baseUploaded.length - 1][0]},${baseUploaded[baseUploaded.length - 1][1] - heightUploaded} ${baseUploaded[0][0]},${baseUploaded[0][1] - heightUploaded}`}
-                              fill="url(#wall-grad-uploaded)"
-                              stroke="#f97316"
-                              strokeOpacity="0.4"
-                            />
-                            {/* Roof */}
-                            <polygon
-                              points={pointsStr(roofCoords(baseUploaded, heightUploaded))}
-                              fill="#f97316"
-                              fillOpacity="0.75"
-                              stroke="#ea580c"
-                              strokeWidth="2"
-                              className="animate-pulse"
-                            />
-                          </g>
-                        );
-                      })()}
-                      
-                      {/* --- PARCEL C (Base ground block) --- */}
-                      <g>
-                        <polygon
-                          points={pointsStr(baseC)}
-                          fill="#0e7490"
-                          fillOpacity="0.1"
-                          stroke="#06b6d4"
-                          strokeWidth="1"
-                          strokeDasharray="2,3"
-                        />
-                      </g>
-
-                      {/* --- PARCEL B (Extruded 3D Block) --- */}
-                      <g className="cursor-pointer group/b" onClick={() => {
-                        setSelectedParcel("PREDIO_002");
-                        runVurCheck("050N-654321");
-                      }}>
-                        {/* Side walls */}
-                        <polygon 
-                          points={`${baseB[0][0]},${baseB[0][1]} ${baseB[3][0]},${baseB[3][1]} ${baseB[3][0]},${baseB[3][1] - heightB} ${baseB[0][0]},${baseB[0][1] - heightB}`}
-                          fill="url(#wall-grad-left)"
-                          stroke="#10b981"
-                          strokeOpacity="0.3"
-                        />
-                        <polygon 
-                          points={`${baseB[3][0]},${baseB[3][1]} ${baseB[2][0]},${baseB[2][1]} ${baseB[2][0]},${baseB[2][1] - heightB} ${baseB[3][0]},${baseB[3][1] - heightB}`}
-                          fill="url(#wall-grad-right)"
-                          stroke="#10b981"
-                          strokeOpacity="0.3"
-                        />
-                        {/* Roof */}
-                        <polygon
-                          points={pointsStr(roofCoords(baseB, heightB))}
-                          fill={simulationStage === "CORRECTING" || simulationStage === "FINAL" ? "#10b981" : "#1e293b"}
-                          fillOpacity={selectedParcel === "PREDIO_002" ? "0.85" : "0.45"}
-                          stroke="#10b981"
-                          strokeWidth="1.5"
-                          className="transition-all duration-500"
-                        />
-                      </g>
-
-                      {/* --- PARCEL A (Extruded 3D Block with dynamic snapping vertex) --- */}
-                      <g className="cursor-pointer group/a" onClick={() => {
-                        setSelectedParcel("PREDIO_001");
-                        setActiveAnalysis({
-                          id: "PREDIO_001",
-                          score: parcelAStatus === "CLEAN" ? 100.0 : 64.2,
-                          impact_radius_m: 450,
-                          risk_assessment: parcelAStatus === "CLEAN" ? "Bajo" : "ALTO (Traslape)",
-                          stack_used: "Polars + DuckDB (Sovereign Engine)",
-                          status: parcelAStatus,
-                          geometry: {
-                            type: "Polygon",
-                            coordinates: [[[-75.567, 6.244], [-75.568, 6.244], [-75.568, 6.245], [-75.567, 6.245], [-75.567, 6.244]]]
-                          }
-                        });
-                      }}>
-                        {/* Side walls */}
-                        <polygon 
-                          points={`${baseA[0][0]},${baseA[0][1]} ${baseA[3][0]},${baseA[3][1]} ${baseA[3][0]},${baseA[3][1] - heightA} ${baseA[0][0]},${baseA[0][1] - heightA}`}
-                          fill="url(#wall-grad-left)"
-                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
-                          strokeOpacity="0.4"
-                          className={isFlashingClean ? "emerald-pulse-flash-animation" : ""}
-                        />
-                        <polygon 
-                          points={`${baseA[3][0]},${baseA[3][1]} ${baseA[2][0]},${baseA[2][1]} ${baseA[2][0]},${baseA[2][1] - heightA} ${baseA[3][0]},${baseA[3][1] - heightA}`}
-                          fill="url(#wall-grad-right)"
-                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#06b6d4" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
-                          strokeOpacity="0.4"
-                          className={isFlashingClean ? "emerald-pulse-flash-animation" : ""}
-                        />
-                        {/* Roof */}
-                        <polygon
-                          points={pointsStr(roofCoords(baseA, heightA))}
-                          fill={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
-                          fillOpacity={selectedParcel === "PREDIO_001" ? "0.85" : "0.45"}
-                          stroke={isFlashingClean ? "#10b981" : (parcelAStatus === "CLEAN" ? "#22d3ee" : parcelAStatus === "HEALING" ? "#f59e0b" : "#ef4444")}
-                          strokeWidth="2.5"
-                          className={isFlashingClean ? "emerald-pulse-flash-animation" : "transition-all duration-500"}
-                        />
-                      </g>
-
-                      {/* --- LIDAR DETECTED OMITTED BUILDING (📡 Capa LiDAR) --- */}
-                      {activeLayer === "LIDAR" && (
-                        <g 
-                          className="cursor-pointer group/omitted"
-                          onClick={() => {
-                            setSelectedParcel("OMITTED");
-                            addLog("LIDAR_DETECTOR: Predio con mejora clandestina (no declarada) inspeccionado.", "info");
-                          }}
-                        >
-                          {/* Side walls */}
-                          <polygon 
-                            points={`${baseOmitted[0][0]},${baseOmitted[0][1]} ${baseOmitted[3][0]},${baseOmitted[3][1]} ${baseOmitted[3][0]},${baseOmitted[3][1] - heightOmitted} ${baseOmitted[0][0]},${baseOmitted[0][1] - heightOmitted}`}
-                            fill="url(#wall-grad-left)"
-                            stroke={isImprovementAdded ? "#22d3ee" : "#f59e0b"}
-                            strokeOpacity="0.5"
-                          />
-                          <polygon 
-                            points={`${baseOmitted[3][0]},${baseOmitted[3][1]} ${baseOmitted[2][0]},${baseOmitted[2][1]} ${baseOmitted[2][0]},${baseOmitted[2][1] - heightOmitted} ${baseOmitted[3][0]},${baseOmitted[3][1] - heightOmitted}`}
-                            fill="url(#wall-grad-right)"
-                            stroke={isImprovementAdded ? "#22d3ee" : "#f59e0b"}
-                            strokeOpacity="0.5"
-                          />
-                          {/* Roof */}
-                          <polygon
-                            points={pointsStr(roofCoords(baseOmitted, heightOmitted))}
-                            fill={isImprovementAdded ? "#22d3ee" : "#f59e0b"}
-                            fillOpacity={isImprovementAdded ? "0.7" : "0.3"}
-                            stroke={isImprovementAdded ? "#22d3ee" : "#f59e0b"}
-                            strokeDasharray={isImprovementAdded ? "none" : "3,3"}
-                            strokeWidth="2"
-                            className="animate-pulse"
-                          />
-                          {/* Point cloud neons above */}
-                          {!isImprovementAdded && (
-                            <g>
-                              <circle cx="310" cy="270" r="1.5" fill="#f59e0b" />
-                              <circle cx="340" cy="265" r="1.5" fill="#f59e0b" />
-                              <circle cx="280" cy="285" r="1.5" fill="#f59e0b" />
-                              <circle cx="320" cy="305" r="1.5" fill="#f59e0b" />
-                            </g>
-                          )}
-                        </g>
-                      )}
-
-                    </g>
-
-                    {/* Sonar line sweep animation */}
-                    <line x1="0" y1="250" x2="800" y2="250" stroke="rgba(6, 182, 212, 0.2)" strokeWidth="2.5" className="animate-pulse" />
-
-                    {/* Intersecting warning path for desalignment */}
-                    {!snappedVertex && (
-                      <g>
-                        {/* Dotted target guide */}
-                        <line x1="228" y1="238" x2="210" y2="260" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3,3" />
-                        {/* Flashing Overlap Area */}
-                        <polygon
-                          points="210,260 228,238 210,238"
-                          fill="#ef4444"
-                          fillOpacity="0.5"
-                          className="animate-pulse"
-                        />
-                      </g>
-                    )}
-
-                    {/* Snapping Target Node */}
-                    <circle cx="210" cy="260" r="5" fill="none" stroke="#22d3ee" strokeWidth="1.5" />
-                    
-                    {/* Interactive Vertex Snapping Handle */}
-                    {!snappedVertex ? (
-                      <g className="cursor-pointer" onClick={handleManualSnap}>
-                        <circle cx="228" cy="238" r="7" fill="#f59e0b" className="animate-ping" />
-                        <circle cx="228" cy="238" r="5.5" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
-                        <text x="240" y="240" fill="#ef4444" fontSize="8" fontFamily="monospace" className="font-bold select-none">
-                          ⚡ TRASLAPE (Haz Clic para Sanar)
-                        </text>
-                      </g>
-                    ) : (
-                      <circle cx="210" cy="260" r="4.5" fill="#10b981" stroke="#ffffff" strokeWidth="1" />
-                    )}
-
-                    {/* Coordinate markers */}
-                    <text x="280" y="100" fill="#22d3ee" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-80 select-none">
-                      {parcelAStatus === "CLEAN" ? "PREDIO_001 [CATASTRO_OK]" : "PREDIO_001 [TRASLAPE_ERROR]"}
-                    </text>
-                    <text x="470" y="90" fill="#10b981" fontSize="9" fontFamily="monospace" className="pointer-events-none opacity-80 select-none">
-                      PREDIO_002 [SNR_VERIFIED]
-                    </text>
-
-                    {/* LiDAR Points decoration */}
-                    {activeLayer === "LIDAR" && (
-                      <g opacity="0.4">
-                        <circle cx="190" cy="110" r="1" fill="#10b981" />
-                        <circle cx="250" cy="90" r="1" fill="#10b981" />
-                        <circle cx="390" cy="80" r="1" fill="#10b981" />
-                        <circle cx="450" cy="110" r="1" fill="#10b981" />
-                        <circle cx="580" cy="90" r="1" fill="#10b981" />
-                      </g>
-                    )}
-                  </svg>
-
-                  {/* Floating telemetry inside viewport */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, type: 'spring', stiffness: 120, damping: 15 }}
-                    className={`absolute bottom-6 right-6 p-4 bg-slate-950/95 rounded-xl font-mono text-[9px] z-20 space-y-1 shadow-[0_10px_40px_rgba(0,0,0,0.7)] backdrop-blur-md border ${forceSovereign ? "border-amber-500/30 text-amber-300" : "border-cyan-500/20 text-cyan-300"}`}
-                  >
-                    {/* Neon accent line */}
-                    <div className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent to-transparent ${forceSovereign ? "via-amber-500/40" : "via-cyan-500/40"}`} />
-                    <div className={`flex items-center gap-1.5 font-bold mb-1 ${forceSovereign ? "text-amber-400" : "text-emerald-400"}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full animate-ping ${forceSovereign ? "bg-amber-500" : "bg-emerald-500"}`} />
-                      <span style={{ textShadow: forceSovereign ? '0 0 8px rgba(245,158,11,0.5)' : '0 0 8px rgba(16,185,129,0.5)' }}>
-                        {forceSovereign ? "MOTOR RESILIENTE 2D SEGURO ACTIVO" : "FALLBACK SOBERANO ACTIVO"}
-                      </span>
-                    </div>
-                    <div>COORD: MAGNA-SIRGAS (EPSG:9377)</div>
-                    <div>QUERY RATE: neon.postgis.stream.ok</div>
-                    <div>ENGINE: Polars v0.20 + DuckDB v0.10</div>
-                  </motion.div>
+                <div className="absolute inset-0 rounded-[2rem] border border-slate-800 bg-[#020408] overflow-y-auto p-4 flex flex-col justify-start">
+                  <SovereignMeshMap onSelectParcel={(p) => {
+                    setSelectedParcel(p.id === "P-102" ? "PREDIO_001" : p.id === "P-101" ? "PREDIO_002" : "PREDIO_001");
+                    addLog(`SOVEREIGN_MAP_SELECT: Predio seleccionado ${p.id} (${p.name})`, "info");
+                  }} />
                 </div>
               ) : (
                 <div 
