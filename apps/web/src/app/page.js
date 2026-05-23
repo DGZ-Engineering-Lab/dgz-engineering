@@ -786,14 +786,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Bar - High Tech Ticker */}
-      <section className="py-20 border-y border-slate-100 bg-white/50 backdrop-blur-md relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div className="max-w-7xl mx-auto px-6 mb-10 relative z-10">
-          <div className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.4em] text-center font-bold">
-            Trusted by Government & Industry Leaders
+      {/* Ecosistema Tecnológico de Elite */}
+      <section className="py-28 border-t border-slate-100 bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-px bg-cyan-500/50"></span>
+              <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">TECNOLOGÍA SIN LÍMITES</span>
+              <span className="w-8 h-px bg-cyan-500/50"></span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
+              Ecosistema de Plataformas <span className="text-slate-400 font-light italic">Multipropósito</span>
+            </h2>
+            <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
+              Dominio absoluto y experiencia certificada en las herramientas líderes globales para la gestión catastral, análisis GeoAI, desarrollo de software e ingeniería territorial.
+            </p>
           </div>
         </div>
+
         <div className="relative z-10">
           <TechTicker />
         </div>

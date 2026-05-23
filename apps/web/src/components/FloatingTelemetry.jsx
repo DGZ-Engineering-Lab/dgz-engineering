@@ -11,22 +11,20 @@ export default function FloatingTelemetry() {
   const [isMinimized, setIsMinimized] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/telemetry");
-        const data = await res.json();
-        if (data.activeNodes) setActiveNodes(data.activeNodes);
-      } catch (e) {
-        console.error("Telemetry fetch failed");
-      }
-    };
-
-    fetchData();
+    // Simulamos la telemetría directamente en el cliente para mayor fluidez 
+    // y evitar errores 404 de rutas de API no configuradas.
     const timer = setInterval(() => {
       const now = new Date();
       setTime(now.toLocaleTimeString("en-GB", { hour12: false }));
       setLoad(Math.floor(Math.random() * (25 - 10) + 10));
-      if (now.getSeconds() % 10 === 0) fetchData();
+      
+      // Simular ligeras variaciones en los nodos activos cada ciertos segundos
+      if (now.getSeconds() % 5 === 0) {
+        setActiveNodes(prev => {
+          const variance = Math.floor(Math.random() * 5) - 2;
+          return Math.max(1200, Math.min(1500, prev + variance));
+        });
+      }
     }, 1000);
     return () => clearInterval(timer);
   }, []);

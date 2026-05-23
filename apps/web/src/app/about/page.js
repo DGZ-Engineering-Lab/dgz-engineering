@@ -397,7 +397,7 @@ export default function AboutPage() {
     <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200">
       
       {/* Editorial Header */}
-      <section className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden">
+      <section id="history" className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
             <motion.div 
@@ -429,7 +429,7 @@ export default function AboutPage() {
       </section>
 
       {/* The Manifesto Section */}
-      <section className="py-32 px-6 section-deferred scroll-reveal" ref={principlesRef}>
+      <section id="vision" className="py-32 px-6 section-deferred scroll-reveal" ref={principlesRef}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
             <motion.div 
@@ -1010,7 +1010,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership - Tactical Command Center Deck */}
-      <section className="py-32 px-6 overflow-hidden bg-[#03060f] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
+      <section id="team" className="py-32 px-6 overflow-hidden bg-[#03060f] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
         
         {/* Subtle holographic grid lines */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 

@@ -7,27 +7,27 @@ import Logo from "../../components/Logo";
 
 const STANDARDS = [
   {
-    id: "ladm-col",
-    title: "LADM-COL (ISO 19152)",
-    tag: "Core Standard",
-    desc: "El modelo de administración de tierras que garantiza la relación técnica y legal entre el interesado, el derecho y el territorio.",
-    specs: ["Basado en ISO 19152:2012", "Estandarización de objetos territoriales", "Seguridad jurídica multinivel"],
+    id: "ladm",
+    title: "Modelo LADM-COL (ISO 19152)",
+    tag: "Normativa Nacional",
+    desc: "El estándar oficial de administración del territorio colombiano para la integración transaccional entre interesado, derecho y predio.",
+    specs: ["Alineado con ISO 19152:2012", "Estructuración predial transaccional", "Modelo base catastral oficial"],
     icon: ShieldCheck
   },
   {
-    id: "interlis",
-    title: "INTERLIS",
-    tag: "Data Exchange",
-    desc: "Lenguaje de descripción conceptual para la transferencia masiva de datos geográficos sin pérdida de integridad semántica.",
-    specs: ["Validación nativa en XTF", "Esquemas extensibles", "Compilación de modelos .ili"],
+    id: "res1040",
+    title: "Resolución 1040/2023 (IGAC)",
+    tag: "Especificaciones Técnicas",
+    desc: "Directiva oficial del IGAC que rige las especificaciones técnicas para el levantamiento catastral y precisión métrica del dato.",
+    specs: ["Márgenes de tolerancia topológica", "Retícula oficial en origen CTM12", "Estandarización de fichas prediales"],
     icon: FileCode
   },
   {
-    id: "icde",
-    title: "Protocolos ICDE",
-    tag: "Interoperability",
-    desc: "Lineamientos de la Infraestructura Colombiana de Datos Espaciales para el intercambio soberano de información geográfica.",
-    specs: ["WMS / WFS / WCS", "Metadatos ISO 19115", "Catálogos de objetos oficiales"],
+    id: "res746",
+    title: "Resolución 746/2024 (IGAC-SNR)",
+    tag: "Interoperabilidad Transaccional",
+    desc: "Lineamientos de interoperabilidad de bases de datos geográficas y alfanuméricas entre Catastro y Registro (SNR).",
+    specs: ["Conciliación automática SNR-VUR", "Esquemas XML/XTF via INTERLIS", "Tolerancia y consistencia transaccional"],
     icon: Share2
   }
 ];
@@ -67,6 +67,7 @@ export default function StandardsPage() {
           {STANDARDS.map((std, idx) => (
             <motion.div 
               key={std.id} 
+              id={std.id}
               className="group p-12 bg-white border border-slate-100 hover:border-slate-300 hover:shadow-2xl transition-all relative overflow-hidden hover:-translate-y-1 duration-300 rounded-xl"
               initial={{ opacity: 0, y: 30 }}
               animate={cardsInView ? { opacity: 1, y: 0 } : {}}

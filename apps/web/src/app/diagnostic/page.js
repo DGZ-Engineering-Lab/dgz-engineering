@@ -57,6 +57,35 @@ export default function DiagnosticPage() {
     }
   }, [consoleLogs, auditTerminalLogs]);
 
+  // Handle smart hash routing on mount and hashchange
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      let targetTab = null;
+      if (hash === "#validator") {
+        targetTab = "sandbox";
+      } else if (hash === "#remote") {
+        targetTab = "audit";
+      } else if (hash === "#rtk") {
+        targetTab = "roi";
+      }
+
+      if (targetTab) {
+        setActiveTab(targetTab);
+        setTimeout(() => {
+          const element = document.getElementById(hash.substring(1));
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 150);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
   // Handle Pathology Click
   const selectPathology = (pathology) => {
     setSelectedPathology(pathology);
@@ -298,7 +327,7 @@ export default function DiagnosticPage() {
             >
               
               {/* Left Column: Interactive Map Canvas */}
-              <div className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow min-h-[500px] relative overflow-hidden bg-slate-950/40">
+              <div id="validator" className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow min-h-[500px] relative overflow-hidden bg-slate-950/40">
                 <div className="flex items-center justify-between border-b border-slate-900 pb-4 mb-6">
                   <div className="space-y-1">
                     <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
@@ -642,7 +671,7 @@ export default function DiagnosticPage() {
             >
               
               {/* Left Column: Config Sliders */}
-              <div className="lg:col-span-6 p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow bg-slate-950/40 space-y-8 flex flex-col justify-between">
+              <div id="rtk" className="lg:col-span-6 p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow bg-slate-950/40 space-y-8 flex flex-col justify-between">
                 
                 <div className="space-y-2 border-b border-slate-900 pb-4">
                   <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
@@ -808,6 +837,7 @@ export default function DiagnosticPage() {
           {activeTab === "audit" && (
             <motion.div
               key="audit-tab"
+              id="remote"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}

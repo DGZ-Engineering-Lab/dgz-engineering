@@ -91,7 +91,7 @@ export default function GestureSandboxPage() {
            
            {/* Visualizer Side */}
            <div className="lg:col-span-8 space-y-8">
-              <div className="relative aspect-video bg-black rounded-[3rem] border border-slate-800 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
+              <div id="simulator" className="relative aspect-video bg-black rounded-[3rem] border border-slate-800 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
                  
                  {/* Map Content - Dynamic Satellite Simulation */}
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
@@ -137,6 +137,7 @@ export default function GestureSandboxPage() {
 
                     <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
                        <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[9px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
+                       <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[9px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
                        <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[9px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
                     </div>
                  </div>
