@@ -291,28 +291,28 @@ export default function BrochurePage() {
                 <div className="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-600">
                   <MapPin className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Inmobiliarias & Corredores</h3>
+                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Pymes & Inmobiliarias</h3>
                 <p className="text-slate-600 text-sm font-light leading-relaxed">
-                  ¿Cansado de perder ventas de lotes campestres por demoras en verificar linderos o afectaciones de ley? DevGiz te da la radiografía de cualquier predio en minutos en el celular.
+                  Automatiza tus consultas geográficas. Visualiza linderos en el móvil, elimina la digitalización manual de planos y genera reportes catastrales listos para notaría en segundos.
                 </p>
                 <ul className="space-y-3 pt-2">
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Cierres de venta 5 veces más rápidos.</span>
+                    <span><strong>Automatización CAD-to-GIS:</strong> Cero reprocesos manuales de planos.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Radiografía ambiental express en PDF.</span>
+                    <span><strong>Visor Móvil Integrado:</strong> Acceso a datos catastrales desde el celular.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Ahorro del 80% en levantamientos topográficos iniciales.</span>
+                    <span><strong>Reportes Express en PDF:</strong> Estudios de linderos listos en 5 minutos.</span>
                   </li>
                 </ul>
               </div>
               <div className="pt-4 border-t border-slate-200/50">
                 <span className="text-[10px] font-mono text-cyan-600 font-bold uppercase tracking-wider block">INVERSIÓN ESTIMADA</span>
-                <span className="text-lg font-black text-slate-950">$249.000 COP / mes</span>
+                <span className="text-lg font-black text-slate-900">$249.000 COP / mes</span>
               </div>
             </div>
 
@@ -322,22 +322,22 @@ export default function BrochurePage() {
                 <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-600">
                   <Building2 className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Constructoras & Obras</h3>
+                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Constructoras & Corporaciones</h3>
                 <p className="text-slate-600 text-sm font-light leading-relaxed">
-                  Evita demandas costosas por disputas de límites prediales o la parálisis de obras debido a normativas del POT o reservas forestales nacionales no detectadas en la compra del lote.
+                  Cruza millones de registros territoriales en milisegundos con DuckDB + Polars. Unifica todos tus archivos Excel y planos sueltos en bases de datos geográficas seguras en la nube.
                 </p>
                 <ul className="space-y-3 pt-2">
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Debida diligencia territorial blindada al 100%.</span>
+                    <span><strong>Cruces Masivos Ultra-Veloces:</strong> DuckDB + Polars para auditorías express.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Validación automática con POT, Pomcas y Reservas.</span>
+                    <span><strong>Arquitectura de Datos PostGIS:</strong> Unificación de bases de datos dispersas.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Evita pérdidas millonarias por detención de obras.</span>
+                    <span><strong>Alertas de POT y Ley 2da:</strong> Detección automática de riesgos e invasiones.</span>
                   </li>
                 </ul>
               </div>
@@ -353,22 +353,22 @@ export default function BrochurePage() {
                 <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-600">
                   <Users className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Alcaldías & Municipios</h3>
+                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Gobierno & Mega-Infraestructura</h3>
                 <p className="text-slate-600 text-sm font-light leading-relaxed">
-                  Aumenta drásticamente el recaudo tributario municipal a través de un catastro multipropósito digital interactivo y gemelos digitales de planificación en 3D.
+                  Implementa Agentes Inteligentes GeoAI para procesar y auditar escrituras históricas automáticamente. Planifica tu territorio con Gemelos Digitales 3D interactivos de alto impacto.
                 </p>
                 <ul className="space-y-3 pt-2">
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Incremento de hasta el 30% en el impuesto predial.</span>
+                    <span><strong>Agentes Inteligentes GeoAI:</strong> Lectura automatizada de escrituras en PDF.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Sincronización híbrida de datos en campo.</span>
+                    <span><strong>Gemelos Digitales 3D:</strong> Simulación de riesgos e impacto fiscal predial.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span>Cumplimiento legal del estándar LADM-COL v3.0.</span>
+                    <span><strong>Sincronización Híbrida Offline:</strong> Operación en campo y catastro LADM-COL.</span>
                   </li>
                 </ul>
               </div>

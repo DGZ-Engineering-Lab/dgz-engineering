@@ -1,7 +1,8 @@
 /**
- * DEVGIZ COLOMBIA - B2B COLD OUTREACH UTILITY
+ * DEVGIZ COLOMBIA - B2B COLD OUTREACH UTILITY (ES MODULES)
  * Uses Resend API to send highly personalized, humanized email proposals
  * with interactive brochure links and calculator CTAs to Colombian prospects.
+ * Promotes the full suite of services: Automation, Big Data Crossings, Databases, and GeoAI.
  */
 
 import fs from "fs";
@@ -38,35 +39,36 @@ async function sendOutreachEmail(lead, dryRun = true) {
   const { company, contact_name, position, email, tier } = lead;
   
   // Custom message elements based on the business tier to make it extremely human
-  let tierPainPoint = "retener licencias catastrales y linderos confusos";
+  let tierPainPoint = "reprocesos manuales de planos y desorden en sus archivos de datos territoriales";
   if (tier === "Mega") {
-    tierPainPoint = "retrasos críticos en licencias ambientales, POT municipal o linderos superpuestos que congelan capital";
+    tierPainPoint = "pérdidas millonarias por retrasos en licencias, cruces fallidos de linderos prediales e ineficiencias en el procesamiento manual de grandes volúmenes de datos catastrales";
   } else if (tier === "Pyme") {
-    tierPainPoint = "demoras interminables verificando afectaciones de ley o linderos que ahuyentan a tus compradores de lotes campestres";
+    tierPainPoint = "tiempo valioso perdido en digitar planos a mano, verificar restricciones del POT o estructurar archivos geográficos dispersos";
   } else if (tier === "Gobierno") {
-    tierPainPoint = "recaudo ineficiente del impuesto predial y falta de una base catastral actualizada bajo LADM-COL";
+    tierPainPoint = "fuga de recaudo del impuesto predial por falta de cruces de datos entre catastro, hacienda y registros de escrituras actualizados";
   }
 
-  const subject = `¿Retrasos en sus planos de obras? Ahorre hasta un 40% en tiempos de predios - DevGiz Colombia`;
+  const subject = `¿Pérdidas de tiempo y recursos en sus datos territoriales? Automatice con DevGiz Colombia`;
   
   const emailHtml = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; line-height: 1.6; font-size: 15px;">
       <h2 style="color: #0891b2; font-weight: 800; font-size: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        DEVGIZ // INTELIGENCIA TERRITORIAL
+        DEVGIZ // INGENIERÍA DE DATOS & INTELIGENCIA ESPACIAL
       </h2>
       <p>Hola <strong>${contact_name}</strong>,</p>
       <p>Espero que estés teniendo un excelente día en tu rol como <strong>${position}</strong> en <strong>${company}</strong>.</p>
       
-      <p>Te escribo porque en el sector inmobiliario y de construcción en Colombia conocemos de primera mano el dolor de cabeza y la fuga de capital que representa esperar semanas para verificar linderos, cruzar planos con el POT o descartar restricciones ambientales antes de adquirir tierras o iniciar una obra. Un solo retraso en licencias puede costarle a una constructora hasta <strong>$15,000,000 COP semanales</strong> en cuadrillas quietas e intereses.</p>
+      <p>Te escribo porque sabemos de primera mano que muchas empresas y entidades públicas en Colombia pierden cientos de horas y millones de pesos mensuales en <strong>tareas repetitivas y desorganizadas con datos de tierras</strong>. Procesar planos CAD de forma manual, lidiar con archivos Excel duplicados, buscar afectaciones ambientales del POT en PDFs escaneados y cruzar bases de datos dispersas ralentiza la operación y drena tus recursos fijos.</p>
       
-      <p>En DevGiz hacemos simple lo complejo. Hemos diseñado una plataforma de Inteligencia Territorial que reduce estos tiempos a minutos. Ayudamos a empresas de alto impacto en Colombia a:</p>
+      <p>En DevGiz transformamos esta ineficiencia operativa en <strong>procesos automáticos, veloces y 100% confiables</strong>. Desarrollamos soluciones avanzadas de ingeniería espacial y arquitectura de datos que resuelven tus dolores del día a día:</p>
       <ul>
-        <li style="margin-bottom: 8px;"><strong>Validar linderos reales y afectaciones ambientales</strong> en 5 minutos en lugar de semanas, reduciendo visitas de campo innecesarias.</li>
-        <li style="margin-bottom: 8px;"><strong>Detectar riesgos en tiempo real:</strong> Cruce automático con POT local, Pomcas, reservas forestales nacionales (Ley 2da de 1959) y zonas de riesgo.</li>
-        <li style="margin-bottom: 8px;"><strong>Control total desde tu móvil:</strong> Toda la información catastral de tus lotes unificada en un visor 3D intuitivo y de alto rendimiento.</li>
+        <li style="margin-bottom: 10px;"><strong>1. Automatización de Procesos:</strong> Convertimos planos AutoCAD (.dwg) a bases de datos geográficas de forma 100% desatendida y generamos expedientes catastrales listos para notaría en segundos.</li>
+        <li style="margin-bottom: 10px;"><strong>2. Cruce Masivo de Datos (DuckDB + Polars):</strong> Cruzamos bases de datos prediales, notariales y fiscales con millones de registros en milisegundos para detectar inconsistencias de límites, traslapes de linderos u oportunidades de recaudo fiscal omitidas.</li>
+        <li style="margin-bottom: 10px;"><strong>3. Arquitectura de Bases de Datos (PostGIS + Cloud):</strong> Unificamos y migramos archivos CAD sueltos, Excel dispersos e información obsoleta a un repositorio centralizado seguro y veloz en la nube, disponible desde cualquier pantalla móvil.</li>
+        <li style="margin-bottom: 10px;"><strong>4. GeoAI & Agentes Inteligentes:</strong> Implementamos agentes de IA que leen escrituras y folios de matrícula en formato imagen/PDF, extraen anotaciones legales complejas y validan la cadena de tradición predial automáticamente.</li>
       </ul>
 
-      <p>Hemos habilitado una herramienta digital interactiva para que estimes tu ahorro neto en segundos. Puedes simular tu caso aquí:</p>
+      <p>Hemos habilitado una herramienta digital interactiva para que estimes tu ahorro neto en segundos. Puedes simular tu caso y ver cómo eliminamos estas pérdidas operativas aquí:</p>
       
       <div style="text-align: center; margin: 30px 0;">
         <a href="https://devgiz.vercel.app/brochure" style="background-color: #0f172a; color: #ffffff; padding: 15px 30px; font-weight: bold; text-decoration: none; border-radius: 4px; display: inline-block; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">
@@ -74,11 +76,11 @@ async function sendOutreachEmail(lead, dryRun = true) {
         </a>
       </div>
 
-      <p>¿Tendrías disponibilidad para una llamada corta de 10 minutos esta semana o agendar un demo rápido por Meet y mostrarte cómo agilizamos el desarrollo de proyectos en ${lead.city}?</p>
+      <p>¿Tendrías disponibilidad para una llamada corta de 10 minutos esta semana o agendar un demo rápido por Meet para mostrarte cómo podemos optimizar el rendimiento de tu infraestructura de datos territoriales?</p>
       
       <p style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 13px; color: #64748b;">
         Atentamente,<br>
-        <strong>El Equipo de Soluciones Territoriales DevGiz</strong><br>
+        <strong>El Equipo de Soluciones de Datos Territoriales DevGiz</strong><br>
         WhatsApp de Enlace Directo: +57 300 123 4567<br>
         <a href="https://devgiz.vercel.app" style="color: #0891b2; text-decoration: none;">devgiz.vercel.app</a>
       </p>
@@ -88,7 +90,7 @@ async function sendOutreachEmail(lead, dryRun = true) {
   if (dryRun) {
     console.log(`[DRY-RUN] Would send email to: ${contact_name} <${email}> from ${company}`);
     console.log(`[DRY-RUN] Subject: ${subject}`);
-    console.log(`[DRY-RUN] Body excerpt: "...${company} conocemos de primera mano el dolor de cabeza..."`);
+    console.log(`[DRY-RUN] Body excerpt: "...tareas repetitivas y desorganizadas con datos de tierras..."`);
     console.log(`--------------------------------------------------------------------------------`);
     return { success: true, dryRun: true };
   }
