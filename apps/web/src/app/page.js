@@ -71,7 +71,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <span className="w-12 h-px bg-cyan-500/40 shadow-[0_0_8px_rgba(6,182,212,0.3)]"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-semibold">
-                  Engineering Sovereignty // 2026
+                  Inteligencia Territorial Práctica // 2026
                 </span>
               </div>
               
@@ -83,7 +83,7 @@ export default function Home() {
 
               <div className="max-w-2xl">
                 <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed">
-                  Transformamos la complejidad geográfica en infraestructura de datos soberana para el sector público y privado de alta escala, bajo estándares estrictos <span className="text-cyan-600 font-mono text-xs border border-cyan-500/20 bg-cyan-500/5 px-1.5 py-0.5 rounded">LADM-COL v3.0</span>.
+                  Hacemos simple lo geográfico. Aseguramos la legalidad de tus linderos, evitamos retrasos costosos en licencias de construcción y optimizamos tus terrenos en minutos, cumpliendo al 100% con los estándares de ordenamiento territorial colombiano <span className="text-cyan-600 font-mono text-xs border border-cyan-500/20 bg-cyan-500/5 px-1.5 py-0.5 rounded">LADM-COL v3.0</span>.
                 </p>
               </div>
 
@@ -801,7 +801,7 @@ export default function Home() {
               Ecosistema de Plataformas <span className="text-slate-400 font-light italic">Multipropósito</span>
             </h2>
             <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
-              Dominio absoluto y experiencia certificada en las herramientas líderes globales para la gestión catastral, análisis GeoAI, desarrollo de software e ingeniería territorial.
+              Herramientas líderes globales adaptadas para eliminar las tareas manuales y repetitivas, ahorrando tiempo y dinero en cada metro cuadrado de tus proyectos.
             </p>
           </div>
         </div>
@@ -816,7 +816,7 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Gobernanza */}
+            {/* Seguridad Legal */}
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
@@ -824,13 +824,13 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Shield className="w-6 h-6 text-cyan-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Gobernanza</h3>
+              <h3 className="text-2xl font-black tracking-tight text-slate-900">Seguridad Legal</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Implementación rigurosa de estándares internacionales para la seguridad jurídica del territorio nacional bajo normativas oficiales.
+                Tranquilidad jurídica total. Validamos linderos y predios bajo las normativas colombianas oficiales para que compres, vendas o construyas sin sorpresas de última hora.
               </p>
             </div>
 
-            {/* Ingeniería */}
+            {/* Eficiencia Máxima */}
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
@@ -838,13 +838,13 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Settings className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Ingeniería</h3>
+              <h3 className="text-2xl font-black tracking-tight text-slate-900">Eficiencia Máxima</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Pipelines desatendidos de procesamiento paralelo (Polars, DuckDB) con precisión milimétrica y validación automática de topologías.
+                Automatización sin errores. Procesamos millones de datos geográficos y catastrales en segundos, eliminando papeleos y semanas de espera técnica.
               </p>
             </div>
 
-            {/* Inteligencia */}
+            {/* Simulación Futura */}
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
@@ -852,9 +852,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Brain className="w-6 h-6 text-emerald-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Inteligencia</h3>
+              <h3 className="text-2xl font-black tracking-tight text-slate-900">Simulación Futura</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Visualización geoespacial táctica 3D interactiva y consultas semánticas Geo-LLM para el análisis de impacto fiscal predial.
+                Visión 3D del mañana. Simula riesgos de inundación, restricciones de construcción o cambios del POT antes de invertir un solo peso en el terreno.
               </p>
             </div>
           </div>
@@ -880,7 +880,7 @@ export default function Home() {
                 <span className="text-slate-400 font-light italic">Activo Espacial.</span>
               </h2>
               <p className="text-slate-600 text-lg font-light leading-relaxed">
-                Nuestra plataforma unificada permite el monitoreo en tiempo real de la dinámica predial y la infraestructura crítica con protocolos criptográficos y auditoría distribuida.
+                Nuestra plataforma unificada te permite vigilar, auditar y actualizar tus lotes, terrenos o red vial en tiempo real, desde cualquier computador o celular con absoluta seguridad.
               </p>
               <div className="pt-4">
                 <Link 
