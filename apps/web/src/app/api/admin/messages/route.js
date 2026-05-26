@@ -276,7 +276,7 @@ export async function GET(req) {
 
   const auth = await authenticateSession(req);
   if (!auth.valid) {
-    await recordFailedAttempt(rateLimitKey, fingerprint);
+    // Don't increment rate limiter for expired sessions — only POST login failures count
     return withSecurityHeaders(
       NextResponse.json({ error: "Unauthorized. Invalid or expired session." }, { status: 401 })
     );
@@ -324,7 +324,7 @@ export async function DELETE(req) {
 
   const auth = await authenticateSession(req);
   if (!auth.valid) {
-    await recordFailedAttempt(rateLimitKey, fingerprint);
+    // Don't increment rate limiter for expired sessions — only POST login failures count
     return withSecurityHeaders(
       NextResponse.json({ error: "Unauthorized. Invalid or expired session." }, { status: 401 })
     );

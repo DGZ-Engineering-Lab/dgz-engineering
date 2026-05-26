@@ -68,12 +68,31 @@ export default function AdminPage() {
 
   // ─── SESSION MANAGEMENT ─────────────────────────────────────────────────────
 
-  // Restore session on mount
+  // Restore session on mount — silently clear if expired
   useEffect(() => {
     const token = sessionStorage.getItem("dgz_session_token");
     if (token) {
-      setSessionToken(token);
-      fetchMessages(token);
+      // Try restoring the session; if 401, silently clear without penalizing
+      (async () => {
+        try {
+          const res = await fetch("/api/admin/messages", {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            setSessionToken(token);
+            setMessages(data.messages);
+            setStorageType(data.storage);
+            setIsAuthorized(true);
+          } else {
+            // Session expired — silently clear, show login screen
+            sessionStorage.removeItem("dgz_session_token");
+          }
+        } catch (e) {
+          sessionStorage.removeItem("dgz_session_token");
+        }
+      })();
     }
   }, []);
 
