@@ -49,6 +49,13 @@ export async function POST(req) {
       console.warn("KV not connected, simulating storage");
     }
 
+    // Sync to in-memory store for local high-fidelity simulation
+    const globalMessages = globalThis._dgz_messages || [];
+    if (!globalThis._dgz_messages) {
+      globalThis._dgz_messages = globalMessages;
+    }
+    globalMessages.unshift(payload);
+
     // Dispatch Email using the new Enterprise EmailService (Phase 3)
     let emailSent = false;
     try {

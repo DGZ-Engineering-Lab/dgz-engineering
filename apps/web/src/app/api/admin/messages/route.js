@@ -54,6 +54,22 @@ const HIGH_FIDELITY_MOCKS = [
   }
 ];
 
+// ─── GLOBAL IN-MEMORY FALLBACK (for local development when Vercel KV is not configured) ────
+const globalSessions = globalThis._dgz_sessions || new Map();
+if (!globalThis._dgz_sessions) globalThis._dgz_sessions = globalSessions;
+
+const globalRateLimits = globalThis._dgz_rate_limits || new Map();
+if (!globalThis._dgz_rate_limits) globalThis._dgz_rate_limits = globalRateLimits;
+
+const globalAuditLog = globalThis._dgz_audit_log || [];
+if (!globalThis._dgz_audit_log) globalThis._dgz_audit_log = globalAuditLog;
+
+const globalMessages = globalThis._dgz_messages || [];
+if (!globalThis._dgz_messages) {
+  globalThis._dgz_messages = globalMessages;
+  globalMessages.push(...HIGH_FIDELITY_MOCKS);
+}
+
 // ─── CRYPTOGRAPHIC UTILITIES ───────────────────────────────────────────────────
 
 // Constant-time string comparison to prevent timing attacks.
@@ -112,19 +128,29 @@ function authenticatePasscode(req) {
   return secureCompare(token, requiredPasscode);
 }
 
-// Session-token based auth: check if Bearer token matches a valid session in KV
+// Session-token based auth: check if Bearer token matches a valid session in KV or memory
 async function authenticateSession(req) {
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) return { valid: false };
   const token = authHeader.substring(7).trim();
 
-  // First try: session token
+  // First try: session token in KV
   try {
     const sessionData = await kv.get(`session:${token}`);
     if (sessionData) {
       return { valid: true, sessionToken: token, sessionData };
     }
   } catch (e) { /* KV unavailable */ }
+
+  // Fallback: session token in memory (for offline / local dev)
+  const memorySession = globalSessions.get(token);
+  if (memorySession) {
+    if (new Date(memorySession.expiresAt) > new Date()) {
+      return { valid: true, sessionToken: token, sessionData: memorySession.data };
+    } else {
+      globalSessions.delete(token); // expired
+    }
+  }
 
   // Fallback: direct passcode (for initial login)
   const requiredPasscode = process.env.ADMIN_PASSCODE || "dgz2026";
@@ -141,19 +167,46 @@ async function checkRateLimit(req) {
   const fingerprint = getClientFingerprint(req);
   const rateLimitKey = `rl:admin:${fingerprint}`;
 
-  try {
-    const attempts = (await kv.get(rateLimitKey)) || 0;
-    const remaining = Math.max(0, MAX_ATTEMPTS - attempts);
+  let attempts = 0;
+  let usingKV = false;
 
-    if (attempts >= MAX_ATTEMPTS) {
-      const ttl = await kv.ttl(rateLimitKey);
-      return { blocked: true, remaining: 0, retryAfter: ttl > 0 ? ttl : LOCKOUT_SECONDS, rateLimitKey, fingerprint };
+  try {
+    const kvAttempts = await kv.get(rateLimitKey);
+    if (kvAttempts !== null && kvAttempts !== undefined) {
+      attempts = Number(kvAttempts);
+      usingKV = true;
     }
-    return { blocked: false, remaining, rateLimitKey, fingerprint };
-  } catch (e) {
-    // KV unavailable — proceed without strict rate limiting
-    return { blocked: false, remaining: MAX_ATTEMPTS, rateLimitKey, fingerprint };
+  } catch (e) { /* KV unavailable */ }
+
+  if (!usingKV) {
+    const localRl = globalRateLimits.get(rateLimitKey);
+    if (localRl) {
+      if (new Date(localRl.expiresAt) > new Date()) {
+        attempts = localRl.attempts;
+      } else {
+        globalRateLimits.delete(rateLimitKey);
+      }
+    }
   }
+
+  const remaining = Math.max(0, MAX_ATTEMPTS - attempts);
+
+  if (attempts >= MAX_ATTEMPTS) {
+    let retryAfter = LOCKOUT_SECONDS;
+    if (usingKV) {
+      try {
+        const ttl = await kv.ttl(rateLimitKey);
+        if (ttl > 0) retryAfter = ttl;
+      } catch (e) {}
+    } else {
+      const localRl = globalRateLimits.get(rateLimitKey);
+      if (localRl) {
+        retryAfter = Math.max(1, Math.ceil((new Date(localRl.expiresAt).getTime() - Date.now()) / 1000));
+      }
+    }
+    return { blocked: true, remaining: 0, retryAfter, rateLimitKey, fingerprint };
+  }
+  return { blocked: false, remaining, rateLimitKey, fingerprint };
 }
 
 async function recordFailedAttempt(rateLimitKey, fingerprint) {
@@ -161,6 +214,13 @@ async function recordFailedAttempt(rateLimitKey, fingerprint) {
     const current = (await kv.get(rateLimitKey)) || 0;
     await kv.set(rateLimitKey, current + 1, { ex: LOCKOUT_SECONDS });
   } catch (e) { /* KV unavailable */ }
+
+  const currentLocal = globalRateLimits.get(rateLimitKey);
+  const localAttempts = currentLocal && new Date(currentLocal.expiresAt) > new Date() ? currentLocal.attempts : 0;
+  globalRateLimits.set(rateLimitKey, {
+    attempts: localAttempts + 1,
+    expiresAt: new Date(Date.now() + LOCKOUT_SECONDS * 1000).toISOString()
+  });
 
   // Audit log
   await writeAuditLog("AUTH_FAIL", { fingerprint });
@@ -171,20 +231,27 @@ async function recordFailedAttempt(rateLimitKey, fingerprint) {
 
 async function clearRateLimit(rateLimitKey) {
   try { await kv.del(rateLimitKey); } catch (e) { /* noop */ }
+  globalRateLimits.delete(rateLimitKey);
 }
 
 // ─── SECURITY: AUDIT LOGGING ───────────────────────────────────────────────────
 
 async function writeAuditLog(action, details = {}) {
+  const entry = JSON.stringify({
+    ts: new Date().toISOString(),
+    action,
+    ...details
+  });
+
   try {
-    const entry = JSON.stringify({
-      ts: new Date().toISOString(),
-      action,
-      ...details
-    });
     await kv.lpush("audit:admin", entry);
     await kv.ltrim("audit:admin", 0, AUDIT_LOG_MAX - 1);
   } catch (e) { /* KV not available, skip audit */ }
+
+  globalAuditLog.unshift(entry);
+  if (globalAuditLog.length > AUDIT_LOG_MAX) {
+    globalAuditLog.length = AUDIT_LOG_MAX;
+  }
 }
 
 // ─── SECURITY HEADERS ──────────────────────────────────────────────────────────
@@ -251,6 +318,12 @@ export async function POST(req) {
     // KV unavailable — session won't persist but login still works
   }
 
+  // Always store in memory store as fallback
+  globalSessions.set(sessionToken, {
+    data: sessionData,
+    expiresAt: new Date(Date.now() + SESSION_TTL * 1000).toISOString()
+  });
+
   await writeAuditLog("LOGIN_SUCCESS", { fingerprint });
 
   const resp = NextResponse.json({
@@ -292,21 +365,21 @@ export async function GET(req) {
       }
     });
 
-    const resp = NextResponse.json({
-      success: true,
-      storage: "Vercel KV Edge Serverless",
-      messages: messages.length > 0 ? messages : HIGH_FIDELITY_MOCKS
-    });
-    return withSecurityHeaders(resp);
+    if (messages.length > 0) {
+      // Sync local memory store to match KV
+      globalMessages.length = 0;
+      globalMessages.push(...messages);
+    }
   } catch (err) {
-    console.warn("⚠️ Vercel KV unavailable. Returning sovereign simulation.");
-    const resp = NextResponse.json({
-      success: true,
-      storage: "Local Sovereign Buffer (Simulation)",
-      messages: HIGH_FIDELITY_MOCKS
-    });
-    return withSecurityHeaders(resp);
+    console.warn("⚠️ Vercel KV unavailable. Using sovereign local buffer.");
   }
+
+  const resp = NextResponse.json({
+    success: true,
+    storage: process.env.KV_REST_API_URL ? "Vercel KV Edge Serverless" : "Local Sovereign Buffer (Memory-Store)",
+    messages: globalMessages
+  });
+  return withSecurityHeaders(resp);
 }
 
 // ─── ROUTE: DELETE /api/admin/messages  (Delete messages) ──────────────────────
@@ -346,6 +419,7 @@ export async function DELETE(req) {
       } catch (e) {
         console.warn("KV bypass deletion for reset");
       }
+      globalMessages.length = 0;
       await writeAuditLog("WIPE_ALL", { fingerprint });
       return withSecurityHeaders(
         NextResponse.json({ success: true, message: "All records deleted.", storage: "Cleared" })
@@ -372,6 +446,14 @@ export async function DELETE(req) {
       }
     } catch (e) {
       console.warn("Could not delete from KV.");
+    }
+
+    // Always delete from local memory buffer as well
+    for (let i = 0; i < globalMessages.length; i++) {
+      if (globalMessages[i].id === id) {
+        globalMessages.splice(i, 1);
+        break;
+      }
     }
 
     await writeAuditLog("DELETE_RECORD", { fingerprint, recordId: id });
