@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Logo from "../components/Logo";
-import FooterSection from "../components/FooterSection";
+import Logo from "../../components/Logo";
+import FooterSection from "../../components/FooterSection";
 import { 
   DollarSign, 
   Clock, 
