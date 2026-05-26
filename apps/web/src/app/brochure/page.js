@@ -16,7 +16,14 @@ import {
   HelpCircle, 
   MessageSquare,
   Sparkles,
-  Users
+  Users,
+  Map,
+  Layers,
+  Globe,
+  Database,
+  Settings,
+  Brain,
+  Cpu
 } from "lucide-react";
 
 export default function BrochurePage() {
@@ -263,6 +270,107 @@ export default function BrochurePage() {
                 </p>
               </div>
 
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* DevGiz Engineering Specialties - Bento Grid */}
+      <section className="py-24 px-6 relative bg-slate-900 text-white overflow-hidden border-t border-slate-800">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.1),transparent_50%)] pointer-events-none"></div>
+        <div className="max-w-6xl mx-auto relative z-10">
+          
+          <div className="text-center space-y-3 mb-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-[9px] font-black tracking-widest text-cyan-400 uppercase">
+              CAPACIDADES DE INGENIERÍA 360
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white">
+              Nuestras Especialidades & Áreas de Acción
+            </h2>
+            <p className="text-slate-400 text-sm font-light max-w-xl mx-auto leading-relaxed">
+              No solo hacemos mapas. Diseñamos e implementamos sistemas de datos espaciales complejos y automatizamos tu flujo completo de trabajo de inicio a fin.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {/* 1. Automatización & DevOps */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-all">
+                <Settings className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">1. Automatización de Procesos & DevOps</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Eliminamos tareas repetitivas. Diseñamos pipelines automáticos, crons desatendidos y flujos CI/CD para automatizar backups, validaciones de código y sincronización de bases de datos territoriales de forma 100% autónoma.
+                </p>
+              </div>
+            </div>
+
+            {/* 2. Procesamiento Satelital & LiDAR */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-black transition-all">
+                <Layers className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">2. Procesamiento de Imágenes Satelitales</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Análisis avanzado de sensores remotos. Procesamos ortofotografía, generamos índices de vegetación (NDVI) y optimizamos nubes de puntos LiDAR para modelar curvas de nivel y perfiles de elevación 3D con precisión de centímetros.
+                </p>
+              </div>
+            </div>
+
+            {/* 3. Planos & Digitalización */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-black transition-all">
+                <Map className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">3. Planos & Digitalización Cartográfica</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Trascendemos el papel. Vectorizamos planos analógicos históricos, aplicamos algoritmos de corrección topológica automáticos y los transformamos en bases de datos geográficas interoperables bajo normativas catastrales modernas.
+                </p>
+              </div>
+            </div>
+
+            {/* 4. Arquitectura de Bases de Datos */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-all">
+                <Database className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">4. Bases de Datos & Cruces Masivos</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Arquitectura Big Data. Desarrollamos bases de datos relacionales geográficas en PostGIS, Neon DB, DuckDB y Polars para cruzar millones de registros prediales en milisegundos sin latencia y con indexación espacial.
+                </p>
+              </div>
+            </div>
+
+            {/* 5. Desarrollo Web & Plataformas */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-black transition-all">
+                <Globe className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">5. Desarrollo Web & Plataformas GIS</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Construimos visores interactivos del futuro. Desarrollamos aplicaciones en Next.js con mapas responsivos basados en Mapbox GL, dashboards de control táctico en tiempo real y gemelos digitales con animaciones aceleradas por GPU.
+                </p>
+              </div>
+            </div>
+
+            {/* 6. Inteligencia Geoespacial & GeoAI */}
+            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+              <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-all">
+                <Cpu className="w-6 h-6" />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold tracking-tight text-white">6. Inteligencia Geoespacial & GeoAI</h3>
+                <p className="text-slate-400 text-xs font-light leading-relaxed">
+                  Inteligencia artificial con sentido de lugar. Creamos modelos predictivos de valoración catastral y agentes de IA (LLMs) especializados en leer escrituras y estructurar resúmenes legales de forma autónoma.
+                </p>
+              </div>
             </div>
 
           </div>
