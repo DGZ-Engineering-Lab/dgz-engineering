@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Logo from "../../components/Logo";
 import FooterSection from "../../components/FooterSection";
-import { 
-  DollarSign, 
-  Clock, 
-  MapPin, 
-  ShieldAlert, 
-  Building2, 
-  TrendingUp, 
-  CheckCircle, 
-  ArrowRight, 
-  HelpCircle, 
+import {
+  DollarSign,
+  Clock,
+  MapPin,
+  ShieldAlert,
+  Building2,
+  TrendingUp,
+  CheckCircle,
+  ArrowRight,
+  HelpCircle,
   MessageSquare,
   Sparkles,
   Users,
@@ -48,23 +48,23 @@ export default function BrochurePage() {
   };
 
   // Pre-filled WhatsApp message
-  const whatsappNumber = "573001234567"; // Can be updated to actual
+  const whatsappNumber = "573106514707"; // Can be updated to actual
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hola%20DevGiz%20Colombia,%20calcul%C3%A9%20mi%20ahorro%20en%20el%20brochure%20interactivo%20(%20${encodeURIComponent(formatCOP(totalSavings))}%20)%20y%20me%20gustar%C3%ADa%20agendar%20una%20demostraci%C3%B3n%20sin%20costo%20para%20mi%20empresa.`;
 
   return (
     <main className="min-h-screen text-slate-900 bg-slate-50 selection:bg-cyan-500/20 overflow-x-hidden relative font-sans">
-      
+
       {/* Dynamic Background Light Gradients */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/10 to-transparent opacity-45 rounded-full blur-[150px] pointer-events-none z-0"></div>
       <div className="absolute top-[40%] left-0 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/10 to-transparent opacity-30 rounded-full blur-[120px] pointer-events-none z-0"></div>
-      
+
       {/* Header / Navigation */}
       <header className="absolute top-0 left-0 right-0 z-50 py-8 px-6 backdrop-blur-md bg-white/40 border-b border-slate-200/30">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="hover:opacity-90 transition-opacity">
             <Logo />
           </Link>
-          <a 
+          <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -83,25 +83,25 @@ export default function BrochurePage() {
             <Sparkles className="w-3 h-3 text-cyan-600 animate-pulse" />
             Soluciones Territoriales sin Complicaciones
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] text-slate-950">
             Dile adiós a los retrasos geográficos. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Protege tus terrenos y acelera tus proyectos.</span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
             Hacemos simple lo que antes tardaba semanas. Validamos linderos, descartamos afectaciones ambientales y automatizamos tus estudios catastrales en 5 minutos, ahorrándote millones de pesos en nóminas y maquinaria quieta.
           </p>
 
           <div className="flex justify-center gap-4">
-            <a 
-              href="#calculator" 
+            <a
+              href="#calculator"
               className="px-8 py-4.5 bg-slate-950 text-white hover:bg-cyan-500 hover:text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm shadow-xl"
             >
               Calcular Mi Ahorro
             </a>
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="px-8 py-4.5 border border-slate-200 hover:border-slate-355 bg-white/80 hover:bg-slate-50 text-slate-700 text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm"
             >
               Ver Mapa Interactivo
@@ -128,10 +128,10 @@ export default function BrochurePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
+
             {/* Left: Input Sliders */}
             <div className="lg:col-span-7 bg-white border border-slate-200/80 rounded-3xl p-8 md:p-10 shadow-xl space-y-8 flex flex-col justify-between">
-              
+
               {/* Slider 1 */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -143,13 +143,13 @@ export default function BrochurePage() {
                     {projects} {projects === 1 ? "proyecto" : "proyectos"}
                   </span>
                 </div>
-                <input 
-                  type="range" 
-                  min="1" 
-                  max="30" 
-                  value={projects} 
+                <input
+                  type="range"
+                  min="1"
+                  max="30"
+                  value={projects}
                   onChange={(e) => setProjects(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500" 
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>1 Proyecto</span>
@@ -168,13 +168,13 @@ export default function BrochurePage() {
                     {delayDays} días
                   </span>
                 </div>
-                <input 
-                  type="range" 
-                  min="5" 
-                  max="120" 
-                  value={delayDays} 
+                <input
+                  type="range"
+                  min="5"
+                  max="120"
+                  value={delayDays}
                   onChange={(e) => setDelayDays(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500" 
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>5 días</span>
@@ -193,14 +193,14 @@ export default function BrochurePage() {
                     {formatCOP(dailyCost)} / día
                   </span>
                 </div>
-                <input 
-                  type="range" 
-                  min="1000000" 
-                  max="20000000" 
-                  step="500000" 
-                  value={dailyCost} 
+                <input
+                  type="range"
+                  min="1000000"
+                  max="20000000"
+                  step="500000"
+                  value={dailyCost}
                   onChange={(e) => setDailyCost(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500" 
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>$1M COP</span>
@@ -219,16 +219,16 @@ export default function BrochurePage() {
 
             {/* Right: Savings Summary HUD */}
             <div className="lg:col-span-5 bg-slate-950 text-white rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between relative overflow-hidden border border-slate-800">
-              
+
               {/* Decorative Glow */}
               <div className="absolute -right-24 -bottom-24 w-60 h-60 bg-cyan-500/20 rounded-full blur-[70px] pointer-events-none"></div>
-              
+
               <div className="space-y-6 relative z-10">
                 <div className="flex justify-between items-center border-b border-white/10 pb-4">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">Pérdida Actual Estimada</span>
                   <span className="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 text-[9px] font-bold rounded">RETROCESO</span>
                 </div>
-                
+
                 <div className="space-y-1">
                   <div className="text-2xl font-light text-slate-400">Tu costo oculto:</div>
                   <div className="text-3xl md:text-4xl font-black text-red-400 tracking-tight">
@@ -256,7 +256,7 @@ export default function BrochurePage() {
               </div>
 
               <div className="space-y-4 pt-8 relative z-10">
-                <a 
+                <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -280,7 +280,7 @@ export default function BrochurePage() {
       <section className="py-24 px-6 relative bg-slate-900 text-white overflow-hidden border-t border-slate-800">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.1),transparent_50%)] pointer-events-none"></div>
         <div className="max-w-6xl mx-auto relative z-10">
-          
+
           <div className="text-center space-y-3 mb-20">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-[9px] font-black tracking-widest text-cyan-400 uppercase">
               CAPACIDADES DE INGENIERÍA 360
@@ -294,7 +294,7 @@ export default function BrochurePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
+
             {/* 1. Automatización & DevOps */}
             <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-all">
@@ -380,7 +380,7 @@ export default function BrochurePage() {
       {/* Humanized B2B Segmented Pitch Blocks */}
       <section className="py-24 px-6 relative bg-white border-y border-slate-200/50">
         <div className="max-w-6xl mx-auto">
-          
+
           <div className="text-center space-y-3 mb-20">
             <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">SOLUCIONES POR SECTOR</span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight">
@@ -392,7 +392,7 @@ export default function BrochurePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
+
             {/* Segment 1: Inmobiliarias */}
             <div className="bg-slate-50 border border-slate-200/60 rounded-3xl p-10 space-y-6 flex flex-col justify-between hover:shadow-lg transition-all">
               <div className="space-y-6">
@@ -492,7 +492,7 @@ export default function BrochurePage() {
 
       {/* Professional Call To Action Banner */}
       <section className="py-28 px-6 bg-slate-950 text-white relative overflow-hidden">
-        
+
         {/* Decorative Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.15),transparent_70%)] pointer-events-none"></div>
 
@@ -501,10 +501,10 @@ export default function BrochurePage() {
             Comienza a ahorrar tiempo y dinero hoy mismo.
           </h2>
           <p className="text-slate-400 text-lg font-light max-w-xl mx-auto leading-relaxed">
-            Nuestros especialistas en ingeniería territorial están listos para analizar tu primer predio de forma 100% gratuita. 
+            Nuestros especialistas en ingeniería territorial están listos para analizar tu primer predio de forma 100% gratuita.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
-            <a 
+            <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -512,7 +512,7 @@ export default function BrochurePage() {
             >
               Agendar Demo Gratuita de 15 Minutos
             </a>
-            <Link 
+            <Link
               href="/"
               className="w-full sm:w-auto px-10 py-5 border border-white/20 hover:border-white/40 hover:bg-white/5 text-white text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm text-center"
             >
