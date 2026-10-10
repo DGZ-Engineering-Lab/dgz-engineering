@@ -1,7 +1,7 @@
-fastapi>=0.95.0
+fastapi>=0.115.0
 uvicorn[standard]>=0.22.0
 shapely>=2.0.0
-python-multipart>=0.0.5
+python-multipart>=0.0.32
 sqlalchemy>=2.0.0
 geoalchemy2>=0.14.0
 psycopg2-binary>=2.9.0
