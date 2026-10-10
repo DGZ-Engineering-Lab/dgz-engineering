@@ -77,7 +77,7 @@ export default function InfrastructureSection() {
 
               <div className="h-12 flex items-center justify-center mt-2 group-hover:scale-110 transition-transform">
                 {item.img ? (
-                  <img src={item.img} alt={item.name} className="w-10 h-10 object-contain" />
+                  <img loading="lazy" decoding="async" src={item.img} alt={item.name} className="w-10 h-10 object-contain" />
                 ) : (
                   item.logo
                 )}

@@ -503,6 +503,8 @@ function PartnerCard({ partner, activePartner, onSelect }) {
           <img 
             src={partner.logo} 
             alt={partner.name} 
+            loading="lazy"
+            decoding="async"
             className={`max-h-full max-w-full object-contain transition-all duration-500 select-none z-10
               ${partner.isWhite 
                 ? 'brightness-0 opacity-40 group-hover:brightness-100 group-hover:opacity-100' 
