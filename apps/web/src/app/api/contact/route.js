@@ -2,13 +2,15 @@ import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
+import { getClientIp, internalError } from "../../../lib/http";
+import { validateContact } from "../../../lib/validation";
 
 
 export const runtime = 'edge';
 
 export async function POST(req) {
   try {
-    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = getClientIp(req);
     const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:contact:${ip}`);
 
     if (!success) {
@@ -25,12 +27,21 @@ export async function POST(req) {
       );
     }
 
-    const { name, email, message, company } = await req.json();
-
-    if (!name || !email || !message) {
-
-      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
+
+    const validation = validateContact(body);
+    if (!validation.ok) {
+      return NextResponse.json(
+        { error: "Invalid fields", fields: validation.errors },
+        { status: 400 }
+      );
+    }
+    const { name, email, message, company } = validation.data;
 
     const contactId = `contact:${Date.now()}`;
     const payload = {
@@ -38,7 +49,7 @@ export async function POST(req) {
       name,
       email,
       message,
-      company: company || "N/A",
+      company,
       timestamp: new Date().toISOString()
     };
 
@@ -80,7 +91,7 @@ export async function POST(req) {
       emailSent
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return internalError(error, "contact");
   }
 }
 

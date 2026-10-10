@@ -6,7 +6,6 @@ if api_dir not in sys.path:
     sys.path.insert(0, api_dir)
 
 
-import asyncio
 from typing import List, Dict, Any
 import geopandas as gpd
 from shapely.geometry import shape, mapping
@@ -59,7 +58,7 @@ def validate_topology(features: List[Dict[str, Any]]) -> Dict[str, Any]:
         features: A list of GeoJSON features representing land parcels or zones.
     """
     parsed_features = []
-    for idx, f in enumerate(features):
+    for f in features:
         parsed_features.append(GeoJSONFeature(
             type=f.get("type", "Feature"),
             properties=f.get("properties", {}),

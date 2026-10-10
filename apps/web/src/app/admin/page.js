@@ -850,7 +850,7 @@ export default function AdminPage() {
                   <div className="bg-slate-900/50 rounded-xl p-3 sm:p-4 border border-slate-800/50">
                     <div className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-1.5">Replying To</div>
                     <div className="text-sm font-bold text-slate-300">{aiDraftMsg.name} <span className="font-normal text-slate-500">&lt;{aiDraftMsg.email}&gt;</span></div>
-                    <p className="text-xs sm:text-sm text-slate-400 italic border-l-2 border-slate-700 pl-3 mt-2 line-clamp-3">"{aiDraftMsg.message}"</p>
+                    <p className="text-xs sm:text-sm text-slate-400 italic border-l-2 border-slate-700 pl-3 mt-2 line-clamp-3">“{aiDraftMsg.message}”</p>
                   </div>
 
                   <div>

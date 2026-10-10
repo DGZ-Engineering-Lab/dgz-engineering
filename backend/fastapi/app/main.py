@@ -3,7 +3,6 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from typing import List
 
 from .schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
 from .spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis

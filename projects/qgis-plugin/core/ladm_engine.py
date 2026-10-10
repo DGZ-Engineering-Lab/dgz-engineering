@@ -1,3 +1,4 @@
+import logging
 import xml.etree.ElementTree as ET
 import datetime
 from typing import Dict, Any, List

@@ -1,9 +1,6 @@
-# To get started with Dependabot version updates, please read the documentation:
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
-  - package-ecosystem: "github-actions" # Keep GitHub Actions up to date
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -11,7 +8,23 @@ updates:
       - "CI/CD"
       - "dependencies"
 
-  - package-ecosystem: "npm" # Only if you add package.json in the future
-    directory: "/"
+  - package-ecosystem: "npm"
+    directory: "/apps/web"
     schedule:
       interval: "weekly"
+    labels:
+      - "dependencies"
+    groups:
+      # Batch routine minor/patch bumps into one PR to keep noise low.
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "pip"
+    directories:
+      - "/apps/api"
+      - "/backend/fastapi"
+      - "/backend/qa_engine"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"

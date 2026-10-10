@@ -1,5 +1,6 @@
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
+import { internalError } from "../../../../lib/http";
 
 export const runtime = "edge";
 
@@ -58,6 +59,6 @@ export async function POST(req) {
 
   } catch (error) {
     console.error("❌ Vercel Blob upload endpoint error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return internalError(error, "blob-upload");
   }
 }

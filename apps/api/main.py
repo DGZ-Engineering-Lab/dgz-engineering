@@ -10,7 +10,7 @@ from brotli_asgi import BrotliMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 # Ensure apps/api directory is in the import path
 api_dir = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +18,7 @@ if api_dir not in sys.path:
     sys.path.insert(0, api_dir)
 
 
-from schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
+from schemas import ValidationRequest, GeoJSONFeature
 from spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis
 from database import get_db
 from vur_service import vur_service
@@ -102,7 +102,7 @@ async def get_ingested_parcels(db: Session = Depends(get_db)):
         """)
         result = db.execute(query).fetchone()
         return result[0] if result and result[0] else {"type": "FeatureCollection", "features": []}
-    except Exception as e:
+    except Exception:
         # Mock data fallback for marketing demo if DB is not ready
         return {
             "type": "FeatureCollection",
@@ -133,7 +133,7 @@ async def analyze_context(feature: GeoJSONFeature):
     """
     try:
         return perform_context_analysis(feature)
-    except Exception as e:
+    except Exception:
         # High-fidelity mock response for the demo to avoid UI breaks
         time.sleep(0.5) # Simulate processing
         return {

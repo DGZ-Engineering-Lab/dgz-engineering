@@ -37,8 +37,6 @@ yarn-error.log
 Thumbs.db
 
 # Docker artifacts
-Dockerfile
-docker-compose.yml
 *.tar
 
 # Environment variables
@@ -49,4 +47,11 @@ docker-compose.yml
 .env.production.local
 *.env
 .env*
+!.env.example
 .vercel
+
+# Test & build output
+coverage/
+.pytest_cache/
+.ruff_cache/
+.next/

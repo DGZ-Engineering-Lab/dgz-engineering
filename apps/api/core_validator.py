@@ -1,5 +1,4 @@
 import geopandas as gpd
-from shapely.validation import make_valid
 import os
 
 class GeoQAValidator:

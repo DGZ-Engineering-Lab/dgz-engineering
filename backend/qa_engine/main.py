@@ -1,10 +1,9 @@
 import os
 import json
 import uuid
-from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException
+from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from core_validator import GeoQAValidator
-import geopandas as gpd
 
 # Configuración FastAPI (Servicio de Backend DGZ)
 app = FastAPI(
@@ -106,7 +105,7 @@ def _background_process_shapefile(job_id: str, temp_dir: str, temp_file_path: st
             os.makedirs(extract_dir, exist_ok=True)
             with zipfile.ZipFile(temp_file_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_dir)
-            for root, dirs, files in os.walk(extract_dir):
+            for root, _dirs, files in os.walk(extract_dir):
                 for name in files:
                     if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
                         target_path = os.path.join(root, name)
@@ -185,7 +184,7 @@ async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_f
             os.makedirs(extract_dir, exist_ok=True)
             with zipfile.ZipFile(spatial_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_dir)
-            for root, dirs, files in os.walk(extract_dir):
+            for root, _dirs, files in os.walk(extract_dir):
                 for name in files:
                     if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
                         target_spatial = os.path.join(root, name)
@@ -198,7 +197,6 @@ async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_f
         cross_report = validator.cross_reference_excel(gdf, tabular_path)
         
         # Reporte LLM Inteligente (Contextualizado para Interoperabilidad)
-        prompt_context = f"Informe de Interoperabilidad Catastro-Registro: {json.dumps(cross_report)}"
         final_assessment = generar_reporte_llm({"interop": cross_report}) # LLM interpretará el reporte
 
         # Visualización

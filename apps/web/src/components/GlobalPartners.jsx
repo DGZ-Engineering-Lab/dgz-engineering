@@ -966,7 +966,7 @@ export default function GlobalPartners() {
                 <div className="w-full py-20 text-center border-2 border-dashed border-slate-200 rounded-[2rem] bg-slate-50/50 backdrop-blur-sm">
                   <Sliders className="w-10 h-10 text-slate-350 mx-auto mb-3 animate-pulse" />
                   <h4 className="text-slate-800 text-sm font-semibold mb-1">Sin Resultados de Sincronización</h4>
-                  <p className="text-slate-450 text-xs max-w-sm mx-auto">No se encontraron entidades que coincidan con la búsqueda "{searchQuery}" bajo el filtro seleccionado.</p>
+                  <p className="text-slate-450 text-xs max-w-sm mx-auto">No se encontraron entidades que coincidan con la búsqueda “{searchQuery}” bajo el filtro seleccionado.</p>
                 </div>
               )}
             </motion.div>

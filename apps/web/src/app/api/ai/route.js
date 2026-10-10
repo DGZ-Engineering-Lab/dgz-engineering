@@ -1,6 +1,7 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 import { checkRateLimit } from '../../../lib/upstash';
+import { getClientIp, internalError } from '../../../lib/http';
 
 export const runtime = 'edge';
 
@@ -14,7 +15,7 @@ if (apiKey) {
 export async function POST(req) {
   try {
     // 1. IP Rate Limiting (Using Upstash)
-    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = getClientIp(req);
     const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:ai:${ip}`);
 
     if (!success) {
@@ -74,7 +75,6 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    console.error("❌ Groq API route error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return internalError(error, "ai");
   }
 }
