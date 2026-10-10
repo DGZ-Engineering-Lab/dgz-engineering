@@ -66,6 +66,18 @@ export default function AdminPage() {
   const lastActivityRef = useRef(Date.now());
   const inactivityTimerRef = useRef(null);
 
+  // Escape cierra el modal de IA o el panel de detalle móvil
+  useEffect(() => {
+    if (!isModalOpen && !selectedMsg) return;
+    const onKeyDown = (e) => {
+      if (e.key !== "Escape") return;
+      if (isModalOpen && !isGeneratingAI) setIsModalOpen(false);
+      else if (selectedMsg) setSelectedMsg(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isModalOpen, selectedMsg, isGeneratingAI]);
+
   // ─── SESSION MANAGEMENT ─────────────────────────────────────────────────────
 
   // Restore session on mount — silently clear if expired
@@ -455,6 +467,7 @@ export default function AdminPage() {
                     value={passcode}
                     onChange={(e) => { setPasscode(e.target.value); setAuthError(""); }}
                     placeholder={isLocked ? "Locked" : "Enter passcode"}
+                    aria-label="Admin passcode"
                     disabled={isLocked}
                     maxLength={24}
                     autoComplete="off"
@@ -464,6 +477,8 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={() => setShowPasscode(!showPasscode)}
+                      aria-label={showPasscode ? "Hide passcode" : "Show passcode"}
+                      aria-pressed={showPasscode}
                       className="p-2 text-slate-500 hover:text-slate-300 transition-colors"
                       tabIndex={-1}
                     >
@@ -553,11 +568,11 @@ export default function AdminPage() {
                 <span className={`w-2 h-2 rounded-full ${storageType.includes("Simulation") ? "bg-amber-400" : "bg-emerald-400"}`} />
                 <span className="text-slate-400">{storageType.includes("Simulation") ? "Local" : "KV"}</span>
               </div>
-              <button onClick={() => fetchMessages(sessionToken)} disabled={isLoading} title="Refresh"
+              <button onClick={() => fetchMessages(sessionToken)} disabled={isLoading} title="Refresh" aria-label="Refresh messages"
                 className="p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-300 hover:text-white cursor-pointer transition-all">
                 <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
               </button>
-              <button onClick={() => handleLogout("Session ended.")} title="Logout"
+              <button onClick={() => handleLogout("Session ended.")} title="Logout" aria-label="Log out"
                 className="p-2.5 bg-slate-900 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/30 rounded-xl text-slate-400 hover:text-red-400 cursor-pointer transition-all">
                 <LogOut className="w-4 h-4" />
               </button>
@@ -617,7 +632,7 @@ export default function AdminPage() {
             <div className="relative w-full sm:w-80">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
               <input
-                type="text" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
+                type="search" aria-label="Search messages" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-800 rounded-2xl text-sm text-slate-200 focus:outline-none focus:border-slate-600 transition-all placeholder:text-slate-500"
                 placeholder="Search..."
               />
@@ -625,7 +640,7 @@ export default function AdminPage() {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
               <div className="flex bg-slate-900/50 p-1 rounded-xl border border-slate-800">
                 {["ALL", "GOV", "CORP", "PUBLIC"].map(f => (
-                  <button key={f} onClick={() => setSectorFilter(f)}
+                  <button key={f} type="button" aria-pressed={sectorFilter === f} onClick={() => setSectorFilter(f)}
                     className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all whitespace-nowrap ${sectorFilter === f ? "bg-slate-700 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
                   >{f === "ALL" ? "All" : f === "GOV" ? "Gov" : f === "CORP" ? "Corp" : "Public"}</button>
                 ))}
@@ -666,7 +681,7 @@ export default function AdminPage() {
                               <div className="text-slate-200 font-bold truncate">{msg.name}</div>
                               <div className="text-xs text-slate-500 truncate flex items-center gap-1 group-hover:text-cyan-400 transition-colors">
                                 {msg.email}
-                                <a href={`mailto:${msg.email}`} className="opacity-0 group-hover:opacity-100 transition-opacity"><ExternalLink className="w-3 h-3" /></a>
+                                <a href={`mailto:${msg.email}`} aria-label={`Escribir a ${msg.email}`} className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"><ExternalLink className="w-3 h-3" /></a>
                               </div>
                             </div>
                           </div>
@@ -685,12 +700,12 @@ export default function AdminPage() {
                           <div className="text-xs font-mono text-slate-500">{msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }) : ""}</div>
                         </td>
                         <td className="px-6 py-5">
-                          <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => handleGenerateAIDraft(msg)} title="AI Draft"
+                          <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+                            <button onClick={() => handleGenerateAIDraft(msg)} title="AI Draft" aria-label={`AI draft reply to ${msg.name}`}
                               className="px-3 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 rounded-xl text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-all">
                               <Cpu className="w-3.5 h-3.5" /><span className="hidden lg:inline">AI Draft</span>
                             </button>
-                            <button onClick={() => handleDeleteMessage(msg.id)} title="Delete"
+                            <button onClick={() => handleDeleteMessage(msg.id)} title="Delete" aria-label={`Delete message from ${msg.name}`}
                               className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-xl cursor-pointer transition-all">
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -757,8 +772,8 @@ export default function AdminPage() {
           {/* ═══ MOBILE DETAIL DRAWER ═══ */}
           {selectedMsg && (
             <div className="fixed inset-0 z-50 md:hidden">
-              <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setSelectedMsg(null)} />
-              <div className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[#0f1117] border-t border-slate-800 rounded-t-[2rem] overflow-y-auto animate-in slide-in-from-bottom duration-300">
+              <div aria-hidden="true" className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setSelectedMsg(null)} />
+              <div role="dialog" aria-modal="true" aria-label={`Message from ${selectedMsg.name}`} className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[#0f1117] border-t border-slate-800 rounded-t-[2rem] overflow-y-auto animate-in slide-in-from-bottom duration-300">
                 {/* Handle */}
                 <div className="flex justify-center py-3"><div className="w-10 h-1 bg-slate-700 rounded-full" /></div>
                 <div className="px-5 pb-8 space-y-5">
@@ -826,8 +841,8 @@ export default function AdminPage() {
           {/* ═══ AI MODAL ═══ */}
           {isModalOpen && aiDraftMsg && (
             <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6">
-              <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => !isGeneratingAI && setIsModalOpen(false)} />
-              <div className="relative w-full sm:max-w-2xl bg-[#0f1117] border border-slate-800 rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[80vh]">
+              <div aria-hidden="true" className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => !isGeneratingAI && setIsModalOpen(false)} />
+              <div role="dialog" aria-modal="true" aria-labelledby="ai-modal-title" className="relative w-full sm:max-w-2xl bg-[#0f1117] border border-slate-800 rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[80vh]">
                 {/* Header */}
                 <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-800/60 bg-slate-900/30 flex justify-between items-center shrink-0">
                   <div className="flex items-center gap-3">
@@ -835,11 +850,11 @@ export default function AdminPage() {
                       <Cpu className="w-4 h-4" />
                     </div>
                     <div>
-                      <h2 className="text-sm sm:text-base font-bold text-slate-200">AI Response</h2>
+                      <h2 id="ai-modal-title" className="text-sm sm:text-base font-bold text-slate-200">AI Response</h2>
                       <p className="text-[10px] sm:text-xs text-slate-500">Llama-3.3-70b</p>
                     </div>
                   </div>
-                  <button onClick={() => setIsModalOpen(false)} disabled={isGeneratingAI}
+                  <button type="button" aria-label="Close" autoFocus onClick={() => setIsModalOpen(false)} disabled={isGeneratingAI}
                     className="p-2 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-xl cursor-pointer disabled:opacity-50 transition-all">
                     <X className="w-5 h-5" />
                   </button>
@@ -865,7 +880,7 @@ export default function AdminPage() {
                         <p className="text-sm text-slate-400">Generating response...</p>
                       </div>
                     ) : (
-                      <textarea readOnly value={aiDraftText}
+                      <textarea readOnly aria-label="AI draft reply" value={aiDraftText}
                         className="w-full h-48 sm:h-64 p-4 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-slate-300 leading-relaxed focus:outline-none resize-none" />
                     )}
                   </div>

@@ -139,7 +139,7 @@ export default function ProjectsPage() {
                 <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
                   <img 
                     src={project.image} 
-                    alt={project.title}
+                    alt=""
                     fetchPriority={idx === 0 ? "high" : "low"}
                     className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 w-full h-full absolute inset-0"
                   />

@@ -71,8 +71,9 @@
 </head>
 
 <body class="dgz-secure-shield">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- ENTERPRISE BACKGROUND SYSTEM -->
-    <div class="enterprise-bg">
+    <div class="enterprise-bg" aria-hidden="true">
         <div class="mesh-gradient"></div>
         <canvas id="topo-canvas"></canvas>
         <div class="floating-nodes" id="neural-nodes"></div>
@@ -551,7 +552,7 @@
     <header id="main-header" style="display: none;">
     </header>
 
-    <main style="padding-top: 60px;">
+    <main id="main-content" tabindex="-1" style="padding-top: 60px;">
         <!-- HERO V6 PREMIUM SAAS -->
         <section class="hero-v2">
             <div class="hero-content">

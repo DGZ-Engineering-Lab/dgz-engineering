@@ -160,6 +160,8 @@ export default function TechTicker() {
             return (
               <button
                 key={area.id}
+                type="button"
+                aria-pressed={isTabActive}
                 onClick={() => setActiveTab(area.id)}
                 className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 flex items-center gap-2
                   ${isTabActive 

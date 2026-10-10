@@ -440,6 +440,8 @@ export default function ServicesSection() {
                 return (
                   <button
                     key={idx}
+                    type="button"
+                    aria-pressed={isActive}
                     onClick={() => handlePipelineClick(step)}
                     className="flex items-center gap-3 p-3 rounded-xl border border-slate-200/60 bg-white/50 text-left hover:border-slate-350 hover:bg-white z-10 transition-all group"
                   >
@@ -1325,6 +1327,8 @@ function ActiveSimulator({ slug, theme }) {
 
           <div className="absolute bottom-2 right-2 flex gap-2">
             <button 
+              type="button"
+              aria-pressed={isPlaying}
               onClick={() => setIsPlaying(!isPlaying)}
               className="px-2 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white text-[8px]"
             >
@@ -1539,10 +1543,10 @@ function ActiveSimulator({ slug, theme }) {
         {/* Timeline Slider Interactivo */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-3 rounded-lg flex flex-col gap-2">
           <div className="flex justify-between items-center text-slate-400 text-[8px] font-bold uppercase">
-            <span>Control de Proyección Ambiental</span>
+            <label htmlFor="env-projection-year">Control de Proyección Ambiental</label>
             <span className="text-teal-400 font-bold">Año: {sliderYear}</span>
           </div>
-          <input 
+          <input id="env-projection-year" aria-valuetext={`Año ${sliderYear}`} 
             type="range" 
             min="2026" 
             max="2030" 

@@ -217,6 +217,7 @@ export default function ContactSection() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
+                  role="status"
                   className="py-16 text-center space-y-6 flex flex-col items-center justify-center h-full"
                 >
                   <CheckCircle2 className="w-16 h-16 text-emerald-500 stroke-[1.5] animate-bounce" />
@@ -227,6 +228,7 @@ export default function ContactSection() {
                     </p>
                   </div>
                   <button 
+                    type="button"
                     onClick={() => {
                       setStatus("idle");
                       setFormData({ name: "", company: "", email: "", subject: "Auditoría de Datos LADM-COL", description: "" });
@@ -242,10 +244,12 @@ export default function ContactSection() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onSubmit={handleSubmit} 
+                  noValidate
+                  aria-label="Solicitud de sesión técnica"
                   className="space-y-8"
                 >
                   {status === "error" && (
-                    <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-mono rounded flex items-center gap-3">
+                    <div role="alert" className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-mono rounded flex items-center gap-3">
                       <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
@@ -254,9 +258,9 @@ export default function ContactSection() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Nombre Completo *</label>
+                        <label htmlFor="contact-name" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Nombre Completo <span aria-hidden="true">*</span></label>
                         {touched.name && (
-                          <span className={`text-[8px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-500" : "text-red-500"}`}>
+                          <span id="contact-name-status" className={`text-[8px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
                             {validateName(formData.name) ? "[ VÁLIDO ]" : "[ CORTO ]"}
                           </span>
                         )}
@@ -264,7 +268,11 @@ export default function ContactSection() {
                       <div className="relative">
                         <input 
                           type="text" 
+                          id="contact-name"
                           name="name"
+                          autoComplete="name"
+                          aria-invalid={touched.name && !validateName(formData.name)}
+                          aria-describedby={touched.name ? "contact-name-status" : undefined}
                           value={formData.name}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -291,7 +299,7 @@ export default function ContactSection() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Organización</label>
+                        <label htmlFor="contact-company" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Organización</label>
                         {touched.company && formData.company.trim() && (
                           <span className="text-[8px] font-mono uppercase tracking-widest text-emerald-500">
                             [ INGRESADO ]
@@ -300,7 +308,9 @@ export default function ContactSection() {
                       </div>
                       <input 
                         type="text" 
+                        id="contact-company"
                         name="company"
+                        autoComplete="organization"
                         value={formData.company}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -316,14 +326,14 @@ export default function ContactSection() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Email Institucional *</label>
+                      <label htmlFor="contact-email" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Email Institucional <span aria-hidden="true">*</span></label>
                       {touched.email && (
-                        <span className={`text-[8px] font-mono uppercase tracking-widest ${
+                        <span id="contact-email-status" className={`text-[8px] font-mono uppercase tracking-widest ${
                           !validateEmail(formData.email)
-                            ? "text-red-500"
+                            ? "text-red-600"
                             : isInstitutionalEmail(formData.email)
-                              ? "text-emerald-500"
-                              : "text-amber-500"
+                              ? "text-emerald-700"
+                              : "text-amber-700"
                         }`}>
                           {!validateEmail(formData.email) 
                             ? "[ INVÁLIDO ]" 
@@ -336,7 +346,11 @@ export default function ContactSection() {
                     <div className="relative">
                       <input 
                         type="email" 
+                        id="contact-email"
                         name="email"
+                        autoComplete="email"
+                        aria-invalid={touched.email && !validateEmail(formData.email)}
+                        aria-describedby={touched.email ? "contact-email-status" : undefined}
                         value={formData.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -397,8 +411,9 @@ export default function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
+                    <label htmlFor="contact-subject" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
                     <select 
+                      id="contact-subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
@@ -414,16 +429,19 @@ export default function ContactSection() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Descripción del Desafío *</label>
-                      <span className={`text-[8px] font-mono uppercase tracking-widest ${
-                        formData.description.length >= 30 ? "text-emerald-500" : "text-slate-400"
+                      <label htmlFor="contact-description" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Descripción del Desafío <span aria-hidden="true">*</span></label>
+                      <span id="contact-description-count" className={`text-[8px] font-mono uppercase tracking-widest ${
+                        formData.description.length >= 30 ? "text-emerald-700" : "text-slate-500"
                       }`}>
                         {formData.description.length} / 30 mín.
                       </span>
                     </div>
                     <div className="relative">
                       <textarea 
+                        id="contact-description"
                         name="description"
+                        aria-invalid={touched.description && !validateDescription(formData.description)}
+                        aria-describedby="contact-description-count"
                         value={formData.description}
                         onChange={handleChange}
                         onBlur={handleBlur}

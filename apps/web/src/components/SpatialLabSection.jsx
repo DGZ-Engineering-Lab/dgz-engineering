@@ -203,15 +203,17 @@ function ProjectCarousel() {
                 key={i}
                 onClick={() => setActiveIndex(i)}
                 className={`h-2 transition-all duration-500 rounded-full ${i === activeIndex ? `w-12 ${projects[i].theme.bg} ${projects[i].theme.shadow}` : 'w-4 bg-slate-800 hover:bg-slate-600'}`}
+                type="button"
                 aria-label={`Ir al proyecto ${i + 1}`}
+                aria-current={i === activeIndex ? "true" : undefined}
               />
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={prev} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
+            <button type="button" onClick={prev} aria-label="Proyecto anterior" className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:-translate-x-1`}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={next} className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
+            <button type="button" onClick={next} aria-label="Proyecto siguiente" className={`p-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white ${activeProject.theme.hoverBorder} hover:bg-slate-800 transition-all shadow-lg hover:translate-x-1`}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>

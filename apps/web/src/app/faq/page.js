@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useId } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Plus, Minus, Search, Mail, ArrowRight, HelpCircle, BookOpen, Cpu, Shield, Database, Brain, Scale, Settings, GraduationCap, Map } from "lucide-react";
 import Link from "next/link";
@@ -334,6 +334,7 @@ const FAQS = [
 
 function FAQAccordion({ q, a, index }) {
   const [isOpen, setIsOpen] = useState(false);
+  const panelId = useId();
   
   return (
     <motion.div 
@@ -343,7 +344,10 @@ function FAQAccordion({ q, a, index }) {
       transition={{ delay: index * 0.08 }}
     >
       <button 
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className="w-full py-8 flex items-center justify-between text-left group cursor-pointer"
       >
         <span className={`text-xl font-bold tracking-tight transition-colors duration-300 ${isOpen ? 'text-[#1a1a1a]' : 'text-slate-500 group-hover:text-[#1a1a1a]'}`}>
@@ -358,6 +362,7 @@ function FAQAccordion({ q, a, index }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div 
+            id={panelId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -392,7 +397,7 @@ export default function FAQPage() {
   const totalQuestions = FAQS.reduce((acc, cat) => acc + cat.questions.length, 0);
 
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
       
       <div className="max-w-7xl mx-auto px-6" ref={headerRef}>
         <motion.div 
@@ -437,6 +442,8 @@ export default function FAQPage() {
                 return (
                   <button
                     key={cat.category}
+                    type="button"
+                    aria-pressed={activeCategory === cat.category}
                     onClick={() => { setActiveCategory(cat.category); setSearchQuery(""); }}
                     className={`block w-full text-left text-xs font-bold uppercase tracking-[0.15em] py-4 px-6 border-l-2 transition-all duration-300 flex items-center gap-3 cursor-pointer ${
                       activeCategory === cat.category 
@@ -455,8 +462,8 @@ export default function FAQPage() {
                 <h3 className="text-sm font-black leading-tight uppercase">Territorial Intelligence Brief</h3>
                 <p className="text-xs text-slate-500 font-light leading-relaxed">Reciba mensualmente análisis técnicos sobre el catastro en Colombia.</p>
                 <div className="flex flex-col gap-3">
-                  <input type="email" placeholder="Email institucional" className="bg-[#fafafa] border border-slate-100 p-3 text-[10px] font-mono focus:outline-none focus:border-slate-400 rounded-lg transition-colors" />
-                  <button className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2">
+                  <input type="email" aria-label="Email institucional para el newsletter" autoComplete="email" placeholder="Email institucional" className="bg-[#fafafa] border border-slate-100 p-3 text-[10px] font-mono focus:outline-none focus:border-slate-400 rounded-lg transition-colors" />
+                  <button type="button" className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2">
                     <Mail className="w-3 h-3" />
                     Suscribirse
                   </button>
@@ -473,7 +480,8 @@ export default function FAQPage() {
                 <div className="relative">
                   <Search className="w-4 h-4 text-slate-300 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input 
-                    type="text" 
+                    type="search" 
+                    aria-label="Buscar en las preguntas frecuentes"
                     placeholder="Buscar solución..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -528,6 +536,6 @@ export default function FAQPage() {
         </div>
       </div>
 
-    </main>
+    </div>
   );
 }

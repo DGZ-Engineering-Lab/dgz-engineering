@@ -296,6 +296,8 @@ export default function DocsPage() {
                        return (
                           <button 
                             key={key} 
+                            type="button"
+                            aria-current={activeTab === key ? "true" : undefined}
                             onClick={() => { setActiveTab(key); }}
                             className={`text-left px-5 py-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-3.5 transition-all duration-300 border cursor-pointer ${
                               activeTab === key 
@@ -364,6 +366,8 @@ export default function DocsPage() {
                                 {["curl", "python", "js"].map((lang) => (
                                    <button
                                      key={lang}
+                                     type="button"
+                                     aria-pressed={activeLang === lang}
                                      onClick={() => setActiveLang(lang)}
                                      className={`text-[9px] font-mono uppercase tracking-widest px-3 py-1.5 rounded transition-all cursor-pointer ${
                                        activeLang === lang 
@@ -376,6 +380,8 @@ export default function DocsPage() {
                                 ))}
                              </div>
                              <button
+                               type="button"
+                               aria-live="polite"
                                onClick={() => handleCopy(ENDPOINTS[activeTab].codeSnippets[activeLang])}
                                className="text-slate-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest"
                              >

@@ -92,12 +92,14 @@ const VurQuery = () => {
           <form onSubmit={handleSearch} className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
             <input
               type="text"
+              aria-label="Número de matrícula inmobiliaria"
               value={matricula}
               onChange={(e) => setMatricula(e.target.value)}
               placeholder="N° Matrícula (Ej: 050N-12345)"
               className="px-6 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all min-w-[280px]"
             />
             <button
+              type="submit"
               disabled={loading}
               className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold rounded-2xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >

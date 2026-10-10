@@ -27,10 +27,10 @@ export default function Background() {
 
   return (
     <>
-      <div className="enterprise-bg ph-no-capture sentry-block" data-sentry-block>
+      <div aria-hidden="true" className="enterprise-bg ph-no-capture sentry-block" data-sentry-block>
         <div className="scanline" />
       </div>
-      <div className="neural-grid ph-no-capture sentry-block" data-sentry-block ref={gridRef} />
+      <div aria-hidden="true" className="neural-grid ph-no-capture sentry-block" data-sentry-block ref={gridRef} />
     </>
   );
 }

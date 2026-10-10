@@ -246,6 +246,8 @@ function CadastreViewer() {
           </h4>
           
           <button
+            type="button"
+            aria-pressed={isLidarActive}
             onClick={() => setIsLidarActive(!isLidarActive)}
             className={`px-2.5 py-1 text-[8px] font-mono tracking-widest uppercase rounded border transition-all ${
               isLidarActive
@@ -983,6 +985,8 @@ LIMIT 5;`,
             {queries.map((q, i) => (
               <button
                 key={i}
+                type="button"
+                aria-pressed={!isLiveMode && activeQueryIndex === i}
                 onClick={() => selectQuery(i)}
                 disabled={isTyping || isSearchingLive}
                 className={`text-left p-3 text-[10px] font-bold rounded-lg border leading-tight transition-all active:scale-95 cursor-pointer ${
@@ -999,12 +1003,12 @@ LIMIT 5;`,
 
         {/* Campo de Consulta Personalizada (Llama 3.3) */}
         <div className="border-t border-slate-900 pt-4">
-          <label className="text-[9px] font-mono text-slate-400 block mb-2 flex items-center gap-1.5 uppercase tracking-wider">
+          <label htmlFor="geo-llm-custom-query" className="text-[9px] font-mono text-slate-400 block mb-2 flex items-center gap-1.5 uppercase tracking-wider">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
             Consola Libre (Llama 3.3)
           </label>
           <div className="relative">
-            <textarea
+            <textarea id="geo-llm-custom-query"
               value={customQuery}
               onChange={(e) => setCustomQuery(e.target.value)}
               placeholder="Haz una pregunta catastral o de SQL espacial libre..."
@@ -1016,6 +1020,7 @@ LIMIT 5;`,
               disabled={isSearchingLive || isTyping || !customQuery.trim()}
               className="absolute right-2.5 bottom-3.5 p-1.5 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-30 disabled:hover:bg-cyan-500 flex items-center justify-center cursor-pointer shadow-lg shadow-cyan-500/10"
               title="Preguntar a Llama 3.3"
+              aria-label="Preguntar a Llama 3.3"
             >
               <Send className="w-3 h-3" />
             </button>

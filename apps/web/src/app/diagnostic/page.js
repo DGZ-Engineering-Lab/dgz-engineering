@@ -333,8 +333,10 @@ export default function DiagnosticPage() {
         </p>
 
         {/* Dynamic Navigation Tabs */}
-        <div className="flex justify-center p-1 bg-slate-950/60 border border-slate-900 rounded-xl max-w-lg mx-auto backdrop-blur-md">
+        <div role="group" aria-label="Herramientas de diagnóstico" className="flex justify-center p-1 bg-slate-950/60 border border-slate-900 rounded-xl max-w-lg mx-auto backdrop-blur-md">
           <button
+            type="button"
+            aria-pressed={activeTab === "sandbox"}
             onClick={() => setActiveTab("sandbox")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "sandbox"
@@ -345,6 +347,8 @@ export default function DiagnosticPage() {
             1. Sandbox Catastral
           </button>
           <button
+            type="button"
+            aria-pressed={activeTab === "roi"}
             onClick={() => setActiveTab("roi")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "roi"
@@ -355,6 +359,8 @@ export default function DiagnosticPage() {
             2. Calculadora ROI
           </button>
           <button
+            type="button"
+            aria-pressed={activeTab === "audit"}
             onClick={() => setActiveTab("audit")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "audit"
@@ -596,6 +602,8 @@ export default function DiagnosticPage() {
                   <div className="space-y-3">
                     {/* Path 1: Overlaps */}
                     <button
+                      type="button"
+                      aria-pressed={selectedPathology === "TRASLAPES"}
                       onClick={() => selectPathology("TRASLAPES")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "TRASLAPES"
@@ -621,6 +629,8 @@ export default function DiagnosticPage() {
 
                     {/* Path 2: Undetected Buildings */}
                     <button
+                      type="button"
+                      aria-pressed={selectedPathology === "MEJORAS"}
                       onClick={() => selectPathology("MEJORAS")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "MEJORAS"
@@ -646,6 +656,8 @@ export default function DiagnosticPage() {
 
                     {/* Path 3: Environmental encroachment */}
                     <button
+                      type="button"
+                      aria-pressed={selectedPathology === "AMBIENTAL"}
                       onClick={() => selectPathology("AMBIENTAL")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "AMBIENTAL"
@@ -671,6 +683,8 @@ export default function DiagnosticPage() {
 
                     {/* Path 4: Discrepancy */}
                     <button
+                      type="button"
+                      aria-pressed={selectedPathology === "REGISTRO"}
                       onClick={() => selectPathology("REGISTRO")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "REGISTRO"
@@ -765,10 +779,10 @@ export default function DiagnosticPage() {
                   {/* Slider 1: Predios */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider font-bold">
-                      <span className="text-slate-300">Número de Predios del Municipio</span>
+                      <label htmlFor="diag-predios" className="text-slate-300">Número de Predios del Municipio</label>
                       <span className="text-cyan-400 text-sm font-black">{numPredios.toLocaleString("es-CO")}</span>
                     </div>
-                    <input
+                    <input id="diag-predios" aria-valuetext={`${numPredios.toLocaleString("es-CO")} predios`}
                       type="range"
                       min="5000"
                       max="150000"
@@ -787,10 +801,10 @@ export default function DiagnosticPage() {
                   {/* Slider 2: Años de Desactualización */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider font-bold">
-                      <span className="text-slate-300">Años de Desactualización Catastral</span>
+                      <label htmlFor="diag-years" className="text-slate-300">Años de Desactualización Catastral</label>
                       <span className="text-cyan-400 text-sm font-black">{yearsOutdated} Años</span>
                     </div>
-                    <input
+                    <input id="diag-years" aria-valuetext={`${yearsOutdated} años`}
                       type="range"
                       min="1"
                       max="15"
@@ -809,10 +823,10 @@ export default function DiagnosticPage() {
                   {/* Slider 3: Tarifa Promedio */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider font-bold">
-                      <span className="text-slate-300">Impuesto Predial Promedio Anual</span>
+                      <label htmlFor="diag-tax" className="text-slate-300">Impuesto Predial Promedio Anual</label>
                       <span className="text-cyan-400 text-sm font-black">{formatCOP(avgTax)} COP</span>
                     </div>
-                    <input
+                    <input id="diag-tax" aria-valuetext={`${formatCOP(avgTax)} pesos colombianos`}
                       type="range"
                       min="200000"
                       max="2000000"
@@ -936,10 +950,10 @@ export default function DiagnosticPage() {
                         
                         {/* Name input */}
                         <div className="space-y-2">
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
+                          <label htmlFor="diag-name" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
                             Nombre del Solicitante *
                           </label>
-                          <input
+                          <input id="diag-name" autoComplete="name"
                             type="text"
                             required
                             placeholder="Ej. Ing. Carlos Restrepo"
@@ -951,10 +965,10 @@ export default function DiagnosticPage() {
 
                         {/* Email input */}
                         <div className="space-y-2">
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
+                          <label htmlFor="diag-email" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
                             Correo Electrónico *
                           </label>
-                          <input
+                          <input id="diag-email" autoComplete="email"
                             type="email"
                             required
                             placeholder="Ej. carlos.restrepo@valle.gov.co"
@@ -966,10 +980,10 @@ export default function DiagnosticPage() {
 
                         {/* Cargo Selector */}
                         <div className="space-y-2">
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
+                          <label htmlFor="diag-role" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
                             Cargo / Rol Administrativo
                           </label>
-                          <select
+                          <select id="diag-role" autoComplete="organization-title"
                             value={formData.cargo}
                             onChange={(e) => setFormData({...formData, cargo: e.target.value})}
                             className="w-full px-5 py-4 bg-slate-950/80 border border-slate-900 focus:border-cyan-500/60 rounded-xl text-slate-300 text-sm focus:outline-none transition-colors"
@@ -985,10 +999,10 @@ export default function DiagnosticPage() {
 
                         {/* Municipio */}
                         <div className="space-y-2">
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
+                          <label htmlFor="diag-municipio" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
                             Municipio / Organización *
                           </label>
-                          <input
+                          <input id="diag-municipio" autoComplete="organization"
                             type="text"
                             required
                             placeholder="Ej. Cartago (Valle del Cauca)"

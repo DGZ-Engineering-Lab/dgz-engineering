@@ -160,7 +160,7 @@ export default function ShapefileUploader() {
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`border-2 border-dashed transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group ${
+          className={`border-2 border-dashed transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group focus-within:ring-2 focus-within:ring-cyan-400 ${
             isDragging 
               ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-[1.02]" 
               : "border-slate-700 hover:border-cyan-500/50"
@@ -169,6 +169,7 @@ export default function ShapefileUploader() {
           <input 
             type="file" 
             accept=".zip,.geojson,.kml,.gpkg,.shp"
+            aria-label="Seleccionar archivo geoespacial (.zip, .geojson, .kml, .gpkg, .shp)"
             onChange={handleFileChange}
             disabled={status === "UPLOADING" || status === "PROCESSING"}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
@@ -231,6 +232,7 @@ export default function ShapefileUploader() {
 
         {/* Botón de Acción */}
         <button
+          type="button"
           onClick={uploadFile}
           disabled={!file || status === "UPLOADING" || status === "PROCESSING"}
           className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white font-bold tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 active:brightness-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer"

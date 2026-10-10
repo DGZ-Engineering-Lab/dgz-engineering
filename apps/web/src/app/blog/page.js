@@ -87,6 +87,8 @@ export default function BlogPage() {
             {CATEGORIES.map((cat, idx) => (
               <button 
                 key={cat}
+                type="button"
+                aria-pressed={idx === 0}
                 className={`whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative py-2 ${
                   idx === 0 ? 'text-[#1a1a1a]' : 'text-slate-400 hover:text-[#1a1a1a]'
                 }`}
@@ -110,7 +112,7 @@ export default function BlogPage() {
                 <div className="lg:col-span-8 relative aspect-[16/9] overflow-hidden bg-slate-100 rounded-sm">
                   <img 
                     src={featuredPost.image} 
-                    alt={featuredPost.title}
+                    alt=""
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
@@ -143,7 +145,7 @@ export default function BlogPage() {
                 <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 rounded-sm">
                   <img 
                     src={post.image} 
-                    alt={post.title}
+                    alt=""
                     className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-[1.05]"
                   />
                 </div>
@@ -181,6 +183,8 @@ export default function BlogPage() {
           <div className="flex flex-col sm:flex-row gap-0 border-b border-slate-700 pb-2">
             <input 
               type="email" 
+              aria-label="Correo institucional para el boletín"
+              autoComplete="email"
               placeholder="Correo institucional"
               className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-700"
             />

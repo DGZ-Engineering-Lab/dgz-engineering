@@ -19,6 +19,7 @@ import AudioInitializer from "../components/AudioInitializer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "../components/PostHogProvider";
+import MotionPreferences from "../components/MotionPreferences";
 
 export const metadata = {
   title: "DevGiz | Smart Geospatial DevOps Systems",
@@ -28,21 +29,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col text-[var(--foreground)] bg-[var(--background)]" suppressHydrationWarning>
+        <a href="#main-content" className="skip-link">
+          Saltar al contenido principal
+        </a>
         <PostHogProvider>
-          <AudioInitializer />
-          <Background />
-          <SystemStatusHeader />
-          <Navbar />
-          <FloatingTelemetry />
-          <main className="relative z-10 flex flex-col min-h-screen">
-            {children}
-          </main>
+          <MotionPreferences>
+            <AudioInitializer />
+            <Background />
+            <SystemStatusHeader />
+            <Navbar />
+            <FloatingTelemetry />
+            <main id="main-content" tabIndex={-1} className="relative z-10 flex flex-col min-h-screen">
+              {children}
+            </main>
+          </MotionPreferences>
           <Analytics />
           <SpeedInsights />
         </PostHogProvider>

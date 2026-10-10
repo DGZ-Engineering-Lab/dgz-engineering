@@ -394,7 +394,7 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200">
       
       {/* Editorial Header */}
       <section id="history" className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden">
@@ -1201,7 +1201,7 @@ export default function AboutPage() {
                       </h4>
                       <span className="text-[9px] font-mono text-emerald-500 animate-pulse uppercase">● LIVE FEED</span>
                     </div>
-                    <div className="bg-slate-950 text-slate-300 p-6 rounded-xl font-mono text-[11px] leading-relaxed relative border border-slate-900 shadow-inner overflow-hidden max-h-[160px] overflow-y-auto space-y-1">
+                    <div tabIndex={0} role="region" aria-label="Registro de operaciones recientes" className="bg-slate-950 text-slate-300 p-6 rounded-xl font-mono text-[11px] leading-relaxed relative border border-slate-900 shadow-inner overflow-hidden max-h-[160px] overflow-y-auto space-y-1">
                       
                       {/* Sutil overlay de CRT lineas */}
                       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)]" style={{ backgroundSize: '100% 3px' }}></div>
@@ -1454,6 +1454,6 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-    </main>
+    </div>
   );
 }
