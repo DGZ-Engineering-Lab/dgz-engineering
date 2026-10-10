@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { internalError } from "../../../lib/http";
 import { get } from "@vercel/edge-config";
 
 export const runtime = 'edge';
@@ -13,7 +14,7 @@ export async function GET() {
 
     try {
       // Support both the user's existing Vercel Edge Config 'features' field and the template fields
-      const features = await get("features");
+      const features = /** @type {Record<string, unknown> | undefined} */ (await get("features"));
       if (features) {
         flags = {
           premium_viewer: !!features.gis_viewer_premium,
@@ -21,7 +22,7 @@ export async function GET() {
           ai_audit_mode: !!features.ai_analysis_node
         };
       } else {
-        const edgeFlags = await get("devgiz_flags");
+        const edgeFlags = /** @type {Record<string, boolean> | undefined} */ (await get("devgiz_flags"));
         if (edgeFlags) flags = { ...flags, ...edgeFlags };
       }
     } catch (e) {
@@ -30,6 +31,6 @@ export async function GET() {
 
     return NextResponse.json(flags);
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return internalError(error, "flags");
   }
 }

@@ -500,7 +500,7 @@ export default function FAQPage() {
                       <div className="w-16 h-16 rounded-full bg-slate-100 mx-auto flex items-center justify-center">
                         <Search className="w-6 h-6 text-slate-300" />
                       </div>
-                      <p className="text-slate-400 font-light">No se encontraron resultados para "{searchQuery}"</p>
+                      <p className="text-slate-400 font-light">No se encontraron resultados para “{searchQuery}”</p>
                       <button onClick={() => setSearchQuery("")} className="text-[10px] font-bold text-[#1a1a1a] uppercase tracking-widest hover:text-slate-500 transition-colors cursor-pointer">
                         Limpiar Búsqueda
                       </button>

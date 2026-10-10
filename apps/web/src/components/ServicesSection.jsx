@@ -665,7 +665,7 @@ export default function ServicesSection() {
                           transition={{ duration: 0.3 }}
                           className="flex-1 flex flex-col justify-between overflow-hidden"
                         >
-                          <ActiveSimulator slug={activeServiceSlug} theme={COLOR_THEMES[activeService.theme]} />
+                          <ActiveSimulator slug={activeServiceSlug} />
                         </motion.div>
                       </AnimatePresence>
                     </div>
@@ -690,9 +690,8 @@ export default function ServicesSection() {
   );
 }
 
-// COMPONENTE CONTENEDOR DE TODOS LOS SIMULADORES EN CÓDIGO PURO
-function ActiveSimulator({ slug, theme }) {
-  // Estados genéricos
+// Consola de logs y estado de reproducción compartidos por todos los simuladores.
+function useSimulatorConsole() {
   const [logs, setLogs] = useState([]);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -702,10 +701,14 @@ function ActiveSimulator({ slug, theme }) {
     setLogs(prev => [...prev.slice(-4), `[${time}] ${text}`]);
   };
 
-  // ==========================================
-  // SIMULADOR 1: DRONES & EARTH DATA (Capa 3 - Captura)
-  // ==========================================
-  if (slug === "drones-earth-data") {
+  return { logs, addLog, isPlaying, setIsPlaying };
+}
+
+// ==========================================
+// SIMULADOR 1: DRONES & EARTH DATA (Capa 3 - Captura)
+// ==========================================
+function DronesEarthDataSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [dronePos, setDronePos] = useState({ x: 10, y: 10 });
     const [scanGrid, setScanGrid] = useState(Array(16).fill(false));
     
@@ -804,12 +807,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 2: DEVOPS & CLOUD ENGINEERING (Capa 3 - Procesamiento)
-  // ==========================================
-  if (slug === "devops-cloud-engineering") {
+// ==========================================
+// SIMULADOR 2: DEVOPS & CLOUD ENGINEERING (Capa 3 - Procesamiento)
+// ==========================================
+function DevOpsCloudSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [pods, setPods] = useState([
       { name: "pod-gis-1", status: "Running", cpu: "12%" },
       { name: "pod-gis-2", status: "Running", cpu: "28%" },
@@ -906,12 +910,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 3: DESARROLLO DE SOFTWARE (Capa 3 - Procesamiento)
-  // ==========================================
-  if (slug === "desarrollo-software") {
+// ==========================================
+// SIMULADOR 3: DESARROLLO DE SOFTWARE (Capa 3 - Procesamiento)
+// ==========================================
+function SoftwareDevSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [status, setStatus] = useState("idle");
     const [payload, setPayload] = useState(null);
 
@@ -990,12 +995,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 4: GIS & GEOINTELLIGENCE (Capa 1 - Inteligencia)
-  // ==========================================
-  if (slug === "gis-geointelligence") {
+// ==========================================
+// SIMULADOR 4: GIS & GEOINTELLIGENCE (Capa 1 - Inteligencia)
+// ==========================================
+function GisGeointelligenceSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [layerCatastro, setLayerCatastro] = useState(true);
     const [layerVias, setLayerVias] = useState(false);
     const [layerZonas, setLayerZonas] = useState(true);
@@ -1118,12 +1124,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 5: DATA ANALYTICS & BI (Capa 1 - Inteligencia)
-  // ==========================================
-  if (slug === "data-analytics-bi") {
+// ==========================================
+// SIMULADOR 5: DATA ANALYTICS & BI (Capa 1 - Inteligencia)
+// ==========================================
+function DataAnalyticsSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [activeTab, setActiveTab] = useState("territory");
     const [counter, setCounter] = useState(1480290);
     const [kpis, setKpis] = useState({ fiscal: "94.2%", efficiency: "88.1%", compliance: "99.8%" });
@@ -1208,12 +1215,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 6: IA & AUTOMATIZACIÓN (Capa 1 - Inteligencia)
-  // ==========================================
-  if (slug === "ia-automatizacion") {
+// ==========================================
+// SIMULADOR 6: IA & AUTOMATIZACIÓN (Capa 1 - Inteligencia)
+// ==========================================
+function AiAutomationSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [boxes, setBoxes] = useState([
       { label: "BOSQUE", confidence: "97.4%", points: "M 20,40 L 90,30 L 100,90 L 30,100 Z", color: "stroke-emerald-400 fill-emerald-500/10", tagX: 25, tagY: 35 },
       { label: "CONSTR", confidence: "94.8%", points: "M 110,60 L 170,50 L 160,110 L 100,120 Z", color: "stroke-cyan-400 fill-cyan-500/10", tagX: 105, tagY: 45 }
@@ -1271,12 +1279,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 7: ARQUITECTURA INTELIGENTE (Capa 2 - Soluciones)
-  // ==========================================
-  if (slug === "arquitectura-inteligente") {
+// ==========================================
+// SIMULADOR 7: ARQUITECTURA INTELIGENTE (Capa 2 - Soluciones)
+// ==========================================
+function SmartArchitectureSimulator() {
+  const { isPlaying, setIsPlaying } = useSimulatorConsole();
     const [rotY, setRotY] = useState(45);
     const [activeSpec, setActiveSpec] = useState("LOD-400");
 
@@ -1345,12 +1354,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 8: INFRAESTRUCTURA VIAL DIGITAL (Capa 2 - Soluciones)
-  // ==========================================
-  if (slug === "infraestructura-vial-digital") {
+// ==========================================
+// SIMULADOR 8: INFRAESTRUCTURA VIAL DIGITAL (Capa 2 - Soluciones)
+// ==========================================
+function RoadInfrastructureSimulator() {
+  const { logs, addLog } = useSimulatorConsole();
     const [scanOffset, setScanOffset] = useState(0);
 
     useEffect(() => {
@@ -1404,12 +1414,13 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 9: AGRICULTURA DE PRECISIÓN (Capa 2 - Soluciones)
-  // ==========================================
-  if (slug === "agricultura-precision") {
+// ==========================================
+// SIMULADOR 9: AGRICULTURA DE PRECISIÓN (Capa 2 - Soluciones)
+// ==========================================
+function PrecisionAgricultureSimulator() {
+  const { addLog } = useSimulatorConsole();
     // Rejilla de parcelas NDVI
     const [ndviGrid, setNdviGrid] = useState([
       { id: 1, ndvi: 0.72, status: "Normal" }, { id: 2, ndvi: 0.45, status: "Seco" }, { id: 3, ndvi: 0.81, status: "Excelente" }, { id: 4, ndvi: 0.68, status: "Normal" },
@@ -1495,12 +1506,12 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  // ==========================================
-  // SIMULADOR 10: GESTIÓN AMBIENTAL INTELIGENTE (Capa 2 - Soluciones)
-  // ==========================================
-  if (slug === "gestion-ambiental-inteligente") {
+// ==========================================
+// SIMULADOR 10: GESTIÓN AMBIENTAL INTELIGENTE (Capa 2 - Soluciones)
+// ==========================================
+function EnvironmentalSimulator() {
     const [sliderYear, setSliderYear] = useState(2026);
     
     // Proyección de métricas basadas en el año seleccionado
@@ -1558,7 +1569,23 @@ function ActiveSimulator({ slug, theme }) {
         </div>
       </div>
     );
-  }
+}
 
-  return null;
+const SIMULATORS = {
+  "drones-earth-data": DronesEarthDataSimulator,
+  "devops-cloud-engineering": DevOpsCloudSimulator,
+  "desarrollo-software": SoftwareDevSimulator,
+  "gis-geointelligence": GisGeointelligenceSimulator,
+  "data-analytics-bi": DataAnalyticsSimulator,
+  "ia-automatizacion": AiAutomationSimulator,
+  "arquitectura-inteligente": SmartArchitectureSimulator,
+  "infraestructura-vial-digital": RoadInfrastructureSimulator,
+  "agricultura-precision": PrecisionAgricultureSimulator,
+  "gestion-ambiental-inteligente": EnvironmentalSimulator,
+};
+
+// COMPONENTE CONTENEDOR DE TODOS LOS SIMULADORES EN CÓDIGO PURO
+function ActiveSimulator({ slug }) {
+  const Simulator = SIMULATORS[slug];
+  return Simulator ? <Simulator key={slug} /> : null;
 }

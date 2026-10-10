@@ -25,7 +25,7 @@ export async function GET() {
   } catch (error) {
     console.error("❌ Error fetching parcels:", error);
     return NextResponse.json(
-      { error: "Failed to load parcel data", message: error.message },
+      { error: "Failed to load parcel data" },
       { status: 500 }
     );
   }

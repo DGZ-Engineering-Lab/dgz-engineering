@@ -1,8 +1,7 @@
 import os
 import geopandas as gpd
 from sqlalchemy import create_engine
-from geoalchemy2 import Geometry, WKTElement
-import pandas as pd
+from geoalchemy2 import Geometry
 from dotenv import load_dotenv
 import sys
 

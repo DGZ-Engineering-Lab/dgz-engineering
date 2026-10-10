@@ -1,10 +1,8 @@
 import time
 import random
-from shapely.geometry import shape, Point, mapping
+from shapely.geometry import shape
 from shapely.strtree import STRtree
 from typing import List, Dict, Any
-import geopandas as gpd
-import pandas as pd
 import polars as pl
 import duckdb
 from pathlib import Path
@@ -112,17 +110,9 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     Level 4: Digital Twin & Simulation.
     Integrated with DuckDB and Polars for high-performance analytics.
     """
-    start_time = time.time()
     props = feature.properties
     codigo = props.get("codigo")
     
-    # 1. SIMULATED POLARS PIPELINE (The "Factor Wow")
-    # Simulating a heavy calculation with Polars
-    df_sim = pl.DataFrame({
-        "id": range(100000),
-        "val": [random.random() for _ in range(100000)]
-    })
-    agg_val = df_sim.select(pl.col("val").sum()).to_numpy()[0][0]
     
     # Base simulation data
     risk_level = "LOW"
@@ -180,8 +170,6 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     score_data = calculate_parcel_score(feature)
     score = score_data["intelligence_score"]
     
-    polars_performance_ms = round((time.time() - start_time) * 1000, 2)
-
     return AnalysisResult(
         parcel_id=str(codigo or "UNKNOWN"),
         risk_level=risk_level,

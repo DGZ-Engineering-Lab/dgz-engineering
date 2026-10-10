@@ -19,10 +19,11 @@ export async function POST(req) {
     }
 
     const wh = new Webhook(webhookSecret);
+    /** @type {{ type: string, data: Record<string, any> }} */
     let event;
 
     try {
-      event = wh.verify(payload, headers);
+      event = /** @type {{ type: string, data: Record<string, any> }} */ (wh.verify(payload, headers));
     } catch (err) {
       console.error("⚠️ Webhook verification failed:", err.message);
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });

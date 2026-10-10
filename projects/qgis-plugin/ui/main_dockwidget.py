@@ -1,11 +1,10 @@
-import logging
-from PyQt5.QtCore import Qt, QVariantAnimation, QEasingCurve, QColor
+from PyQt5.QtCore import Qt, QVariantAnimation, QEasingCurve
 from PyQt5.QtWidgets import (
-    QDockWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
+    QDockWidget, QWidget, QVBoxLayout, QLabel, 
     QLineEdit, QPushButton, QComboBox, QTextEdit, QFrame, 
     QScrollArea, QMessageBox, QGraphicsDropShadowEffect, QProgressBar
 )
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtGui import QColor
 
 # Graceful QGIS Imports to support testing
 QGIS_AVAILABLE = False
