@@ -13,12 +13,15 @@ app = FastAPI(
     version="1.0"
 )
 
+# Orígenes permitidos vía CORS_ALLOW_ORIGINS (separados por comas). Nunca con credenciales:
+# un origen comodín con credenciales es inseguro y la API no usa cookies.
+_cors_origins = [o.strip() for o in os.getenv("CORS_ALLOW_ORIGINS", "*").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Permitir peticiones desde tu Frontend GitHub Pages
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_cors_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 try:
@@ -60,6 +63,48 @@ import tempfile
 import zipfile
 import shutil
 
+# ─── Límites de subida (protección contra DoS, zip bombs y path traversal) ───
+MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", 50 * 1024 * 1024))          # 50 MB
+MAX_ZIP_UNCOMPRESSED_BYTES = int(os.getenv("MAX_ZIP_UNCOMPRESSED_BYTES", 500 * 1024 * 1024))  # 500 MB
+MAX_ZIP_MEMBERS = 2000
+
+
+def _safe_filename(filename: str) -> str:
+    """Devuelve solo el nombre base, sin directorios, para evitar escribir fuera de temp_dir."""
+    name = os.path.basename((filename or "").replace("\\", "/")).strip()
+    if not name or name in (".", ".."):
+        raise HTTPException(status_code=400, detail="Nombre de archivo inválido.")
+    return name
+
+
+async def _save_upload(upload: UploadFile, temp_dir: str) -> str:
+    """Guarda el archivo en temp_dir respetando MAX_UPLOAD_BYTES. Devuelve la ruta."""
+    path = os.path.join(temp_dir, _safe_filename(upload.filename))
+    written = 0
+    with open(path, "wb") as f:
+        while chunk := await upload.read(1024 * 1024):
+            written += len(chunk)
+            if written > MAX_UPLOAD_BYTES:
+                raise HTTPException(status_code=413, detail="Archivo demasiado grande.")
+            f.write(chunk)
+    return path
+
+
+def _safe_extract_zip(zip_path: str, extract_dir: str) -> None:
+    """Extrae un zip validando número de miembros, tamaño total y rutas."""
+    base = os.path.realpath(extract_dir)
+    with zipfile.ZipFile(zip_path, "r") as zip_ref:
+        members = zip_ref.infolist()
+        if len(members) > MAX_ZIP_MEMBERS:
+            raise ValueError("El zip contiene demasiados archivos.")
+        if sum(m.file_size for m in members) > MAX_ZIP_UNCOMPRESSED_BYTES:
+            raise ValueError("El zip descomprimido excede el tamaño permitido.")
+        for m in members:
+            target = os.path.realpath(os.path.join(extract_dir, m.filename))
+            if not target.startswith(base + os.sep) and target != base:
+                raise ValueError("Ruta no permitida dentro del zip.")
+        zip_ref.extractall(extract_dir)
+
 # Diccionario en memoria para rastrear tareas (Sustituye a Redis de forma 100% gratuita)
 JOB_TRACKER = {}
 
@@ -71,16 +116,16 @@ async def analyze_shapefile(background_tasks: BackgroundTasks, file: UploadFile 
     Retorna un JobID inmediatamente.
     """
     allowed_extensions = ('.geojson', '.json', '.zip', '.kml', '.gpkg', '.shp')
-    if not file.filename.lower().endswith(allowed_extensions):
+    if not file.filename or not file.filename.lower().endswith(allowed_extensions):
          raise HTTPException(status_code=400, detail=f"Extensión no soportada. Use {allowed_extensions}")
          
     # Directorio temporal para manejar zips y extracciones
     temp_dir = tempfile.mkdtemp()
-    temp_file_path = os.path.join(temp_dir, file.filename)
-    
-    with open(temp_file_path, "wb") as f:
-         content = await file.read()
-         f.write(content)
+    try:
+        temp_file_path = await _save_upload(file, temp_dir)
+    except HTTPException:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+        raise
          
     job_id = str(uuid.uuid4())
     JOB_TRACKER[job_id] = {"status": "Processing", "file": file.filename, "result": None, "error": None}
@@ -104,8 +149,7 @@ def _background_process_shapefile(job_id: str, temp_dir: str, temp_file_path: st
         if filename.lower().endswith('.zip'):
             extract_dir = os.path.join(temp_dir, "extracted")
             os.makedirs(extract_dir, exist_ok=True)
-            with zipfile.ZipFile(temp_file_path, 'r') as zip_ref:
-                zip_ref.extractall(extract_dir)
+            _safe_extract_zip(temp_file_path, extract_dir)
             for root, dirs, files in os.walk(extract_dir):
                 for name in files:
                     if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
@@ -171,11 +215,10 @@ async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_f
     temp_dir = tempfile.mkdtemp()
     try:
         # Guardar archivos temporales
-        spatial_path = os.path.join(temp_dir, spatial_file.filename)
-        tabular_path = os.path.join(temp_dir, tabular_file.filename)
-        
-        with open(spatial_path, "wb") as f: f.write(await spatial_file.read())
-        with open(tabular_path, "wb") as f: f.write(await tabular_file.read())
+        spatial_path = await _save_upload(spatial_file, temp_dir)
+        tabular_path = await _save_upload(tabular_file, temp_dir)
+        if os.path.realpath(spatial_path) == os.path.realpath(tabular_path):
+            raise HTTPException(status_code=400, detail="Los archivos deben tener nombres distintos.")
         
         # Procesamiento Espacial
         # (Reusing extraction logic if spatial is zip)
@@ -183,8 +226,7 @@ async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_f
         if spatial_file.filename.lower().endswith('.zip'):
             extract_dir = os.path.join(temp_dir, "extracted")
             os.makedirs(extract_dir, exist_ok=True)
-            with zipfile.ZipFile(spatial_path, 'r') as zip_ref:
-                zip_ref.extractall(extract_dir)
+            _safe_extract_zip(spatial_path, extract_dir)
             for root, dirs, files in os.walk(extract_dir):
                 for name in files:
                     if name.lower().endswith(('.shp', '.gpkg', '.geojson', '.kml')):
@@ -233,6 +275,8 @@ async def interoperability_cross(spatial_file: UploadFile = File(...), tabular_f
             "geo_llm_intelligence_report": final_assessment,
             "geojson": geojson_data
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:

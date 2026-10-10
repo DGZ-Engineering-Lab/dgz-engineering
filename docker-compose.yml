@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend/postgres/initdb:/docker-entrypoint-initdb.d:ro
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
 
   api:
     build: ./backend/fastapi
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./backend/fastapi:/app:rw
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 
   web:
     image: nginx:stable-alpine

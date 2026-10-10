@@ -2,13 +2,14 @@ import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
+import { boundedString, getClientIp, isValidEmail } from "../../../lib/security";
 
 
 export const runtime = 'edge';
 
 export async function POST(req) {
   try {
-    const ip = req.headers.get("cf-connecting-ip") || req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const ip = getClientIp(req);
     const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:contact:${ip}`);
 
     if (!success) {
@@ -25,14 +26,26 @@ export async function POST(req) {
       );
     }
 
-    const { name, email, message, company } = await req.json();
-
-    if (!name || !email || !message) {
-
-      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const contactId = `contact:${Date.now()}`;
+    const name = boundedString(body?.name, 120);
+    const email = boundedString(body?.email, 254);
+    const message = boundedString(body?.message, 5000);
+    const company = boundedString(body?.company, 160, { required: false });
+
+    if (!name || !email || !message || company === null) {
+      return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+    }
+    if (!isValidEmail(email)) {
+      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+    }
+
+    const contactId = `contact:${Date.now()}:${crypto.randomUUID().slice(0, 8)}`;
     const payload = {
       id: contactId,
       name,
@@ -80,7 +93,8 @@ export async function POST(req) {
       emailSent
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("❌ Contact route error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 

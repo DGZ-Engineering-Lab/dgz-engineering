@@ -120,12 +120,11 @@ function getClientFingerprint(req) {
 
 // ─── SECURITY: AUTHENTICATION ──────────────────────────────────────────────────
 
-function authenticatePasscode(req) {
-  const authHeader = req.headers.get("authorization");
-  if (!authHeader || !authHeader.startsWith("Bearer ")) return false;
-  const token = authHeader.substring(7).trim();
-  const requiredPasscode = process.env.ADMIN_PASSCODE || "dgz2026";
-  return secureCompare(token, requiredPasscode);
+// The admin passcode must come from the environment. There is deliberately no
+// default: if ADMIN_PASSCODE is unset (or too short) the admin API stays locked.
+function getAdminPasscode() {
+  const passcode = process.env.ADMIN_PASSCODE;
+  return typeof passcode === "string" && passcode.length >= 12 ? passcode : null;
 }
 
 // Session-token based auth: check if Bearer token matches a valid session in KV or memory
@@ -150,12 +149,6 @@ async function authenticateSession(req) {
     } else {
       globalSessions.delete(token); // expired
     }
-  }
-
-  // Fallback: direct passcode (for initial login)
-  const requiredPasscode = process.env.ADMIN_PASSCODE || "dgz2026";
-  if (secureCompare(token, requiredPasscode)) {
-    return { valid: true, isPasscode: true };
   }
 
   return { valid: false };
@@ -292,7 +285,13 @@ export async function POST(req) {
     return withSecurityHeaders(NextResponse.json({ error: "Passcode is required." }, { status: 400 }));
   }
 
-  const requiredPasscode = process.env.ADMIN_PASSCODE || "dgz2026";
+  const requiredPasscode = getAdminPasscode();
+  if (!requiredPasscode) {
+    console.error("ADMIN_PASSCODE is not configured (min 12 chars). Admin login is disabled.");
+    return withSecurityHeaders(
+      NextResponse.json({ error: "Admin access is not configured." }, { status: 503 })
+    );
+  }
   if (!secureCompare(passcode.trim(), requiredPasscode)) {
     await recordFailedAttempt(rateLimitKey, fingerprint);
     const resp = NextResponse.json(
@@ -462,8 +461,9 @@ export async function DELETE(req) {
       NextResponse.json({ success: true, message: `Record ${id} deleted.`, deletedFromKV })
     );
   } catch (err) {
+    console.error("❌ Admin delete error:", err);
     return withSecurityHeaders(
-      NextResponse.json({ error: err.message }, { status: 500 })
+      NextResponse.json({ error: "Internal server error" }, { status: 500 })
     );
   }
 }
