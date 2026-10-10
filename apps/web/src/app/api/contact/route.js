@@ -2,8 +2,7 @@ import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
-import { getClientIp, internalError } from "../../../lib/http";
-import { validateContact } from "../../../lib/validation";
+import { boundedString, getClientIp, isValidEmail } from "../../../lib/security";
 
 
 export const runtime = 'edge';
@@ -34,22 +33,25 @@ export async function POST(req) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const validation = validateContact(body);
-    if (!validation.ok) {
-      return NextResponse.json(
-        { error: "Invalid fields", fields: validation.errors },
-        { status: 400 }
-      );
-    }
-    const { name, email, message, company } = validation.data;
+    const name = boundedString(body?.name, 120);
+    const email = boundedString(body?.email, 254);
+    const message = boundedString(body?.message, 5000);
+    const company = boundedString(body?.company, 160, { required: false });
 
-    const contactId = `contact:${Date.now()}`;
+    if (!name || !email || !message || company === null) {
+      return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+    }
+    if (!isValidEmail(email)) {
+      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+    }
+
+    const contactId = `contact:${Date.now()}:${crypto.randomUUID().slice(0, 8)}`;
     const payload = {
       id: contactId,
       name,
       email,
       message,
-      company,
+      company: company || "N/A",
       timestamp: new Date().toISOString()
     };
 
@@ -91,7 +93,8 @@ export async function POST(req) {
       emailSent
     });
   } catch (error) {
-    return internalError(error, "contact");
+    console.error("❌ Contact route error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 

@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
 
+// Constant-time comparison so the secret can't be guessed byte-by-byte via timing.
+function timingSafeEqual(a, b) {
+  const enc = new TextEncoder();
+  const x = enc.encode(a);
+  const y = enc.encode(b);
+  let diff = x.length ^ y.length;
+  for (let i = 0; i < y.length; i++) diff |= (x[i] ?? 0) ^ y[i];
+  return diff === 0;
+}
+
 /**
  * GET /api/cron
  *
@@ -18,7 +28,7 @@ export async function GET(req) {
   const authHeader = req.headers.get("Authorization");
   const cronSecret = process.env.CRON_SECRET;
 
-  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || !timingSafeEqual(authHeader || "", `Bearer ${cronSecret}`)) {
     return NextResponse.json(
       { error: "Unauthorized — CRON_SECRET inválido o ausente." },
       { status: 401 }

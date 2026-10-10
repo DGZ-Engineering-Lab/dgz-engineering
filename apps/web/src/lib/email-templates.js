@@ -1,17 +1,21 @@
-import { escapeHtml } from "./html.js";
+import { escapeHtml } from "./security.js";
 
 /**
  * Generates the HTML template for internal Admin notifications.
  */
 export function getAdminNotificationTemplate({ name, email, message, company }) {
+  name = escapeHtml(name);
+  email = escapeHtml(email);
+  message = escapeHtml(message);
+  company = escapeHtml(company || "N/A");
   return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; padding: 20px;">
       <h2 style="color: #333;">Nuevo Lead desde DevGiz Engineering</h2>
-      <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-      <p><strong>Compañía:</strong> ${escapeHtml(company || "N/A")}</p>
-      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Nombre:</strong> ${name}</p>
+      <p><strong>Compañía:</strong> ${company || "N/A"}</p>
+      <p><strong>Email:</strong> ${email}</p>
       <div style="background-color: #f9f9f9; padding: 15px; margin-top: 20px; border-radius: 5px;">
-        <p style="margin: 0; font-style: italic;">"${escapeHtml(message)}"</p>
+        <p style="margin: 0; font-style: italic;">"${message}"</p>
       </div>
       <hr style="border: none; border-top: 1px solid #eaeaea; margin: 30px 0;" />
       <p style="font-size: 12px; color: #888;">Este es un mensaje automático generado por la plataforma DevGiz.</p>
@@ -24,6 +28,9 @@ export function getAdminNotificationTemplate({ name, email, message, company }) 
  * NOTE: On Resend Free Tier, this will only work if the user's email matches the verified admin email.
  */
 export function getUserConfirmationTemplate({ name, message, company }) {
+  name = escapeHtml(name);
+  message = escapeHtml(message);
+  company = escapeHtml(company || "N/A");
   return `
     <!DOCTYPE html>
     <html>
@@ -50,15 +57,15 @@ export function getUserConfirmationTemplate({ name, message, company }) {
           <span class="logo">DEVGIZ ENGINEERING</span>
         </div>
         <div class="content">
-          <h1>¡Gracias por contactar con DevGiz, <span class="accent">${escapeHtml(name)}</span>!</h1>
+          <h1>¡Gracias por contactar con DevGiz, <span class="accent">${name}</span>!</h1>
           <p>Hemos recibido tu solicitud de información sobre nuestra suite de <strong>Inteligencia Territorial y Catastro Multipropósito</strong>.</p>
           <p>Un ingeniero geoespacial de nuestro equipo revisará tu caso y se pondrá en contacto contigo en un plazo de 24 horas hábiles.</p>
           
           <div class="details">
-            <div class="detail-item"><span class="detail-label">Remitente:</span> <span class="detail-val">${escapeHtml(name)}</span></div>
-            <div class="detail-item"><span class="detail-label">Compañía:</span> <span class="detail-val">${escapeHtml(company || 'N/A')}</span></div>
+            <div class="detail-item"><span class="detail-label">Remitente:</span> <span class="detail-val">${name}</span></div>
+            <div class="detail-item"><span class="detail-label">Compañía:</span> <span class="detail-val">${company || 'N/A'}</span></div>
             <div class="detail-item"><span class="detail-label">Mensaje recibido:</span></div>
-            <p style="margin: 5px 0 0 0; font-style: italic; color: #94a3b8; font-size: 13px;">"${escapeHtml(message)}"</p>
+            <p style="margin: 5px 0 0 0; font-style: italic; color: #94a3b8; font-size: 13px;">"${message}"</p>
           </div>
           
           <p>Mientras tanto, puedes explorar nuestro laboratorio interactivo de IA y visor catastral 3D.</p>

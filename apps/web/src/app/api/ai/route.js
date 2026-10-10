@@ -1,7 +1,10 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 import { checkRateLimit } from '../../../lib/upstash';
-import { getClientIp, internalError } from '../../../lib/http';
+import { getClientIp } from '../../../lib/security';
+
+const MAX_PROMPT_CHARS = 6000;
+const MAX_CONTEXT_CHARS = 12000;
 
 export const runtime = 'edge';
 
@@ -33,9 +36,22 @@ export async function POST(req) {
     }
 
     // 2. Validate incoming request
-    const { prompt, context } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+    const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : "";
     if (!prompt) {
       return NextResponse.json({ error: "Missing prompt query" }, { status: 400 });
+    }
+    if (prompt.length > MAX_PROMPT_CHARS) {
+      return NextResponse.json({ error: `Prompt exceeds ${MAX_PROMPT_CHARS} characters` }, { status: 413 });
+    }
+    const contextJson = JSON.stringify(body?.context || {});
+    if (contextJson.length > MAX_CONTEXT_CHARS) {
+      return NextResponse.json({ error: `Context exceeds ${MAX_CONTEXT_CHARS} characters` }, { status: 413 });
     }
 
     // 3. Fallback simulation if GROQ is not configured yet (marketing demo friendly)
@@ -59,7 +75,7 @@ export async function POST(req) {
         },
         {
           role: 'user',
-          content: `Prompt: ${prompt}\nContext data: ${JSON.stringify(context || {})}`
+          content: `Prompt: ${prompt}\nContext data: ${contextJson}`
         }
       ],
       model: 'llama-3.3-70b-versatile',
@@ -75,6 +91,7 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    return internalError(error, "ai");
+    console.error("❌ Groq API route error:", error);
+    return NextResponse.json({ error: "AI analysis failed" }, { status: 500 });
   }
 }

@@ -12,11 +12,10 @@ export async function POST(req) {
       'svix-signature': req.headers.get('svix-signature'),
     };
 
-    // If no secret is configured, just log and return 200 to not fail
+    // Never accept unsigned events: without a secret we cannot tell Resend from anyone else.
     if (!webhookSecret) {
-      console.warn("⚠️ RESEND_WEBHOOK_SECRET is not configured. Webhook received but not verified.");
-      console.log("Payload:", JSON.parse(payload));
-      return NextResponse.json({ received: true, verified: false });
+      console.error("⚠️ RESEND_WEBHOOK_SECRET is not configured. Rejecting unverified webhook.");
+      return NextResponse.json({ error: "Webhook verification not configured" }, { status: 503 });
     }
 
     const wh = new Webhook(webhookSecret);
@@ -32,7 +31,7 @@ export async function POST(req) {
 
     // Process the verified event
     const { type, data } = event;
-    console.log(`[Resend Webhook] Received Event: ${type}`, data);
+    console.log(`[Resend Webhook] Received Event: ${type}`, data?.email_id || "");
 
     switch (type) {
       case 'email.sent':

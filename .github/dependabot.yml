@@ -1,3 +1,6 @@
+# Dependabot version updates
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
 version: 2
 updates:
   - package-ecosystem: "github-actions"
@@ -15,15 +18,25 @@ updates:
     labels:
       - "dependencies"
     groups:
-      # Batch routine minor/patch bumps into one PR to keep noise low.
       minor-and-patch:
         update-types: ["minor", "patch"]
 
   - package-ecosystem: "pip"
-    directories:
-      - "/apps/api"
-      - "/backend/fastapi"
-      - "/backend/qa_engine"
+    directory: "/backend/fastapi"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "pip"
+    directory: "/backend/qa_engine"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "docker"
+    directory: "/backend/fastapi"
     schedule:
       interval: "weekly"
     labels:
