@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { getAdminNotificationTemplate, getUserConfirmationTemplate } from "./email-templates.js";
+import { singleLine } from "./security.js";
 
 class EmailService {
   constructor() {
@@ -30,7 +31,7 @@ class EmailService {
       const response = await this.resend.emails.send({
         from: this.fromEmail,
         to: [this.adminEmail],
-        subject: `[DevGiz Contact] Nuevo contacto: ${name}`,
+        subject: `[DevGiz Contact] Nuevo contacto: ${singleLine(name)}`,
         html: getAdminNotificationTemplate({ name, email, message, company })
       });
       
@@ -66,7 +67,7 @@ class EmailService {
       const response = await this.resend.emails.send({
         from: this.fromEmail,
         to: [email],
-        subject: `¡Gracias por contactar a DevGiz, ${name}!`,
+        subject: `¡Gracias por contactar a DevGiz, ${singleLine(name)}!`,
         html: emailHtml
       });
 

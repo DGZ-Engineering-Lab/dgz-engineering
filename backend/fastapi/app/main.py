@@ -1,3 +1,4 @@
+import logging
 import os
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,19 +10,23 @@ from .schemas import ValidationRequest, GeoJSONFeature, AnalysisResult
 from .spatial_engine import validate_collection_topology, calculate_parcel_score, perform_context_analysis
 from .database import get_db
 
+logger = logging.getLogger(__name__)
+
 app = FastAPI(
     title="DGZ Spatial Intelligence Engine",
     description="Advanced Spatial Systems Engineering API for Multipurpose Cadastre & Territorial Intelligence.",
     version="6.1.0"
 )
 
-# Enterprise CORS Configuration
+# CORS: public read-only API. Origins come from CORS_ALLOW_ORIGINS (comma-separated);
+# credentials are never allowed, since a wildcard origin with credentials is unsafe.
+_cors_origins = [o.strip() for o in os.getenv("CORS_ALLOW_ORIGINS", "*").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_cors_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 @app.get("/", tags=["System"])
@@ -58,8 +63,10 @@ async def get_ingested_parcels(db: Session = Depends(get_db)):
         """)
         result = db.execute(query).fetchone()
         return result[0] if result else {"type": "FeatureCollection", "features": []}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception:
+        # Log the real error server-side; don't leak SQL/connection details to clients.
+        logger.exception("Failed to fetch cadastral parcels")
+        raise HTTPException(status_code=500, detail="Database error")
 
 @app.post("/validate", tags=["Topology"])
 async def validate_topology(request: ValidationRequest):
