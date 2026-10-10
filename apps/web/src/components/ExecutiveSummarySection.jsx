@@ -86,7 +86,7 @@ export default function ExecutiveSummarySection() {
                 <div className="flex-1 space-y-1 lg:space-y-2">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl lg:text-2xl font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors">{p.title}</h3>
-                    <span className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">{p.subtitle}</span>
+                    <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">{p.subtitle}</span>
                   </div>
                   <p className="text-slate-400 text-xs lg:text-sm leading-relaxed font-light">{p.desc}</p>
                 </div>

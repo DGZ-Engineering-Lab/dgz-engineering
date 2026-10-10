@@ -288,7 +288,7 @@ export default function CareersPage() {
                             {!formSubmitted ? (
                                <form onSubmit={(e) => submitApplication(e, job.title)} className="space-y-4">
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Nombre Completo</label>
+                                     <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Nombre Completo</label>
                                      <input 
                                        required
                                        type="text" 
@@ -300,7 +300,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
+                                     <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
                                      <input 
                                        required
                                        type="email" 
@@ -312,7 +312,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
+                                     <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
                                      <input 
                                        type="url" 
                                        name="portfolio"
@@ -323,7 +323,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
+                                     <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
                                      <textarea 
                                        name="pitch"
                                        value={formData.pitch}
@@ -336,7 +336,7 @@ export default function CareersPage() {
 
                                   {/* Cyber-processing console during submit */}
                                   {consoleLogs.length > 0 && (
-                                     <div className="bg-black p-4 rounded-lg font-mono text-[9px] text-cyan-400 space-y-1 max-h-[120px] overflow-y-auto">
+                                     <div className="bg-black p-4 rounded-lg font-mono text-[10px] text-cyan-400 space-y-1 max-h-[120px] overflow-y-auto">
                                         {consoleLogs.map((log, i) => (
                                            <div key={i}>{log}</div>
                                         ))}
@@ -349,7 +349,7 @@ export default function CareersPage() {
                                   <button
                                     type="submit"
                                     disabled={formLoading}
-                                    className="w-full bg-[#1a1a1a] hover:bg-slate-800 text-white text-[9px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                                    className="w-full bg-[#1a1a1a] hover:bg-slate-800 text-white text-[10px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                                   >
                                      <Send className="w-3 h-3" /> Registrar Postulación
                                   </button>
@@ -369,12 +369,12 @@ export default function CareersPage() {
                                         Sus credenciales han sido cifradas y almacenadas en nuestro nodo de recursos humanos.
                                      </p>
                                   </div>
-                                  <div className="p-4 bg-white border border-slate-200 rounded-lg font-mono text-[9px] text-slate-500">
+                                  <div className="p-4 bg-white border border-slate-200 rounded-lg font-mono text-[10px] text-slate-500">
                                      CANDIDATE_HASH: 0x8a7f92023d8c1c4f
                                   </div>
                                   <button
                                     onClick={resetForm}
-                                    className="text-[9px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer"
+                                    className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer"
                                   >
                                      Postular a otro nodo
                                   </button>

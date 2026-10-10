@@ -187,20 +187,20 @@ export default function OfficialGISDemo() {
                <div className="bg-black/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl pointer-events-auto">
                   <div className="text-[10px] font-mono text-blue-400 uppercase tracking-widest mb-2">Data Ingestion</div>
                   <div className="text-lg font-bold text-white tracking-tight">PostGIS Active Node</div>
-                  <div className="mt-2 text-[9px] text-slate-500 font-mono">Connected to Neon Cloud Engine</div>
+                  <div className="mt-2 text-[10px] text-slate-500 font-mono">Connected to Neon Cloud Engine</div>
                </div>
 
                <div className="bg-black/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl pointer-events-auto">
                   <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest mb-2">Engine Intelligence</div>
                   <div className="text-lg font-bold text-white tracking-tight">Context Analysis: ON</div>
-                  <div className="mt-2 text-[9px] text-slate-500 font-mono">Shapely Geometry Engine Level 4</div>
+                  <div className="mt-2 text-[10px] text-slate-500 font-mono">Shapely Geometry Engine Level 4</div>
                </div>
 
                <div className="bg-black/80 backdrop-blur-xl border border-white/10 p-6 rounded-2xl pointer-events-auto flex items-center gap-6">
                   <div className="w-12 h-12 rounded-full border-4 border-emerald-500/30 border-t-emerald-500 animate-spin"></div>
                   <div className="space-y-1">
                     <div className="text-xs font-bold text-white">Sincronización Real</div>
-                    <div className="text-[9px] font-mono text-slate-500">Datos Vivos IGAC 2026</div>
+                    <div className="text-[10px] font-mono text-slate-500">Datos Vivos IGAC 2026</div>
                   </div>
                </div>
             </div>

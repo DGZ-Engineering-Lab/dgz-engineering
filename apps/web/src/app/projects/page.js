@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-10 right-10 p-6 bg-white/90 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
-                    <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">{project.stats.label}</div>
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1">{project.stats.label}</div>
                     <div className="text-lg font-black text-[#1a1a1a] tracking-tight">{project.stats.value}</div>
                   </div>
                 </div>

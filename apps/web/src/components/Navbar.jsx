@@ -114,7 +114,7 @@ export default function Navbar() {
             <Logo className={`w-8 h-8 transition-transform duration-500 group-hover:scale-105 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
             <div className="flex flex-col leading-none gap-1">
               <span className={`font-display text-[22px] tracking-tight transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
-              <span className="text-[7px] font-mono uppercase tracking-[0.42em] text-cyan-400/80 font-semibold">Engineering Lab</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-cyan-400/80 font-semibold">Engineering Lab</span>
             </div>
           </Link>
 
@@ -138,7 +138,7 @@ export default function Navbar() {
                     <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
                   )}
                   {link.isBeta && (
-                    <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[7px] tracking-widest rounded-sm font-black scale-90">
+                    <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-widest rounded-sm font-black scale-90">
                       BETA
                     </span>
                   )}
@@ -149,7 +149,7 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className={`px-8 py-3 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm ${ctaBtnStyle}`}
+              className={`px-8 py-3 text-[10px] font-black tracking-[0.2em] uppercase transition-all rounded-sm ${ctaBtnStyle}`}
             >
               Consultoría
             </Link>
@@ -194,7 +194,7 @@ export default function Navbar() {
                   <div>
                     <div className="flex items-center gap-2 mb-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_6px_#ddbe7a]" />
-                      <span className="text-[8px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DEVGIZ_ROUTING // HUD_INFO</span>
+                      <span className="text-[10px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DEVGIZ_ROUTING // HUD_INFO</span>
                     </div>
                     <h4 className="font-display text-2xl tracking-tight mb-2">{activeDropdown}</h4>
                     <p className="text-slate-500 text-xs font-light leading-relaxed">
@@ -203,7 +203,7 @@ export default function Navbar() {
                   </div>
                   
                   {/* Micro telemetry footer */}
-                  <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[7px] font-mono text-slate-400">
+                  <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-400">
                     <span>SYS_LOCK: SECURE</span>
                     <span>COINCIDENCIAS: {DROPDOWNS_DATA[activeDropdown]?.items.length} PÁGINAS</span>
                   </div>
@@ -276,7 +276,7 @@ export default function Navbar() {
             )}
 
             <div className="flex flex-col gap-5 relative z-10">
-              <div className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
+              <div className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
                 MENÚ DE INTEGRACIÓN DE RED
               </div>
               
@@ -299,7 +299,7 @@ export default function Navbar() {
                         >
                           <span>{link.name}</span>
                           {link.isBeta && (
-                            <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[7px] tracking-widest rounded-sm font-black">
+                            <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-widest rounded-sm font-black">
                               BETA
                             </span>
                           )}
@@ -356,7 +356,7 @@ export default function Navbar() {
               <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`w-full py-4.5 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm flex items-center justify-center gap-3 ${
+                className={`w-full py-4.5 text-[10px] font-black tracking-[0.2em] uppercase transition-all rounded-sm flex items-center justify-center gap-3 ${
                   isDarkPage
                     ? 'btn-gold font-black'
                     : 'bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-md'
@@ -365,7 +365,7 @@ export default function Navbar() {
                 <span>Solicitar Consultoría</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <div className="text-center text-[7px] font-mono text-slate-400 uppercase tracking-widest">
+              <div className="text-center text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                 DevGiz Spatial Systems // 2026
               </div>
             </motion.div>

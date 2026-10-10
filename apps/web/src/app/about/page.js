@@ -160,7 +160,7 @@ END LADM_COL_V3_1.`
     metric: "Qt5 / C++ Core",
     latency: "Zero UI Latency",
     accent: "from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-400 shadow-violet-500/5",
-    accentColor: "#94653a",
+    accentColor: "#b58552",
     icon: Code,
     snippet: `# Complemento PyQt5 / QGIS DevGiz
 from qgis.core import QgsProject, QgsVectorLayer
@@ -576,9 +576,9 @@ export default function AboutPage() {
                       : "bg-[#100f0d]/40 border-slate-900/60 text-slate-500 hover:border-slate-800 hover:text-slate-300 hover:bg-[#100f0d]/80"
                   }`}
                 >
-                  <div className="font-bold text-[9px] text-slate-500 mb-1">CASO DE ESTUDIO 0{idx+1}</div>
+                  <div className="font-bold text-[10px] text-slate-500 mb-1">CASO DE ESTUDIO 0{idx+1}</div>
                   <div className="text-sm font-black truncate">{scen.name}</div>
-                  <div className="text-[9px] text-slate-500 mt-1 truncate">{scen.context}</div>
+                  <div className="text-[10px] text-slate-500 mt-1 truncate">{scen.context}</div>
                 </button>
               );
             })}
@@ -591,13 +591,13 @@ export default function AboutPage() {
               {/* Scenario description card */}
               <div className="bg-[#100f0d]/60 border border-slate-900 p-6 rounded-2xl space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[9px] font-mono text-cyan-400 font-bold uppercase tracking-widest">{SIMULATOR_SCENARIOS[selectedScenarioIndex].context}</span>
+                  <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-widest">{SIMULATOR_SCENARIOS[selectedScenarioIndex].context}</span>
                   <h3 className="text-xl font-black text-white">{SIMULATOR_SCENARIOS[selectedScenarioIndex].name}</h3>
                 </div>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
                   {SIMULATOR_SCENARIOS[selectedScenarioIndex].description}
                 </p>
-                <div className="pt-4 border-t border-slate-900 grid grid-cols-2 gap-4 font-mono text-[9px]">
+                <div className="pt-4 border-t border-slate-900 grid grid-cols-2 gap-4 font-mono text-[10px]">
                   <div>
                     <span className="text-slate-500 uppercase block tracking-wider">Norma Aplicable</span>
                     <span className="text-slate-300 font-bold">{SIMULATOR_SCENARIOS[selectedScenarioIndex].normative}</span>
@@ -636,7 +636,7 @@ export default function AboutPage() {
                         {step.solved ? <Check className="w-3.5 h-3.5" /> : step.num}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <span className="text-[9px] font-mono text-slate-500 block uppercase tracking-wider">PASO 0{step.num}</span>
+                        <span className="text-[10px] font-mono text-slate-500 block uppercase tracking-wider">PASO 0{step.num}</span>
                         <h4 className="text-xs font-bold truncate text-white">{step.title}</h4>
                       </div>
                     </div>
@@ -651,7 +651,7 @@ export default function AboutPage() {
               
               {/* Visualizer card */}
               <div className="bg-[#100f0d]/60 border border-slate-900 rounded-2xl p-8 flex-1 flex flex-col justify-center min-h-[360px] relative overflow-hidden">
-                <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-600 tracking-wider">INTERACTIVE GRAPHIC VIEWER // STEP_0{activeStep}</span>
+                <span className="absolute top-4 left-4 font-mono text-[10px] text-slate-600 tracking-wider">INTERACTIVE GRAPHIC VIEWER // STEP_0{activeStep}</span>
                 
                 {/* Step 1 Content: Topo Snapping */}
                 {activeStep === 1 && (
@@ -666,7 +666,7 @@ export default function AboutPage() {
                           strokeWidth="2"
                           strokeDasharray="4 2"
                         />
-                        <text x="50" y="80" fill="#cfa758" className="font-mono text-[9px] font-bold" opacity="0.6">PREDIO_A (Fiel)</text>
+                        <text x="50" y="80" fill="#cfa758" className="font-mono text-[10px] font-bold" opacity="0.6">PREDIO_A (Fiel)</text>
                         
                         {/* Polygon 2 (Erroneous or Solved) */}
                         <polygon 
@@ -678,7 +678,7 @@ export default function AboutPage() {
                           strokeWidth="2"
                           className="transition-all duration-700"
                         />
-                        <text x="180" y="190" fill={step1Snapped ? "#10b981" : "#ef4444"} className="font-mono text-[9px] font-bold" opacity="0.6">PREDIO_B</text>
+                        <text x="180" y="190" fill={step1Snapped ? "#10b981" : "#ef4444"} className="font-mono text-[10px] font-bold" opacity="0.6">PREDIO_B</text>
 
                         {/* Overlapping alert fill */}
                         {!step1Snapped && (
@@ -717,12 +717,12 @@ export default function AboutPage() {
 
                       {/* Floating Indicator */}
                       {!step1Snapped && (
-                        <div className="absolute top-3 right-3 bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[8px] px-2.5 py-1 rounded-full animate-pulse tracking-wider font-black">
+                        <div className="absolute top-3 right-3 bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[10px] px-2.5 py-1 rounded-full animate-pulse tracking-wider font-black">
                           SOLAPE DETECTADO (15.4%)
                         </div>
                       )}
                       {step1Snapped && (
-                        <div className="absolute top-3 right-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[8px] px-2.5 py-1 rounded-full tracking-wider font-black">
+                        <div className="absolute top-3 right-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px] px-2.5 py-1 rounded-full tracking-wider font-black">
                           TOPOLOGÍA DEPURADA (0.00%)
                         </div>
                       )}
@@ -747,7 +747,7 @@ export default function AboutPage() {
                               try { window.dgzSynth.playSuccess(); } catch(e){}
                             }
                           }}
-                          className="px-6 py-2.5 bg-red-500 text-white font-mono text-[9px] font-black uppercase tracking-widest rounded border border-red-400 hover:bg-red-600 transition-all cursor-pointer"
+                          className="px-6 py-2.5 bg-red-700 text-white font-mono text-[10px] font-black uppercase tracking-widest rounded border border-red-400 hover:bg-red-800 transition-all cursor-pointer"
                         >
                           Auto-Depurar Linderos
                         </button>
@@ -767,7 +767,7 @@ export default function AboutPage() {
                           <p className="text-slate-500">[VALIDATE] Ejecutando compilador de esquemas INTERLIS...</p>
                         </div>
                       ) : step2Compiled ? (
-                        <pre className="whitespace-pre text-emerald-400/90 leading-relaxed text-[9px] md:text-[10px]">
+                        <pre className="whitespace-pre text-emerald-400/90 leading-relaxed text-[10px] md:text-[10px]">
                           {SIMULATOR_SCENARIOS[selectedScenarioIndex].interlisCode}
                         </pre>
                       ) : (
@@ -805,7 +805,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[10px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
                           step2Compiled
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                             : step2Compiling
@@ -827,18 +827,18 @@ export default function AboutPage() {
                       {/* Metric Comparison rows */}
                       <div className="grid grid-cols-2 gap-4 font-mono text-[10px]">
                         <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900">
-                          <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Levantamiento Físico</span>
+                          <span className="text-slate-500 block uppercase text-[10px] tracking-wider">Levantamiento Físico</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica} m²</span>
                         </div>
                         <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900">
-                          <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Folio de Registro (SNR)</span>
+                          <span className="text-slate-500 block uppercase text-[10px] tracking-wider">Folio de Registro (SNR)</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica} m²</span>
                         </div>
                       </div>
 
                       {/* Tolerance Indicator bar */}
                       <div className="space-y-1.5">
-                        <div className="flex justify-between text-[8px] font-mono text-slate-500 tracking-wider">
+                        <div className="flex justify-between text-[10px] font-mono text-slate-500 tracking-wider">
                           <span>DIFERENCIA REAL: {((Math.abs(SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica - SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica) / SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica) * 100).toFixed(1)}%</span>
                           <span>TOLERANCIA LEY: {SIMULATOR_SCENARIOS[selectedScenarioIndex].toleranceThreshold}%</span>
                         </div>
@@ -851,11 +851,11 @@ export default function AboutPage() {
                           />
                         </div>
                         <div className="flex justify-between items-center mt-1">
-                          <span className="text-[8px] font-mono text-slate-500 tracking-widest">ESTADO LEGAL</span>
+                          <span className="text-[10px] font-mono text-slate-500 tracking-widest">ESTADO LEGAL</span>
                           {step3Conciliated ? (
-                            <span className="text-[9px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">CONCILIACIÓN APROBADA</span>
+                            <span className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">CONCILIACIÓN APROBADA</span>
                           ) : (
-                            <span className="text-[9px] font-mono text-red-400 font-bold bg-red-500/10 px-2 py-0.5 rounded animate-pulse">RECHAZADO POR DISCREPANCIA</span>
+                            <span className="text-[10px] font-mono text-red-400 font-bold bg-red-500/10 px-2 py-0.5 rounded animate-pulse">RECHAZADO POR DISCREPANCIA</span>
                           )}
                         </div>
                       </div>
@@ -889,7 +889,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[10px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
                           step3Conciliated
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                             : step3Conciliating
@@ -916,14 +916,14 @@ export default function AboutPage() {
                             <CheckCircle2 className="w-6 h-6" />
                           </div>
                           <div>
-                            <span className="text-[9px] font-mono text-emerald-400 font-black uppercase tracking-widest block">CERTIFICATE_DEPLOYS_SUCCESSFULLY</span>
+                            <span className="text-[10px] font-mono text-emerald-400 font-black uppercase tracking-widest block">CERTIFICATE_DEPLOYS_SUCCESSFULLY</span>
                             <h4 className="text-lg font-black text-white mt-1">Soberanía Fiscal Asegurada</h4>
                           </div>
                           <p className="text-[10px] text-slate-400 font-light leading-relaxed">
                             El predio ha sido incorporado al catastro multipropósito y sincronizado con SNR. Se ha emitido la firma criptográfica para garantizar la seguridad jurídica.
                           </p>
                           <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900 inline-block">
-                            <span className="text-[8px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
+                            <span className="text-[10px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
                             <span className="text-emerald-400 font-mono font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}</span>
                           </div>
                         </div>
@@ -931,7 +931,7 @@ export default function AboutPage() {
                         <div className="space-y-4 relative z-10 py-4">
                           <Fingerprint className="w-12 h-12 text-slate-700 mx-auto animate-pulse" />
                           <div>
-                            <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">STATUS // AWAITING FINAL SEAL</span>
+                            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">STATUS // AWAITING FINAL SEAL</span>
                             <h4 className="text-lg font-black text-white mt-1">Listo para Firma Digital</h4>
                           </div>
                           <p className="text-[10px] text-slate-400 font-light leading-relaxed">
@@ -968,7 +968,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[10px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
                           step4Stamped
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,182,129,0.05)]"
                             : step4Stamping
@@ -985,7 +985,7 @@ export default function AboutPage() {
 
               {/* Console log box */}
               <div className="bg-[#050504] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1 relative h-[110px] overflow-y-auto shadow-inner">
-                <div className="absolute top-3 right-3 bg-slate-900/80 text-slate-500 text-[8px] px-2 py-0.5 rounded border border-slate-800 uppercase tracking-widest font-bold">
+                <div className="absolute top-3 right-3 bg-slate-900/80 text-slate-500 text-[10px] px-2 py-0.5 rounded border border-slate-800 uppercase tracking-widest font-bold">
                   TELEMETRÍA EN VIVO
                 </div>
                 {simConsoleLogs.map((log, lIdx) => {
@@ -1090,9 +1090,9 @@ export default function AboutPage() {
                     <div className="flex-1 min-w-0">
                       <h3 className={`font-black text-sm transition-colors ${isSelected ? "text-white" : "text-slate-350 hover:text-white"}`}>{director.name}</h3>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider truncate block">{director.role.split("&")[0]}</span>
-                        <span className="text-slate-700 font-mono text-[9px]">•</span>
-                        <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest">{director.latency}</span>
+                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider truncate block">{director.role.split("&")[0]}</span>
+                        <span className="text-slate-700 font-mono text-[10px]">•</span>
+                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{director.latency}</span>
                       </div>
                     </div>
 
@@ -1121,15 +1121,15 @@ export default function AboutPage() {
                     backgroundSize: '16px 16px'
                   }}></div>
 
-                  <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} {"//"} {activeDirector.coordinates}</span>
-                  <span className="absolute bottom-4 right-4 font-mono text-[8px] text-slate-500 tracking-wider">DEVGIZ {"//"} CATASTRO MULTIPROPÓSITO</span>
+                  <span className="absolute top-4 left-4 font-mono text-[10px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} {"//"} {activeDirector.coordinates}</span>
+                  <span className="absolute bottom-4 right-4 font-mono text-[10px] text-slate-500 tracking-wider">DEVGIZ {"//"} CATASTRO MULTIPROPÓSITO</span>
                   
                   {/* Verification Banner */}
                   {verifiedSignatures[activeDirector.name] && (
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="absolute top-8 right-8 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3.5 py-1.5 rounded-full font-mono text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm"
+                      className="absolute top-8 right-8 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3.5 py-1.5 rounded-full font-mono text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm"
                     >
                       <Check className="w-3 h-3 text-emerald-400" />
                       SIGNATURE VERIFIED
@@ -1199,14 +1199,14 @@ export default function AboutPage() {
                         <Terminal className="w-3.5 h-3.5" />
                         Registro de Operaciones Recientes
                       </h4>
-                      <span className="text-[9px] font-mono text-emerald-500 animate-pulse uppercase">● LIVE FEED</span>
+                      <span className="text-[10px] font-mono text-emerald-500 animate-pulse uppercase">● LIVE FEED</span>
                     </div>
                     <div className="bg-slate-950 text-slate-300 p-6 rounded-xl font-mono text-[11px] leading-relaxed relative border border-slate-900 shadow-inner overflow-hidden max-h-[160px] overflow-y-auto space-y-1">
                       
                       {/* Sutil overlay de CRT lineas */}
                       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)]" style={{ backgroundSize: '100% 3px' }}></div>
                       
-                      <div className="text-slate-500 text-[9px] uppercase tracking-widest border-b border-slate-900 pb-2 mb-2">DEVGIZ SECURE TELEMETRY FEED v1.1</div>
+                      <div className="text-slate-500 text-[10px] uppercase tracking-widest border-b border-slate-900 pb-2 mb-2">DEVGIZ SECURE TELEMETRY FEED v1.1</div>
                       {activeDirector.logs.map((log, lIdx) => {
                         let colorClass = "text-slate-300";
                         if (log.includes("[INIT]") || log.includes("[LOAD]") || log.includes("[SCAN]")) colorClass = "text-cyan-400";
@@ -1242,7 +1242,7 @@ export default function AboutPage() {
                       {verifiedSignatures[activeDirector.name] ? (
                         <div className="font-mono text-[10px] space-y-0.5 min-w-0">
                           <p className="text-cyan-400 font-bold truncate">CLAVE PÚBLICA: {activeDirector.publicKey}</p>
-                          <p className="text-slate-500 truncate text-[9px]">SHA-256 HASH: {activeDirector.signatureHash}</p>
+                          <p className="text-slate-500 truncate text-[10px]">SHA-256 HASH: {activeDirector.signatureHash}</p>
                         </div>
                       ) : (
                         <p className="text-xs text-slate-400 font-light">Valide el hash criptográfico SHA-256 de seguridad jurídica para este perfil.</p>
@@ -1385,9 +1385,9 @@ export default function AboutPage() {
                       <div className="w-2.5 h-2.5 rounded-full bg-cyan-500/20 flex items-center justify-center animate-pulse">
                         <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: TECH_STACK[activeTechIndex].accentColor }}></div>
                       </div>
-                      <span className="text-[9px] uppercase tracking-[0.25em] font-black text-slate-400">ENGINEERING SOURCE VIEW</span>
+                      <span className="text-[10px] uppercase tracking-[0.25em] font-black text-slate-400">ENGINEERING SOURCE VIEW</span>
                     </div>
-                    <span className="text-[9px] text-slate-600 font-bold uppercase tracking-wider">{TECH_STACK[activeTechIndex].name.replace("&", "_").replace(" ", "_").toLowerCase()}_core.py</span>
+                    <span className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">{TECH_STACK[activeTechIndex].name.replace("&", "_").replace(" ", "_").toLowerCase()}_core.py</span>
                   </div>
 
                   <p className="text-slate-500 leading-relaxed mb-6 font-sans font-light text-xs">
@@ -1410,7 +1410,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Console footer */}
-                <div className="mt-8 pt-4 border-t border-slate-900 flex items-center justify-between text-slate-600 text-[9px] tracking-widest font-black uppercase">
+                <div className="mt-8 pt-4 border-t border-slate-900 flex items-center justify-between text-slate-600 text-[10px] tracking-widest font-black uppercase">
                   <span>DEVGIZ ENGINEERING CORP</span>
                   <span className="animate-pulse" style={{ color: TECH_STACK[activeTechIndex].accentColor }}>STATUS // READY TO PIPELINE</span>
                 </div>

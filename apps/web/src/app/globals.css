@@ -39,9 +39,9 @@
   --color-slate-100: #f0ede6;
   --color-slate-200: #e2ded4;
   --color-slate-300: #cac4b7;
-  --color-slate-400: #9c968a;
-  --color-slate-500: #716c63;
-  --color-slate-600: #57534c;
+  --color-slate-400: #6b665d;
+  --color-slate-500: #5f5a52;
+  --color-slate-600: #4d4943;
   --color-slate-700: #3d3a35;
   --color-slate-800: #282622;
   --color-slate-900: #181714;
@@ -53,7 +53,7 @@
   --color-cyan-300: #ddbe7a;
   --color-cyan-400: #cfa758;
   --color-cyan-500: #b88f3e;
-  --color-cyan-600: #8a6825;
+  --color-cyan-600: #7a5b1f;
   --color-cyan-700: #6f531f;
   --color-cyan-800: #56411c;
   --color-cyan-900: #403119;
@@ -65,7 +65,7 @@
   --color-sky-300: #ddbe7a;
   --color-sky-400: #cfa758;
   --color-sky-500: #b88f3e;
-  --color-sky-600: #8a6825;
+  --color-sky-600: #7a5b1f;
   --color-sky-700: #6f531f;
   --color-sky-800: #56411c;
   --color-sky-900: #403119;
@@ -77,7 +77,7 @@
   --color-teal-300: #ddbe7a;
   --color-teal-400: #cfa758;
   --color-teal-500: #b88f3e;
-  --color-teal-600: #8a6825;
+  --color-teal-600: #7a5b1f;
   --color-teal-700: #6f531f;
   --color-teal-800: #56411c;
   --color-teal-900: #403119;
@@ -116,6 +116,10 @@
   --color-purple-600: #77502e;
   --color-purple-900: #372518;
   --color-purple-950: #1f140c;
+
+  /* Verdes de estado con contraste AA sobre marfil y blanco */
+  --color-emerald-500: #047857;
+  --color-emerald-600: #046c4c;
 }
 
 @theme inline {
@@ -551,4 +555,85 @@ html {
 @keyframes hero-rise-solid {
   from { transform: translateY(24px); letter-spacing: 0.01em; }
   to { transform: none; }
+}
+
+
+/* ===================================================================
+   Contraste WCAG 2.2 AA adaptativo
+   Los neutros y el oro tienen dos juegos de valores: el de :root
+   (marfil/blanco, arriba en @theme) y este, que se activa dentro de
+   cualquier superficie oscura. Así un mismo `text-slate-400` cumple
+   4.5:1 tanto sobre marfil (#6b665d) como sobre obsidiana (#b3ada1).
+   =================================================================== */
+.surface-obsidian,
+.bg-obsidian,
+.bg-black,
+.bg-slate-950,
+.bg-slate-900,
+.bg-slate-800,
+.bg-black\/60,
+.bg-black\/70,
+.bg-black\/80,
+.bg-black\/85,
+.bg-black\/90,
+.bg-black\/95,
+.bg-slate-950\/60,
+.bg-slate-950\/70,
+.bg-slate-950\/80,
+.bg-slate-950\/85,
+.bg-slate-950\/90,
+.bg-slate-950\/95,
+.bg-slate-900\/60,
+.bg-slate-900\/70,
+.bg-slate-900\/80,
+.bg-slate-900\/85,
+.bg-slate-900\/90,
+.bg-slate-900\/95,
+[class*="bg-[#0"],
+[class*="bg-[#1"] {
+  --color-slate-400: #b3ada1;
+  --color-slate-500: #a19b8f;
+  --color-slate-600: #928c80;
+  --color-cyan-500: #b88f3e;
+  --color-cyan-600: #b88f3e;
+  --color-sky-600: #b88f3e;
+  --color-teal-600: #b88f3e;
+  --color-indigo-500: #b58552;
+  --color-violet-500: #b58552;
+  --color-purple-500: #b58552;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #10b981;
+  --bg-glass: rgba(255, 255, 255, 0.035);
+  --border-glass: rgba(207, 167, 88, 0.16);
+}
+
+/* Tarjetas claras dentro de secciones oscuras vuelven a los valores claros */
+.bg-white,
+.bg-slate-50,
+.bg-slate-100,
+.bg-ivory,
+[class*="bg-[#f"],
+[class*="bg-white/9"] {
+  --color-slate-400: #6b665d;
+  --color-slate-500: #5f5a52;
+  --color-slate-600: #4d4943;
+  --color-cyan-500: #b88f3e;
+  --color-cyan-600: #7a5b1f;
+  --color-sky-600: #7a5b1f;
+  --color-teal-600: #7a5b1f;
+  --color-indigo-500: #94653a;
+  --color-violet-500: #94653a;
+  --color-purple-500: #94653a;
+  --color-emerald-500: #047857;
+  --color-emerald-600: #046c4c;
+  --bg-glass: rgba(255, 254, 251, 0.78);
+  --border-glass: rgba(18, 17, 14, 0.08);
+}
+
+/* El oro medio como texto no llega a 4.5:1 sobre marfil: se usa el tono 600,
+   que dentro de superficies oscuras vuelve a ser el oro medio. */
+.text-cyan-500,
+.text-sky-500,
+.text-teal-500 {
+  color: var(--color-cyan-600);
 }

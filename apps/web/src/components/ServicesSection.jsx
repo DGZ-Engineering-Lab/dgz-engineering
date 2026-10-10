@@ -416,10 +416,10 @@ export default function ServicesSection() {
           <div className="p-6 md:p-8 border-b border-slate-200/80 bg-slate-50/40">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div>
-                <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest block mb-1">OPERATIONAL PIPELINE</span>
+                <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest block mb-1">OPERATIONAL PIPELINE</span>
                 <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight">Flujo de Valor Territorial</h3>
               </div>
-              <div className="px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+              <div className="px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                 End-To-End Pipeline
               </div>
             </div>
@@ -458,7 +458,7 @@ export default function ServicesSection() {
                       }`}>
                         {step.title}
                       </div>
-                      <div className="text-[9px] text-slate-400 truncate hidden sm:block">
+                      <div className="text-[10px] text-slate-400 truncate hidden sm:block">
                         {step.desc}
                       </div>
                     </div>
@@ -476,7 +476,7 @@ export default function ServicesSection() {
               
               {/* Segmented Control de Capas */}
               <div>
-                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block mb-3">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-3">
                   Capa Operacional
                 </span>
                 <div className="flex bg-slate-100 p-1 rounded-xl relative">
@@ -506,7 +506,7 @@ export default function ServicesSection() {
 
               {/* Lista Vertical de Servicios de la Capa Activa */}
               <div className="flex-1 flex flex-col gap-3">
-                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">
                   Servicios en la Capa
                 </span>
                 
@@ -539,7 +539,7 @@ export default function ServicesSection() {
 
                         <div className="min-w-0 flex-1">
                           <div className="flex justify-between items-center mb-0.5">
-                            <span className="text-[8px] font-mono text-slate-400 tracking-wider">
+                            <span className="text-[10px] font-mono text-slate-400 tracking-wider">
                               {svc.id}
                             </span>
                             {isSelected && (
@@ -560,7 +560,7 @@ export default function ServicesSection() {
 
               {/* Caja de Concepto Maestro Contextual */}
               <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm hidden lg:block">
-                <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-1.5">CONCEPTO CAPA</span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1.5">CONCEPTO CAPA</span>
                 <p className="text-[11px] text-slate-500 font-light leading-relaxed">
                   {currentCapaData?.description}
                 </p>
@@ -580,10 +580,10 @@ export default function ServicesSection() {
                     <div className="space-y-4">
                       {/* Badge superior */}
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-1 bg-slate-100 border border-slate-200 text-[8px] font-mono font-bold tracking-wider rounded-md text-slate-500 uppercase">
+                        <span className="px-2.5 py-1 bg-slate-100 border border-slate-200 text-[10px] font-mono font-bold tracking-wider rounded-md text-slate-500 uppercase">
                           {activeService.id}
                         </span>
-                        <span className="text-[8px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+                        <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                           {activeCapa === "capa-1" ? "Inteligencia" : activeCapa === "capa-2" ? "Soluciones" : "Tecnología"}
                         </span>
                       </div>
@@ -599,7 +599,7 @@ export default function ServicesSection() {
 
                       {/* Capacidades */}
                       <div className="pt-4 border-t border-slate-200/60 space-y-2">
-                        <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
+                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2">
                           Servicios de Valor
                         </span>
                         <div className="space-y-1.5">
@@ -616,7 +616,7 @@ export default function ServicesSection() {
                     {/* Enfoque Diferencial y Botón */}
                     <div className="space-y-4 pt-4 border-t border-slate-200/60">
                       <div className="bg-slate-100/50 border border-slate-200 p-3.5 rounded-xl">
-                        <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block mb-1">
+                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-1">
                           Enfoque Diferencial
                         </span>
                         <p className="text-[10px] text-slate-500 font-light leading-relaxed">
@@ -626,7 +626,7 @@ export default function ServicesSection() {
 
                       <Link 
                         href={`/services/${activeService.slug}`}
-                        className="w-full py-3 bg-slate-900 hover:bg-slate-950 border border-slate-800 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all flex items-center justify-center gap-2 group shadow-md"
+                        className="w-full py-3 bg-slate-900 hover:bg-slate-950 border border-slate-800 rounded-xl text-[10px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all flex items-center justify-center gap-2 group shadow-md"
                       >
                         <span>Explorar Solución</span>
                         <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -643,7 +643,7 @@ export default function ServicesSection() {
                       <div className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                        <span className="font-mono text-[9px] uppercase tracking-wider text-slate-300 font-bold">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-300 font-bold">
                           Simulador Real // Activo
                         </span>
                       </div>
@@ -767,7 +767,7 @@ function ActiveSimulator({ slug, theme }) {
                 }`}
               >
                 <span>S{i+1}</span>
-                {scanned && <span className="text-[7px] text-cyan-400 self-end">LiDAR</span>}
+                {scanned && <span className="text-[10px] text-cyan-400 self-end">LiDAR</span>}
               </div>
             ))}
 
@@ -789,7 +789,7 @@ function ActiveSimulator({ slug, theme }) {
 
         {/* Consola de logs */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
-          <div className="text-slate-500 font-bold mb-1.5 uppercase text-[9px]">Log Drones:</div>
+          <div className="text-slate-500 font-bold mb-1.5 uppercase text-[10px]">Log Drones:</div>
           <div className="space-y-0.5 min-h-[48px]">
             {logs.map((log, i) => (
               <div key={i} className="text-cyan-400/80 truncate">{log}</div>
@@ -797,7 +797,7 @@ function ActiveSimulator({ slug, theme }) {
           </div>
           <button 
             onClick={resetScan}
-            className="mt-2 w-full py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white uppercase text-[8px] tracking-wider transition-colors"
+            className="mt-2 w-full py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white uppercase text-[10px] tracking-wider transition-colors"
           >
             Reiniciar Escaneo
           </button>
@@ -844,11 +844,11 @@ function ActiveSimulator({ slug, theme }) {
           <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
             <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
               <span className="font-bold text-cyan-400">NODE-MASTER</span>
-              <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
             </div>
             <div className="space-y-1.5">
               {pods.slice(0, 2).map((pod, i) => (
-                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                <div key={i} className="flex justify-between items-center text-[10px] bg-black/40 p-1.5 rounded border border-slate-900">
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span className="text-slate-300 font-bold">{pod.name}</span>
@@ -857,18 +857,18 @@ function ActiveSimulator({ slug, theme }) {
                 </div>
               ))}
             </div>
-            <div className="text-[8px] text-slate-500 pt-2 text-right">MAGNA-SIRGAS Origin API</div>
+            <div className="text-[10px] text-slate-500 pt-2 text-right">MAGNA-SIRGAS Origin API</div>
           </div>
 
           {/* Node 2 */}
           <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
             <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
               <span className="font-bold text-indigo-400">NODE-COMPUTE</span>
-              <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
             </div>
             <div className="space-y-1.5">
               {pods.slice(2, 4).map((pod, i) => (
-                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                <div key={i} className="flex justify-between items-center text-[10px] bg-black/40 p-1.5 rounded border border-slate-900">
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span className="text-slate-300 font-bold">{pod.name}</span>
@@ -877,13 +877,13 @@ function ActiveSimulator({ slug, theme }) {
                 </div>
               ))}
             </div>
-            <div className="text-[8px] text-slate-500 pt-2 text-right">LADM-COL Parser Node</div>
+            <div className="text-[10px] text-slate-500 pt-2 text-right">LADM-COL Parser Node</div>
           </div>
         </div>
 
         {/* Latency Sparkline Graph */}
         <div className="mt-3 bg-[#090807] border border-slate-900 p-2.5 rounded-lg flex flex-col">
-          <div className="flex justify-between text-slate-500 text-[8px] mb-1 font-bold">
+          <div className="flex justify-between text-slate-500 text-[10px] mb-1 font-bold">
             <span>LATENCIA DEL PROCESADOR (ms)</span>
             <span className="text-emerald-400 font-mono">PROM: 32ms</span>
           </div>
@@ -943,11 +943,11 @@ function ActiveSimulator({ slug, theme }) {
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Request Input Area */}
         <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 space-y-2">
-          <div className="flex justify-between items-center text-slate-500 text-[8px] font-bold uppercase">
+          <div className="flex justify-between items-center text-slate-500 text-[10px] font-bold uppercase">
             <span>Query Console (API Sandbox)</span>
             <span className="text-cyan-400">HTTPS POST</span>
           </div>
-          <div className="bg-black/60 border border-slate-900 p-2 rounded text-slate-300 text-[9px] leading-relaxed">
+          <div className="bg-black/60 border border-slate-900 p-2 rounded text-slate-300 text-[10px] leading-relaxed">
             <div><span className="text-rose-400">endpoint</span>: <span className="text-emerald-400">&quot;https://api.dgz.co/v1/spatial/validate&quot;</span></div>
             <div><span className="text-rose-400">headers</span>: &#123; Authorization: <span className="text-yellow-400">&quot;Bearer dgz_live_key_92c3...&quot;</span> &#125;</div>
             <div><span className="text-rose-400">body</span>: &#123; id: <span className="text-indigo-400">&quot;PARCEL-BOG-CHAPINERO&quot;</span>, format: <span className="text-indigo-400">&quot;LADM-COL-XTF&quot;</span> &#125;</div>
@@ -955,7 +955,7 @@ function ActiveSimulator({ slug, theme }) {
           <button 
             onClick={executeQuery}
             disabled={status === "loading"}
-            className="w-full py-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-black font-bold uppercase text-[9px] tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10 disabled:opacity-50"
+            className="w-full py-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-black font-bold uppercase text-[10px] tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10 disabled:opacity-50"
           >
             <Play className="w-2.5 h-2.5 fill-black" />
             {status === "loading" ? "Procesando..." : "Ejecutar Consulta API"}
@@ -964,14 +964,14 @@ function ActiveSimulator({ slug, theme }) {
 
         {/* JSON Response Area */}
         <div className="flex-1 mt-3 bg-slate-950 border border-slate-900 rounded-xl p-3 overflow-hidden flex flex-col min-h-[120px]">
-          <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2 text-slate-500 text-[8px] font-bold uppercase">
+          <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2 text-slate-500 text-[10px] font-bold uppercase">
             <span>API Response Body</span>
             {status === "idle" && <span className="text-slate-600">ESPERANDO EJECUCIÓN</span>}
             {status === "loading" && <span className="text-yellow-400 animate-pulse">CARGANDO DATA...</span>}
             {status === "success" && <span className="text-emerald-400">HTTP 200 OK</span>}
           </div>
           
-          <div className="flex-1 overflow-auto scrollbar-hide text-[9px] leading-relaxed">
+          <div className="flex-1 overflow-auto scrollbar-hide text-[10px] leading-relaxed">
             {status === "success" && payload ? (
               <pre className="text-emerald-400/90 whitespace-pre">
                 {JSON.stringify(payload, null, 2)}
@@ -1023,7 +1023,7 @@ function ActiveSimulator({ slug, theme }) {
         <div className="flex gap-2 mb-3">
           <button 
             onClick={() => { setLayerCatastro(!layerCatastro); addLog(`Capa Catastro: ${!layerCatastro ? 'Visible' : 'Oculta'}`); }}
-            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[10px] font-bold transition-all ${
               layerCatastro ? "bg-rose-500/10 border-rose-500/30 text-rose-400" : "bg-slate-950 border-slate-800 text-slate-500"
             }`}
           >
@@ -1031,7 +1031,7 @@ function ActiveSimulator({ slug, theme }) {
           </button>
           <button 
             onClick={() => { setLayerVias(!layerVias); addLog(`Capa Red Vial: ${!layerVias ? 'Visible' : 'Oculta'}`); }}
-            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[10px] font-bold transition-all ${
               layerVias ? "bg-yellow-500/10 border-yellow-500/30 text-yellow-400" : "bg-slate-950 border-slate-800 text-slate-500"
             }`}
           >
@@ -1039,7 +1039,7 @@ function ActiveSimulator({ slug, theme }) {
           </button>
           <button 
             onClick={() => { setLayerZonas(!layerZonas); addLog(`Capa Zonas Restringidas: ${!layerZonas ? 'Visible' : 'Oculta'}`); }}
-            className={`flex-1 py-1.5 px-2 rounded-lg border text-[8px] font-bold transition-all ${
+            className={`flex-1 py-1.5 px-2 rounded-lg border text-[10px] font-bold transition-all ${
               layerZonas ? "bg-purple-500/10 border-purple-500/30 text-purple-400" : "bg-slate-950 border-slate-800 text-slate-500"
             }`}
           >
@@ -1090,21 +1090,21 @@ function ActiveSimulator({ slug, theme }) {
           </svg>
 
           {/* Telemetría y Coordenadas Flotantes */}
-          <div className="absolute bottom-2 left-2 bg-black/85 border border-slate-800 p-2 rounded text-[8px] text-slate-300">
+          <div className="absolute bottom-2 left-2 bg-black/85 border border-slate-800 p-2 rounded text-[10px] text-slate-300">
             <div>ESTE: <span className="text-cyan-400">{coords.x}</span></div>
             <div>NORTE: <span className="text-cyan-400">{coords.y}</span></div>
-            <div className="text-[7px] text-slate-500 mt-1">SISTEMA: MAGNA-SIRGAS (Origen Unico)</div>
+            <div className="text-[10px] text-slate-500 mt-1">SISTEMA: MAGNA-SIRGAS (Origen Unico)</div>
           </div>
 
           {/* Info de Parcela Seleccionada */}
           {selectedParcel && (
-            <div className="absolute top-2 right-2 bg-black/90 border border-slate-800 p-2 rounded text-[8px] text-slate-300 max-w-[120px]">
+            <div className="absolute top-2 right-2 bg-black/90 border border-slate-800 p-2 rounded text-[10px] text-slate-300 max-w-[120px]">
               <div className="font-bold text-rose-400 mb-1">{selectedParcel.name}</div>
               <div>Área: {selectedParcel.area}</div>
               <div className="truncate">Titular: {selectedParcel.owner}</div>
               <button 
                 onClick={() => setSelectedParcel(null)}
-                className="mt-1 text-[7px] text-slate-500 underline hover:text-white"
+                className="mt-1 text-[10px] text-slate-500 underline hover:text-white"
               >
                 Cerrar
               </button>
@@ -1146,11 +1146,11 @@ function ActiveSimulator({ slug, theme }) {
         {/* KPI Counters */}
         <div className="grid grid-cols-2 gap-3 mb-3">
           <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl">
-            <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Registros Procesados</span>
+            <span className="text-slate-500 text-[10px] uppercase tracking-wider block">Registros Procesados</span>
             <span className="text-lg font-black text-white tracking-tight">{counter.toLocaleString()}</span>
           </div>
           <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl">
-            <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Estándar LADM-COL</span>
+            <span className="text-slate-500 text-[10px] uppercase tracking-wider block">Estándar LADM-COL</span>
             <span className="text-lg font-black text-emerald-400 tracking-tight">100% CUMPLIDO</span>
           </div>
         </div>
@@ -1158,11 +1158,11 @@ function ActiveSimulator({ slug, theme }) {
         {/* Chart Container */}
         <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl p-3.5 flex flex-col justify-between min-h-[140px]">
           <div className="flex justify-between items-center border-b border-slate-900 pb-2 mb-3">
-            <span className="text-slate-400 text-[8px] font-bold uppercase">Tableros de Mando Ejecutivos</span>
+            <span className="text-slate-400 text-[10px] font-bold uppercase">Tableros de Mando Ejecutivos</span>
             <div className="flex gap-1.5 bg-slate-900 p-0.5 rounded-md">
               <button 
                 onClick={() => { setActiveTab("territory"); addLog("Cargando métricas de Territorio"); }}
-                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                className={`px-1.5 py-0.5 rounded text-[10px] transition-all ${
                   activeTab === "territory" ? "bg-indigo-500 text-white" : "text-slate-500"
                 }`}
               >
@@ -1170,7 +1170,7 @@ function ActiveSimulator({ slug, theme }) {
               </button>
               <button 
                 onClick={() => { setActiveTab("fiscal"); addLog("Cargando optimización catastral"); }}
-                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                className={`px-1.5 py-0.5 rounded text-[10px] transition-all ${
                   activeTab === "fiscal" ? "bg-indigo-500 text-white" : "text-slate-500"
                 }`}
               >
@@ -1178,7 +1178,7 @@ function ActiveSimulator({ slug, theme }) {
               </button>
               <button 
                 onClick={() => { setActiveTab("sectors"); addLog("Cargando impacto sectorial"); }}
-                className={`px-1.5 py-0.5 rounded text-[8px] transition-all ${
+                className={`px-1.5 py-0.5 rounded text-[10px] transition-all ${
                   activeTab === "sectors" ? "bg-indigo-500 text-white" : "text-slate-500"
                 }`}
               >
@@ -1191,12 +1191,12 @@ function ActiveSimulator({ slug, theme }) {
           <div className="flex-1 flex items-end gap-3 h-24 pt-2">
             {chartData[activeTab].map((val, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
-                <span className="text-[7px] text-slate-400 font-bold">{val}%</span>
+                <span className="text-[10px] text-slate-400 font-bold">{val}%</span>
                 <div 
                   className="w-full bg-indigo-500/25 border border-indigo-400/40 rounded-t-sm transition-all duration-500 hover:bg-indigo-400"
                   style={{ height: `${val * 0.7}px` }}
                 ></div>
-                <span className="text-[7px] text-slate-500">M{i+1}</span>
+                <span className="text-[10px] text-slate-500">M{i+1}</span>
               </div>
             ))}
           </div>
@@ -1239,8 +1239,8 @@ function ActiveSimulator({ slug, theme }) {
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Status bar */}
         <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl flex justify-between items-center mb-3">
-          <span className="text-slate-500 text-[8px] font-bold">MODELO DE IA: SEGMENTATION_NET_V2</span>
-          <span className="text-[8px] text-purple-400 font-bold animate-pulse">INFERENCIA ACTIVA</span>
+          <span className="text-slate-500 text-[10px] font-bold">MODELO DE IA: SEGMENTATION_NET_V2</span>
+          <span className="text-[10px] text-purple-400 font-bold animate-pulse">INFERENCIA ACTIVA</span>
         </div>
 
         {/* Imagen del satélite simulada con SVG */}
@@ -1252,7 +1252,7 @@ function ActiveSimulator({ slug, theme }) {
               <g key={i}>
                 <path d={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
                 <rect x={box.tagX} y={box.tagY} width="50" height="12" rx="2" className="fill-black border border-slate-850" />
-                <text x={box.tagX + 4} y={box.tagY + 9} className="fill-white text-[7px] font-bold font-mono">
+                <text x={box.tagX + 4} y={box.tagY + 9} className="fill-white text-[10px] font-bold font-mono">
                   {box.label} {box.confidence}
                 </text>
               </g>
@@ -1326,7 +1326,7 @@ function ActiveSimulator({ slug, theme }) {
           <div className="absolute bottom-2 right-2 flex gap-2">
             <button 
               onClick={() => setIsPlaying(!isPlaying)}
-              className="px-2 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white text-[8px]"
+              className="px-2 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded font-bold text-white text-[10px]"
             >
               {isPlaying ? "PAUSAR GIRO" : "GIRAR"}
             </button>
@@ -1335,8 +1335,8 @@ function ActiveSimulator({ slug, theme }) {
 
         {/* Telemetría del gemelo digital */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
-          <div className="text-slate-500 font-bold mb-1 uppercase text-[8px]">Propiedades del Modelo:</div>
-          <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-350">
+          <div className="text-slate-500 font-bold mb-1 uppercase text-[10px]">Propiedades del Modelo:</div>
+          <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-350">
             <div>• Nivel de Detalle: <span className="text-blue-400 font-bold">LOD 400</span></div>
             <div>• Formato: <span className="text-blue-400 font-bold">IFC 4.3</span></div>
             <div>• Interoperabilidad: <span className="text-blue-400 font-bold">GIS + BIM</span></div>
@@ -1463,8 +1463,8 @@ function ActiveSimulator({ slug, theme }) {
                     isSelected ? "scale-[1.08] ring-2 ring-white z-20 shadow-lg" : "hover:scale-[1.02]"
                   }`}
                 >
-                  <span className="text-[7px] font-bold">S{cell.id}</span>
-                  <span className="text-[9px] font-black self-end font-mono">{(cell.ndvi).toFixed(2)}</span>
+                  <span className="text-[10px] font-bold">S{cell.id}</span>
+                  <span className="text-[10px] font-black self-end font-mono">{(cell.ndvi).toFixed(2)}</span>
                 </div>
               );
             })}
@@ -1477,18 +1477,18 @@ function ActiveSimulator({ slug, theme }) {
             <div className="flex justify-between items-center">
               <div>
                 <div className="text-white font-bold">Parcela S{ndviGrid[selectedCell].id} Seleccionada</div>
-                <div className="text-[9px] text-slate-500">Estado: {ndviGrid[selectedCell].status} (NDVI: {ndviGrid[selectedCell].ndvi})</div>
+                <div className="text-[10px] text-slate-500">Estado: {ndviGrid[selectedCell].status} (NDVI: {ndviGrid[selectedCell].ndvi})</div>
               </div>
               <button 
                 onClick={handleIrrigate}
-                className="py-1.5 px-3 bg-teal-500 hover:bg-teal-400 text-black font-black uppercase text-[8px] tracking-wider rounded-lg transition-colors flex items-center gap-1 shadow-md shadow-teal-500/10"
+                className="py-1.5 px-3 bg-teal-500 hover:bg-teal-400 text-black font-black uppercase text-[10px] tracking-wider rounded-lg transition-colors flex items-center gap-1 shadow-md shadow-teal-500/10"
               >
                 <Droplet className="w-2.5 h-2.5 fill-black" />
                 Dosificar Riego
               </button>
             </div>
           ) : (
-            <div className="text-slate-500 text-center py-1.5 italic text-[9px]">
+            <div className="text-slate-500 text-center py-1.5 italic text-[10px]">
               Selecciona una parcela seca o crítica en el mapa para aplicarle riego.
             </div>
           )}
@@ -1532,13 +1532,13 @@ function ActiveSimulator({ slug, theme }) {
             {reforestedArea >= 76 && <circle cx="150" cy="55" r="4.5" className="fill-emerald-600/90 stroke-emerald-400 stroke-[1]" />}
             {reforestedArea >= 98 && <circle cx="95" cy="50" r="7" className="fill-emerald-500 stroke-emerald-400 stroke-[1]" />}
 
-            <text x="15" y="20" className="fill-slate-500 text-[8px] font-bold">PROYECCIÓN FORESTAL {sliderYear}</text>
+            <text x="15" y="20" className="fill-slate-500 text-[10px] font-bold">PROYECCIÓN FORESTAL {sliderYear}</text>
           </svg>
         </div>
 
         {/* Timeline Slider Interactivo */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-3 rounded-lg flex flex-col gap-2">
-          <div className="flex justify-between items-center text-slate-400 text-[8px] font-bold uppercase">
+          <div className="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase">
             <span>Control de Proyección Ambiental</span>
             <span className="text-teal-400 font-bold">Año: {sliderYear}</span>
           </div>
@@ -1550,7 +1550,7 @@ function ActiveSimulator({ slug, theme }) {
             onChange={(e) => setSliderYear(parseInt(e.target.value))}
             className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500 focus:outline-none"
           />
-          <div className="flex justify-between text-[7px] text-slate-500 px-1 font-bold">
+          <div className="flex justify-between text-[10px] text-slate-500 px-1 font-bold">
             <span>2026 (Actual)</span>
             <span>2028</span>
             <span>2030 (Meta)</span>

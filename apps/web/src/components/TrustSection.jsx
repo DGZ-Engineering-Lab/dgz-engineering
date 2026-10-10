@@ -22,7 +22,7 @@ export default function TrustSection() {
             <div className={`text-2xl font-black tracking-tighter text-white mb-1 group-hover:text-cyan-400 transition-colors`}>
               {ent.name}
             </div>
-            <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
               {ent.label}
             </div>
           </div>

@@ -134,18 +134,18 @@ const CybersecurityLab = () => {
       <div className="px-6 py-4 bg-gradient-to-r from-[#0c0b09] to-[#14130f] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full ${isRunning ? 'bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]' : status === "COMPLETED" ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.4)]' : 'bg-slate-600'}`}></div>
-          <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">SOC // Security Operations Center — Auditoría Territorial</span>
+          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">SOC // Security Operations Center — Auditoría Territorial</span>
         </div>
         <div className="flex items-center gap-4">
-          {isRunning && <span className="text-[8px] font-mono text-red-400 animate-pulse uppercase tracking-wider">🔴 LIVE AUDIT</span>}
-          {status === "COMPLETED" && <span className="text-[8px] font-mono text-emerald-400 uppercase tracking-wider font-bold">✓ RESILIENTE</span>}
+          {isRunning && <span className="text-[10px] font-mono text-red-400 animate-pulse uppercase tracking-wider">🔴 LIVE AUDIT</span>}
+          {status === "COMPLETED" && <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider font-bold">✓ RESILIENTE</span>}
         </div>
       </div>
       <div className="px-6 py-3 bg-[#0f0e0c] border-b border-slate-800/50">
         <div className="flex items-center gap-2 mb-2">
           {PHASES.map((p, i) => (
             <div key={i} className="flex items-center gap-1 flex-1">
-              <div className={`text-[8px] font-mono px-2 py-1 rounded flex items-center gap-1 transition-all duration-300 w-full justify-center ${
+              <div className={`text-[10px] font-mono px-2 py-1 rounded flex items-center gap-1 transition-all duration-300 w-full justify-center ${
                 phase > i ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
                 phase === i ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_8px_rgba(207,167,88,0.15)]' :
                 'bg-slate-900/50 text-slate-600 border border-slate-800'
@@ -163,17 +163,17 @@ const CybersecurityLab = () => {
       <div className="bg-[#0c0b09] p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
           <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Amenazas Detectadas</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Amenazas Detectadas</span>
             <div className="text-3xl font-black text-amber-400 font-mono">{threats.detected}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${Math.min(threats.detected * 15, 100)}%` }} /></div>
           </div>
           <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Ataques Bloqueados</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Ataques Bloqueados</span>
             <div className="text-3xl font-black text-cyan-400 font-mono">{threats.blocked}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${Math.min(threats.blocked * 15, 100)}%` }} /></div>
           </div>
           <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Criticidad Remediada</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Criticidad Remediada</span>
             <div className="text-3xl font-black text-rose-400 font-mono">{threats.critical}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-rose-500 rounded-full transition-all" style={{ width: `${threats.critical * 33.3}%` }} /></div>
           </div>
@@ -191,14 +191,14 @@ const CybersecurityLab = () => {
               transition={{ duration: 1, repeat: Infinity }}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[8px] font-mono text-slate-400 uppercase tracking-wider font-bold">{node.id}</span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">{node.id}</span>
                 <span className={`w-2 h-2 rounded-full ${
                   node.status === "secure" ? "bg-emerald-400" :
                   node.status === "scanning" ? "bg-amber-400 animate-pulse" :
                   "bg-slate-700"
                 }`}></span>
               </div>
-              <div className="text-[9px] text-slate-300 font-medium">{node.label}</div>
+              <div className="text-[10px] text-slate-300 font-medium">{node.label}</div>
               <div className="mt-2 h-0.5 bg-slate-800 rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all duration-700 ${
                   node.status === "secure" ? "bg-emerald-500" : node.status === "scanning" ? "bg-amber-500" : "bg-slate-700"
@@ -215,9 +215,9 @@ const CybersecurityLab = () => {
                 <div className="w-2 h-2 rounded-full bg-amber-500/70"></div>
                 <div className="w-2 h-2 rounded-full bg-emerald-500/70"></div>
               </div>
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">terminal // soc_audit.exe</span>
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">terminal // soc_audit.exe</span>
             </div>
-            {isRunning && <span className="text-[8px] font-mono text-cyan-400 animate-pulse">Fase {phase + 1}/3: {PHASES[phase]?.name}</span>}
+            {isRunning && <span className="text-[10px] font-mono text-cyan-400 animate-pulse">Fase {phase + 1}/3: {PHASES[phase]?.name}</span>}
           </div>
           <div ref={consoleRef} className="p-4 font-mono text-[10px] space-y-1 h-[180px] overflow-y-auto scrollbar-thin">
             {status === "IDLE" && logs.length === 0 && <div className="text-slate-600 italic">Esperando inicio de auditoría. Pulse el botón para ejecutar el escaneo de seguridad completo.</div>}
@@ -360,7 +360,7 @@ const InteroperabilityLab = () => {
           <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.25em] font-bold">Pipeline de Interoperabilidad INTERLIS</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">ISO 19152 // LADM-COL v3.0</span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">ISO 19152 // LADM-COL v3.0</span>
         </div>
       </div>
 
@@ -408,7 +408,7 @@ const InteroperabilityLab = () => {
                 {step >= i ? s.icon : i + 1}
               </motion.div>
               <div className="text-center">
-                <span className={`text-[9px] font-bold uppercase tracking-widest block transition-colors duration-300 ${
+                <span className={`text-[10px] font-bold uppercase tracking-widest block transition-colors duration-300 ${
                   step === i ? 'text-[#1a1a1a]' : 'text-slate-400 group-hover:text-slate-600'
                 }`}>{s.label}</span>
                 {step === i && (
@@ -441,7 +441,7 @@ const InteroperabilityLab = () => {
               <div className="space-y-1.5 flex-1">
                 <div className="flex items-center gap-2">
                   <h5 className="text-sm font-black text-[#1a1a1a] uppercase tracking-wider">{steps[step].label}</h5>
-                  <span className={`text-[7px] font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider ${
+                  <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider ${
                     step === 2 ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-slate-50 text-slate-500 border border-slate-200'
                   }`}>
                     {step === 2 ? 'COMPLETADO' : `ETAPA ${step + 1}/3`}
@@ -462,9 +462,9 @@ const InteroperabilityLab = () => {
               <div className="w-2.5 h-2.5 rounded-full bg-amber-500/70"></div>
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/70"></div>
             </div>
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest ml-2">terminal // interlis_pipeline.exe</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest ml-2">terminal // interlis_pipeline.exe</span>
           </div>
-          {isProcessing && <span className="text-[8px] font-mono text-cyan-400 animate-pulse uppercase tracking-wider">Procesando...</span>}
+          {isProcessing && <span className="text-[10px] font-mono text-cyan-400 animate-pulse uppercase tracking-wider">Procesando...</span>}
         </div>
         <div ref={consoleRef} className="p-4 font-mono text-[10px] space-y-1 h-[140px] overflow-y-auto scrollbar-thin">
           {logs.length === 0 && !isProcessing && (
@@ -500,8 +500,8 @@ const InteroperabilityLab = () => {
               />
             </div>
             <div className="flex justify-between mt-1">
-              <span className="text-[8px] font-mono text-slate-600">{progress}%</span>
-              <span className="text-[8px] font-mono text-slate-600">ETL Pipeline Active</span>
+              <span className="text-[10px] font-mono text-slate-600">{progress}%</span>
+              <span className="text-[10px] font-mono text-slate-600">ETL Pipeline Active</span>
             </div>
           </div>
         )}
@@ -624,10 +624,10 @@ const GeoAILab = () => {
             <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
           </div>
-          <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">Geo-AI // Change Detection Engine</span>
+          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Geo-AI // Change Detection Engine</span>
         </div>
-        {status === "RUNNING" && <span className="text-[8px] font-mono text-orange-400 animate-pulse uppercase tracking-wider">\ud83e\udde0 INFERENCIA ACTIVA</span>}
-        {status === "COMPLETED" && <span className="text-[8px] font-mono text-emerald-400 uppercase tracking-wider font-bold">\u2713 6 DETECCIONES</span>}
+        {status === "RUNNING" && <span className="text-[10px] font-mono text-orange-400 animate-pulse uppercase tracking-wider">\ud83e\udde0 INFERENCIA ACTIVA</span>}
+        {status === "COMPLETED" && <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider font-bold">\u2713 6 DETECCIONES</span>}
       </div>
 
       {/* Progress */}
@@ -640,7 +640,7 @@ const GeoAILab = () => {
           {/* SVG Detection Map */}
           <div className="bg-[#0c0b09] rounded-xl border border-slate-800 overflow-hidden p-4 relative min-h-[280px]">
             <div className="absolute top-3 left-3 z-10">
-              <span className="text-[7px] font-mono text-slate-500 uppercase tracking-widest bg-black/60 px-2 py-1 rounded">Vista A\u00e9rea // Detecci\u00f3n Multitemporal</span>
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest bg-black/60 px-2 py-1 rounded">Vista A\u00e9rea // Detecci\u00f3n Multitemporal</span>
             </div>
             
             <svg viewBox="0 0 240 200" className="w-full h-auto">
@@ -679,7 +679,7 @@ const GeoAILab = () => {
                     <motion.text
                       x={d.x + d.w / 2} y={d.y - 4}
                       textAnchor="middle"
-                      className="font-mono text-[5px] font-bold"
+                      className="font-mono text-[10px] font-bold"
                       fill={colors.stroke}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -710,15 +710,15 @@ const GeoAILab = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-2">
               <div className="p-3 bg-white border border-slate-100 rounded-lg text-center">
-                <span className="text-[7px] font-mono text-slate-400 uppercase tracking-widest block">Edificaciones</span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">Edificaciones</span>
                 <span className="text-xl font-black text-orange-500">{stats.buildings}</span>
               </div>
               <div className="p-3 bg-white border border-slate-100 rounded-lg text-center">
-                <span className="text-[7px] font-mono text-slate-400 uppercase tracking-widest block">Cambios</span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">Cambios</span>
                 <span className="text-xl font-black text-violet-500">{stats.changes}</span>
               </div>
               <div className="p-3 bg-white border border-slate-100 rounded-lg text-center">
-                <span className="text-[7px] font-mono text-slate-400 uppercase tracking-widest block">Anomal\u00edas</span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">Anomal\u00edas</span>
                 <span className="text-xl font-black text-rose-500">{stats.anomalies}</span>
               </div>
             </div>
@@ -727,9 +727,9 @@ const GeoAILab = () => {
             <div className="bg-[#0c0b09] rounded-xl border border-slate-800 overflow-hidden flex-grow">
               <div className="px-3 py-2 bg-[#111] border-b border-slate-800/60 flex items-center gap-2">
                 <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-red-500/70"></div><div className="w-2 h-2 rounded-full bg-amber-500/70"></div><div className="w-2 h-2 rounded-full bg-emerald-500/70"></div></div>
-                <span className="text-[7px] font-mono text-slate-500 uppercase tracking-widest">inference_engine.py</span>
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">inference_engine.py</span>
               </div>
-              <div ref={consoleRef} className="p-3 font-mono text-[9px] space-y-0.5 h-[140px] overflow-y-auto scrollbar-thin">
+              <div ref={consoleRef} className="p-3 font-mono text-[10px] space-y-0.5 h-[140px] overflow-y-auto scrollbar-thin">
                 {status === "IDLE" && logs.length === 0 && <div className="text-slate-600 italic">Modelo en espera. Pulse ejecutar para iniciar la detecci\u00f3n.</div>}
                 {logs.filter(Boolean).map((log, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} className={
@@ -885,7 +885,7 @@ const LidarLab = () => {
           <div className={`w-2.5 h-2.5 rounded-full ${phase === 1 ? 'bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.6)]' : phase === 2 ? 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 'bg-slate-500'}`} />
           <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em] font-bold">Caso Real // Diagnóstico Municipal</span>
         </div>
-        <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">DANE {MUNICIPIO.codigoDANE} // IGAC 2023</span>
+        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">DANE {MUNICIPIO.codigoDANE} // IGAC 2023</span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -899,9 +899,9 @@ const LidarLab = () => {
                   <p className="text-sm text-slate-500">{MUNICIPIO.departamento}, Colombia · Código DANE: {MUNICIPIO.codigoDANE}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-[8px] font-mono text-rose-500 uppercase tracking-widest font-bold">⚠ Catastro Desactualizado</div>
+                  <div className="text-[10px] font-mono text-rose-500 uppercase tracking-widest font-bold">⚠ Catastro Desactualizado</div>
                   <div className="text-2xl font-black text-rose-600">{MUNICIPIO.anosDesactualizado} años</div>
-                  <div className="text-[9px] text-slate-400">Última actualización: {MUNICIPIO.ultimaActualizacion}</div>
+                  <div className="text-[10px] text-slate-400">Última actualización: {MUNICIPIO.ultimaActualizacion}</div>
                 </div>
               </div>
 
@@ -913,9 +913,9 @@ const LidarLab = () => {
                   { label: "Recaudo 2024", value: formatCOP(MUNICIPIO.recaudoPredial2024), sub: "Impuesto predial" },
                 ].map((m, i) => (
                   <div key={i} className="p-4 bg-white border border-slate-100 rounded-xl space-y-1">
-                    <div className="text-[8px] font-mono text-slate-400 uppercase tracking-widest">{m.label}</div>
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{m.label}</div>
                     <div className="text-lg font-black text-[#1a1a1a]">{m.value}</div>
-                    <div className="text-[9px] text-slate-400">{m.sub}</div>
+                    <div className="text-[10px] text-slate-400">{m.sub}</div>
                   </div>
                 ))}
               </div>
@@ -971,7 +971,7 @@ const LidarLab = () => {
                 { label: "Informalidad", value: `${porcentajeInformalidad}%`, color: "text-rose-600" },
               ].map((m, i) => (
                 <div key={i} className="p-5 bg-white text-center">
-                  <div className="text-[8px] font-mono text-slate-400 uppercase tracking-widest mb-1">{m.label}</div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1">{m.label}</div>
                   <div className={`text-2xl font-black font-mono ${m.color}`}>{m.value}</div>
                 </div>
               ))}
@@ -981,7 +981,7 @@ const LidarLab = () => {
             <div className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">Mapa de Calor por Barrio — Mejoras No Declaradas</h4>
-                <span className="text-[8px] font-mono text-slate-400">Haz clic en un barrio para ver detalles</span>
+                <span className="text-[10px] font-mono text-slate-400">Haz clic en un barrio para ver detalles</span>
               </div>
 
               <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
@@ -994,9 +994,9 @@ const LidarLab = () => {
                       className={`p-3 rounded-xl border-2 transition-all text-left cursor-pointer ${selectedBarrio?.id === b.id ? 'border-[#1a1a1a] shadow-lg scale-105' : 'border-slate-200 hover:border-slate-400'}`}
                       style={{ background: `${b.color}${Math.round(intensity * 30 + 8).toString(16)}` }}
                     >
-                      <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">{b.nombre}</div>
+                      <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{b.nombre}</div>
                       <div className="text-lg font-black" style={{ color: b.color }}>{b.mejoras}</div>
-                      <div className="text-[8px] text-slate-400">mejoras ocultas</div>
+                      <div className="text-[10px] text-slate-400">mejoras ocultas</div>
                       <div className="w-full h-1 bg-slate-200 rounded-full mt-1.5 overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${intensity * 100}%`, background: b.color }} />
                       </div>
@@ -1020,25 +1020,25 @@ const LidarLab = () => {
                           <h5 className="text-sm font-black text-[#1a1a1a] uppercase tracking-wider">Barrio {selectedBarrio.nombre}</h5>
                           <p className="text-[10px] text-slate-400">Estrato {selectedBarrio.estrato} · {selectedBarrio.area_ha} hectáreas · {selectedBarrio.predios.toLocaleString('es-CO')} predios</p>
                         </div>
-                        <div className="px-2 py-1 rounded text-[8px] font-bold uppercase tracking-wider" style={{ background: `${selectedBarrio.color}15`, color: selectedBarrio.color, border: `1px solid ${selectedBarrio.color}40` }}>
+                        <div className="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider" style={{ background: `${selectedBarrio.color}15`, color: selectedBarrio.color, border: `1px solid ${selectedBarrio.color}40` }}>
                           {((selectedBarrio.mejoras / selectedBarrio.predios) * 100).toFixed(1)}% Informalidad
                         </div>
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="p-3 bg-slate-50 rounded-lg">
-                          <div className="text-[8px] font-mono text-slate-400 uppercase">Mejoras Ocultas</div>
+                          <div className="text-[10px] font-mono text-slate-400 uppercase">Mejoras Ocultas</div>
                           <div className="text-xl font-black" style={{ color: selectedBarrio.color }}>{selectedBarrio.mejoras}</div>
-                          <div className="text-[9px] text-slate-400">edificaciones sin registro</div>
+                          <div className="text-[10px] text-slate-400">edificaciones sin registro</div>
                         </div>
                         <div className="p-3 bg-slate-50 rounded-lg">
-                          <div className="text-[8px] font-mono text-slate-400 uppercase">Traslapes</div>
+                          <div className="text-[10px] font-mono text-slate-400 uppercase">Traslapes</div>
                           <div className="text-xl font-black text-[#1a1a1a]">{selectedBarrio.traslapes}</div>
-                          <div className="text-[9px] text-slate-400">conflictos geométricos</div>
+                          <div className="text-[10px] text-slate-400">conflictos geométricos</div>
                         </div>
                         <div className="p-3 bg-slate-50 rounded-lg">
-                          <div className="text-[8px] font-mono text-slate-400 uppercase">Fuga Tributaria</div>
+                          <div className="text-[10px] font-mono text-slate-400 uppercase">Fuga Tributaria</div>
                           <div className="text-xl font-black text-amber-600">{formatCOP(selectedBarrio.fugaAnual)}</div>
-                          <div className="text-[9px] text-slate-400">recaudo perdido/año</div>
+                          <div className="text-[10px] text-slate-400">recaudo perdido/año</div>
                         </div>
                       </div>
                     </div>
@@ -1050,21 +1050,21 @@ const LidarLab = () => {
               <div className="p-6 bg-[#1a1a1a] rounded-xl text-white space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-black uppercase tracking-widest">Impacto Financiero Total — {MUNICIPIO.nombre}</h4>
-                  <span className="text-[8px] font-mono text-slate-500 uppercase">Proyección a 5 años</span>
+                  <span className="text-[10px] font-mono text-slate-500 uppercase">Proyección a 5 años</span>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest mb-1">Fuga Anual</div>
+                    <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">Fuga Anual</div>
                     <div className="text-2xl md:text-3xl font-black text-rose-500">{formatCOP(totalFugaAnual)}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest mb-1">Pérdida Acumulada (5 años)</div>
+                    <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">Pérdida Acumulada (5 años)</div>
                     <div className="text-2xl md:text-3xl font-black text-amber-500">{formatCOP(totalFugaAnual * 5)}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest mb-1">Recaudo Recuperable</div>
+                    <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">Recaudo Recuperable</div>
                     <div className="text-2xl md:text-3xl font-black text-emerald-400">{formatCOP(totalFugaAnual * 0.85)}</div>
-                    <div className="text-[9px] text-slate-500">85% con actualización DevGiz</div>
+                    <div className="text-[10px] text-slate-500">85% con actualización DevGiz</div>
                   </div>
                 </div>
               </div>
@@ -1277,7 +1277,7 @@ export default function BlogPostPage() {
                 <div className="space-y-10">
                   {post.sidebar.metrics.map(stat => (
                     <div key={stat.label} className="space-y-1">
-                      <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
+                      <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
                       <div className="text-2xl font-black text-[#1a1a1a] tracking-tight">{stat.value}</div>
                     </div>
                   ))}

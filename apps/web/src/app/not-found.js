@@ -164,15 +164,15 @@ export default function NotFound() {
 
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-red-500/10">
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Error_ID</div>
+              <div className="text-[10px] text-slate-500 uppercase mb-1 tracking-widest">Error_ID</div>
               <div className="text-xs text-white font-bold">0xDEADBEEF_404</div>
             </div>
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Process_State</div>
+              <div className="text-[10px] text-slate-500 uppercase mb-1 tracking-widest">Process_State</div>
               <div className="text-xs text-red-500 font-bold animate-pulse">PANIC_HALT</div>
             </div>
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Recovery</div>
+              <div className="text-[10px] text-slate-500 uppercase mb-1 tracking-widest">Recovery</div>
               <div className="text-xs text-emerald-400 font-bold">AVAILABLE</div>
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function NotFound() {
 
         {/* Footer Trace */}
         <motion.div 
-          className="pt-12 text-[8px] text-slate-700 uppercase tracking-[0.5em] text-center"
+          className="pt-12 text-[10px] text-slate-700 uppercase tracking-[0.5em] text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}

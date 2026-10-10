@@ -297,7 +297,7 @@ const ROW2 = [
   { name: "DNP", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYtFZUqE_-Syl04f9K4xSypL0WTaJZscWtrw&s", type: "institution", isWhite: false },
   { name: "UPRA", logo: "https://www.icde.gov.co/sites/default/files/ides/logo%20upra.png", type: "institution", isWhite: false },
   { name: "IGGA", logo: "https://igga.com.co/wp-content/uploads/2022/08/Logo_IGGA_Blanco.png", type: "client", isWhite: true },
-  { name: "ARBITRIUM", logo: "https://www.arbitrium.com.co/assets/img/grande.png", type: "client", isWhite: false },
+  { name: "ARBITRIUM", logo: "https://www.arbitrium.com.co/assets/img/grande.png", type: "client", isWhite: true },
   { name: "DEER", logo: "https://cdn-ileimge.nitrocdn.com/fpXuxNvpGBHXdUXQieHOZUiZoJRvuprb/assets/images/optimized/rev-3050f1c/deer.com.co/wp-content/uploads/2024/09/DEER-OD-BLANCO.webp", type: "client", isWhite: true },
   { name: "SICARARE (COSARGO)", logo: "https://extractorasicarare.com/wp-content/uploads/2018/11/logo-ppal.png", type: "client", isWhite: false },
   { name: "AMB", logo: null, type: "client", isWhite: true },
@@ -330,7 +330,7 @@ function GpsTimeCode() {
     const timer = setInterval(tick, 1000);
     return () => clearInterval(timer);
   }, []);
-  return <div className="text-[8px] font-mono text-slate-400 mt-1 uppercase tracking-wider">{timeCode}</div>;
+  return <div className="text-[10px] font-mono text-slate-400 mt-1 uppercase tracking-wider">{timeCode}</div>;
 }
 
 function PartnerCard({ partner, activePartner, onSelect }) {
@@ -480,7 +480,7 @@ function PartnerCard({ partner, activePartner, onSelect }) {
     >
       {/* Hover Status indicator Tag */}
       <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 z-35 scale-90 group-hover:scale-100">
-        <span className="text-[5.5px] font-mono bg-slate-950 text-white px-2 py-0.5 rounded-full border border-slate-800 tracking-[0.15em] font-black uppercase shadow-md truncate">
+        <span className="text-[10px] font-mono bg-slate-950 text-white px-2 py-0.5 rounded-full border border-slate-800 tracking-[0.15em] font-black uppercase shadow-md truncate">
           {partnerMeta.quality.split(" ")[0]}
         </span>
       </div>
@@ -515,10 +515,6 @@ function PartnerCard({ partner, activePartner, onSelect }) {
             <span className="text-[10px] font-mono font-black tracking-widest text-slate-800 relative z-10 transition-colors duration-300 group-hover:text-slate-950">
               {getInitials(partner.name)}
             </span>
-            
-            <span className="absolute bottom-1 text-[5px] font-mono text-slate-400 tracking-[0.25em] font-bold uppercase scale-90">
-              NODE_SYS
-            </span>
 
             {/* Micro active LED node status indicator */}
             <div className={`absolute bottom-1.5 right-1.5 w-1.5 h-1.5 rounded-full ${theme.pulseDot} animate-pulse shadow-[0_0_6px_currentColor]`} />
@@ -548,7 +544,7 @@ function PartnerCard({ partner, activePartner, onSelect }) {
       </div>
 
       <div className="flex flex-col items-center text-center mt-1 z-10">
-        <span className={`text-[9px] font-mono font-bold tracking-tight transition-colors duration-300 ${isActive ? theme.text : 'text-slate-700 opacity-80 group-hover:opacity-100 group-hover:text-slate-900 font-semibold'}`}>
+        <span className={`text-[10px] font-mono font-bold tracking-tight transition-colors duration-300 ${isActive ? theme.text : 'text-slate-700 opacity-80 group-hover:opacity-100 group-hover:text-slate-900 font-semibold'}`}>
           {partner.name}
         </span>
       </div>
@@ -789,8 +785,8 @@ export default function GlobalPartners() {
       <div className="absolute bottom-8 left-8 w-6 h-6 border-b-2 border-l-2 border-slate-300/40 pointer-events-none animate-corner-pulse hidden lg:block" />
       <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-slate-300/40 pointer-events-none animate-corner-pulse hidden lg:block" />
       
-      <div className="absolute top-8 left-16 text-[7px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">SYS_LINK_FRAME // LATENCY_MODULE: ON</div>
-      <div className="absolute top-8 right-16 text-[7px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">LOCAL_LOC // 06.2442° N, 75.5750° W</div>
+      <div className="absolute top-8 left-16 text-[10px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">SYS_LINK_FRAME // LATENCY_MODULE: ON</div>
+      <div className="absolute top-8 right-16 text-[10px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">LOCAL_LOC // 06.2442° N, 75.5750° W</div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -817,14 +813,14 @@ export default function GlobalPartners() {
             <div className="flex bg-slate-200/50 p-1 rounded-xl border border-slate-300/30">
               <button 
                 onClick={() => setViewMode("marquee")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "marquee" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "marquee" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 <RefreshCw className="w-3.5 h-3.5 animate-spin-slow text-cyan-500" />
                 Flujo Continuo
               </button>
               <button 
                 onClick={() => setViewMode("grid")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "grid" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "grid" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 <Grid className="w-3.5 h-3.5 text-blue-500" />
                 Buscador de Red
@@ -835,19 +831,19 @@ export default function GlobalPartners() {
             <div className="flex bg-slate-200/50 p-1 rounded-xl border border-slate-300/30">
               <button 
                 onClick={() => setFilter("all")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "all" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "all" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Todos ({ALL_PARTNERS.length})
               </button>
               <button 
                 onClick={() => setFilter("institution")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "institution" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "institution" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Gobierno
               </button>
               <button 
                 onClick={() => setFilter("client")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "client" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "client" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Sector Privado
               </button>
@@ -875,7 +871,7 @@ export default function GlobalPartners() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-16 py-4 bg-white/70 border border-slate-200/80 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20 backdrop-blur-md shadow-sm transition-all"
                 />
-                <span className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+                <span className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
                   {filteredPartners.length} COINCIDENCIAS
                 </span>
               </div>
@@ -894,7 +890,7 @@ export default function GlobalPartners() {
               Haz clic sobre el logotipo de cualquier entidad para sincronizar la telemetría del <strong className="text-slate-900 font-semibold">Centro de Control Técnico e Interoperabilidad</strong> en tiempo real con su protocolo.
             </span>
           </div>
-          <span className="font-mono text-[9px] text-cyan-500 bg-cyan-500/10 px-3.5 py-1.5 rounded-lg self-start sm:self-auto font-black tracking-[0.15em] uppercase border border-cyan-500/20 shrink-0">
+          <span className="font-mono text-[10px] text-cyan-500 bg-cyan-500/10 px-3.5 py-1.5 rounded-lg self-start sm:self-auto font-black tracking-[0.15em] uppercase border border-cyan-500/20 shrink-0">
             SISTEMA HOLOGRÁFICO CONECTADO
           </span>
         </div>
@@ -1026,7 +1022,7 @@ export default function GlobalPartners() {
               </div>
 
               {/* Protocol Badge tag */}
-              <div className={`px-4.5 py-2 rounded-xl border text-[9px] font-mono font-black uppercase tracking-[0.15em] ${badgeTextTheme} shadow-sm`}>
+              <div className={`px-4.5 py-2 rounded-xl border text-[10px] font-mono font-black uppercase tracking-[0.15em] ${badgeTextTheme} shadow-sm`}>
                 {currentMetadata.protocol}
               </div>
             </div>
@@ -1053,7 +1049,7 @@ export default function GlobalPartners() {
                   <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-slate-350 pointer-events-none" />
                   <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-slate-350 pointer-events-none" />
                   
-                  <div className={`flex items-center gap-2 font-mono text-[9px] font-black uppercase tracking-widest ${textHighlightTheme}`}>
+                  <div className={`flex items-center gap-2 font-mono text-[10px] font-black uppercase tracking-widest ${textHighlightTheme}`}>
                     <Activity className="w-4 h-4 text-cyan-500 animate-pulse" />
                     Impacto Técnico de Operación
                   </div>
@@ -1067,7 +1063,7 @@ export default function GlobalPartners() {
                   <button 
                     onClick={handlePingTest}
                     disabled={pingState === "pinging"}
-                    className={`px-7 py-4 rounded-2xl text-[9px] font-mono font-black uppercase tracking-[0.15em] transition-all duration-350 flex items-center gap-2.5 shadow-md hover:shadow-lg
+                    className={`px-7 py-4 rounded-2xl text-[10px] font-mono font-black uppercase tracking-[0.15em] transition-all duration-350 flex items-center gap-2.5 shadow-md hover:shadow-lg
                       ${pingState === "pinging"
                         ? "bg-slate-100 text-slate-405 border border-slate-250 cursor-not-allowed"
                         : "bg-slate-950 text-white hover:bg-slate-850 border border-slate-950 hover:scale-[1.02] active:scale-[0.98]"
@@ -1092,7 +1088,7 @@ export default function GlobalPartners() {
                       e.preventDefault();
                       alert(`Esquema LADM-COL v3.0 para ${activePartnerName} descargado virtualmente.`);
                     }}
-                    className="px-7 py-4 bg-white border border-slate-205 rounded-2xl text-[9px] font-mono font-black text-slate-700 hover:text-slate-950 hover:bg-slate-50 hover:border-slate-300 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm"
+                    className="px-7 py-4 bg-white border border-slate-205 rounded-2xl text-[10px] font-mono font-black text-slate-700 hover:text-slate-950 hover:bg-slate-50 hover:border-slate-300 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm"
                   >
                     Descargar Esquema XML
                   </a>
@@ -1104,7 +1100,7 @@ export default function GlobalPartners() {
                 
                 {/* Visual Interconnection Network Node Graph */}
                 <div className="bg-slate-50 border border-slate-200/60 rounded-3xl p-5 flex flex-col items-center justify-between relative overflow-hidden h-[135px]">
-                  <div className="absolute top-3 left-4 text-[8px] font-mono text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="absolute top-3 left-4 text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
                     DIAGRAMA DE ENLACE ACTIVO
                   </div>
@@ -1163,15 +1159,15 @@ export default function GlobalPartners() {
                 </div>
 
                 {/* Developer CLI Console Logs */}
-                <div className="bg-slate-950 rounded-3xl border border-slate-900 p-5 font-mono text-[9px] leading-relaxed text-cyan-400/90 shadow-2xl relative overflow-hidden">
+                <div className="bg-slate-950 rounded-3xl border border-slate-900 p-5 font-mono text-[10px] leading-relaxed text-cyan-400/90 shadow-2xl relative overflow-hidden">
                   <div className="absolute -top-10 -right-10 w-24 h-24 bg-cyan-500/5 blur-xl pointer-events-none rounded-full" />
                   
                   <div className="flex items-center justify-between border-b border-slate-900 pb-3 mb-3 relative z-10">
                     <div className="flex items-center gap-2">
                       <Terminal className="w-4 h-4 text-slate-500 animate-pulse" />
-                      <span className="text-[8px] text-slate-500 font-bold uppercase tracking-[0.1em]">SALIDA DE CONSOLA DE SINCRONIZACIÓN</span>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.1em]">SALIDA DE CONSOLA DE SINCRONIZACIÓN</span>
                     </div>
-                    <span className="text-[7px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-black tracking-widest border border-emerald-500/20">LIVE</span>
+                    <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-black tracking-widest border border-emerald-500/20">LIVE</span>
                   </div>
 
                   <div className="h-[135px] overflow-y-auto space-y-1.5 custom-scrollbar text-left relative z-10">
@@ -1196,16 +1192,16 @@ export default function GlobalPartners() {
                 {/* Micro metrics underneath */}
                 <div className="grid grid-cols-3 gap-3.5">
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">LATENCIA</div>
+                    <div className="text-[10px] font-mono text-slate-450 uppercase tracking-wider">LATENCIA</div>
                     <div className={`font-mono text-xs font-black mt-1 ${textHighlightTheme}`}>{pingLatency}</div>
                   </div>
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">VELOCIDAD</div>
+                    <div className="text-[10px] font-mono text-slate-450 uppercase tracking-wider">VELOCIDAD</div>
                     <div className={`font-mono text-xs font-black mt-1 ${textHighlightTheme}`}>{currentMetadata.rate}</div>
                   </div>
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">CANAL</div>
-                    <div className="font-mono text-[9px] font-black text-emerald-600 mt-1.5 uppercase truncate">{currentMetadata.quality.split(" ")[0]}</div>
+                    <div className="text-[10px] font-mono text-slate-450 uppercase tracking-wider">CANAL</div>
+                    <div className="font-mono text-[10px] font-black text-emerald-600 mt-1.5 uppercase truncate">{currentMetadata.quality.split(" ")[0]}</div>
                   </div>
                 </div>
 

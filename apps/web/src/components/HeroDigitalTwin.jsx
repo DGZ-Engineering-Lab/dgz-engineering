@@ -41,7 +41,7 @@ export default function HeroDigitalTwin() {
         <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-slate-950 via-slate-950/90 to-transparent px-5 py-3.5">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(207,167,88,0.95)] animate-pulse"></span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-cyan-300 font-bold">SOVEREIGN GRAPH CORE v3.1</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300 font-bold">SOVEREIGN GRAPH CORE v3.1</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-full bg-cyan-500/10 px-2.5 py-0.5 ring-1 ring-cyan-500/20">
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layers text-cyan-400 animate-pulse">
@@ -49,12 +49,12 @@ export default function HeroDigitalTwin() {
               <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path>
               <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path>
             </svg>
-            <span className="text-[9px] font-black text-cyan-200 uppercase tracking-widest">4K DWIN</span>
+            <span className="text-[10px] font-black text-cyan-200 uppercase tracking-widest">4K DWIN</span>
           </div>
         </div>
 
         {/* Real-time Dynamic Status Tag */}
-        <div className="pointer-events-none absolute left-1/2 top-14 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-500/20 bg-slate-900/90 px-4 py-1.5 text-[9px] font-black text-cyan-400 shadow-xl backdrop-blur-md">
+        <div className="pointer-events-none absolute left-1/2 top-14 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-500/20 bg-slate-900/90 px-4 py-1.5 text-[10px] font-black text-cyan-400 shadow-xl backdrop-blur-md">
           <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-activity text-orange-400 animate-pulse">
             <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
           </svg>
@@ -681,15 +681,15 @@ export default function HeroDigitalTwin() {
           <div className="grid grid-cols-3 gap-3 text-center">
             <div>
               <div className="font-mono text-[11px] md:text-sm font-bold text-white tracking-tight">1.245.310</div>
-              <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">PREDIOS</div>
+              <div className="mt-0.5 text-[10px] uppercase tracking-wider text-slate-400 font-semibold">PREDIOS</div>
             </div>
             <div className="border-x border-white/10">
               <div className="font-mono text-[11px] md:text-sm font-bold text-cyan-400 tracking-tight">5 cm/px</div>
-              <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">RESOLUCIÓN</div>
+              <div className="mt-0.5 text-[10px] uppercase tracking-wider text-slate-400 font-semibold">RESOLUCIÓN</div>
             </div>
             <div>
               <div className="font-mono text-[11px] md:text-sm font-bold text-white tracking-tight">EPSG:9377</div>
-              <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">CTM12</div>
+              <div className="mt-0.5 text-[10px] uppercase tracking-wider text-slate-400 font-semibold">CTM12</div>
             </div>
           </div>
         </div>

@@ -1089,7 +1089,7 @@ export default function ServicePage() {
                 
                 {/* Control Deck */}
                 <div className="space-y-4">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">Operator Control Deck</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold block">Operator Control Deck</span>
                   
                   <div className="flex flex-wrap gap-3">
                     {simStatus !== "running" ? (
@@ -1121,7 +1121,7 @@ export default function ServicePage() {
 
                   {/* Regulador de Frecuencia/Velocidad */}
                   <div className="pt-2">
-                    <label className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
+                    <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
                       Frecuencia de Muestreo / Velocidad: {simSpeed}x
                     </label>
                     <input
@@ -1138,7 +1138,7 @@ export default function ServicePage() {
 
                 {/* Barra de Progreso */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-[9px] font-mono font-bold text-slate-400 uppercase">
+                  <div className="flex justify-between items-center text-[10px] font-mono font-bold text-slate-400 uppercase">
                     <span>Avance de Simulación</span>
                     <span className="text-cyan-600">{simProgress}%</span>
                   </div>
@@ -1153,11 +1153,11 @@ export default function ServicePage() {
 
                 {/* HUD Live Metrics */}
                 <div className="space-y-3">
-                  <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">Live Telemetry Metrics</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold block">Live Telemetry Metrics</span>
                   <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
                     {simMetrics.map((met, idx) => (
                       <div key={idx} className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col justify-between">
-                        <span className="text-[8px] font-mono text-slate-400 uppercase font-bold">{met.label}</span>
+                        <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">{met.label}</span>
                         <div className="flex items-baseline gap-1.5 mt-1">
                           <span className="text-xl font-black text-slate-800 font-mono">
                             {met.current.toLocaleString()}
@@ -1173,8 +1173,8 @@ export default function ServicePage() {
 
                 {/* Estado del Sistema */}
                 <div className="p-4 rounded-2xl border flex items-center justify-between text-xs font-mono font-bold shadow-sm bg-slate-50 border-slate-200">
-                  <span className="text-slate-500 uppercase text-[9px]">Simulator Engine Status:</span>
-                  <span className={`px-2 py-0.5 rounded text-[9px] ${
+                  <span className="text-slate-500 uppercase text-[10px]">Simulator Engine Status:</span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] ${
                     simStatus === "running" ? "bg-emerald-50 text-emerald-600 border border-emerald-200 animate-pulse" :
                     simStatus === "paused" ? "bg-amber-50 text-amber-600 border border-amber-200" :
                     simStatus === "completed" ? "bg-cyan-50 text-cyan-600 border border-cyan-200" :
@@ -1194,7 +1194,7 @@ export default function ServicePage() {
                 
                 {/* Pantalla Gráfica (Viewport) */}
                 <div className="h-[280px] bg-slate-50/70 border border-slate-200 rounded-[1.8rem] overflow-hidden relative shadow-inner flex items-center justify-center">
-                  <div className="absolute top-4 left-4 p-2 bg-white/90 border border-slate-200/80 rounded-lg text-[8px] font-mono text-slate-500 font-bold z-10 uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <div className="absolute top-4 left-4 p-2 bg-white/90 border border-slate-200/80 rounded-lg text-[10px] font-mono text-slate-500 font-bold z-10 uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                     <span className={`w-1.5 h-1.5 rounded-full ${simStatus === "running" ? "bg-emerald-500 animate-pulse" : "bg-slate-400"}`}></span>
                     Viewport: {service.simulation.type.toUpperCase()}_STAGE
                   </div>
@@ -1210,7 +1210,7 @@ export default function ServicePage() {
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
                     </div>
-                    <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black flex items-center gap-1.5">
+                    <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-black flex items-center gap-1.5">
                       <Terminal className="w-3.5 h-3.5 text-cyan-500" />
                       Live Data Logger Stream
                     </span>
@@ -1452,7 +1452,7 @@ export default function ServicePage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">Interactive Architecture Terminal</span>
-                    <span className="flex items-center gap-1.5 text-[9px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    <span className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                       <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
                       SYSTEM OK
                     </span>
@@ -1522,13 +1522,13 @@ export default function ServicePage() {
                   }`}
                 >
                   {isPopular && (
-                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-cyan-50 border-b border-l border-cyan-200 rounded-bl-xl text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-cyan-50 border-b border-l border-cyan-200 rounded-bl-xl text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                       Recomendado
                     </div>
                   )}
 
                   <div>
-                    <div className="flex items-center gap-2 text-slate-400 font-mono text-[9px] uppercase tracking-wider mb-6 justify-start">
+                    <div className="flex items-center gap-2 text-slate-400 font-mono text-[10px] uppercase tracking-wider mb-6 justify-start">
                       {idx === 0 ? <Calendar className="w-3.5 h-3.5 text-cyan-600" /> : idx === 1 ? <Boxes className="w-3.5 h-3.5 text-cyan-600" /> : <Lock className="w-3.5 h-3.5 text-cyan-600" />}
                       <span>Fase // {tier.duration}</span>
                     </div>
@@ -1541,7 +1541,7 @@ export default function ServicePage() {
                     </div>
 
                     <div className="space-y-3.5 mb-10">
-                      <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-4 font-bold text-left">Entregables y Garantías</span>
+                      <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-4 font-bold text-left">Entregables y Garantías</span>
                       {tier.deliverables.map((del, dIdx) => (
                         <div key={dIdx} className="flex gap-2.5 items-start text-[11px] text-slate-600 font-light leading-snug text-left">
                           <CheckCircle2 className="w-4 h-4 mt-0.5 text-cyan-600 flex-shrink-0" />
@@ -1562,7 +1562,7 @@ export default function ServicePage() {
                       }));
                       document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className={`w-full py-4 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-md ${
+                    className={`w-full py-4 rounded-xl text-[10px] font-mono uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-md ${
                       isPopular
                         ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_4px_20px_rgba(207,167,88,0.15)]"
                         : "bg-slate-900 hover:bg-slate-800 text-white"

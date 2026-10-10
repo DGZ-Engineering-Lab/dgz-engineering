@@ -113,13 +113,13 @@ export default function SovereignMeshMap({ onSelectParcel }) {
       <div className="lg:col-span-7 p-6 md:p-8 bg-slate-950/40 glass-card-premium border-glow rounded-[2rem] flex flex-col justify-between min-h-[480px] relative overflow-hidden">
         <div className="flex items-center justify-between border-b border-slate-900 pb-4 mb-4 relative z-10">
           <div className="space-y-1">
-            <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
+            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
               <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#ddbe7a]"></span>
               Sovereign Grid Fallback
             </span>
             <h3 className="text-sm font-bold text-white uppercase tracking-wider">Visor Catastral Offline</h3>
           </div>
-          <span className="px-2 py-0.5 border border-cyan-500/25 bg-cyan-500/5 text-cyan-400 text-[8px] font-mono tracking-widest rounded uppercase">
+          <span className="px-2 py-0.5 border border-cyan-500/25 bg-cyan-500/5 text-cyan-400 text-[10px] font-mono tracking-widest rounded uppercase">
             LOCAL ENGINE ACTIVE
           </span>
         </div>
@@ -178,7 +178,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
                   <text
                     x={p.center.x}
                     y={p.center.y}
-                    className="fill-slate-400 font-mono text-[7px] tracking-widest font-black pointer-events-none select-none text-center"
+                    className="fill-slate-400 font-mono text-[10px] tracking-widest font-black pointer-events-none select-none text-center"
                     textAnchor="middle"
                   >
                     {p.id}
@@ -189,7 +189,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
           </svg>
 
           {/* Environmental River Zone */}
-          <div className="absolute bottom-4 left-4 flex flex-col gap-1 text-[8px] font-mono text-slate-500">
+          <div className="absolute bottom-4 left-4 flex flex-col gap-1 text-[10px] font-mono text-slate-500">
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-1 bg-cyan-500" />
               <span>Conforme Snapping</span>
@@ -202,9 +202,9 @@ export default function SovereignMeshMap({ onSelectParcel }) {
         </div>
 
         {/* Local Console Terminal */}
-        <div className="mt-4 bg-[#030302] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[90px] flex flex-col justify-between">
+        <div className="mt-4 bg-[#030302] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[90px] flex flex-col justify-between">
           <div className="flex items-center justify-between border-b border-slate-900 pb-1 mb-1">
-            <span className="text-[7px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
+            <span className="text-[10px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
               <Cpu className="w-3 h-3 text-cyan-400" />
               Offline Terminal Stream
             </span>
@@ -231,7 +231,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
         <div className="space-y-6">
           <div className="flex justify-between items-center text-xs font-mono text-slate-500 font-bold">
             <span>PREDIO: {selectedParcel.id}</span>
-            <span className={`px-2 py-0.5 rounded-full text-[8px] border font-bold ${
+            <span className={`px-2 py-0.5 rounded-full text-[10px] border font-bold ${
               selectedParcel.status === "CLEAN" 
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" 
                 : "bg-red-500/10 text-red-400 border-red-500/30 animate-pulse"
@@ -242,12 +242,12 @@ export default function SovereignMeshMap({ onSelectParcel }) {
 
           <div className="space-y-3">
             <div>
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Identidad Predial</span>
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Identidad Predial</span>
               <h4 className="text-sm font-bold text-white tracking-tight">{selectedParcel.name}</h4>
               <p className="text-[10px] text-cyan-400 font-mono italic">{selectedParcel.ladm}</p>
             </div>
 
-            <div className="pt-3 border-t border-slate-900 grid grid-cols-2 gap-4 font-mono text-[9px]">
+            <div className="pt-3 border-t border-slate-900 grid grid-cols-2 gap-4 font-mono text-[10px]">
               <div>
                 <span className="text-slate-500 uppercase block tracking-wider">Superficie Terreno</span>
                 <span className="text-slate-200 font-black text-xs">{selectedParcel.area}</span>
@@ -261,14 +261,14 @@ export default function SovereignMeshMap({ onSelectParcel }) {
             </div>
 
             <div className="pt-3 border-t border-slate-900 space-y-1">
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Metodología / FMI</span>
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Metodología / FMI</span>
               <p className="text-[10.5px] text-slate-400 leading-normal font-light">{selectedParcel.desc}</p>
             </div>
           </div>
         </div>
 
         <div className="pt-6 border-t border-slate-900 mt-6 space-y-3">
-          <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">
             Acción Saneamiento
           </span>
           

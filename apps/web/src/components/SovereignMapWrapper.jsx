@@ -129,11 +129,11 @@ export default function SovereignMapWrapper() {
           <div className="flex items-center justify-between z-10 w-full">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#ddbe7a]"></span>
-              <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest font-black">
+              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-black">
                 GEO_HUD // STANDBY_MODE
               </span>
             </div>
-            <div className="text-[7px] font-mono text-slate-500 tracking-[0.2em]">
+            <div className="text-[10px] font-mono text-slate-500 tracking-[0.2em]">
               EPSG:9377 COLOMBIA NATIONAL ORIGIN
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function SovereignMapWrapper() {
             </div>
 
             {/* Indicator showing current selected engine */}
-            <div className="text-[8px] font-mono tracking-wider z-10 mt-1">
+            <div className="text-[10px] font-mono tracking-wider z-10 mt-1">
               {mapEngine === "sovereign" ? (
                 <span className="text-amber-400 font-bold flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/25 px-2.5 py-1 rounded shadow-[0_0_15px_rgba(245,158,11,0.05)]">
                   <ShieldAlert className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
@@ -171,10 +171,10 @@ export default function SovereignMapWrapper() {
 
             {/* Premium Selector de Motor de Renderizado */}
             <div className="z-10 mt-2 p-2 bg-slate-950/80 border border-slate-900 rounded-xl max-w-xs w-full flex flex-col gap-1.5">
-              <span className="text-[7px] font-mono text-slate-400/80 tracking-widest uppercase font-black text-center">
+              <span className="text-[10px] font-mono text-slate-400/80 tracking-widest uppercase font-black text-center">
                 SELECCIONAR MOTOR DE RENDIMIENTO
               </span>
-              <div className="flex gap-1 bg-black/60 p-0.5 rounded-lg border border-slate-900 font-mono text-[8px] tracking-wider uppercase">
+              <div className="flex gap-1 bg-black/60 p-0.5 rounded-lg border border-slate-900 font-mono text-[10px] tracking-wider uppercase">
                 <button
                   type="button"
                   onClick={() => {
@@ -213,7 +213,7 @@ export default function SovereignMapWrapper() {
             <button
               onClick={handleActivate}
               disabled={isLoading}
-              className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[9px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
+              className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
                 mapEngine === "sovereign"
                   ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.5)]"
                   : "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_30px_rgba(207,167,88,0.2)] hover:shadow-[0_0_40px_rgba(207,167,88,0.5)]"
@@ -237,9 +237,9 @@ export default function SovereignMapWrapper() {
             {consoleLogs.map((log, index) => log && (
               <div
                 key={index}
-                className="flex items-center gap-3 text-[8px] font-mono text-slate-500 justify-start select-none"
+                className="flex items-center gap-3 text-[10px] font-mono text-slate-500 justify-start select-none"
               >
-                <span className="text-[7px] text-slate-600">[{log?.time || ""}]</span>
+                <span className="text-[10px] text-slate-600">[{log?.time || ""}]</span>
                 <span
                   className={
                     log?.type === "success"

@@ -79,7 +79,7 @@ export default function BrochurePage() {
       {/* Hero Section - The Big Humanized Hook */}
       <section className="relative pt-44 pb-12 px-6 overflow-hidden">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[9px] font-black tracking-[0.2em] text-cyan-700 uppercase">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[10px] font-black tracking-[0.2em] text-cyan-700 uppercase">
             <Sparkles className="w-3 h-3 text-cyan-600 animate-pulse" />
             Soluciones Territoriales sin Complicaciones
           </div>
@@ -116,7 +116,7 @@ export default function BrochurePage() {
           <div className="text-center space-y-3 mb-12">
             <div className="flex items-center justify-center gap-2">
               <span className="w-8 h-px bg-cyan-500/50"></span>
-              <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-cyan-600 font-bold">HERRAMIENTA FINANCIERA</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-cyan-600 font-bold">HERRAMIENTA FINANCIERA</span>
               <span className="w-8 h-px bg-cyan-500/50"></span>
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight">
@@ -226,7 +226,7 @@ export default function BrochurePage() {
               <div className="space-y-6 relative z-10">
                 <div className="flex justify-between items-center border-b border-white/10 pb-4">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">Pérdida Actual Estimada</span>
-                  <span className="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 text-[9px] font-bold rounded">RETROCESO</span>
+                  <span className="px-2 py-0.5 bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-bold rounded">RETROCESO</span>
                 </div>
 
                 <div className="space-y-1">
@@ -265,7 +265,7 @@ export default function BrochurePage() {
                   <MessageSquare className="w-4 h-4" />
                   <span>Reclamar Mi Ahorro vía WhatsApp</span>
                 </a>
-                <p className="text-[9px] text-slate-400 text-center leading-relaxed">
+                <p className="text-[10px] text-slate-400 text-center leading-relaxed">
                   Te enviaremos una propuesta formal y personalizada de forma inmediata en PDF basada en tu estimación actual.
                 </p>
               </div>
@@ -282,7 +282,7 @@ export default function BrochurePage() {
         <div className="max-w-6xl mx-auto relative z-10">
 
           <div className="text-center space-y-3 mb-20">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-[9px] font-black tracking-widest text-cyan-400 uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-[10px] font-black tracking-widest text-cyan-400 uppercase">
               CAPACIDADES DE INGENIERÍA 360
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white">
@@ -382,7 +382,7 @@ export default function BrochurePage() {
         <div className="max-w-6xl mx-auto">
 
           <div className="text-center space-y-3 mb-20">
-            <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">SOLUCIONES POR SECTOR</span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">SOLUCIONES POR SECTOR</span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight">
               ¿Cómo impulsamos el crecimiento de tu negocio?
             </h2>

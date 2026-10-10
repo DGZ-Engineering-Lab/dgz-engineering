@@ -135,11 +135,11 @@ export default function StandardsPage() {
               </p>
               <div className="pt-8 flex flex-wrap gap-6">
                 <div className="px-6 py-4 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-default group/badge">
-                  <div className="text-[9px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Schema Status</div>
+                  <div className="text-[10px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Schema Status</div>
                   <div className="text-sm font-black text-emerald-500 tracking-widest group-hover/badge:scale-105 transition-transform origin-left">STABLE // LADM-COL v3.0</div>
                 </div>
                 <div className="px-6 py-4 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-default group/badge">
-                  <div className="text-[9px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Compliance</div>
+                  <div className="text-[10px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Compliance</div>
                   <div className="text-sm font-black text-white tracking-widest group-hover/badge:scale-105 transition-transform origin-left">ISO 19152 CERTIFIED</div>
                 </div>
               </div>
@@ -185,14 +185,14 @@ export default function StandardsPage() {
                   </div>
                   {/* Floating labels */}
                   <motion.div 
-                    className="absolute top-6 left-6 text-[9px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
+                    className="absolute top-6 left-6 text-[10px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     LAT: 4.6486 // LON: -74.0592
                   </motion.div>
                   <motion.div 
-                    className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
+                    className="absolute bottom-6 right-6 text-[10px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
                   >

@@ -98,11 +98,11 @@ export default function ProfessionalProfile() {
             
             <div className="pt-6 border-t border-slate-800/50 flex flex-wrap gap-8">
                <div className="flex flex-col gap-1">
-                 <span className="text-[9px] font-mono text-slate-600 uppercase">Native Language</span>
+                 <span className="text-[10px] font-mono text-slate-600 uppercase">Native Language</span>
                  <span className="text-xs font-bold text-white tracking-widest">ESPAÑOL (CO)</span>
                </div>
                <div className="flex flex-col gap-1">
-                 <span className="text-[9px] font-mono text-slate-600 uppercase">Proficiency</span>
+                 <span className="text-[10px] font-mono text-slate-600 uppercase">Proficiency</span>
                  <span className="text-xs font-bold text-white tracking-widest">ENGLISH (C1)</span>
                </div>
             </div>
@@ -141,7 +141,7 @@ export default function ProfessionalProfile() {
                       <p className="text-slate-400 font-light max-w-md">{exp.desc}</p>
                       <div className="flex flex-wrap gap-2 pt-2">
                         {exp.tags.map((tag, j) => (
-                          <span key={j} className="text-[9px] font-mono text-slate-500">#{tag}</span>
+                          <span key={j} className="text-[10px] font-mono text-slate-500">#{tag}</span>
                         ))}
                       </div>
                     </div>

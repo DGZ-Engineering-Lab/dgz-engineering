@@ -49,7 +49,7 @@ export default function FloatingTelemetry() {
             className="pointer-events-auto flex items-center gap-2 p-2 px-4 rounded-full bg-slate-950/80 hover:bg-slate-900/90 border border-cyan-500/30 hover:border-cyan-400/50 backdrop-blur-md text-cyan-400 transition-all cursor-pointer shadow-[0_8px_25px_rgba(0,0,0,0.6)] group/tele"
           >
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-[8px] font-mono tracking-[0.25em] font-bold uppercase">Telemetría</span>
+            <span className="text-[10px] font-mono tracking-[0.25em] font-bold uppercase">Telemetría</span>
           </motion.button>
         ) : (
           <motion.div
@@ -67,7 +67,7 @@ export default function FloatingTelemetry() {
             <div className="flex items-center justify-between gap-6 pb-2.5 border-b border-slate-800/40 relative z-10">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#ddbe7a]" />
-                <span className="text-[8px] font-mono text-cyan-300 tracking-[0.2em] font-black">SYSTEM_LIVE</span>
+                <span className="text-[10px] font-mono text-cyan-300 tracking-[0.2em] font-black">SYSTEM_LIVE</span>
               </div>
               <button
                 onClick={() => setIsMinimized(true)}
@@ -80,23 +80,23 @@ export default function FloatingTelemetry() {
             </div>
             
             <div className="mt-3 space-y-2 relative z-10">
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Uplink_Time</span>
                 <span className="text-white font-bold">{time}</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Local_Node</span>
                 <span className="text-white font-bold">MEDELLÍN_HQ</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Core_Load</span>
                 <span className="text-white font-bold">{load}%</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Encryption</span>
                 <span className="text-emerald-400 font-bold tracking-widest">DGZ_SECURE</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-850 pt-2 mt-2">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-850 pt-2 mt-2">
                 <span>Active_Nodes</span>
                 <span className="text-cyan-400 font-black">{activeNodes}</span>
               </div>

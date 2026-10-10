@@ -456,7 +456,7 @@ export default function FAQPage() {
                 <p className="text-xs text-slate-500 font-light leading-relaxed">Reciba mensualmente análisis técnicos sobre el catastro en Colombia.</p>
                 <div className="flex flex-col gap-3">
                   <input type="email" placeholder="Email institucional" className="bg-[#fafafa] border border-slate-100 p-3 text-[10px] font-mono focus:outline-none focus:border-slate-400 rounded-lg transition-colors" />
-                  <button className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2">
+                  <button className="bg-[#1a1a1a] text-white text-[10px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2">
                     <Mail className="w-3 h-3" />
                     Suscribirse
                   </button>

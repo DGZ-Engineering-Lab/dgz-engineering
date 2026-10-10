@@ -27,7 +27,7 @@ export default function Home() {
           <div className="flex flex-col items-center text-center space-y-3">
             <div className="flex items-center gap-2">
               <span className="w-8 h-px bg-cyan-500/50"></span>
-              <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">TECNOLOGÍA SIN LÍMITES</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">TECNOLOGÍA SIN LÍMITES</span>
               <span className="w-8 h-px bg-cyan-500/50"></span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
@@ -104,7 +104,7 @@ export default function Home() {
             <div 
               className="lg:col-span-5 space-y-8 relative z-10 scroll-reveal"
             >
-              <div className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.5em] flex items-center gap-2 font-bold">
+              <div className="text-[10px] font-mono text-cyan-600 uppercase tracking-[0.5em] flex items-center gap-2 font-bold">
                 <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping"></span>
                 Live Intelligence Stream
               </div>
@@ -134,7 +134,7 @@ export default function Home() {
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-slate-200/50 z-20 shadow-md">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]"></div>
-                  <span className="text-[9px] font-mono text-slate-900 uppercase tracking-widest font-black">
+                  <span className="text-[10px] font-mono text-slate-900 uppercase tracking-widest font-black">
                     Tactical View: Operational
                   </span>
                 </div>
@@ -144,7 +144,7 @@ export default function Home() {
                 <Link
                   href="/projects"
                   prefetch={false}
-                  className="flex items-center gap-2 px-5 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-[0_0_20px_rgba(207,167,88,0.3)] group/btn"
+                  className="flex items-center gap-2 px-5 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-xl text-[10px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-[0_0_20px_rgba(207,167,88,0.3)] group/btn"
                 >
                   <ArrowUpRight className="w-4 h-4 text-cyan-400 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                   <span>MÁXIMA RESOLUCIÓN</span>
@@ -191,7 +191,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-bold">Caso de Exito // Valle</span>
+                  <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-bold">Caso de Exito // Valle</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     La Nueva Era del Catastro Multipropósito
                   </h3>
@@ -215,7 +215,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[9px] font-mono text-emerald-600 uppercase tracking-widest font-bold">Ciberseguridad // Zero-Trust</span>
+                  <span className="text-[10px] font-mono text-emerald-600 uppercase tracking-widest font-bold">Ciberseguridad // Zero-Trust</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     Ciberseguridad Geográfica Nacional
                   </h3>

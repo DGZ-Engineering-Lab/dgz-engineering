@@ -172,7 +172,7 @@ export default function ContactSection() {
                   <MapPin className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
-                  <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Global Presence</div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1">Global Presence</div>
                   <div className="text-sm font-bold uppercase tracking-widest">Bogotá // Medellín // Cali</div>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export default function ContactSection() {
                   <Mail className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
-                  <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Direct Inquiry</div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1">Direct Inquiry</div>
                   <div className="text-sm font-bold uppercase tracking-widest">engineering@devgiz.com</div>
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function ContactSection() {
               <button 
                 type="button"
                 onClick={triggerMockSentryException}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-dashed border-red-200 text-red-500 text-[9px] font-mono uppercase rounded-lg hover:bg-red-50/50 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-dashed border-red-200 text-red-500 text-[10px] font-mono uppercase rounded-lg hover:bg-red-50/50 transition-all cursor-pointer"
               >
                 <Bug className="w-3.5 h-3.5" />
                 Simular Error (Test Sentry)
@@ -224,7 +224,7 @@ export default function ContactSection() {
                       setStatus("idle");
                       setFormData({ name: "", company: "", email: "", subject: "Auditoría de Datos LADM-COL", description: "" });
                     }} 
-                    className="px-6 py-2.5 border border-slate-200 text-[9px] font-black uppercase tracking-wider text-slate-500 hover:bg-slate-50 transition-all"
+                    className="px-6 py-2.5 border border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-500 hover:bg-slate-50 transition-all"
                   >
                     Agendar otra sesión
                   </button>
@@ -247,9 +247,9 @@ export default function ContactSection() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Nombre Completo *</label>
+                        <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Nombre Completo *</label>
                         {touched.name && (
-                          <span className={`text-[8px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-500" : "text-red-500"}`}>
+                          <span className={`text-[10px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-500" : "text-red-500"}`}>
                             {validateName(formData.name) ? "[ VÁLIDO ]" : "[ CORTO ]"}
                           </span>
                         )}
@@ -284,9 +284,9 @@ export default function ContactSection() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Organización</label>
+                        <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Organización</label>
                         {touched.company && formData.company.trim() && (
-                          <span className="text-[8px] font-mono uppercase tracking-widest text-emerald-500">
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-500">
                             [ INGRESADO ]
                           </span>
                         )}
@@ -309,9 +309,9 @@ export default function ContactSection() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Email Institucional *</label>
+                      <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Email Institucional *</label>
                       {touched.email && (
-                        <span className={`text-[8px] font-mono uppercase tracking-widest ${
+                        <span className={`text-[10px] font-mono uppercase tracking-widest ${
                           !validateEmail(formData.email)
                             ? "text-red-500"
                             : isInstitutionalEmail(formData.email)
@@ -390,7 +390,7 @@ export default function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
+                    <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
                     <select 
                       aria-label="Asunto de la sesión"
                       name="subject"
@@ -408,8 +408,8 @@ export default function ContactSection() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest">Descripción del Desafío *</label>
-                      <span className={`text-[8px] font-mono uppercase tracking-widest ${
+                      <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Descripción del Desafío *</label>
+                      <span className={`text-[10px] font-mono uppercase tracking-widest ${
                         formData.description.length >= 30 ? "text-emerald-500" : "text-slate-400"
                       }`}>
                         {formData.description.length} / 30 mín.

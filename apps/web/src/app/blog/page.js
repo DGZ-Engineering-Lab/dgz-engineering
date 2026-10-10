@@ -148,7 +148,7 @@ export default function BlogPage() {
                   />
                 </div>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-[9px] font-mono text-slate-400 uppercase tracking-widest">
+                  <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                     <span>{post.category}</span>
                     <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                     <span>{post.readTime}</span>
@@ -188,7 +188,7 @@ export default function BlogPage() {
               Suscribirse
             </button>
           </div>
-          <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">
+          <p className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">
             Privacidad garantizada // Repositorio DevGiz
           </p>
         </div>

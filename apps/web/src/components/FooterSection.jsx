@@ -52,7 +52,7 @@ export default function FooterSection() {
               <Logo className="w-10 h-10" />
               <div className="flex flex-col leading-none gap-1">
                 <span className="font-display text-2xl tracking-tight text-[#f6f1e6]">DevGiz</span>
-                <span className="text-[8px] font-mono uppercase tracking-[0.42em] text-cyan-300/80">Engineering Lab</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.42em] text-cyan-300/80">Engineering Lab</span>
               </div>
             </Link>
             <p className="text-slate-400 font-light leading-relaxed text-sm max-w-xs">

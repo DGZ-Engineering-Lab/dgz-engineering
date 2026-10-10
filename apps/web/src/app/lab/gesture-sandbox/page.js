@@ -77,11 +77,11 @@ export default function GestureSandboxPage() {
                  <div className="absolute inset-0 border-2 border-cyan-400 rounded-full animate-ping opacity-20"></div>
               </div>
               <div className="text-left space-y-1">
-                 <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Detection Engine</div>
+                 <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Detection Engine</div>
                  <div className="text-sm font-black uppercase text-white tracking-tight">Computer Vision [ACTIVE]</div>
                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span className="text-[9px] font-mono text-emerald-500 uppercase">Synchronized with NeuralLink</span>
+                    <span className="text-[10px] font-mono text-emerald-500 uppercase">Synchronized with NeuralLink</span>
                  </div>
               </div>
         </div>
@@ -126,28 +126,28 @@ export default function GestureSandboxPage() {
                     {/* Corner Telemetry */}
                     <div className="absolute top-10 left-10 space-y-4">
                        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl">
-                          <div className="text-[8px] font-mono text-slate-500 uppercase mb-1">Processing Latency</div>
+                          <div className="text-[10px] font-mono text-slate-500 uppercase mb-1">Processing Latency</div>
                           <div className="text-lg font-black text-white">0.02<span className="text-xs text-cyan-400">ms</span></div>
                        </div>
                        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl">
-                          <div className="text-[8px] font-mono text-slate-500 uppercase mb-1">Neural Precision</div>
+                          <div className="text-[10px] font-mono text-slate-500 uppercase mb-1">Neural Precision</div>
                           <div className="text-lg font-black text-emerald-400">99.98<span className="text-xs text-white">%</span></div>
                        </div>
                     </div>
 
                     <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
-                       <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[9px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
-                       <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[9px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
-                       <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[9px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
+                       <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[10px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
+                       <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[10px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
+                       <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[10px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
                     </div>
                  </div>
 
                  {/* Console Stream Overlay */}
                  <div className="absolute bottom-10 left-10 w-64 h-40 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 overflow-hidden">
-                    <div className="text-[8px] font-mono text-cyan-500 mb-4 tracking-widest font-black uppercase">Gesture_Kernel_Log</div>
+                    <div className="text-[10px] font-mono text-cyan-500 mb-4 tracking-widest font-black uppercase">Gesture_Kernel_Log</div>
                     <div className="flex flex-col gap-2">
                        {logs.map((log, i) => (
-                          <div key={i} className={`text-[8px] font-mono transition-all duration-500 ${i === 0 ? 'text-white' : 'text-slate-500'}`}>
+                          <div key={i} className={`text-[10px] font-mono transition-all duration-500 ${i === 0 ? 'text-white' : 'text-slate-500'}`}>
                              {i === 0 && <span className="text-cyan-400 mr-2">&gt;</span>}
                              {log}
                           </div>

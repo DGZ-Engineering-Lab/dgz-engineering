@@ -206,7 +206,7 @@ const VurQuery = () => {
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                    <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[99.8%]"></div>
                 </div>
-                <p className="mt-4 text-[9px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {btoa(matricula || "DEMO").substring(0, 10).toUpperCase()}</p>
+                <p className="mt-4 text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {btoa(matricula || "DEMO").substring(0, 10).toUpperCase()}</p>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ const VurQuery = () => {
       {result && (
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-4">
            <div className="flex items-center gap-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-[0.4em]">Interoperando con:</span>
+              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em]">Interoperando con:</span>
                {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_de_Colombia.svg/1200px-Escudo_de_Colombia.svg.png" alt="Colombia" className="h-8" />
               <div className="h-8 w-px bg-slate-800"></div>

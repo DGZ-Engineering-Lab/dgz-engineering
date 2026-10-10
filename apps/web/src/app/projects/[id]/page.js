@@ -247,7 +247,7 @@ function CadastreViewer() {
           
           <button
             onClick={() => setIsLidarActive(!isLidarActive)}
-            className={`px-2.5 py-1 text-[8px] font-mono tracking-widest uppercase rounded border transition-all ${
+            className={`px-2.5 py-1 text-[10px] font-mono tracking-widest uppercase rounded border transition-all ${
               isLidarActive
                 ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(207,167,88,0.2)]"
                 : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300"
@@ -308,7 +308,7 @@ function CadastreViewer() {
           </svg>
 
           {/* Interactive Legends */}
-          <div className="absolute bottom-2 left-2 flex flex-col gap-1 text-[8px] font-mono text-slate-400">
+          <div className="absolute bottom-2 left-2 flex flex-col gap-1 text-[10px] font-mono text-slate-400">
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 bg-cyan-500/25 border border-cyan-500 rounded-sm" />
               <span>Seleccionado</span>
@@ -325,8 +325,8 @@ function CadastreViewer() {
         </div>
 
         {/* Local Console logs representing active engineering work */}
-        <div className="bg-black/80 border border-slate-900 rounded-lg p-3 font-mono text-[8px] text-slate-500 space-y-1 h-20 overflow-y-auto">
-          <div className="text-[7px] text-slate-600 font-bold uppercase tracking-widest border-b border-slate-900 pb-1 mb-1 flex items-center justify-between">
+        <div className="bg-black/80 border border-slate-900 rounded-lg p-3 font-mono text-[10px] text-slate-500 space-y-1 h-20 overflow-y-auto">
+          <div className="text-[10px] text-slate-600 font-bold uppercase tracking-widest border-b border-slate-900 pb-1 mb-1 flex items-center justify-between">
             <span>Terminal // DevGiz GIS Engine</span>
             <span className="w-1 h-1 bg-cyan-400 rounded-full animate-ping"></span>
           </div>
@@ -343,7 +343,7 @@ function CadastreViewer() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 font-bold">{selectedParcel.id}</span>
-            <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border transition-all ${
+            <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border transition-all ${
               selectedParcel.status.includes("CONFORME") 
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" 
                 : selectedParcel.status.includes("VERIFICACIÓN")
@@ -356,21 +356,21 @@ function CadastreViewer() {
 
           <div className="space-y-3">
             <div>
-              <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Predio (Clase LADM-COL)</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Predio (Clase LADM-COL)</div>
               <div className="text-sm font-bold text-white tracking-tight">{selectedParcel.name}</div>
               <div className="text-[10px] text-slate-400 font-mono italic">{selectedParcel.ladmClass}</div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
                   <User className="w-2.5 h-2.5 text-slate-500" />
                   Sujeto de Interés
                 </div>
                 <div className="text-[11px] font-bold text-slate-300 line-clamp-1">{selectedParcel.interesado}</div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
                   <Activity className="w-2.5 h-2.5 text-slate-500" />
                   Derecho / RRD
                 </div>
@@ -380,11 +380,11 @@ function CadastreViewer() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Área Física (LiDAR)</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Área Física (LiDAR)</div>
                 <div className="text-xs font-bold font-mono text-cyan-400">{selectedParcel.lidarArea}</div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Varianza de Registro</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Varianza de Registro</div>
                 <div className={`text-xs font-bold font-mono transition-all ${
                   selectedParcel.variance.includes("Ajuste") || selectedParcel.variance.includes("Superposición") 
                     ? "text-rose-400 animate-pulse font-bold" 
@@ -400,7 +400,7 @@ function CadastreViewer() {
         {/* Dynamic Action Buttons illustrating the "magic" of DevGiz */}
         <div className="pt-4 border-t border-slate-900 mt-4 space-y-3">
           
-          <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">
+          <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
             Herramientas DevGiz Engine en Vivo
           </div>
 
@@ -410,7 +410,7 @@ function CadastreViewer() {
               <button
                 onClick={() => executeDevGizAction(selectedParcel.id, "repair")}
                 disabled={isProcessing}
-                className="flex-1 py-2.5 bg-white text-black hover:bg-cyan-500 hover:text-black font-black uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed"
+                className="flex-1 py-2.5 bg-white text-black hover:bg-cyan-500 hover:text-black font-black uppercase text-[10px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Saneamiento Topológico</span>
@@ -419,7 +419,7 @@ function CadastreViewer() {
               <button
                 onClick={() => executeDevGizAction(selectedParcel.id, "lidar")}
                 disabled={isProcessing}
-                className="flex-1 py-2.5 bg-cyan-950/20 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 font-bold uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-2.5 bg-cyan-950/20 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 font-bold uppercase text-[10px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Cpu className="w-3.5 h-3.5" />
                 <span>Auditar Nube LiDAR</span>
@@ -427,7 +427,7 @@ function CadastreViewer() {
             )}
           </div>
 
-          <div className="flex items-center justify-between text-[8px] font-mono text-slate-500 pt-1">
+          <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-1">
             <span>Sincronizado con Nodo IGAC</span>
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -480,7 +480,7 @@ function PluginSimulator() {
             <Layers className="w-3.5 h-3.5 text-cyan-400" />
             Topología Shapely (QGIS Plugin)
           </h4>
-          <span className="text-[9px] font-mono text-slate-500 uppercase">Spatial Engine Canvas</span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase">Spatial Engine Canvas</span>
         </div>
 
         <div className="relative h-64 bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex items-center justify-center p-4">
@@ -520,7 +520,7 @@ function PluginSimulator() {
             </AnimatePresence>
           </svg>
 
-          <div className="absolute top-2 right-2 px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 text-[8px] font-mono">
+          <div className="absolute top-2 right-2 px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono">
             {isRepaired ? (
               <span className="text-emerald-400 font-bold flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3 text-emerald-400" />
@@ -544,14 +544,14 @@ function PluginSimulator() {
       <div className="md:col-span-6 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
         <div className="space-y-4">
           <div className="space-y-1">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Procedimiento Topológico</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Procedimiento Topológico</span>
             <h5 className="text-xs font-bold text-white">Algoritmo de Snapping Vectorial LADM-COL</h5>
             <p className="text-[10px] text-slate-400 font-light leading-relaxed">
               Resuelve traslapes topológicos de linderos prediales bajo la regla de no-superposición oficial mediante geometría computacional.
             </p>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[9px] text-slate-300 space-y-1.5 h-32 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[10px] text-slate-300 space-y-1.5 h-32 overflow-y-auto">
             {logStep >= 0 && (
               <div className="text-slate-400">
                 &gt;&gt;&gt; import shapely.ops, shapely.geometry
@@ -590,7 +590,7 @@ function PluginSimulator() {
           {!isRepaired && !isAnimating ? (
             <button
               onClick={startRepair}
-              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
+              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[10px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
             >
               <Zap className="w-3 h-3 text-slate-950 fill-slate-950" />
               Reparar Topología
@@ -599,7 +599,7 @@ function PluginSimulator() {
             <button
               onClick={resetSimulator}
               disabled={isAnimating}
-              className="flex-1 py-2 px-3 bg-slate-800 text-slate-200 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-slate-700 active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-2 px-3 bg-slate-800 text-slate-200 font-bold text-[10px] font-mono tracking-wider uppercase rounded hover:bg-slate-700 active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
             >
               <RefreshCw className="w-3 h-3 text-slate-200" />
               Restablecer Simulación
@@ -680,10 +680,10 @@ function PipelineMonitor() {
             <Terminal className="w-3.5 h-3.5 text-cyan-400" />
             Consola ETL en Vivo (Polars & DuckDB)
           </h4>
-          <span className="text-[9px] font-mono text-slate-500 uppercase">Live Pipeline Execution</span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase">Live Pipeline Execution</span>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded p-4 font-mono text-[9px] text-slate-300 space-y-1.5 h-64 overflow-y-auto flex flex-col justify-end">
+        <div className="bg-slate-900 border border-slate-800 rounded p-4 font-mono text-[10px] text-slate-300 space-y-1.5 h-64 overflow-y-auto flex flex-col justify-end">
           <div className="flex-1 overflow-y-auto space-y-1">
             {logs.length === 0 ? (
               <div className="text-slate-500 italic">
@@ -711,13 +711,13 @@ function PipelineMonitor() {
       <div className="md:col-span-5 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
         <div className="space-y-6">
           <div className="space-y-1">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Métricas de Rendimiento</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Métricas de Rendimiento</span>
             <h5 className="text-xs font-bold text-white">Consistencia Temporal & Ingesta</h5>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[9px] font-mono">
+              <div className="flex justify-between text-[10px] font-mono">
                 <span className="text-slate-400">Progreso Total</span>
                 <span className="text-white font-bold">{progress}%</span>
               </div>
@@ -731,13 +731,13 @@ function PipelineMonitor() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Filas Procesadas</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Filas Procesadas</div>
                 <div className="text-sm font-bold font-mono text-white">
                   {recordsCount.toLocaleString()}
                 </div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Velocidad Ingesta</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Velocidad Ingesta</div>
                 <div className="text-sm font-bold font-mono text-cyan-400">
                   {isRunning ? "124,500/s" : "0/s"}
                 </div>
@@ -746,13 +746,13 @@ function PipelineMonitor() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Engine Footprint</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Engine Footprint</div>
                 <div className="text-[11px] font-bold font-mono text-slate-300">
                   {isRunning ? "1.42 GB RAM" : "Idle"}
                 </div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Cores Activos</div>
+                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Cores Activos</div>
                 <div className="text-[11px] font-bold font-mono text-indigo-400 flex items-center gap-1.5">
                   <Cpu className="w-3.5 h-3.5 text-indigo-400" />
                   {isRunning ? "8/8 Threads" : "0 threads"}
@@ -766,7 +766,7 @@ function PipelineMonitor() {
           {isRunning ? (
             <button
               onClick={pausePipeline}
-              className="flex-1 py-2 px-3 bg-amber-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-2 px-3 bg-amber-500 text-slate-950 font-bold text-[10px] font-mono tracking-wider uppercase rounded hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Pause className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
               Pausar
@@ -774,7 +774,7 @@ function PipelineMonitor() {
           ) : (
             <button
               onClick={startPipeline}
-              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
+              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[10px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
             >
               <Play className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
               {progress > 0 ? "Reanudar Ingesta" : "Iniciar Orquestación"}
@@ -951,8 +951,8 @@ LIMIT 5;`,
         }
         return (
           <div key={index} className="my-3 space-y-1.5">
-            <div className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
-            <div className="bg-[#0a0907] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[9px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
+            <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
+            <div className="bg-[#0a0907] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[10px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
               {code.trim()}
             </div>
           </div>
@@ -976,7 +976,7 @@ LIMIT 5;`,
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               Preguntas Geoespaciales
             </h4>
-            <span className="text-[8px] font-mono text-slate-500">Geo-LLM Core v2</span>
+            <span className="text-[10px] font-mono text-slate-500">Geo-LLM Core v2</span>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -999,7 +999,7 @@ LIMIT 5;`,
 
         {/* Campo de Consulta Personalizada (Llama 3.3) */}
         <div className="border-t border-slate-900 pt-4">
-          <label className="text-[9px] font-mono text-slate-400 block mb-2 flex items-center gap-1.5 uppercase tracking-wider">
+          <label className="text-[10px] font-mono text-slate-400 block mb-2 flex items-center gap-1.5 uppercase tracking-wider">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
             Consola Libre (Llama 3.3)
           </label>
@@ -1034,10 +1034,10 @@ LIMIT 5;`,
                 Ejecutando Inferencia en Vivo
               </div>
             </div>
-            <div className="bg-[#0a0907] border border-slate-900 rounded-lg p-4 font-mono text-[9px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
+            <div className="bg-[#0a0907] border border-slate-900 rounded-lg p-4 font-mono text-[10px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
               {liveLogs.map((log, index) => (
                 <div key={index} className="flex items-center gap-1.5">
-                  <span className="text-[7px] text-slate-600">[{index * 0.4}s]</span>
+                  <span className="text-[10px] text-slate-600">[{index * 0.4}s]</span>
                   <span>{log}</span>
                 </div>
               ))}
@@ -1056,7 +1056,7 @@ LIMIT 5;`,
                 </p>
                 <button
                   onClick={() => handleLiveQuery(customQuery || queries[activeQueryIndex]?.q)}
-                  className="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/25 rounded-md text-[9px] font-mono text-rose-400 cursor-pointer transition-all"
+                  className="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/25 rounded-md text-[10px] font-mono text-rose-400 cursor-pointer transition-all"
                 >
                   Reintentar Operación
                 </button>
@@ -1065,24 +1065,24 @@ LIMIT 5;`,
               <div className="flex-1 flex flex-col justify-between space-y-4">
                 {/* Badge de Diagnóstico según estado real de API */}
                 {liveResponse.simulated ? (
-                  <div className="bg-amber-500/5 border border-amber-500/20 text-amber-400 rounded-lg p-3 text-[9px] flex items-start gap-2.5 shadow-md">
+                  <div className="bg-amber-500/5 border border-amber-500/20 text-amber-400 rounded-lg p-3 text-[10px] flex items-start gap-2.5 shadow-md">
                     <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <div>
                       <div className="font-bold uppercase tracking-wide">Modo Simulación Activo</div>
-                      <div className="text-[8.5px] text-amber-400/70 leading-normal mt-0.5">
+                      <div className="text-[10px] text-amber-400/70 leading-normal mt-0.5">
                         GROQ_API_KEY no detectada en la variable local. Mostrando respuesta inteligente simulada.
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 rounded-lg p-3 text-[9px] flex items-start gap-2.5 shadow-md shadow-emerald-950/20">
+                  <div className="bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 rounded-lg p-3 text-[10px] flex items-start gap-2.5 shadow-md shadow-emerald-950/20">
                     <Zap className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 animate-pulse" />
                     <div>
                       <div className="font-bold uppercase tracking-wide flex items-center gap-1.5">
                         Llama 3.3 Conectado
                         <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
                       </div>
-                      <div className="text-[8.5px] text-emerald-400/70 leading-normal mt-0.5">
+                      <div className="text-[10px] text-emerald-400/70 leading-normal mt-0.5">
                         Inferencia espacial real ejecutada con éxito en el clúster de cómputo ultraveloz de Groq.
                       </div>
                     </div>
@@ -1090,7 +1090,7 @@ LIMIT 5;`,
                 )}
 
                 <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-cyan-400">
                     <Terminal className="w-3.5 h-3.5" />
                     RESPUESTA GEO-AI EN VIVO
                   </div>
@@ -1099,7 +1099,7 @@ LIMIT 5;`,
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-900 text-[8px] font-mono text-slate-500 flex items-center justify-between">
+                <div className="pt-3 border-t border-slate-900 text-[10px] font-mono text-slate-500 flex items-center justify-between">
                   <span className="flex items-center gap-1">
                     <Cpu className="w-2.5 h-2.5 text-slate-600" />
                     Modelo: {liveResponse.model}
@@ -1116,7 +1116,7 @@ LIMIT 5;`,
                 setLiveResponse(null);
                 setLiveError(null);
               }}
-              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
+              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[10px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
             >
               ← Volver al Centro de Demostración
             </button>
@@ -1138,7 +1138,7 @@ LIMIT 5;`,
           /* Caso D: Vista de Presets Estáticos (Con Opción de Inferencia en Vivo) */
           <div className="flex-1 flex flex-col justify-between space-y-4">
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
+              <div className="flex items-center gap-2 text-[10px] font-mono text-cyan-400">
                 <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
                 DEMO PRE-RENDERIZADA
               </div>
@@ -1154,14 +1154,14 @@ LIMIT 5;`,
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-3"
               >
-                <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[8px] text-emerald-400 overflow-x-auto whitespace-pre">
+                <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[10px] text-emerald-400 overflow-x-auto whitespace-pre">
                   {queries[activeQueryIndex].sql}
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 border-t border-slate-900 pt-2.5">
                   {Object.entries(queries[activeQueryIndex].metrics).map(([key, val]) => (
                     <div key={key} className="bg-slate-900/60 p-2 rounded border border-slate-900 text-center shadow-inner">
-                      <div className="text-[7px] text-slate-500 uppercase tracking-widest leading-none">{key}</div>
+                      <div className="text-[10px] text-slate-500 uppercase tracking-widest leading-none">{key}</div>
                       <div className="text-[10px] font-bold text-white mt-1 leading-none">{val}</div>
                     </div>
                   ))}
@@ -1173,7 +1173,7 @@ LIMIT 5;`,
                     setCustomQuery(queries[activeQueryIndex].q);
                     handleLiveQuery(queries[activeQueryIndex].q);
                   }}
-                  className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded-lg py-2 text-[9px] font-mono text-cyan-400 hover:text-cyan-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded-lg py-2 text-[10px] font-mono text-cyan-400 hover:text-cyan-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Zap className="w-3.5 h-3.5 text-cyan-400" />
                   Ejecutar Análisis en Vivo con Groq Llama-3.3
@@ -1181,7 +1181,7 @@ LIMIT 5;`,
               </motion.div>
             )}
 
-            <div className="pt-3 border-t border-slate-900 text-[8px] font-mono text-slate-500 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-900 text-[10px] font-mono text-slate-500 flex items-center justify-between">
               <span>Token Cost: ~210 Spatial Tokens</span>
               <span>Model latency: 0.12s</span>
             </div>
@@ -1316,7 +1316,7 @@ export default function ProjectDetailPage() {
                 <div className="space-y-10">
                   {project.impact.map(stat => (
                     <div key={stat.label} className="space-y-1">
-                      <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
+                      <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
                       <div className="text-2xl font-black text-[#1a1a1a] tracking-tight">{stat.value}</div>
                     </div>
                   ))}
