@@ -55,6 +55,11 @@ export const metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   formatDetection: { telephone: false },
+  // Códigos de verificación de Google Search Console y Bing Webmaster Tools (variables de entorno en Vercel).
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } } : {}),
+  },
   other: { "geo.region": "CO-ANT", "geo.placename": "Medellín" },
 };
 

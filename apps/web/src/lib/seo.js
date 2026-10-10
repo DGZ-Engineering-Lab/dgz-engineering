@@ -71,7 +71,8 @@ export function pageMetadata({ title, description, path, image, type = "website"
       card: "summary_large_image",
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [images[0].url],
+      // Sin imagen propia, X/Twitter recurre a og:image (que puede venir de un opengraph-image por ruta).
+      ...(image ? { images: [image] } : {}),
     },
     ...(noIndex ? { robots: { index: false, follow: false } } : {}),
   };

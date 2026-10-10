@@ -1,21 +1,7 @@
 import JsonLd from "../../../components/JsonLd";
 import { SERVICES_DATA } from "../../../data/servicesData";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "../../../lib/seo";
-
-// "GIS & GEOINTELLIGENCE" -> "GIS & Geointelligence": conserva siglas cortas y normaliza el resto.
-const KEEP_UPPER = new Set(["GIS", "BI", "IA", "&"]);
-const LOWER = new Set(["DE", "Y"]);
-function displayName(title) {
-  return title
-    .split(" ")
-    .map((w) => {
-      if (KEEP_UPPER.has(w)) return w;
-      if (LOWER.has(w)) return w.toLowerCase();
-      if (w === "DEVOPS") return "DevOps";
-      return w.charAt(0) + w.slice(1).toLowerCase();
-    })
-    .join(" ");
-}
+import { displayName } from "./serviceName";
 
 // Títulos de ~60 caracteres para que no se trunquen en los resultados de búsqueda.
 function serviceTitle(service) {
