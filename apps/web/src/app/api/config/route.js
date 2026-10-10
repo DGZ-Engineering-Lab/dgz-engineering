@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { internalError } from "../../../lib/http";
 import { get } from "@vercel/edge-config";
 
 export const runtime = 'edge'; // Force Edge Runtime for maximum performance
@@ -24,7 +25,7 @@ export async function GET() {
           maintenance: !!maintenanceModeKey
         };
       } else {
-        const config = await get("devgiz_config");
+        const config = /** @type {{ systemStatus?: object } | undefined} */ (await get("devgiz_config"));
         if (config && config.systemStatus) {
           systemStatus = config.systemStatus;
         }
@@ -35,6 +36,6 @@ export async function GET() {
 
     return NextResponse.json({ systemStatus });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return internalError(error, "config");
   }
 }

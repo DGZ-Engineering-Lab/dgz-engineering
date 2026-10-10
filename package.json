@@ -6,6 +6,12 @@
     "dev": "npm --prefix apps/web run dev",
     "build": "npm --prefix apps/web run build",
     "start": "npm --prefix apps/web run start",
-    "install:all": "npm install && npm --prefix apps/web install"
+    "install:all": "npm install && npm --prefix apps/web install",
+    "lint": "npm --prefix apps/web run lint",
+    "typecheck": "npm --prefix apps/web run typecheck",
+    "test": "npm --prefix apps/web test",
+    "test:py": "pytest -q backend/qa_engine projects/qgis-plugin/tests",
+    "lint:py": "ruff check .",
+    "check": "npm --prefix apps/web run check && ruff check . && pytest -q backend/qa_engine projects/qgis-plugin/tests"
   }
 }

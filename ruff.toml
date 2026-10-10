@@ -1,0 +1,26 @@
+# Ruff configuration for every Python package in the repo
+# (apps/api, backend/*, geoai, projects/qgis-plugin).
+target-version = "py311"
+line-length = 120
+extend-exclude = ["**/node_modules", "apps/web"]
+
+[lint]
+# Correctness first: pyflakes (undefined names, unused imports/vars),
+# pycodestyle errors, bugbear and syntax-level issues.
+select = ["E4", "E7", "E9", "F", "B"]
+ignore = [
+  "B008", # FastAPI's Depends()/File() in defaults is idiomatic
+  "E402", # several scripts adjust sys.path or load env before importing
+  "E701", # compact one-line ifs in legacy code
+  "E722", # bare except: legacy code, tracked for cleanup
+  "B904", # raise ... from err: legacy handlers, tracked for cleanup
+]
+
+[lint.per-file-ignores]
+# Tests import fixtures by name.
+"**/test_*.py" = ["F811"]
+# QGIS imports inside try/except double as availability probes.
+"projects/qgis-plugin/**" = ["F401"]
+
+[format]
+quote-style = "double"

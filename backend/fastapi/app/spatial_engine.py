@@ -1,6 +1,6 @@
 import time
 import random
-from shapely.geometry import shape, Point
+from shapely.geometry import shape
 from shapely.strtree import STRtree
 from typing import List, Dict, Any
 from .schemas import GeoJSONFeature, AnalysisResult
@@ -135,7 +135,7 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
                 
                 if category:
                     recommendations.append(f"Land Use Classification: {category}.")
-        except Exception as e:
+        except Exception:
             # Fallback if DuckDB query fails, continue with base logic
             pass
 
@@ -152,7 +152,6 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
     # Generate "Heatmap" points for visualization
     # We simulate a radial impact area
     for _ in range(8):
-        angle = random.uniform(0, 2 * 3.14159)
         dist = random.uniform(0.0005, 0.002) # approx 50-200m
         node = {
             "lat": feature.geometry.get("coordinates", [0, 0])[1] + dist * 0.7 * random.uniform(-1, 1),
