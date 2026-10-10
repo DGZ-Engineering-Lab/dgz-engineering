@@ -1,7 +1,13 @@
+import { escapeHtml } from "./security.js";
+
 /**
  * Generates the HTML template for internal Admin notifications.
  */
 export function getAdminNotificationTemplate({ name, email, message, company }) {
+  name = escapeHtml(name);
+  email = escapeHtml(email);
+  message = escapeHtml(message);
+  company = escapeHtml(company || "N/A");
   return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; padding: 20px;">
       <h2 style="color: #333;">Nuevo Lead desde DevGiz Engineering</h2>
@@ -22,6 +28,9 @@ export function getAdminNotificationTemplate({ name, email, message, company }) 
  * NOTE: On Resend Free Tier, this will only work if the user's email matches the verified admin email.
  */
 export function getUserConfirmationTemplate({ name, message, company }) {
+  name = escapeHtml(name);
+  message = escapeHtml(message);
+  company = escapeHtml(company || "N/A");
   return `
     <!DOCTYPE html>
     <html>

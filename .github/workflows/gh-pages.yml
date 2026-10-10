@@ -60,11 +60,17 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
+      - name: Assemble static site
+        # Publish only the static site. Uploading the whole repository would expose
+        # .env.example, backend source, scratch data and other files that aren't part of the site.
+        run: |
+          mkdir _site
+          cp -r index.html 404.html favicon.ico robots.txt sitemap.xml assets projects lab _site/
+          touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
