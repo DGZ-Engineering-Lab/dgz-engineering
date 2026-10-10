@@ -19,7 +19,7 @@
     "@vercel/kv": "^1.0.1",
     "@vercel/speed-insights": "^1.0.12",
     "animejs": "^4.4.1",
-    "framer-motion": "^12.38.0",
+    "framer-motion": "^14.0.0",
     "groq-sdk": "^0.13.0",
     "lightweight-charts": "^5.2.0",
     "lucide-react": "^1.16.0",
