@@ -7,6 +7,6 @@ groq==0.4.2
 python-multipart==0.0.32
 numpy<2.0.0
 pandas==2.1.4
-openpyxl==3.1.2
+openpyxl==3.1.5
 supabase
 fpdf2==2.3.4
