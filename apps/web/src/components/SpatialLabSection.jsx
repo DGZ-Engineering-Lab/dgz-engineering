@@ -32,12 +32,12 @@ export default function SpatialLabSection() {
 
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 space-y-6">
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#0a0908]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(207,167,88,0.15)] backdrop-blur-xl">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
             DGZ Engineering / Innovation Lab
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter leading-[0.95]">
-            Laboratorio de <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">Inteligencia Espacial</span>
+            Laboratorio de <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(207,167,88,0.4)]">Inteligencia Espacial</span>
           </h2>
           <p className="text-sm md:text-base text-slate-400 font-light max-w-4xl leading-relaxed">
             Explora nuestros <strong className="text-white font-medium">nodos geoespaciales de alto rendimiento</strong>. Desde automatización territorial desatendida hasta agentes de Inteligencia Artificial que escriben Spatial SQL en tiempo real.
@@ -74,10 +74,10 @@ function ProjectCarousel() {
         hoverBg: "hover:bg-cyan-500",
         hoverText: "hover:text-cyan-300",
         via: "via-cyan-500",
-        shadow: "shadow-[0_0_15px_#06b6d4]",
-        colorHex: "#22d3ee"
+        shadow: "shadow-[0_0_15px_#cfa758]",
+        colorHex: "#ddbe7a"
       },
-      glow: "shadow-[0_0_80px_rgba(6,182,212,0.3)]",
+      glow: "shadow-[0_0_80px_rgba(207,167,88,0.3)]",
       border: "border-cyan-500/50"
     },
     {
@@ -98,10 +98,10 @@ function ProjectCarousel() {
         hoverBg: "hover:bg-indigo-500",
         hoverText: "hover:text-indigo-300",
         via: "via-indigo-500",
-        shadow: "shadow-[0_0_15px_#6366f1]",
-        colorHex: "#818cf8"
+        shadow: "shadow-[0_0_15px_#94653a]",
+        colorHex: "#b58552"
       },
-      glow: "shadow-[0_0_80px_rgba(99,102,241,0.3)]",
+      glow: "shadow-[0_0_80px_rgba(148,101,58,0.3)]",
       border: "border-indigo-500/50"
     },
     {
@@ -146,10 +146,10 @@ function ProjectCarousel() {
         hoverBg: "hover:bg-blue-500",
         hoverText: "hover:text-blue-300",
         via: "via-blue-500",
-        shadow: "shadow-[0_0_15px_#3b82f6]",
-        colorHex: "#60a5fa"
+        shadow: "shadow-[0_0_15px_#a97a3c]",
+        colorHex: "#c4955a"
       },
-      glow: "shadow-[0_0_80px_rgba(59,130,246,0.3)]",
+      glow: "shadow-[0_0_80px_rgba(169,122,60,0.3)]",
       border: "border-blue-500/50"
     },
     {
@@ -196,7 +196,7 @@ function ProjectCarousel() {
         </div>
 
         {/* Carousel Controls */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 bg-[#050810]/80 p-2 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-xl">
+        <div className="flex flex-col sm:flex-row items-center gap-4 bg-[#0a0908]/80 p-2 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-xl">
           <div className="flex gap-2 px-3">
             {projects.map((_, i) => (
               <button
@@ -224,19 +224,19 @@ function ProjectCarousel() {
         {/* Dynamic Background Glow matching active project color */}
         <div className={`absolute inset-0 ${activeProject.glow} opacity-40 blur-[100px] rounded-[2rem] transition-all duration-1000 pointer-events-none`}></div>
 
-        <div className={`relative w-full h-full bg-[#03060d]/90 backdrop-blur-md border ${activeProject.border} rounded-[2rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
+        <div className={`relative w-full h-full bg-[#080706]/90 backdrop-blur-md border ${activeProject.border} rounded-[2rem] overflow-hidden flex flex-col lg:flex-row transform transition-all duration-700 ease-out`}>
           
           {/* Top/Left Visual Area */}
-          <div className="w-full lg:w-[45%] min-h-[250px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#050810] to-[#02040a] border-b lg:border-b-0 lg:border-r border-slate-800">
+          <div className="w-full lg:w-[45%] min-h-[250px] lg:min-h-full relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a0908] to-[#060504] border-b lg:border-b-0 lg:border-r border-slate-800">
             {/* Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+            <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: 'linear-gradient(#3d3a35 1px, transparent 1px), linear-gradient(90deg, #3d3a35 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
             
             {/* Scanning Line */}
             <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent ${activeProject.theme.via} to-transparent animate-[scan_3s_ease-in-out_infinite] z-20`}></div>
 
             <div className="relative z-10 transition-transform duration-700 group-hover:scale-[1.03] flex justify-center items-center p-6 w-full h-full">
               {activeProject.img ? (
-                <div className={`relative w-full max-w-[200px] aspect-video drop-shadow-[0_0_40px_rgba(6,182,212,0.4)]`}>
+                <div className={`relative w-full max-w-[200px] aspect-video drop-shadow-[0_0_40px_rgba(207,167,88,0.4)]`}>
                   <Image src={activeProject.img} alt={activeProject.title} fill className="object-contain" />
                 </div>
               ) : (
@@ -247,11 +247,11 @@ function ProjectCarousel() {
             </div>
             
             {/* Overlay Gradient for visual depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#060504] via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
           </div>
 
           {/* Bottom/Right Information Area */}
-          <div className="w-full lg:w-[55%] p-6 md:p-8 lg:p-10 flex flex-col justify-center relative z-20 bg-gradient-to-br from-[#050810]/50 to-transparent">
+          <div className="w-full lg:w-[55%] p-6 md:p-8 lg:p-10 flex flex-col justify-center relative z-20 bg-gradient-to-br from-[#0a0908]/50 to-transparent">
             
             {/* Tags and Status */}
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -277,7 +277,7 @@ function ProjectCarousel() {
             {/* Tech Stack Pills */}
             <div className="flex flex-wrap gap-2 mb-10">
               {activeProject.tech.map((t, i) => (
-                <span key={i} className={`px-3 py-1.5 bg-[#02040a] border border-slate-800 text-[10px] font-mono text-slate-300 rounded-lg uppercase tracking-widest ${activeProject.theme.hoverBorder} ${activeProject.theme.hoverText} hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
+                <span key={i} className={`px-3 py-1.5 bg-[#060504] border border-slate-800 text-[10px] font-mono text-slate-300 rounded-lg uppercase tracking-widest ${activeProject.theme.hoverBorder} ${activeProject.theme.hoverText} hover:-translate-y-1 transition-all shadow-lg cursor-default`}>
                   {t}
                 </span>
               ))}

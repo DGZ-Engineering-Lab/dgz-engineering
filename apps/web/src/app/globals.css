@@ -1,32 +1,221 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   DevGiz — Sistema "Obsidian & Gold"
+   Marfil editorial + obsidiana + oro champán. La paleta de Tailwind se
+   redefine aquí para que TODA la plataforma herede la identidad sin tener
+   que reescribir cada componente:
+     slate            → neutros cálidos (marfil → obsidiana)
+     cyan / sky / teal → oro champán (acento principal)
+     blue             → bronce antiguo
+     indigo / violet / purple → coñac (acento profundo)
+   ========================================================================== */
+
 :root {
-  /* Cyber Light - Estética Territorial Premium */
-  --background: #f8fafc;       /* Slate 50 (Fondo limpio de ingeniería) */
-  --foreground: #0f172a;       /* Slate 900 (Texto oscuro nítido) */
-  --slate-900: #f1f5f9;       /* Slate 100 (Invertido para contrastes) */
-  --slate-800: #e2e8f0;       /* Slate 200 */
-  --cyan-500: #0891b2;        /* Cyan 600 (Más contraste para modo claro) */
-  --cyan-400: #06b6d4;        /* Cyan 500 */
-  --blue-500: #2563eb;        /* Blue 600 */
-  --emerald-500: #059669;     /* Emerald 600 */
-  --emerald-400: #10b981;     /* Emerald 500 */
-  --accent-glow: rgba(8, 145, 178, 0.06);
-  --border-glass: rgba(15, 23, 42, 0.08); /* Bordes oscuros suaves */
-  --bg-glass: rgba(255, 255, 255, 0.75);  /* Cristal blanco translúcido */
+  --background: #f8f6f1;       /* Marfil */
+  --foreground: #12110e;       /* Tinta obsidiana */
+  --obsidian: #0b0a08;
+  --obsidian-2: #13120f;
+  --ivory: #f8f6f1;
+  --gold: #cfa758;
+  --gold-soft: #e9d5a6;
+  --gold-deep: #8a6825;
+  --slate-900: #f0ede6;
+  --slate-800: #e2ded4;
+  --cyan-500: #b88f3e;
+  --cyan-400: #cfa758;
+  --blue-500: #a97a3c;
+  --emerald-500: #059669;
+  --emerald-400: #10b981;
+  --accent-glow: rgba(207, 167, 88, 0.08);
+  --border-glass: rgba(18, 17, 14, 0.08);
+  --bg-glass: rgba(255, 254, 251, 0.78);
+  --gold-gradient: linear-gradient(100deg, #f4e4b8 0%, #cfa758 28%, #a67b2e 55%, #e9d5a6 78%, #b88f3e 100%);
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme {
+  --color-slate-50: #f8f6f1;
+  --color-slate-100: #f0ede6;
+  --color-slate-200: #e2ded4;
+  --color-slate-300: #cac4b7;
+  --color-slate-400: #9c968a;
+  --color-slate-500: #716c63;
+  --color-slate-600: #57534c;
+  --color-slate-700: #3d3a35;
+  --color-slate-800: #282622;
+  --color-slate-900: #181714;
+  --color-slate-950: #0d0c0a;
+
+  --color-cyan-50: #fbf7ee;
+  --color-cyan-100: #f4ead2;
+  --color-cyan-200: #e9d5a6;
+  --color-cyan-300: #ddbe7a;
+  --color-cyan-400: #cfa758;
+  --color-cyan-500: #b88f3e;
+  --color-cyan-600: #8a6825;
+  --color-cyan-700: #6f531f;
+  --color-cyan-800: #56411c;
+  --color-cyan-900: #403119;
+  --color-cyan-950: #241b0c;
+
+  --color-sky-50: #fbf7ee;
+  --color-sky-100: #f4ead2;
+  --color-sky-200: #e9d5a6;
+  --color-sky-300: #ddbe7a;
+  --color-sky-400: #cfa758;
+  --color-sky-500: #b88f3e;
+  --color-sky-600: #8a6825;
+  --color-sky-700: #6f531f;
+  --color-sky-800: #56411c;
+  --color-sky-900: #403119;
+  --color-sky-950: #241b0c;
+
+  --color-teal-50: #fbf7ee;
+  --color-teal-100: #f4ead2;
+  --color-teal-200: #e9d5a6;
+  --color-teal-300: #ddbe7a;
+  --color-teal-400: #cfa758;
+  --color-teal-500: #b88f3e;
+  --color-teal-600: #8a6825;
+  --color-teal-700: #6f531f;
+  --color-teal-800: #56411c;
+  --color-teal-900: #403119;
+  --color-teal-950: #241b0c;
+
+  --color-blue-50: #faf4ec;
+  --color-blue-100: #f1e3cf;
+  --color-blue-200: #e2c6a0;
+  --color-blue-300: #d3a971;
+  --color-blue-400: #c4955a;
+  --color-blue-500: #a97a3c;
+  --color-blue-600: #85602c;
+  --color-blue-700: #6a4c25;
+  --color-blue-800: #523b1f;
+  --color-blue-900: #3d2c18;
+  --color-blue-950: #22180c;
+
+  --color-indigo-50: #f8f1ea;
+  --color-indigo-100: #eedfcf;
+  --color-indigo-200: #dcbf9f;
+  --color-indigo-300: #c99f70;
+  --color-indigo-400: #b58552;
+  --color-indigo-500: #94653a;
+  --color-indigo-600: #77502e;
+  --color-indigo-700: #5f4027;
+  --color-indigo-800: #4a3220;
+  --color-indigo-900: #372518;
+  --color-indigo-950: #1f140c;
+
+  --color-violet-400: #b58552;
+  --color-violet-500: #94653a;
+  --color-violet-600: #77502e;
+  --color-purple-300: #c99f70;
+  --color-purple-400: #b58552;
+  --color-purple-500: #94653a;
+  --color-purple-600: #77502e;
+  --color-purple-900: #372518;
+  --color-purple-950: #1f140c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-obsidian: var(--obsidian);
+  --color-ivory: var(--ivory);
+  --color-gold: var(--gold);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display-serif);
 
-  --color-brand-500: #1e6f9f;
-  --color-brand-900: #0f132f;
-  --color-accent-300: #7dd9ff;
-  --color-accent-400: #f59e4b;
-  --color-accent-500: #e07a1f;
+  --color-brand-500: #8a6825;
+  --color-brand-900: #0d0c0a;
+  --color-accent-300: #e9d5a6;
+  --color-accent-400: #cfa758;
+  --color-accent-500: #b88f3e;
+}
+
+::selection {
+  background: rgba(207, 167, 88, 0.28);
+  color: inherit;
+}
+
+/* --- Tipografía editorial: display serif para titulares --- */
+h1:not(.font-mono):not(.font-sans),
+h2:not(.font-mono):not(.font-sans),
+.font-display {
+  font-family: var(--font-display-serif), "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  font-optical-sizing: auto;
+}
+
+/* Texto con degradado + itálica: evita que la última letra quede recortada */
+.bg-clip-text {
+  padding-inline-end: 0.1em;
+  margin-inline-end: -0.1em;
+  padding-block-end: 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Oro metálico para titulares */
+.text-gold {
+  background: var(--gold-gradient);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-inline-end: 0.1em;
+  margin-inline-end: -0.1em;
+  padding-block-end: 0.08em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .text-gold-animated {
+    animation: gold-sheen 9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes gold-sheen {
+  from { background-position: 0% center; }
+  to { background-position: 100% center; }
+}
+
+/* Superficies de lujo */
+.surface-obsidian {
+  background-color: var(--obsidian);
+  color: #f3efe6;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 75% 0%, rgba(207, 167, 88, 0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(148, 101, 58, 0.10), transparent 60%);
+}
+
+.hairline-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(207, 167, 88, 0.55), transparent);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, #e3c88a 0%, #cfa758 45%, #b08636 100%);
+  color: #14110a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 10px 30px -10px rgba(207, 167, 88, 0.55);
+  transition: transform 0.4s var(--ease-lux), box-shadow 0.4s var(--ease-lux), filter 0.4s var(--ease-lux);
+}
+.btn-gold:hover {
+  filter: brightness(1.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 18px 40px -12px rgba(207, 167, 88, 0.7);
+  transform: translateY(-1px);
 }
 
 * {
@@ -35,10 +224,14 @@
   -webkit-font-smoothing: antialiased;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
-  overflow-x: hidden;
 }
 
 /* Custom Scrollbar - Minimalista Premium */
@@ -52,7 +245,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(15, 23, 42, 0.1);
+  background: rgba(18, 17, 14, 0.1);
   border-radius: 2px;
   transition: background 0.3s;
 }
@@ -96,14 +289,14 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
-  box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.04);
+  box-shadow: 0 8px 32px 0 rgba(18, 17, 14, 0.04);
 }
 
 .glass-nav-premium {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(250, 248, 243, 0.86);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  border-bottom: 1px solid rgba(18, 17, 14, 0.05);
 }
 
 /* Micro-interacciones e Iluminación Activa */
@@ -111,8 +304,8 @@ body {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glow-cyan-hover:hover {
-  box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
-  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 25px rgba(207, 167, 88, 0.25);
+  border-color: rgba(207, 167, 88, 0.4);
 }
 
 .glow-emerald-hover {
@@ -161,7 +354,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(6, 182, 212, 0.3), rgba(255,255,255,0.05));
+  background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(207, 167, 88, 0.3), rgba(255,255,255,0.05));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -173,11 +366,11 @@ body {
   background: rgba(255, 255, 255, 0.65);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(18, 17, 14, 0.05);
 }
 
 .text-glow {
-  text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  text-shadow: 0 0 20px rgba(207, 167, 88, 0.3);
 }
 
 /* ===================================================================
@@ -292,7 +485,7 @@ html {
 
 /* Utility classes for oklch-powered gradients */
 .glow-gradient-cyan {
-  background: radial-gradient(var(--in-oklch), oklch(0.7 0.15 200 / 0.08), transparent 70%);
+  background: radial-gradient(var(--in-oklch), oklch(0.78 0.11 85 / 0.10), transparent 70%);
 }
 
 .glow-gradient-emerald {
@@ -308,3 +501,54 @@ html {
   mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
 }
 
+
+/* ===================================================================
+   Acentos editoriales en titulares
+   Las palabras en itálica atenuada dentro de un H1/H2 se convierten en
+   oro grabado (tono profundo en marfil, champán sobre obsidiana).
+   =================================================================== */
+:is(h1, h2) .italic:is(.text-slate-300, .text-slate-400, .text-slate-500) {
+  background: linear-gradient(100deg, #6f531f 0%, #a67b2e 40%, #7a5b1f 70%, #9c7430 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-inline-end: 0.1em;
+  margin-inline-end: -0.1em;
+  padding-block-end: 0.08em;
+}
+
+:is(.surface-obsidian, .bg-slate-950, .bg-black) :is(h1, h2) .italic:is(.text-slate-300, .text-slate-400, .text-slate-500) {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.font-display {
+  font-family: var(--font-display-serif), "Times New Roman", serif;
+}
+
+/* Subtítulos: Geist en peso firme pero no "black", para convivir con el serif */
+:is(h3, h4).font-black {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+/* Entrada del hero: CSS puro para no depender de la hidratación */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 1.1s var(--ease-lux) both;
+  }
+  .hero-rise-solid {
+    animation: hero-rise-solid 1.2s var(--ease-lux) both;
+  }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-rise-solid {
+  from { transform: translateY(24px); letter-spacing: 0.01em; }
+  to { transform: none; }
+}

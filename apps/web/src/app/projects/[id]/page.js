@@ -249,7 +249,7 @@ function CadastreViewer() {
             onClick={() => setIsLidarActive(!isLidarActive)}
             className={`px-2.5 py-1 text-[8px] font-mono tracking-widest uppercase rounded border transition-all ${
               isLidarActive
-                ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+                ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(207,167,88,0.2)]"
                 : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300"
             }`}
           >
@@ -268,7 +268,7 @@ function CadastreViewer() {
               initial={{ y: "-100%" }}
               animate={{ y: "100%" }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_#06b6d4] z-10 pointer-events-none"
+              className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_#cfa758] z-10 pointer-events-none"
             />
           )}
 
@@ -281,8 +281,8 @@ function CadastreViewer() {
                 <g key={p.id}>
                   <motion.path
                     d={p.path}
-                    fill={isSelected ? (isError ? "rgba(239, 68, 68, 0.25)" : "rgba(6, 182, 212, 0.25)") : "rgba(30, 41, 59, 0.25)"}
-                    stroke={isSelected ? (isError ? "#ef4444" : "#06b6d4") : "#475569"}
+                    fill={isSelected ? (isError ? "rgba(239, 68, 68, 0.25)" : "rgba(207,167,88, 0.25)") : "rgba(40,38,34, 0.25)"}
+                    stroke={isSelected ? (isError ? "#ef4444" : "#cfa758") : "#57534c"}
                     strokeWidth={isSelected ? 2.5 : 1.2}
                     onClick={() => {
                       setSelectedId(p.id);
@@ -489,8 +489,8 @@ function PluginSimulator() {
           <svg className="w-full h-full max-w-[280px] max-h-[200px]" viewBox="0 0 300 200">
             <path
               d="M 40 40 L 160 30 L 150 160 L 30 150 Z"
-              fill="rgba(6, 182, 212, 0.15)"
-              stroke="#06b6d4"
+              fill="rgba(207,167,88, 0.15)"
+              stroke="#cfa758"
               strokeWidth="2"
             />
             
@@ -952,7 +952,7 @@ LIMIT 5;`,
         return (
           <div key={index} className="my-3 space-y-1.5">
             <div className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
-            <div className="bg-[#030712] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[9px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
+            <div className="bg-[#0a0907] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[9px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
               {code.trim()}
             </div>
           </div>
@@ -1009,7 +1009,7 @@ LIMIT 5;`,
               onChange={(e) => setCustomQuery(e.target.value)}
               placeholder="Haz una pregunta catastral o de SQL espacial libre..."
               disabled={isSearchingLive || isTyping}
-              className="w-full bg-[#030712] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
+              className="w-full bg-[#0a0907] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
             />
             <button
               onClick={() => handleLiveQuery(customQuery)}
@@ -1034,7 +1034,7 @@ LIMIT 5;`,
                 Ejecutando Inferencia en Vivo
               </div>
             </div>
-            <div className="bg-[#030712] border border-slate-900 rounded-lg p-4 font-mono text-[9px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
+            <div className="bg-[#0a0907] border border-slate-900 rounded-lg p-4 font-mono text-[9px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
               {liveLogs.map((log, index) => (
                 <div key={index} className="flex items-center gap-1.5">
                   <span className="text-[7px] text-slate-600">[{index * 0.4}s]</span>

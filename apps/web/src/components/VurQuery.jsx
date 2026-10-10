@@ -75,7 +75,7 @@ const VurQuery = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Search Header */}
-      <div className="bg-[#050810] border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden group">
+      <div className="bg-[#0a0908] border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent pointer-events-none"></div>
         
         <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
@@ -146,7 +146,7 @@ const VurQuery = () => {
         {result && (
           <div className="vur-result-card w-full opacity-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
             {/* Main Info Card */}
-            <div className="lg:col-span-2 p-8 bg-[#0a0f18] border border-slate-800 rounded-3xl space-y-6 shadow-xl hover:border-red-500/30 transition-colors group">
+            <div className="lg:col-span-2 p-8 bg-[#11100d] border border-slate-800 rounded-3xl space-y-6 shadow-xl hover:border-red-500/30 transition-colors group">
               <div className="flex justify-between items-start">
                 <div>
                    <h5 className="text-xs font-mono text-red-400 uppercase tracking-widest mb-1">PROPIETARIO REGISTRADO</h5>
@@ -178,7 +178,7 @@ const VurQuery = () => {
             </div>
 
             {/* Legal Status Card */}
-            <div className="p-8 bg-[#0a0f18] border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl hover:border-blue-500/30 transition-colors">
+            <div className="p-8 bg-[#11100d] border border-slate-800 rounded-3xl flex flex-col justify-between shadow-xl hover:border-blue-500/30 transition-colors">
               <div>
                 <h5 className="text-xs font-mono text-blue-400 uppercase tracking-widest mb-4">ESTADO JURÍDICO</h5>
                 <div className="space-y-4">

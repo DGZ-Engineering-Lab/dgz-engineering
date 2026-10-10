@@ -14,7 +14,7 @@ export default function MetricsSection() {
       label: "Reducción del Margen de Error",
       sub: "QA/QC // Automatización // Validación",
       color: "from-cyan-400 to-blue-600",
-      glow: "shadow-[0_0_30px_rgba(6,182,212,0.2)]"
+      glow: "shadow-[0_0_30px_rgba(207,167,88,0.2)]"
     },
     {
       val: "115",
@@ -30,7 +30,7 @@ export default function MetricsSection() {
       label: "Proyectos de Catastro Multipropósito",
       sub: "LADM-COL // Estándares IGAC",
       color: "from-purple-400 to-pink-600",
-      glow: "shadow-[0_0_30px_rgba(168,85,247,0.2)]"
+      glow: "shadow-[0_0_30px_rgba(181,133,82,0.2)]"
     }
   ];
 
@@ -56,7 +56,7 @@ export default function MetricsSection() {
           {metrics.map((m, idx) => (
             <div 
               key={idx}
-              className={`relative flex flex-col p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-slate-600 transition-all duration-300 ${m.glow} group`}
+              className={`relative flex flex-col p-8 rounded-2xl bg-[#100f0d] border border-slate-800 hover:border-slate-600 transition-all duration-300 ${m.glow} group`}
             >
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">

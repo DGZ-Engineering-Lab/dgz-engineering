@@ -260,10 +260,10 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#05070a] text-white pt-32 pb-20 selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#080706] text-white pt-32 pb-20 selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
       {/* HUD Background Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(221,190,122,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(221,190,122,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -299,7 +299,7 @@ export default function DocsPage() {
                             onClick={() => { setActiveTab(key); }}
                             className={`text-left px-5 py-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-3.5 transition-all duration-300 border cursor-pointer ${
                               activeTab === key 
-                                ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)]' 
+                                ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 shadow-[0_0_20px_rgba(207,167,88,0.15)]' 
                                 : 'text-slate-400 border-transparent hover:text-white hover:bg-white/5'
                             }`}
                           >
@@ -386,7 +386,7 @@ export default function DocsPage() {
                           
                           <div className="relative group">
                              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-b-2xl blur opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                             <pre className="relative bg-[#070b11] p-8 rounded-b-2xl border-x border-b border-slate-900 overflow-x-auto">
+                             <pre className="relative bg-[#0c0b09] p-8 rounded-b-2xl border-x border-b border-slate-900 overflow-x-auto">
                                 <code className="text-xs font-mono leading-relaxed text-slate-300">
                                    {ENDPOINTS[activeTab].codeSnippets[activeLang]}
                                 </code>
@@ -491,7 +491,7 @@ export default function DocsPage() {
                     </div>
 
                     {/* Result JSON Window */}
-                    <div className="flex flex-col bg-[#070b11] border border-slate-900 p-6 rounded-2xl min-h-[280px]">
+                    <div className="flex flex-col bg-[#0c0b09] border border-slate-900 p-6 rounded-2xl min-h-[280px]">
                        <div className="flex justify-between items-center border-b border-slate-900 pb-3 mb-4">
                           <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">HTTP Response Payload</span>
                           <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[9px] font-bold rounded">200 OK</span>

@@ -82,9 +82,9 @@ export default function RealityShowcase() {
   }, [activeTab]);
 
   return (
-    <section className="relative w-full py-32 bg-[#02040a] overflow-hidden border-t border-slate-900">
+    <section className="relative w-full py-32 bg-[#060504] overflow-hidden border-t border-slate-900">
       {/* Background FX */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'linear-gradient(90deg, #38BDF8 1px, transparent 1px), linear-gradient(#38BDF8 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'linear-gradient(90deg, #ddbe7a 1px, transparent 1px), linear-gradient(#ddbe7a 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -137,7 +137,7 @@ export default function RealityShowcase() {
 
           {/* Visualization Canvas */}
           <div className="w-full lg:w-2/3">
-            <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[16/10] lg:aspect-auto lg:h-[600px]">
+            <div className="relative bg-[#100f0d] border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[16/10] lg:aspect-auto lg:h-[600px]">
               
               {/* Header Bar */}
               <div className="px-6 py-4 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between">
@@ -194,8 +194,8 @@ export default function RealityShowcase() {
                             className="rounded-sm transition-colors duration-1000"
                             style={{ 
                               backgroundColor: isProcessing 
-                               ? `rgba(168, 85, 247, ${randomOpacities[i]})` 
-                               : 'rgba(30, 41, 59, 0.2)' 
+                               ? `rgba(181,133,82, ${randomOpacities[i]})` 
+                               : 'rgba(40,38,34, 0.2)' 
                             }}
                           ></div>
                         ))}
@@ -241,10 +241,10 @@ export default function RealityShowcase() {
                      </div>
                      <div className="h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800">
                         <div 
-                          className="h-full transition-all duration-200 ease-out shadow-[0_0_15px_rgba(34,211,238,0.5)]"
+                          className="h-full transition-all duration-200 ease-out shadow-[0_0_15px_rgba(221,190,122,0.5)]"
                           style={{ 
                             width: `${progress}%`,
-                            backgroundColor: activeTab.id === 'cadastre' ? '#22d3ee' : activeTab.id === 'iot' ? '#3b82f6' : '#a855f7'
+                            backgroundColor: activeTab.id === 'cadastre' ? '#ddbe7a' : activeTab.id === 'iot' ? '#a97a3c' : '#b58552'
                           }}
                         ></div>
                      </div>

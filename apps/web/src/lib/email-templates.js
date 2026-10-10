@@ -36,19 +36,19 @@ export function getUserConfirmationTemplate({ name, message, company }) {
     <html>
     <head>
       <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #030712; color: #f3f4f6; margin: 0; padding: 40px 20px; }
-        .card { max-width: 600px; margin: 0 auto; background-color: #0b0f19; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .header { padding: 30px; background: linear-gradient(135deg, #0e1e38 0%, #020617 100%); border-bottom: 1px solid #1e293b; text-align: center; }
-        .logo { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #22d3ee; text-decoration: none; font-family: system-ui, sans-serif; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #0a0907; color: #f3f4f6; margin: 0; padding: 40px 20px; }
+        .card { max-width: 600px; margin: 0 auto; background-color: #12110e; border: 1px solid #282622; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .header { padding: 30px; background: linear-gradient(135deg, #0e1e38 0%, #0d0c0a 100%); border-bottom: 1px solid #282622; text-align: center; }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #ddbe7a; text-decoration: none; font-family: system-ui, sans-serif; }
         .content { padding: 40px 30px; line-height: 1.6; }
         h1 { font-size: 20px; font-weight: 700; color: #ffffff; margin-top: 0; }
-        p { color: #94a3b8; font-size: 14px; }
-        .accent { color: #22d3ee; font-weight: 600; }
-        .details { background-color: #030712; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; margin: 25px 0; }
+        p { color: #9c968a; font-size: 14px; }
+        .accent { color: #ddbe7a; font-weight: 600; }
+        .details { background-color: #0a0907; border: 1px solid #282622; border-radius: 8px; padding: 20px; margin: 25px 0; }
         .detail-item { margin-bottom: 10px; font-size: 13px; font-family: monospace; }
-        .detail-label { color: #64748b; }
+        .detail-label { color: #716c63; }
         .detail-val { color: #f3f4f6; }
-        .footer { padding: 20px; text-align: center; background-color: #030712; border-top: 1px solid #1e293b; font-size: 11px; color: #475569; }
+        .footer { padding: 20px; text-align: center; background-color: #0a0907; border-top: 1px solid #282622; font-size: 11px; color: #57534c; }
       </style>
     </head>
     <body>
@@ -65,7 +65,7 @@ export function getUserConfirmationTemplate({ name, message, company }) {
             <div class="detail-item"><span class="detail-label">Remitente:</span> <span class="detail-val">${name}</span></div>
             <div class="detail-item"><span class="detail-label">Compañía:</span> <span class="detail-val">${company || 'N/A'}</span></div>
             <div class="detail-item"><span class="detail-label">Mensaje recibido:</span></div>
-            <p style="margin: 5px 0 0 0; font-style: italic; color: #94a3b8; font-size: 13px;">"${message}"</p>
+            <p style="margin: 5px 0 0 0; font-style: italic; color: #9c968a; font-size: 13px;">"${message}"</p>
           </div>
           
           <p>Mientras tanto, puedes explorar nuestro laboratorio interactivo de IA y visor catastral 3D.</p>

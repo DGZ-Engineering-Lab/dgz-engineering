@@ -131,7 +131,7 @@ const CybersecurityLab = () => {
 
   return (
     <div className="my-12 rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
-      <div className="px-6 py-4 bg-gradient-to-r from-[#0a0a0f] to-[#111118] flex items-center justify-between">
+      <div className="px-6 py-4 bg-gradient-to-r from-[#0c0b09] to-[#14130f] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full ${isRunning ? 'bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]' : status === "COMPLETED" ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.4)]' : 'bg-slate-600'}`}></div>
           <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">SOC // Security Operations Center — Auditoría Territorial</span>
@@ -141,13 +141,13 @@ const CybersecurityLab = () => {
           {status === "COMPLETED" && <span className="text-[8px] font-mono text-emerald-400 uppercase tracking-wider font-bold">✓ RESILIENTE</span>}
         </div>
       </div>
-      <div className="px-6 py-3 bg-[#0d0d12] border-b border-slate-800/50">
+      <div className="px-6 py-3 bg-[#0f0e0c] border-b border-slate-800/50">
         <div className="flex items-center gap-2 mb-2">
           {PHASES.map((p, i) => (
             <div key={i} className="flex items-center gap-1 flex-1">
               <div className={`text-[8px] font-mono px-2 py-1 rounded flex items-center gap-1 transition-all duration-300 w-full justify-center ${
                 phase > i ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                phase === i ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_8px_rgba(6,182,212,0.15)]' :
+                phase === i ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_8px_rgba(207,167,88,0.15)]' :
                 'bg-slate-900/50 text-slate-600 border border-slate-800'
               }`}>
                 <span>{p.icon}</span>
@@ -160,19 +160,19 @@ const CybersecurityLab = () => {
           <motion.div className="h-full bg-gradient-to-r from-red-500 via-cyan-500 to-emerald-500 rounded-full" style={{ width: `${scanProgress}%` }} />
         </div>
       </div>
-      <div className="bg-[#0a0a0f] p-6">
+      <div className="bg-[#0c0b09] p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
-          <div className="p-4 bg-[#111118] border border-slate-800 rounded-xl space-y-2">
+          <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
             <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Amenazas Detectadas</span>
             <div className="text-3xl font-black text-amber-400 font-mono">{threats.detected}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${Math.min(threats.detected * 15, 100)}%` }} /></div>
           </div>
-          <div className="p-4 bg-[#111118] border border-slate-800 rounded-xl space-y-2">
+          <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
             <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Ataques Bloqueados</span>
             <div className="text-3xl font-black text-cyan-400 font-mono">{threats.blocked}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${Math.min(threats.blocked * 15, 100)}%` }} /></div>
           </div>
-          <div className="p-4 bg-[#111118] border border-slate-800 rounded-xl space-y-2">
+          <div className="p-4 bg-[#14130f] border border-slate-800 rounded-xl space-y-2">
             <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest block">Criticidad Remediada</span>
             <div className="text-3xl font-black text-rose-400 font-mono">{threats.critical}</div>
             <div className="h-1 bg-slate-900 rounded-full"><div className="h-full bg-rose-500 rounded-full transition-all" style={{ width: `${threats.critical * 33.3}%` }} /></div>
@@ -267,7 +267,7 @@ const InteroperabilityLab = () => {
       icon: "📄",
       desc: "Datos municipales sin formato (Excel/CSV) con campos heterogéneos, coordenadas en sistemas locales y registros duplicados.",
       color: "from-slate-500 to-slate-600",
-      glowColor: "rgba(100,116,139,0.3)",
+      glowColor: "rgba(113,108,99,0.3)",
       terminalLogs: [
         "[INGEST] Leyendo archivo: Municipio_Valle_2026.xlsx",
         "[INGEST] 14,892 filas detectadas en 23 columnas",
@@ -281,7 +281,7 @@ const InteroperabilityLab = () => {
       icon: "🔄",
       desc: "Traducción automática a clases ISO 19152: LA_Predio, LA_Interesado, COL_RRD. Validación de dominios y resolución de ambigüedades.",
       color: "from-cyan-500 to-blue-500",
-      glowColor: "rgba(6,182,212,0.3)",
+      glowColor: "rgba(207,167,88,0.3)",
       terminalLogs: [
         "[MAP] Iniciando traducción a esquema LADM-COL v3.0",
         "[MAP] Campo 'propietario' → LA_Interesado.nombre",
@@ -356,7 +356,7 @@ const InteroperabilityLab = () => {
       
       <div className="px-8 py-5 bg-gradient-to-r from-slate-900 to-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className={`w-2.5 h-2.5 rounded-full ${isProcessing ? 'bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.6)]' : 'bg-emerald-400'}`}></div>
+          <div className={`w-2.5 h-2.5 rounded-full ${isProcessing ? 'bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(207,167,88,0.6)]' : 'bg-emerald-400'}`}></div>
           <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.25em] font-bold">Pipeline de Interoperabilidad INTERLIS</span>
         </div>
         <div className="flex items-center gap-2">
@@ -381,7 +381,7 @@ const InteroperabilityLab = () => {
             {isProcessing && (
               <motion.div
                 key={particleKey}
-                className="absolute top-[18px] w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.8)] z-20"
+                className="absolute top-[18px] w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(207,167,88,0.8)] z-20"
                 initial={{ left: `${step * 33.33 + 8}%`, opacity: 0, scale: 0 }}
                 animate={{ left: `${((step + 1) % 3) * 33.33 + 16}%`, opacity: [0, 1, 1, 0], scale: [0, 1.5, 1, 0] }}
                 transition={{ duration: 1.8, ease: "easeInOut" }}
@@ -454,8 +454,8 @@ const InteroperabilityLab = () => {
         </AnimatePresence>
       </div>
 
-      <div className="mx-8 mb-6 bg-[#0a0a0f] rounded-lg border border-slate-800 overflow-hidden shadow-inner">
-        <div className="px-4 py-2.5 bg-[#111118] border-b border-slate-800/60 flex items-center justify-between">
+      <div className="mx-8 mb-6 bg-[#0c0b09] rounded-lg border border-slate-800 overflow-hidden shadow-inner">
+        <div className="px-4 py-2.5 bg-[#14130f] border-b border-slate-800/60 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
@@ -610,7 +610,7 @@ const GeoAILab = () => {
 
   const getDetectionColor = (type) => {
     if (type === "building") return { stroke: "#f97316", fill: "rgba(249,115,22,0.15)", text: "text-orange-400" };
-    if (type === "change") return { stroke: "#a78bfa", fill: "rgba(167,139,250,0.15)", text: "text-violet-400" };
+    if (type === "change") return { stroke: "#c99f70", fill: "rgba(167,139,250,0.15)", text: "text-violet-400" };
     return { stroke: "#f43f5e", fill: "rgba(244,63,94,0.15)", text: "text-rose-400" };
   };
 
@@ -638,7 +638,7 @@ const GeoAILab = () => {
       <div className="bg-[#fafafa] p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
           {/* SVG Detection Map */}
-          <div className="bg-[#0a0a0f] rounded-xl border border-slate-800 overflow-hidden p-4 relative min-h-[280px]">
+          <div className="bg-[#0c0b09] rounded-xl border border-slate-800 overflow-hidden p-4 relative min-h-[280px]">
             <div className="absolute top-3 left-3 z-10">
               <span className="text-[7px] font-mono text-slate-500 uppercase tracking-widest bg-black/60 px-2 py-1 rounded">Vista A\u00e9rea // Detecci\u00f3n Multitemporal</span>
             </div>
@@ -647,7 +647,7 @@ const GeoAILab = () => {
               {/* Base terrain grid */}
               <defs>
                 <pattern id="geoGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(100,116,139,0.1)" strokeWidth="0.5"/>
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(113,108,99,0.1)" strokeWidth="0.5"/>
                 </pattern>
               </defs>
               <rect width="240" height="200" fill="url(#geoGrid)" />
@@ -724,7 +724,7 @@ const GeoAILab = () => {
             </div>
 
             {/* Terminal */}
-            <div className="bg-[#0a0a0f] rounded-xl border border-slate-800 overflow-hidden flex-grow">
+            <div className="bg-[#0c0b09] rounded-xl border border-slate-800 overflow-hidden flex-grow">
               <div className="px-3 py-2 bg-[#111] border-b border-slate-800/60 flex items-center gap-2">
                 <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-red-500/70"></div><div className="w-2 h-2 rounded-full bg-amber-500/70"></div><div className="w-2 h-2 rounded-full bg-emerald-500/70"></div></div>
                 <span className="text-[7px] font-mono text-slate-500 uppercase tracking-widest">inference_engine.py</span>
@@ -880,7 +880,7 @@ const LidarLab = () => {
   return (
     <div className="my-12 rounded-xl overflow-hidden border border-slate-200 shadow-xl">
       {/* Header */}
-      <div className="px-6 py-4 bg-gradient-to-r from-[#0a0a0f] to-[#1a1a2e] flex items-center justify-between">
+      <div className="px-6 py-4 bg-gradient-to-r from-[#0c0b09] to-[#22201a] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full ${phase === 1 ? 'bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.6)]' : phase === 2 ? 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 'bg-slate-500'}`} />
           <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em] font-bold">Caso Real // Diagnóstico Municipal</span>
@@ -943,7 +943,7 @@ const LidarLab = () => {
             <div className="h-1.5 w-full bg-slate-200">
               <motion.div className="h-full bg-gradient-to-r from-amber-500 via-cyan-500 to-emerald-500 rounded-r-full" animate={{ width: `${scanProgress}%` }} transition={{ duration: 0.2 }} />
             </div>
-            <div ref={consoleRef} className="bg-[#0a0a0f] p-6 min-h-[340px] max-h-[400px] overflow-y-auto font-mono text-[11px] space-y-1.5">
+            <div ref={consoleRef} className="bg-[#0c0b09] p-6 min-h-[340px] max-h-[400px] overflow-y-auto font-mono text-[11px] space-y-1.5">
               {logs.map((log, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className={
                   log?.includes("[SUCCESS]") ? "text-emerald-400 font-bold" :

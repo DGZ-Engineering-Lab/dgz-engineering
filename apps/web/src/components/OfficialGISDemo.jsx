@@ -47,9 +47,9 @@ export default function OfficialGISDemo() {
             if (data && data.features) {
               const geojsonLayer = L.geoJSON(data, {
                 style: {
-                  color: "#3b82f6",
+                  color: "#a97a3c",
                   weight: 2,
-                  fillColor: "#3b82f6",
+                  fillColor: "#a97a3c",
                   fillOpacity: 0.2
                 },
                 onEachFeature: (feature, layer) => {
@@ -122,7 +122,7 @@ export default function OfficialGISDemo() {
   }, [mapLoaded]);
 
   return (
-    <section className="relative w-full py-12 lg:py-16 bg-[#02040a] border-y border-slate-800/50">
+    <section className="relative w-full py-12 lg:py-16 bg-[#060504] border-y border-slate-800/50">
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
@@ -153,7 +153,7 @@ export default function OfficialGISDemo() {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
           
-          <div className="relative bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
+          <div className="relative bg-[#100f0d] border border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[450px] lg:h-[550px] flex flex-col">
             
             <div className="p-4 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex justify-between items-center z-20">
                <div className="flex items-center gap-4">
@@ -217,20 +217,20 @@ export default function OfficialGISDemo() {
           filter: grayscale(0.6) contrast(1.2) brightness(0.7) invert(0.1) hue-rotate(180deg);
         }
         .leaflet-popup-content-wrapper {
-          background: rgba(10, 15, 22, 0.95) !important;
+          background: rgba(15,14,11, 0.95) !important;
           color: white !important;
-          border: 1px solid rgba(59, 130, 246, 0.5) !important;
+          border: 1px solid rgba(169,122,60, 0.5) !important;
           backdrop-filter: blur(12px);
           border-radius: 12px !important;
           padding: 0 !important;
         }
         .leaflet-popup-tip {
-          background: rgba(10, 15, 22, 0.95) !important;
+          background: rgba(15,14,11, 0.95) !important;
         }
         .leaflet-control-layers {
-          background: rgba(10, 15, 22, 0.9) !important;
+          background: rgba(15,14,11, 0.9) !important;
           border: 1px solid rgba(255, 255, 255, 0.1) !important;
-          color: #94a3b8 !important;
+          color: #9c968a !important;
           font-family: monospace !important;
           font-size: 10px !important;
           backdrop-filter: blur(8px);

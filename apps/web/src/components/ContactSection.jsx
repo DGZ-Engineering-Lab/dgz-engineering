@@ -83,23 +83,14 @@ export default function ContactSection() {
     // Telemetry capture: Log submission event in Sentry for instant validation
     Sentry.captureMessage("Lead Contact Session Request", {
       level: "info",
+      // Sin datos personales: Sentry no es un CRM.
       extra: {
-        name: formData.name,
-        company: formData.company,
-        email: formData.email,
         subject: formData.subject,
         length: formData.description.length
       }
     });
 
     try {
-      // Deliberate test error triggers if "error" or "debug" is in the email address
-      if (formData.email.toLowerCase().includes("error") || formData.email.toLowerCase().includes("sentry")) {
-        const deliberateError = new Error(`Sentry Lead Debugger: Deliberate crash triggered by lead email (${formData.email})`);
-        Sentry.captureException(deliberateError);
-        throw deliberateError;
-      }
-
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -198,6 +189,7 @@ export default function ContactSection() {
 
             <div className="pt-10 flex items-center gap-6">
               <Logo className="w-12 h-12 opacity-10" />
+              {process.env.NODE_ENV === "development" && (
               <button 
                 type="button"
                 onClick={triggerMockSentryException}
@@ -206,6 +198,7 @@ export default function ContactSection() {
                 <Bug className="w-3.5 h-3.5" />
                 Simular Error (Test Sentry)
               </button>
+              )}
             </div>
           </div>
 
@@ -399,6 +392,7 @@ export default function ContactSection() {
                   <div className="space-y-2">
                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
                     <select 
+                      aria-label="Asunto de la sesión"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}

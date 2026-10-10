@@ -23,7 +23,7 @@ const WORK_AREAS = [
     bgColor: "bg-cyan-500/10",
     textColor: "text-cyan-600",
     borderColor: "border-cyan-500/20",
-    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.15)]",
+    glowColor: "shadow-[0_0_20px_rgba(207,167,88,0.15)]",
     platforms: [
       { name: "QGIS", sub: "SIG Desktop", desc: "Software nuclear para análisis espacial, topologías prediales y mapeo catastral LADM-COL.", status: "Core Engine" },
       { name: "ArcGIS Pro", sub: "SIG Enterprise", desc: "Modelado geográfico avanzado, análisis 3D y estructuración de geodatabases corporativas.", status: "Enterprise" },
@@ -42,7 +42,7 @@ const WORK_AREAS = [
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-600",
     borderColor: "border-blue-500/20",
-    glowColor: "shadow-[0_0_20px_rgba(59,130,246,0.15)]",
+    glowColor: "shadow-[0_0_20px_rgba(169,122,60,0.15)]",
     platforms: [
       { name: "PostGIS", sub: "Geo Database", desc: "Extensión espacial de PostgreSQL que almacena, consulta y valida toda la geometría catastral.", status: "SQL Standard" },
       { name: "PostgreSQL", sub: "Core Relational", desc: "Base de datos principal transaccional de alto rendimiento para el registro jurídico predial.", status: "Production" },
@@ -61,7 +61,7 @@ const WORK_AREAS = [
     bgColor: "bg-indigo-500/10",
     textColor: "text-indigo-600",
     borderColor: "border-indigo-500/20",
-    glowColor: "shadow-[0_0_20px_rgba(99,102,241,0.15)]",
+    glowColor: "shadow-[0_0_20px_rgba(148,101,58,0.15)]",
     platforms: [
       { name: "Leaflet", sub: "Map Library", desc: "Librería ligera para visores de mapas interactivos 2D ultrarrápidos y compatibles con móviles.", status: "WebGIS" },
       { name: "Mapbox GL JS", sub: "Map Canvas", desc: "Renderizado WebGL de alta densidad para visualización de millones de polígonos prediales fluidos.", status: "High Perf" },
@@ -283,9 +283,9 @@ export default function TechTicker() {
       </div>
 
       {/* 3. Dynamic Ticker Footer (Dynamic Movement) */}
-      <div className="w-full bg-[#02040a] py-6 overflow-hidden border-y border-slate-800/30 relative ph-no-capture sentry-block" data-sentry-block>
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#02040a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#02040a] to-transparent z-10 pointer-events-none" />
+      <div className="w-full bg-[#060504] py-6 overflow-hidden border-y border-slate-800/30 relative ph-no-capture sentry-block" data-sentry-block>
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#060504] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#060504] to-transparent z-10 pointer-events-none" />
         
         <motion.div 
           className="flex gap-12 items-center whitespace-nowrap ph-no-capture sentry-block"

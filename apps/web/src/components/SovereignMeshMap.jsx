@@ -114,7 +114,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
         <div className="flex items-center justify-between border-b border-slate-900 pb-4 mb-4 relative z-10">
           <div className="space-y-1">
             <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
-              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
+              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#ddbe7a]"></span>
               Sovereign Grid Fallback
             </span>
             <h3 className="text-sm font-bold text-white uppercase tracking-wider">Visor Catastral Offline</h3>
@@ -127,7 +127,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
         {/* Vector SVG Blueprint */}
         <div className="flex-grow bg-slate-950/80 rounded-2xl border border-slate-900/60 relative overflow-hidden flex items-center justify-center p-6 min-h-[260px] group">
           {/* Subtle grid background */}
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,rgba(0,229,255,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,229,255,0.2)_1px,transparent_1px)] bg-[size:25px_25px]" />
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(to_right,rgba(221,190,122,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(221,190,122,0.2)_1px,transparent_1px)] bg-[size:25px_25px]" />
           
           {/* Scanline beam */}
           {isHealing && (
@@ -135,7 +135,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
               initial={{ y: "-100%" }}
               animate={{ y: "100%" }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-0 w-full h-[2px] bg-cyan-400/80 shadow-[0_0_12px_#06b6d4] z-10 pointer-events-none"
+              className="absolute left-0 w-full h-[2px] bg-cyan-400/80 shadow-[0_0_12px_#cfa758] z-10 pointer-events-none"
             />
           )}
 
@@ -144,12 +144,12 @@ export default function SovereignMeshMap({ onSelectParcel }) {
               const isSelected = p.id === selectedId;
               const isError = p.status === "DIRTY";
               
-              let fill = "rgba(15, 23, 42, 0.35)";
-              let stroke = "rgba(71, 85, 105, 0.4)";
+              let fill = "rgba(18,17,14, 0.35)";
+              let stroke = "rgba(87,83,76, 0.4)";
               
               if (isSelected) {
-                fill = isError ? "rgba(239, 68, 68, 0.2)" : "rgba(6, 182, 212, 0.25)";
-                stroke = isError ? "#ef4444" : "#06b6d4";
+                fill = isError ? "rgba(239, 68, 68, 0.2)" : "rgba(207,167,88, 0.25)";
+                stroke = isError ? "#ef4444" : "#cfa758";
               }
 
               return (
@@ -202,7 +202,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
         </div>
 
         {/* Local Console Terminal */}
-        <div className="mt-4 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[90px] flex flex-col justify-between">
+        <div className="mt-4 bg-[#030302] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[90px] flex flex-col justify-between">
           <div className="flex items-center justify-between border-b border-slate-900 pb-1 mb-1">
             <span className="text-[7px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
               <Cpu className="w-3 h-3 text-cyan-400" />
@@ -277,7 +277,7 @@ export default function SovereignMeshMap({ onSelectParcel }) {
               <button
                 onClick={executeSnapping}
                 disabled={isHealing}
-                className="flex-1 py-4 bg-white text-black hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="flex-1 py-4 bg-white text-black hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_20px_rgba(207,167,88,0.3)] transition-all duration-300 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Sanar Colindancia</span>

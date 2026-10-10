@@ -14,29 +14,29 @@ export default function RealtimeDataStream() {
     const chart = createChart(chartContainerRef.current, {
       layout: {
         background: { type: 'solid', color: 'transparent' },
-        textColor: '#94a3b8',
+        textColor: '#9c968a',
       },
       grid: {
-        vertLines: { color: 'rgba(30, 41, 59, 0.5)' },
-        horzLines: { color: 'rgba(30, 41, 59, 0.5)' },
+        vertLines: { color: 'rgba(40,38,34, 0.5)' },
+        horzLines: { color: 'rgba(40,38,34, 0.5)' },
       },
       width: chartContainerRef.current.clientWidth,
       height: 300,
       timeScale: {
         timeVisible: true,
         secondsVisible: true,
-        borderColor: 'rgba(30, 41, 59, 1)',
+        borderColor: 'rgba(40,38,34, 1)',
       },
       rightPriceScale: {
-        borderColor: 'rgba(30, 41, 59, 1)',
+        borderColor: 'rgba(40,38,34, 1)',
         borderVisible: false,
       },
     });
 
     const areaSeries = chart.addSeries(AreaSeries, {
-      lineColor: '#06b6d4',
-      topColor: 'rgba(6, 182, 212, 0.3)',
-      bottomColor: 'rgba(6, 182, 212, 0)',
+      lineColor: '#cfa758',
+      topColor: 'rgba(207,167,88, 0.3)',
+      bottomColor: 'rgba(207,167,88, 0)',
       lineWidth: 2,
     });
 

@@ -48,10 +48,10 @@ export default function GestureSandboxPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-white pt-32 pb-20 relative overflow-hidden">
+    <div className="min-h-screen bg-[#060504] text-white pt-32 pb-20 relative overflow-hidden">
       {/* HUD Background Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+         <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(221,190,122,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(221,190,122,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -241,7 +241,7 @@ export default function GestureSandboxPage() {
 
       {isCalibrating && (
         <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-500">
-           <div className="max-w-md w-full p-16 bg-[#0a0f16] border border-cyan-500/30 rounded-[4rem] text-center space-y-10 shadow-[0_0_100px_rgba(0,229,255,0.1)]">
+           <div className="max-w-md w-full p-16 bg-[#100f0d] border border-cyan-500/30 rounded-[4rem] text-center space-y-10 shadow-[0_0_100px_rgba(221,190,122,0.1)]">
               <div className="relative w-32 h-32 mx-auto">
                  <div className="absolute inset-0 border-4 border-cyan-500/10 rounded-full"></div>
                  <div className="absolute inset-0 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>

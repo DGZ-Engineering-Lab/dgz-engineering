@@ -1,6 +1,6 @@
 export default function OperatorProfileSection() {
   return (
-    <section id="profile" className="relative w-full py-24 z-10 bg-[#05070a] border-t border-slate-800">
+    <section id="profile" className="relative w-full py-24 z-10 bg-[#080706] border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header */}
@@ -20,7 +20,7 @@ export default function OperatorProfileSection() {
           <div className="col-span-1 lg:col-span-4 space-y-6">
 
             {/* Profile Core */}
-            <div className="p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-[#f3ca20]/50 transition-colors">
+            <div className="p-8 rounded-2xl bg-[#100f0d] border border-slate-800 hover:border-[#f3ca20]/50 transition-colors">
               <div className="w-16 h-16 rounded-full bg-[#f3ca20]/10 flex items-center justify-center mb-6 border border-[#f3ca20]/30">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f3ca20" strokeWidth="1.5">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -52,7 +52,7 @@ export default function OperatorProfileSection() {
             </div>
 
             {/* Polyglot Stream */}
-            <div className="p-8 rounded-2xl bg-[#0a0f16] border border-slate-800">
+            <div className="p-8 rounded-2xl bg-[#100f0d] border border-slate-800">
               <h4 className="text-[10px] text-slate-500 font-mono tracking-widest mb-6">IDIOMAS</h4>
               <div className="space-y-4">
                 {[
@@ -74,7 +74,7 @@ export default function OperatorProfileSection() {
           {/* Center Column: Experience Log */}
           <div className="col-span-1 lg:col-span-5 space-y-6">
 
-            <div className="p-8 rounded-2xl bg-[#0a0f16] border border-slate-800 h-full">
+            <div className="p-8 rounded-2xl bg-[#100f0d] border border-slate-800 h-full">
               <h4 className="text-[10px] text-slate-500 font-mono tracking-widest mb-6">EXPERIENCIA PROFESIONAL</h4>
 
               <div className="relative border-l border-slate-800 ml-3 space-y-8 pb-4">
@@ -112,7 +112,7 @@ export default function OperatorProfileSection() {
           <div className="col-span-1 lg:col-span-3 space-y-6">
 
             {/* Academic Trajectory */}
-            <div className="p-6 rounded-2xl bg-[#0a0f16] border border-slate-800">
+            <div className="p-6 rounded-2xl bg-[#100f0d] border border-slate-800">
               <h4 className="text-[10px] text-slate-500 font-mono tracking-widest mb-4">FORMACIÓN ACADÉMICA</h4>
               <div className="space-y-4">
                 <div>
@@ -127,7 +127,7 @@ export default function OperatorProfileSection() {
             </div>
 
             {/* Technical DNA (Bars) */}
-            <div className="p-6 rounded-2xl bg-[#0a0f16] border border-slate-800">
+            <div className="p-6 rounded-2xl bg-[#100f0d] border border-slate-800">
               <h4 className="text-[10px] text-slate-500 font-mono tracking-widest mb-4">HERRAMIENTAS TÉCNICAS</h4>
               <div className="space-y-3">
                 {[
@@ -152,7 +152,7 @@ export default function OperatorProfileSection() {
             </div>
 
             {/* Verified Recognitions */}
-            <div className="p-6 rounded-2xl bg-[#0a0f16] border border-slate-800">
+            <div className="p-6 rounded-2xl bg-[#100f0d] border border-slate-800">
               <h4 className="text-[10px] text-slate-500 font-mono tracking-widest mb-4">RECONOCIMIENTOS</h4>
               <div className="space-y-3">
                 {[

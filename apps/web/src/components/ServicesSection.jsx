@@ -36,7 +36,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-cyan-400/40",
     glow: "bg-cyan-500/5 group-hover:bg-cyan-500/10",
     badge: "text-cyan-600 bg-cyan-50 border-cyan-200",
-    dot: "bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.3)]",
+    dot: "bg-cyan-500 shadow-[0_0_8px_rgba(207,167,88,0.3)]",
   },
   indigo: {
     text: "text-indigo-600",
@@ -44,7 +44,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-indigo-400/40",
     glow: "bg-indigo-500/5 group-hover:bg-indigo-500/10",
     badge: "text-indigo-600 bg-indigo-50 border-indigo-200",
-    dot: "bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.3)]",
+    dot: "bg-indigo-500 shadow-[0_0_8px_rgba(148,101,58,0.3)]",
   },
   purple: {
     text: "text-purple-600",
@@ -52,7 +52,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-purple-400/40",
     glow: "bg-purple-500/5 group-hover:bg-purple-500/10",
     badge: "text-purple-600 bg-purple-50 border-purple-200",
-    dot: "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.3)]",
+    dot: "bg-purple-500 shadow-[0_0_8px_rgba(181,133,82,0.3)]",
   },
   blue: {
     text: "text-blue-600",
@@ -60,7 +60,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-blue-500/40",
     glow: "bg-blue-500/5 group-hover:bg-blue-500/10",
     badge: "text-blue-600 bg-blue-50 border-blue-200",
-    dot: "bg-blue-505 shadow-[0_0_8px_rgba(59,130,246,0.3)]",
+    dot: "bg-blue-505 shadow-[0_0_8px_rgba(169,122,60,0.3)]",
   },
   emerald: {
     text: "text-emerald-600",
@@ -76,7 +76,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-teal-500/40",
     glow: "bg-teal-500/5 group-hover:bg-teal-500/10",
     badge: "text-teal-600 bg-teal-50 border-teal-200",
-    dot: "bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.3)]",
+    dot: "bg-teal-500 shadow-[0_0_8px_rgba(184,143,62,0.3)]",
   },
   orange: {
     text: "text-orange-600",
@@ -636,7 +636,7 @@ export default function ServicesSection() {
                   </div>
 
                   {/* Sub-columna Derecha: Simulador Interactivo (col-span-7) */}
-                  <div className="md:col-span-7 flex flex-col bg-[#02050a] border border-slate-800 rounded-2xl relative overflow-hidden h-[360px] md:h-auto min-h-[360px] shadow-2xl p-4">
+                  <div className="md:col-span-7 flex flex-col bg-[#060605] border border-slate-800 rounded-2xl relative overflow-hidden h-[360px] md:h-auto min-h-[360px] shadow-2xl p-4">
                     
                     {/* Header de la consola de simulación */}
                     <div className="flex justify-between items-center pb-3 border-b border-slate-900 mb-3 text-slate-400">
@@ -745,7 +745,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Telemetría en vivo */}
-        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+        <div className="grid grid-cols-3 gap-2 bg-[#0d0c0a] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
           <div>ALTITUD: <span className="text-cyan-400">120.4 m</span></div>
           <div>BATERÍA: <span className="text-emerald-400">92%</span></div>
           <div>ESTADO: <span className="text-rose-400 animate-pulse">ESCANEO</span></div>
@@ -756,7 +756,7 @@ function ActiveSimulator({ slug, theme }) {
           {/* Rejilla de fondo */}
           <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
           
-          <div className="relative w-44 h-44 border border-slate-800 rounded bg-[#03060c]/80 p-1 grid grid-cols-4 gap-1.5">
+          <div className="relative w-44 h-44 border border-slate-800 rounded bg-[#070706]/80 p-1 grid grid-cols-4 gap-1.5">
             {scanGrid.map((scanned, i) => (
               <div 
                 key={i} 
@@ -841,7 +841,7 @@ function ActiveSimulator({ slug, theme }) {
         {/* Kubernetes Cluster diagram */}
         <div className="flex-1 grid grid-cols-2 gap-4 min-h-[160px]">
           {/* Node 1 */}
-          <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+          <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
             <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
               <span className="font-bold text-cyan-400">NODE-MASTER</span>
               <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
@@ -861,7 +861,7 @@ function ActiveSimulator({ slug, theme }) {
           </div>
 
           {/* Node 2 */}
-          <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
+          <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between">
             <div className="flex justify-between items-center border-b border-slate-900 pb-1.5 mb-2">
               <span className="font-bold text-indigo-400">NODE-COMPUTE</span>
               <span className="text-[8px] bg-emerald-500/10 text-emerald-400 px-1 rounded">ACTIVE</span>
@@ -882,7 +882,7 @@ function ActiveSimulator({ slug, theme }) {
         </div>
 
         {/* Latency Sparkline Graph */}
-        <div className="mt-3 bg-[#03070f] border border-slate-900 p-2.5 rounded-lg flex flex-col">
+        <div className="mt-3 bg-[#090807] border border-slate-900 p-2.5 rounded-lg flex flex-col">
           <div className="flex justify-between text-slate-500 text-[8px] mb-1 font-bold">
             <span>LATENCIA DEL PROCESADOR (ms)</span>
             <span className="text-emerald-400 font-mono">PROM: 32ms</span>
@@ -942,7 +942,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Request Input Area */}
-        <div className="bg-[#050a12]/80 border border-slate-800 rounded-xl p-3 space-y-2">
+        <div className="bg-[#0c0b09]/80 border border-slate-800 rounded-xl p-3 space-y-2">
           <div className="flex justify-between items-center text-slate-500 text-[8px] font-bold uppercase">
             <span>Query Console (API Sandbox)</span>
             <span className="text-cyan-400">HTTPS POST</span>
@@ -1145,11 +1145,11 @@ function ActiveSimulator({ slug, theme }) {
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* KPI Counters */}
         <div className="grid grid-cols-2 gap-3 mb-3">
-          <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl">
+          <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl">
             <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Registros Procesados</span>
             <span className="text-lg font-black text-white tracking-tight">{counter.toLocaleString()}</span>
           </div>
-          <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl">
+          <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl">
             <span className="text-slate-500 text-[8px] uppercase tracking-wider block">Estándar LADM-COL</span>
             <span className="text-lg font-black text-emerald-400 tracking-tight">100% CUMPLIDO</span>
           </div>
@@ -1238,7 +1238,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Status bar */}
-        <div className="bg-[#050a12]/80 border border-slate-800 p-2.5 rounded-xl flex justify-between items-center mb-3">
+        <div className="bg-[#0c0b09]/80 border border-slate-800 p-2.5 rounded-xl flex justify-between items-center mb-3">
           <span className="text-slate-500 text-[8px] font-bold">MODELO DE IA: SEGMENTATION_NET_V2</span>
           <span className="text-[8px] text-purple-400 font-bold animate-pulse">INFERENCIA ACTIVA</span>
         </div>
@@ -1247,7 +1247,7 @@ function ActiveSimulator({ slug, theme }) {
         <div className="flex-1 bg-slate-950 border border-slate-900 rounded-xl relative overflow-hidden flex items-center justify-center min-h-[160px]">
           <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
           
-          <svg viewBox="0 0 200 200" className="w-44 h-44 relative z-10 border border-slate-800 rounded bg-[#03060c]">
+          <svg viewBox="0 0 200 200" className="w-44 h-44 relative z-10 border border-slate-800 rounded bg-[#070706]">
             {boxes.map((box, i) => (
               <g key={i}>
                 <path d={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
@@ -1293,7 +1293,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* BIM Specs Header */}
-        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2 rounded-lg text-slate-400 mb-3">
+        <div className="grid grid-cols-3 gap-2 bg-[#0d0c0a] border border-slate-900 p-2 rounded-lg text-slate-400 mb-3">
           <div className="truncate">TIPO: <span className="text-blue-400">GEMELO_DIGITAL</span></div>
           <div className="truncate">ESTÁNDAR: <span className="text-blue-400">BIM_IFC</span></div>
           <div className="truncate">ESTADO: <span className="text-emerald-400 font-bold">OK</span></div>
@@ -1366,7 +1366,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Telemetría vial */}
-        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+        <div className="grid grid-cols-3 gap-2 bg-[#0d0c0a] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
           <div>PENDIENTE: <span className="text-emerald-400">+3.12%</span></div>
           <div>ESTACIÓN: <span className="text-cyan-400">K2+350</span></div>
           <div>SEGURIDAD: <span className="text-emerald-400 font-bold">APROBADO</span></div>
@@ -1391,7 +1391,7 @@ function ActiveSimulator({ slug, theme }) {
             {/* Scanner intersection dot */}
             <circle 
               cx={`${scanOffset}%`} cy="70" r="2.5" 
-              className="fill-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]"
+              className="fill-cyan-400 shadow-[0_0_8px_rgba(207,167,88,0.8)]"
             />
           </svg>
         </div>
@@ -1435,7 +1435,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Telemetría ambiental del cultivo */}
-        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+        <div className="grid grid-cols-3 gap-2 bg-[#0d0c0a] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
           <div>HUMEDAD: <span className="text-cyan-400">42%</span></div>
           <div>TEMPERATURA: <span className="text-orange-400">26.8°C</span></div>
           <div>DOSIFICACIÓN: <span className="text-teal-400 font-bold">AUTOMÁTICA</span></div>
@@ -1511,7 +1511,7 @@ function ActiveSimulator({ slug, theme }) {
     return (
       <div className="flex-1 flex flex-col justify-between h-full font-mono text-[10px]">
         {/* Telemetría ambiental */}
-        <div className="grid grid-cols-3 gap-2 bg-[#060b14] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
+        <div className="grid grid-cols-3 gap-2 bg-[#0d0c0a] border border-slate-900 p-2.5 rounded-lg text-slate-400 mb-3">
           <div>CO2 REMOVIDO: <span className="text-teal-400 font-bold">{co2Offsets} Ton</span></div>
           <div>HUELLA DE CARBONO: <span className="text-rose-400">{carbonFootprint}%</span></div>
           <div>REFORESTADO: <span className="text-emerald-400">{reforestedArea}%</span></div>

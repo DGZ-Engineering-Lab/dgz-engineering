@@ -14,7 +14,7 @@ const techStack = [
     label: "Backend",
     symbol: "B",
     color: "text-blue-400",
-    glow: "shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+    glow: "shadow-[0_0_20px_rgba(169,122,60,0.3)]",
     description: "Motor de procesamiento geoespacial asíncrono.",
     tools: [
       { name: "FastAPI", icon: "⚡", benefit: "Latencia mínima en peticiones" },
@@ -53,7 +53,7 @@ const techStack = [
     label: "Analytics",
     symbol: "A",
     color: "text-cyan-400",
-    glow: "shadow-[0_0_20px_rgba(34,211,238,0.3)]",
+    glow: "shadow-[0_0_20px_rgba(221,190,122,0.3)]",
     description: "Inteligencia territorial y ciencia de datos.",
     tools: [
       { name: "PySAL", icon: "📈", benefit: "Estadística espacial avanzada" },
@@ -132,7 +132,7 @@ export default function ImpactMetrics() {
   }, [isVisible]);
 
   return (
-    <section ref={sectionRef} className="relative w-full py-16 z-10 bg-[#02040a] border-t border-slate-800/50 overflow-hidden">
+    <section ref={sectionRef} className="relative w-full py-16 z-10 bg-[#060504] border-t border-slate-800/50 overflow-hidden">
       {/* Decorative background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -148,7 +148,7 @@ export default function ImpactMetrics() {
 
           <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
              {metrics.map((m, i) => (
-               <div key={i} className="group p-6 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:bg-slate-900/80 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+               <div key={i} className="group p-6 rounded-2xl bg-[#100f0d] border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:bg-slate-900/80 shadow-2xl relative overflow-hidden backdrop-blur-sm">
                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                  <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                  <div className={`relative z-10 text-4xl lg:text-5xl font-black mb-3 tracking-tighter ${m.color} drop-shadow-lg`}>

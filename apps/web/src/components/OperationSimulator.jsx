@@ -52,10 +52,10 @@ export default function OperationSimulator() {
   }, []);
 
   return (
-    <section className="relative w-full py-24 bg-[#02040a] overflow-hidden border-y border-slate-800/50">
+    <section className="relative w-full py-24 bg-[#060504] overflow-hidden border-y border-slate-800/50">
       {/* Background Grid Accent */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(#38BDF8 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+           style={{ backgroundImage: 'radial-gradient(#ddbe7a 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -75,7 +75,7 @@ export default function OperationSimulator() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left Pane: Terminal / Logs */}
-          <div className="lg:col-span-5 flex flex-col h-[500px] bg-[#0a0f16] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl group hover:border-cyan-500/30 transition-colors">
+          <div className="lg:col-span-5 flex flex-col h-[500px] bg-[#100f0d] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl group hover:border-cyan-500/30 transition-colors">
             <div className="px-4 py-3 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between">
               <div className="flex gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
@@ -103,7 +103,7 @@ export default function OperationSimulator() {
           <div className="lg:col-span-7 grid grid-rows-2 gap-8">
             
             {/* Map Simulation */}
-            <div className="bg-[#0a0f16] border border-slate-800 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-colors">
+            <div className="bg-[#100f0d] border border-slate-800 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-colors">
               <div className="absolute inset-0 opacity-20">
                 <svg viewBox="0 0 100 100" className="w-full h-full stroke-slate-800" fill="none">
                   <path d="M0 20 L100 20 M0 40 L100 40 M0 60 L100 60 M0 80 L100 80" />
@@ -119,7 +119,7 @@ export default function OperationSimulator() {
               {activeNodes.map((node, i) => (
                 <div 
                   key={i}
-                  className="absolute w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
+                  className="absolute w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_#ddbe7a]"
                   style={{ left: `${node.x}%`, top: `${node.y}%`, opacity: (i + 1) / activeNodes.length }}
                 ></div>
               ))}
@@ -143,7 +143,7 @@ export default function OperationSimulator() {
 
             {/* Bottom Row Dashboard Stats */}
             <div className="grid grid-cols-2 gap-8">
-               <div className="bg-[#0a0f16] border border-slate-800 rounded-2xl p-6 flex flex-col justify-between group hover:border-purple-500/30 transition-colors overflow-hidden relative">
+               <div className="bg-[#100f0d] border border-slate-800 rounded-2xl p-6 flex flex-col justify-between group hover:border-purple-500/30 transition-colors overflow-hidden relative">
                   <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-all"></div>
                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Neural Load</span>
                   <div className="text-4xl font-black text-white my-2">{metrics.processing}%</div>
@@ -152,7 +152,7 @@ export default function OperationSimulator() {
                   </div>
                </div>
 
-               <div className="bg-[#0a0f16] border border-slate-800 rounded-2xl p-6 flex flex-col justify-between group hover:border-emerald-500/30 transition-colors overflow-hidden relative">
+               <div className="bg-[#100f0d] border border-slate-800 rounded-2xl p-6 flex flex-col justify-between group hover:border-emerald-500/30 transition-colors overflow-hidden relative">
                   <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-all"></div>
                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">System Health</span>
                   <div className="text-4xl font-black text-emerald-400 my-2">NOMINAL</div>

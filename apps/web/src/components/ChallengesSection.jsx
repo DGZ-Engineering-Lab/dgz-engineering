@@ -35,7 +35,7 @@ export default function ChallengesSection() {
   ];
 
   return (
-    <section id="challenges" className="relative w-full py-12 lg:py-16 z-10 bg-[#020406] overflow-hidden border-t border-slate-900">
+    <section id="challenges" className="relative w-full py-12 lg:py-16 z-10 bg-[#040403] overflow-hidden border-t border-slate-900">
       {/* Background Radar Effect */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
       

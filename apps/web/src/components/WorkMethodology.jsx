@@ -33,7 +33,7 @@ const METHODS = [
 
 export default function WorkMethodology() {
   return (
-    <section className="py-24 bg-[#02040a] relative overflow-hidden">
+    <section className="py-24 bg-[#060504] relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">

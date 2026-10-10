@@ -8,12 +8,15 @@ export default function FloatingTelemetry() {
   const [time, setTime] = useState("");
   const [load, setLoad] = useState(12);
   const [activeNodes, setActiveNodes] = useState(1240);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   useEffect(() => {
     // Simulamos la telemetría directamente en el cliente para mayor fluidez 
     // y evitar errores 404 de rutas de API no configuradas.
+    // Solo corre mientras el panel está abierto y la pestaña visible.
+    if (isMinimized) return;
     const timer = setInterval(() => {
+      if (document.hidden) return;
       const now = new Date();
       setTime(now.toLocaleTimeString("en-GB", { hour12: false }));
       setLoad(Math.floor(Math.random() * (25 - 10) + 10));
@@ -27,10 +30,10 @@ export default function FloatingTelemetry() {
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isMinimized]);
 
   return (
-    <div className="fixed bottom-6 left-6 z-[100] pointer-events-none hidden md:block select-none">
+    <div className="fixed bottom-6 right-6 z-[80] pointer-events-none hidden xl:block select-none">
       <AnimatePresence mode="wait">
         {isMinimized ? (
           <motion.button
@@ -42,10 +45,11 @@ export default function FloatingTelemetry() {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             onClick={() => setIsMinimized(false)}
+            aria-label="Mostrar telemetría"
             className="pointer-events-auto flex items-center gap-2 p-2 px-4 rounded-full bg-slate-950/80 hover:bg-slate-900/90 border border-cyan-500/30 hover:border-cyan-400/50 backdrop-blur-md text-cyan-400 transition-all cursor-pointer shadow-[0_8px_25px_rgba(0,0,0,0.6)] group/tele"
           >
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-[7px] font-mono tracking-[0.25em] font-black uppercase">TELEMETRÍA_HUD</span>
+            <span className="text-[8px] font-mono tracking-[0.25em] font-bold uppercase">Telemetría</span>
           </motion.button>
         ) : (
           <motion.div
@@ -54,7 +58,7 @@ export default function FloatingTelemetry() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 22 }}
-            className="pointer-events-auto flex flex-col gap-1 p-5 rounded-2xl bg-[#06060a]/75 border border-cyan-500/25 backdrop-blur-2xl shadow-[0_15px_40px_rgba(0,0,0,0.7)] min-w-[230px] relative overflow-hidden group hover:border-cyan-500/40 transition-colors duration-500"
+            className="pointer-events-auto flex flex-col gap-1 p-5 rounded-2xl bg-[#080706]/75 border border-cyan-500/25 backdrop-blur-2xl shadow-[0_15px_40px_rgba(0,0,0,0.7)] min-w-[230px] relative overflow-hidden group hover:border-cyan-500/40 transition-colors duration-500"
           >
             {/* Ruido de fondo analógico y rejilla táctica */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:1rem] pointer-events-none" />
@@ -62,13 +66,14 @@ export default function FloatingTelemetry() {
             
             <div className="flex items-center justify-between gap-6 pb-2.5 border-b border-slate-800/40 relative z-10">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
+                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#ddbe7a]" />
                 <span className="text-[8px] font-mono text-cyan-300 tracking-[0.2em] font-black">SYSTEM_LIVE</span>
               </div>
               <button
                 onClick={() => setIsMinimized(true)}
                 className="p-1 hover:bg-white/5 rounded text-slate-500 hover:text-white cursor-pointer transition-all duration-200 hover:scale-110"
                 title="Minimizar Telemetría"
+                aria-label="Minimizar telemetría"
               >
                 <ChevronDown className="w-4 h-4" />
               </button>
@@ -102,7 +107,7 @@ export default function FloatingTelemetry() {
                 initial={{ width: 0 }}
                 animate={{ width: `${load * 4}%` }}
                 transition={{ type: "spring", stiffness: 80, damping: 15 }}
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 shadow-[0_0_10px_rgba(6,182,212,0.6)]"
+                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 shadow-[0_0_10px_rgba(207,167,88,0.6)]"
               />
             </div>
           </motion.div>

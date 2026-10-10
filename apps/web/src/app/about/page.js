@@ -88,7 +88,7 @@ const TECH_STACK = [
     metric: "1.2M+ predios/seg",
     latency: "< 8.5ms query time",
     accent: "from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400 shadow-cyan-500/5",
-    accentColor: "#06b6d4",
+    accentColor: "#cfa758",
     icon: Database,
     snippet: `import polars as pl
 
@@ -160,7 +160,7 @@ END LADM_COL_V3_1.`
     metric: "Qt5 / C++ Core",
     latency: "Zero UI Latency",
     accent: "from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-400 shadow-violet-500/5",
-    accentColor: "#8b5cf6",
+    accentColor: "#94653a",
     icon: Code,
     snippet: `# Complemento PyQt5 / QGIS DevGiz
 from qgis.core import QgsProject, QgsVectorLayer
@@ -535,7 +535,7 @@ export default function AboutPage() {
       </section>
 
       {/* LADM-COL Simulator Section */}
-      <section className="py-32 bg-[#040814] text-white border-y border-slate-950 relative overflow-hidden section-deferred scroll-reveal" ref={simulatorRef}>
+      <section className="py-32 bg-[#0b0a09] text-white border-y border-slate-950 relative overflow-hidden section-deferred scroll-reveal" ref={simulatorRef}>
         {/* Neon lines background */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
@@ -572,8 +572,8 @@ export default function AboutPage() {
                   onClick={() => handleScenarioChange(idx)}
                   className={`p-5 border rounded-xl font-mono text-xs uppercase tracking-wider text-left transition-all duration-300 cursor-pointer ${
                     isSelected 
-                      ? "bg-slate-900/80 border-cyan-500/40 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-                      : "bg-[#080d1a]/40 border-slate-900/60 text-slate-500 hover:border-slate-800 hover:text-slate-300 hover:bg-[#080d1a]/80"
+                      ? "bg-slate-900/80 border-cyan-500/40 text-cyan-400 shadow-[0_0_15px_rgba(207,167,88,0.1)]"
+                      : "bg-[#100f0d]/40 border-slate-900/60 text-slate-500 hover:border-slate-800 hover:text-slate-300 hover:bg-[#100f0d]/80"
                   }`}
                 >
                   <div className="font-bold text-[9px] text-slate-500 mb-1">CASO DE ESTUDIO 0{idx+1}</div>
@@ -589,7 +589,7 @@ export default function AboutPage() {
             <div className="lg:col-span-4 flex flex-col justify-between gap-6">
               
               {/* Scenario description card */}
-              <div className="bg-[#080d1a]/60 border border-slate-900 p-6 rounded-2xl space-y-4">
+              <div className="bg-[#100f0d]/60 border border-slate-900 p-6 rounded-2xl space-y-4">
                 <div className="space-y-1">
                   <span className="text-[9px] font-mono text-cyan-400 font-bold uppercase tracking-widest">{SIMULATOR_SCENARIOS[selectedScenarioIndex].context}</span>
                   <h3 className="text-xl font-black text-white">{SIMULATOR_SCENARIOS[selectedScenarioIndex].name}</h3>
@@ -614,15 +614,15 @@ export default function AboutPage() {
               </div>
 
               {/* Step Checklist */}
-              <div className="bg-[#080d1a]/60 border border-slate-900 p-6 rounded-2xl flex-1 flex flex-col justify-between gap-4">
+              <div className="bg-[#100f0d]/60 border border-slate-900 p-6 rounded-2xl flex-1 flex flex-col justify-between gap-4">
                 {[
                   { num: 1, title: "Sanación Topológica", solved: step1Snapped, active: activeStep === 1 },
                   { num: 2, title: "Compilación INTERLIS (.XTF)", solved: step2Compiled, active: activeStep === 2 },
                   { num: 3, title: "Conciliación IGAC-SNR", solved: step3Conciliated, active: activeStep === 3 },
                   { num: 4, title: "Estampillado & Soberanía", solved: step4Stamped, active: activeStep === 4 }
                 ].map((step) => {
-                  let statusColor = "text-slate-500 border-slate-900/60 bg-[#080d1a]/20";
-                  if (step.active) statusColor = "text-cyan-400 border-cyan-500/40 bg-cyan-500/5 shadow-[0_0_10px_rgba(6,182,212,0.05)]";
+                  let statusColor = "text-slate-500 border-slate-900/60 bg-[#100f0d]/20";
+                  if (step.active) statusColor = "text-cyan-400 border-cyan-500/40 bg-cyan-500/5 shadow-[0_0_10px_rgba(207,167,88,0.05)]";
                   if (step.solved) statusColor = "text-emerald-400 border-emerald-500/40 bg-emerald-500/5";
 
                   return (
@@ -650,7 +650,7 @@ export default function AboutPage() {
             <div className="lg:col-span-8 flex flex-col justify-between gap-6">
               
               {/* Visualizer card */}
-              <div className="bg-[#080d1a]/60 border border-slate-900 rounded-2xl p-8 flex-1 flex flex-col justify-center min-h-[360px] relative overflow-hidden">
+              <div className="bg-[#100f0d]/60 border border-slate-900 rounded-2xl p-8 flex-1 flex flex-col justify-center min-h-[360px] relative overflow-hidden">
                 <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-600 tracking-wider">INTERACTIVE GRAPHIC VIEWER // STEP_0{activeStep}</span>
                 
                 {/* Step 1 Content: Topo Snapping */}
@@ -661,12 +661,12 @@ export default function AboutPage() {
                         {/* Polygon 1 (Stable) */}
                         <polygon 
                           points={SIMULATOR_SCENARIOS[selectedScenarioIndex].polygon1}
-                          fill="rgba(6, 182, 212, 0.05)"
-                          stroke="#06b6d4"
+                          fill="rgba(207,167,88, 0.05)"
+                          stroke="#cfa758"
                           strokeWidth="2"
                           strokeDasharray="4 2"
                         />
-                        <text x="50" y="80" fill="#06b6d4" className="font-mono text-[9px] font-bold" opacity="0.6">PREDIO_A (Fiel)</text>
+                        <text x="50" y="80" fill="#cfa758" className="font-mono text-[9px] font-bold" opacity="0.6">PREDIO_A (Fiel)</text>
                         
                         {/* Polygon 2 (Erroneous or Solved) */}
                         <polygon 
@@ -826,11 +826,11 @@ export default function AboutPage() {
                       
                       {/* Metric Comparison rows */}
                       <div className="grid grid-cols-2 gap-4 font-mono text-[10px]">
-                        <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900">
+                        <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900">
                           <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Levantamiento Físico</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica} m²</span>
                         </div>
-                        <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900">
+                        <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900">
                           <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Folio de Registro (SNR)</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica} m²</span>
                         </div>
@@ -922,7 +922,7 @@ export default function AboutPage() {
                           <p className="text-[10px] text-slate-400 font-light leading-relaxed">
                             El predio ha sido incorporado al catastro multipropósito y sincronizado con SNR. Se ha emitido la firma criptográfica para garantizar la seguridad jurídica.
                           </p>
-                          <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900 inline-block">
+                          <div className="bg-[#100f0d] p-3 rounded-lg border border-slate-900 inline-block">
                             <span className="text-[8px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
                             <span className="text-emerald-400 font-mono font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}</span>
                           </div>
@@ -984,7 +984,7 @@ export default function AboutPage() {
               </div>
 
               {/* Console log box */}
-              <div className="bg-[#020409] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1 relative h-[110px] overflow-y-auto shadow-inner">
+              <div className="bg-[#050504] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1 relative h-[110px] overflow-y-auto shadow-inner">
                 <div className="absolute top-3 right-3 bg-slate-900/80 text-slate-500 text-[8px] px-2 py-0.5 rounded border border-slate-800 uppercase tracking-widest font-bold">
                   TELEMETRÍA EN VIVO
                 </div>
@@ -1010,7 +1010,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership - Tactical Command Center Deck */}
-      <section id="team" className="py-32 px-6 overflow-hidden bg-[#03060f] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
+      <section id="team" className="py-32 px-6 overflow-hidden bg-[#080806] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
         
         {/* Subtle holographic grid lines */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 
@@ -1061,7 +1061,7 @@ export default function AboutPage() {
                     className={`w-full text-left p-6 border rounded-xl relative overflow-hidden transition-all duration-300 cursor-pointer flex items-center gap-5 ${
                       isSelected 
                         ? `bg-slate-900/80 border-slate-800 shadow-[0_4px_30px_rgba(0,0,0,0.4)] translate-x-2`
-                        : "bg-[#070b15]/40 border-slate-900/60 hover:border-slate-800 hover:bg-[#0c1224]/60 text-slate-400"
+                        : "bg-[#0e0d0a]/40 border-slate-900/60 hover:border-slate-800 hover:bg-[#171612]/60 text-slate-400"
                     }`}
                   >
                     {/* Active dynamic indicator bar */}
@@ -1082,7 +1082,7 @@ export default function AboutPage() {
                       }`}>
                         {director.initials}
                       </div>
-                      <span className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-[#03060f] transition-colors ${
+                      <span className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-[#080806] transition-colors ${
                         i === 0 ? "bg-cyan-500 animate-pulse" : "bg-emerald-500 animate-pulse"
                       }`} />
                     </div>
@@ -1113,7 +1113,7 @@ export default function AboutPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="bg-[#070b15]/60 backdrop-blur-xl border border-slate-900 rounded-2xl p-8 lg:p-10 relative overflow-hidden group/hud hover:border-slate-800 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                  className="bg-[#0e0d0a]/60 backdrop-blur-xl border border-slate-900 rounded-2xl p-8 lg:p-10 relative overflow-hidden group/hud hover:border-slate-800 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                 >
                   {/* Digital Crosshairs / Technical grid lines */}
                   <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 
@@ -1139,7 +1139,7 @@ export default function AboutPage() {
                   {/* Laser Scan line on verifying */}
                   {verifyingDirector === activeDirector.name && (
                     <motion.div 
-                      className="absolute left-0 right-0 h-0.5 bg-cyan-500 z-20 shadow-[0_0_15px_rgba(6,182,212,0.8)]"
+                      className="absolute left-0 right-0 h-0.5 bg-cyan-500 z-20 shadow-[0_0_15px_rgba(207,167,88,0.8)]"
                       initial={{ top: "0%" }}
                       animate={{ top: "100%" }}
                       transition={{ duration: 1.6, ease: "easeInOut", repeat: 0 }}
@@ -1176,7 +1176,7 @@ export default function AboutPage() {
                                     key={idx}
                                     className={`h-full flex-1 transition-all ${
                                       isActive 
-                                        ? "bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" 
+                                        ? "bg-cyan-500 shadow-[0_0_8px_rgba(207,167,88,0.6)]" 
                                         : "bg-slate-800"
                                     }`}
                                     initial={{ opacity: 0.2 }}
@@ -1289,10 +1289,10 @@ export default function AboutPage() {
       </section>
 
       {/* Sovereign Tech Stack Section */}
-      <section className="py-32 px-6 bg-[#02040a] text-white border-y border-slate-900 relative section-deferred scroll-reveal" ref={techRef}>
+      <section className="py-32 px-6 bg-[#060504] text-white border-y border-slate-900 relative section-deferred scroll-reveal" ref={techRef}>
         
         {/* Ambient neon radial glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(800px,100%)] h-[400px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           
@@ -1332,7 +1332,7 @@ export default function AboutPage() {
                     className={`p-8 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group/card relative ${
                       isSelected
                         ? `bg-slate-900/60 border-slate-700 shadow-2xl`
-                        : "bg-[#090d16]/40 border-slate-900 hover:border-slate-800 hover:bg-[#0c1220]/60"
+                        : "bg-[#0f0e0c]/40 border-slate-900 hover:border-slate-800 hover:bg-[#161411]/60"
                     }`}
                   >
                     {/* Active neon dot */}

@@ -58,7 +58,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05070a] flex items-center justify-center p-6 font-mono selection:bg-red-500 selection:text-white overflow-hidden relative">
+    <div className="min-h-screen bg-[#080706] flex items-center justify-center p-6 font-mono selection:bg-red-500 selection:text-white overflow-hidden relative">
       
       {/* Grid Background */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none">

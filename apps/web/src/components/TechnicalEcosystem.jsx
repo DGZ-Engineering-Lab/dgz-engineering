@@ -35,7 +35,7 @@ export default function TechnicalEcosystem() {
   ];
 
   return (
-    <section className="relative w-full py-12 lg:py-16 z-10 bg-[#05070a] overflow-hidden">
+    <section className="relative w-full py-12 lg:py-16 z-10 bg-[#080706] overflow-hidden">
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[150px]"></div>

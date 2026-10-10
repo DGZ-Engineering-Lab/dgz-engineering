@@ -165,7 +165,7 @@ export default function StandardsPage() {
                   />
                   {/* Orbiting dots */}
                   <motion.div 
-                    className="absolute w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]"
+                    className="absolute w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_10px_#cfa758]"
                     animate={{ 
                       x: [0, 90, 0, -90, 0],
                       y: [-90, 0, 90, 0, -90]

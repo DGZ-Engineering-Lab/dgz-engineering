@@ -36,7 +36,7 @@ export default function ExecutiveSummarySection() {
   ];
 
   return (
-    <section id="summary" className="relative w-full py-12 lg:py-16 z-10 bg-[#05070a] overflow-hidden">
+    <section id="summary" className="relative w-full py-12 lg:py-16 z-10 bg-[#080706] overflow-hidden">
       {/* Subtle Grid Pattern Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
       

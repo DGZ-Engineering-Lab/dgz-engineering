@@ -78,8 +78,8 @@ export default function RealDataSimulator() {
   }, [currentIndex, sample.id, sample.nupre]);
 
   return (
-    <section className="relative w-full py-12 lg:py-16 bg-[#02040a] overflow-hidden border-y border-slate-800/30">
-      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#38BDF8 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+    <section className="relative w-full py-12 lg:py-16 bg-[#060504] overflow-hidden border-y border-slate-800/30">
+      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(#ddbe7a 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -99,7 +99,7 @@ export default function RealDataSimulator() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           
           {/* Data Feed Side */}
-          <div className="bg-[#0a0f16] border border-slate-800 rounded-[2rem] overflow-hidden flex flex-col shadow-2xl relative group">
+          <div className="bg-[#100f0d] border border-slate-800 rounded-[2rem] overflow-hidden flex flex-col shadow-2xl relative group">
             <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                <div className="text-[60px] font-black text-white/5 select-none">DATA_CORE</div>
             </div>
@@ -144,7 +144,7 @@ export default function RealDataSimulator() {
           <div className="flex flex-col gap-8">
             
             {/* Map Preview */}
-            <div className="flex-1 bg-[#05070a] border border-slate-800 rounded-[2rem] relative overflow-hidden group shadow-2xl">
+            <div className="flex-1 bg-[#080706] border border-slate-800 rounded-[2rem] relative overflow-hidden group shadow-2xl">
                <div className="absolute inset-0 opacity-10">
                  <svg viewBox="0 0 100 100" className="w-full h-full stroke-slate-700" fill="none">
                     <path d="M0 10 H100 M0 30 H100 M0 50 H100 M0 70 H100 M0 90 H100" />
@@ -176,7 +176,7 @@ export default function RealDataSimulator() {
             </div>
 
             {/* Compliance Badge Card */}
-            <div className="bg-[#0a0f16] border border-slate-800 rounded-[2rem] p-8 flex items-center gap-8 relative overflow-hidden group hover:border-emerald-500/30 transition-all">
+            <div className="bg-[#100f0d] border border-slate-800 rounded-[2rem] p-8 flex items-center gap-8 relative overflow-hidden group hover:border-emerald-500/30 transition-all">
                <div className="absolute -right-8 -top-8 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-all"></div>
                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-3xl">✅</div>
                <div className="flex-1 space-y-1">

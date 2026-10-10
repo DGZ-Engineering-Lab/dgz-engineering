@@ -65,7 +65,9 @@ export default function Navbar() {
     setActiveDropdown(null);
   }, [pathname]);
 
-  const isDarkPage = pathname?.startsWith("/lab") || pathname?.startsWith("/diagnostic");
+  // La navegación es siempre "obsidiana": ancla visual de la marca en toda la plataforma.
+  const isDarkPage = true;
+  const isHome = pathname === "/";
 
   const navLinks = [
     { name: "Inicio", href: "/" },
@@ -80,21 +82,21 @@ export default function Navbar() {
 
   // Dynamic Styles
   const navBackground = scrolled
-    ? isDarkPage
-      ? "py-4 bg-[#02040a]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/20"
-      : "py-4 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm"
-    : "py-8 bg-transparent";
+    ? "py-3 bg-[#0b0a08]/90 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)]"
+    : isHome
+      ? "py-6 bg-transparent border-b border-transparent"
+      : "py-5 bg-[#0b0a08] border-b border-white/[0.06]";
 
   const logoTextColor = isDarkPage ? "text-white" : "text-[#1a1a1a]";
   
   const linkTextColor = isDarkPage
-    ? "text-slate-400 hover:text-white"
+    ? "text-slate-300/80 hover:text-white"
     : "text-slate-500 hover:text-[#1a1a1a]";
 
-  const activeLineColor = isDarkPage ? "bg-cyan-400" : "bg-[#1a1a1a]";
+  const activeLineColor = isDarkPage ? "bg-gradient-to-r from-transparent via-cyan-400 to-transparent" : "bg-[#1a1a1a]";
   
   const ctaBtnStyle = isDarkPage
-    ? "bg-white text-black hover:bg-cyan-500 hover:text-black shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+    ? "btn-gold"
     : "bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-xl";
 
   const burgerColor = isDarkPage ? "text-white" : "text-[#1a1a1a]";
@@ -109,15 +111,15 @@ export default function Navbar() {
           
           {/* Logo Section */}
           <Link href="/" className="flex items-center gap-3 group cursor-pointer">
-            <Logo className={`w-8 h-8 transition-transform group-hover:scale-110 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
-            <div className="flex flex-col leading-none">
-              <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
-              <span className="text-[7px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold">Engineering</span>
+            <Logo className={`w-8 h-8 transition-transform duration-500 group-hover:scale-105 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
+            <div className="flex flex-col leading-none gap-1">
+              <span className={`font-display text-[22px] tracking-tight transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
+              <span className="text-[7px] font-mono uppercase tracking-[0.42em] text-cyan-400/80 font-semibold">Engineering Lab</span>
             </div>
           </Link>
 
           {/* Desktop Links - Editorial Style with Mega-Submenus */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => (
               <div 
                 key={link.name} 
@@ -156,8 +158,9 @@ export default function Navbar() {
           {/* Mobile Toggle Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 -mr-2 transition-colors rounded-full focus:outline-none hover:bg-slate-500/10 ${burgerColor}`}
-            aria-label="Toggle Menu"
+            className={`lg:hidden p-2 -mr-2 transition-colors rounded-full focus:outline-none hover:bg-slate-500/10 ${burgerColor}`}
+            aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -175,7 +178,7 @@ export default function Navbar() {
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
               className={`absolute left-0 top-full w-full z-40 border-b shadow-2xl pointer-events-auto transition-colors duration-500 ${
                 isDarkPage
-                  ? "bg-[#02040a]/98 border-slate-800/80 text-white"
+                  ? "bg-[#060504]/98 border-slate-800/80 text-white"
                   : "bg-white/95 border-slate-100 shadow-xl"
               }`}
               onMouseEnter={() => setActiveDropdown(activeDropdown)}
@@ -187,20 +190,20 @@ export default function Navbar() {
               <div className="max-w-7xl mx-auto px-6 py-9 grid grid-cols-12 gap-8 items-stretch relative z-10">
                 
                 {/* Left Side: Summary Context */}
-                <div className="col-span-4 border-r border-slate-200/50 pr-8 flex flex-col justify-between">
+                <div className="col-span-4 border-r border-white/[0.06] pr-8 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_6px_#22d3ee]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_6px_#ddbe7a]" />
                       <span className="text-[8px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DEVGIZ_ROUTING // HUD_INFO</span>
                     </div>
-                    <h4 className="text-lg font-black tracking-tight mb-2 uppercase">{activeDropdown}</h4>
+                    <h4 className="font-display text-2xl tracking-tight mb-2">{activeDropdown}</h4>
                     <p className="text-slate-500 text-xs font-light leading-relaxed">
                       {DROPDOWNS_DATA[activeDropdown]?.desc}
                     </p>
                   </div>
                   
                   {/* Micro telemetry footer */}
-                  <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[7px] font-mono text-slate-400">
+                  <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[7px] font-mono text-slate-400">
                     <span>SYS_LOCK: SECURE</span>
                     <span>COINCIDENCIAS: {DROPDOWNS_DATA[activeDropdown]?.items.length} PÁGINAS</span>
                   </div>
@@ -230,12 +233,12 @@ export default function Navbar() {
                         
                         <div className="space-y-1 text-left">
                           <span className={`text-xs font-black tracking-tight flex items-center gap-1.5 transition-colors ${
-                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-850 group-hover/item:text-[#1a1a1a]"
+                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-800 group-hover/item:text-[#1a1a1a]"
                           }`}>
                             {item.name}
                             <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-cyan-500 shrink-0" />
                           </span>
-                          <p className="text-slate-450 text-[10px] font-light leading-snug">
+                          <p className="text-slate-400 text-[10px] font-light leading-snug">
                             {item.desc}
                           </p>
                         </div>
@@ -260,15 +263,15 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className={`fixed inset-0 z-[90] md:hidden pt-28 pb-8 px-6 flex flex-col justify-between overflow-y-auto ${
+            className={`fixed inset-0 z-[90] lg:hidden pt-28 pb-8 px-6 flex flex-col justify-between overflow-y-auto ${
               isDarkPage 
-                ? "bg-[#02040a] text-white border-b border-slate-800" 
+                ? "bg-[#060504] text-white border-b border-slate-800" 
                 : "bg-white text-[#1a1a1a] border-b border-slate-200"
             }`}
           >
             {isDarkPage && (
               <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+                <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(221,190,122,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(221,190,122,0.2) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
               </div>
             )}
 
@@ -283,14 +286,14 @@ export default function Navbar() {
                   const isExpanded = expandedMobileSection === link.dropdownKey;
                   
                   return (
-                    <div key={link.name} className="flex flex-col border-b border-slate-100/50 pb-2">
+                    <div key={link.name} className="flex flex-col border-b border-white/[0.06] pb-2">
                       <div className="flex items-center justify-between w-full">
                         <Link
                           href={link.href}
                           onClick={() => {
                             if (!hasDropdown) setIsMobileMenuOpen(false);
                           }}
-                          className={`text-xl font-black tracking-tight uppercase flex items-center gap-2 py-1.5 ${
+                          className={`font-display text-2xl tracking-tight flex items-center gap-2 py-1.5 ${
                             isDarkPage ? 'text-slate-300 hover:text-cyan-400' : 'text-slate-700 hover:text-[#1a1a1a]'
                           }`}
                         >
@@ -355,7 +358,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`w-full py-4.5 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm flex items-center justify-center gap-3 ${
                   isDarkPage
-                    ? 'bg-cyan-500 text-black hover:bg-cyan-400 font-black'
+                    ? 'btn-gold font-black'
                     : 'bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-md'
                 }`}
               >

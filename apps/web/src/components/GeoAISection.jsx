@@ -1,6 +1,6 @@
 export default function GeoAISection() {
   return (
-    <section id="geoai" className="relative w-full py-24 z-10 bg-gradient-to-b from-[#05070a] to-[#020406] overflow-hidden">
+    <section id="geoai" className="relative w-full py-24 z-10 bg-gradient-to-b from-[#080706] to-[#040403] overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none">
@@ -44,7 +44,7 @@ export default function GeoAISection() {
               ].map((step, i) => (
                 <div key={i} className="flex gap-6 group">
                   <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 rounded-full bg-[#0a0f16] border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono text-sm group-hover:bg-emerald-500/20 group-hover:border-emerald-500 transition-colors">
+                    <div className="w-10 h-10 rounded-full bg-[#100f0d] border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-mono text-sm group-hover:bg-emerald-500/20 group-hover:border-emerald-500 transition-colors">
                       {step.num}
                     </div>
                     {i < 3 && <div className="w-px h-16 bg-slate-800 my-2 group-hover:bg-emerald-500/30 transition-colors"></div>}
@@ -60,7 +60,7 @@ export default function GeoAISection() {
             {/* Tech Stack Pills */}
             <div className="flex flex-wrap gap-3 pt-6 border-t border-slate-800">
               {['Rasterio', 'GeoPandas', 'NumPy', 'Scikit-learn', 'Sentinel-2', 'Shapely'].map(tech => (
-                <span key={tech} className="px-3 py-1.5 bg-[#0a0f16] border border-slate-700 text-slate-300 rounded text-sm font-mono hover:border-emerald-500 hover:text-emerald-400 cursor-default transition-colors">
+                <span key={tech} className="px-3 py-1.5 bg-[#100f0d] border border-slate-700 text-slate-300 rounded text-sm font-mono hover:border-emerald-500 hover:text-emerald-400 cursor-default transition-colors">
                   {tech}
                 </span>
               ))}
@@ -69,9 +69,9 @@ export default function GeoAISection() {
 
           {/* Right Column: Interactive Visualization */}
           <div className="w-full lg:w-1/2">
-            <div className="bg-[#0a0f16] border border-slate-800 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(16,185,129,0.05)]">
+            <div className="bg-[#100f0d] border border-slate-800 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(16,185,129,0.05)]">
               
-              <div className="bg-[#05070a] px-4 py-3 border-b border-slate-800 font-mono text-xs text-emerald-500 flex justify-between items-center">
+              <div className="bg-[#080706] px-4 py-3 border-b border-slate-800 font-mono text-xs text-emerald-500 flex justify-between items-center">
                 <span>[CHANGE_DETECTION_ENGINE]</span>
                 <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> PROCESSING_DEMO</span>
               </div>
@@ -91,7 +91,7 @@ export default function GeoAISection() {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-3 divide-x divide-slate-800 border-b border-slate-800 bg-[#05070a]">
+              <div className="grid grid-cols-3 divide-x divide-slate-800 border-b border-slate-800 bg-[#080706]">
                 <div className="p-4 text-center">
                   <div className="text-2xl font-bold text-white mb-1">94%</div>
                   <div className="text-[10px] uppercase tracking-wider text-slate-500 font-mono">Accuracy</div>
@@ -107,7 +107,7 @@ export default function GeoAISection() {
               </div>
 
               {/* Console Output */}
-              <div className="p-6 bg-[#0a0f16] font-mono text-xs leading-relaxed text-slate-400">
+              <div className="p-6 bg-[#100f0d] font-mono text-xs leading-relaxed text-slate-400">
                 <div className="text-emerald-500">&gt;&gt;&gt; SENTINEL_BAND: B08+B04+B11</div>
                 <div>&gt;&gt;&gt; DATE_COMPARISON: 2023-01-15 vs 2025-01-15</div>
                 <div>&gt;&gt;&gt; CHANGE_PIXELS_DETECTED: <span className="text-red-400">RED</span> = URBAN_EXPANSION</div>

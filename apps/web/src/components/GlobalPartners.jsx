@@ -317,8 +317,32 @@ const STANDARDS = [
   { text: "Interoperabilidad SNR-IGAC", color: "red" }
 ];
 
+// Reloj GPS aislado: antes forzaba un re-render de toda la sección cada 450 ms.
+function GpsTimeCode() {
+  const [timeCode, setTimeCode] = useState("GPS-UTC LOCK: --:--:--");
+  useEffect(() => {
+    const tick = () => {
+      if (document.hidden) return;
+      const d = new Date();
+      setTimeCode(`GPS-UTC LOCK: ${d.toTimeString().split(' ')[0]}.${String(Math.floor(Math.random() * 99)).padStart(2, "0")}`);
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, []);
+  return <div className="text-[8px] font-mono text-slate-400 mt-1 uppercase tracking-wider">{timeCode}</div>;
+}
+
 function PartnerCard({ partner, activePartner, onSelect }) {
   const [imgFailed, setImgFailed] = useState(false);
+  const imgRef = useRef(null);
+
+  // Si el logo remoto falló antes de hidratar, onError nunca se dispara:
+  // lo detectamos al montar para mostrar el distintivo de respaldo.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setImgFailed(true);
+  }, []);
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const isActive = activePartner === partner.name;
@@ -330,26 +354,26 @@ function PartnerCard({ partner, activePartner, onSelect }) {
     cyan: {
       border: "border-cyan-500/30",
       borderActive: "border-cyan-500",
-      glow: "shadow-[0_0_25px_rgba(6,182,212,0.3)]",
-      hover: "hover:border-cyan-500/50 hover:shadow-[0_12px_24px_rgba(6,182,212,0.12)]",
+      glow: "shadow-[0_0_25px_rgba(207,167,88,0.3)]",
+      hover: "hover:border-cyan-500/50 hover:shadow-[0_12px_24px_rgba(207,167,88,0.12)]",
       scanner: "via-cyan-400/50",
       bg: "from-cyan-500/[0.02] to-cyan-500/[0.08]",
       text: "text-cyan-600 font-black",
       textClass: "text-cyan-600",
       pulseDot: "bg-cyan-500",
-      ambientShadow: "shadow-[0_4px_15px_rgba(6,182,212,0.03)]"
+      ambientShadow: "shadow-[0_4px_15px_rgba(207,167,88,0.03)]"
     },
     blue: {
       border: "border-blue-500/30",
       borderActive: "border-blue-500",
-      glow: "shadow-[0_0_25px_rgba(59,130,246,0.3)]",
-      hover: "hover:border-blue-500/50 hover:shadow-[0_12px_24px_rgba(59,130,246,0.12)]",
+      glow: "shadow-[0_0_25px_rgba(169,122,60,0.3)]",
+      hover: "hover:border-blue-500/50 hover:shadow-[0_12px_24px_rgba(169,122,60,0.12)]",
       scanner: "via-blue-400/50",
       bg: "from-blue-500/[0.02] to-blue-500/[0.08]",
       text: "text-blue-600 font-black",
       textClass: "text-blue-600",
       pulseDot: "bg-blue-500",
-      ambientShadow: "shadow-[0_4px_15px_rgba(59,130,246,0.03)]"
+      ambientShadow: "shadow-[0_4px_15px_rgba(169,122,60,0.03)]"
     },
     emerald: {
       border: "border-emerald-500/30",
@@ -378,14 +402,14 @@ function PartnerCard({ partner, activePartner, onSelect }) {
     indigo: {
       border: "border-indigo-500/30",
       borderActive: "border-indigo-500",
-      glow: "shadow-[0_0_25px_rgba(99,102,241,0.3)]",
-      hover: "hover:border-indigo-500/50 hover:shadow-[0_12px_24px_rgba(99,102,241,0.12)]",
+      glow: "shadow-[0_0_25px_rgba(148,101,58,0.3)]",
+      hover: "hover:border-indigo-500/50 hover:shadow-[0_12px_24px_rgba(148,101,58,0.12)]",
       scanner: "via-indigo-400/50",
       bg: "from-indigo-500/[0.02] to-indigo-500/[0.08]",
       text: "text-indigo-600 font-black",
       textClass: "text-indigo-600",
       pulseDot: "bg-indigo-500",
-      ambientShadow: "shadow-[0_4px_15px_rgba(99,102,241,0.03)]"
+      ambientShadow: "shadow-[0_4px_15px_rgba(148,101,58,0.03)]"
     },
     orange: {
       border: "border-orange-500/30",
@@ -402,14 +426,14 @@ function PartnerCard({ partner, activePartner, onSelect }) {
   }[pColor] || {
     border: "border-cyan-500/30",
     borderActive: "border-cyan-500",
-    glow: "shadow-[0_0_25px_rgba(6,182,212,0.3)]",
-    hover: "hover:border-cyan-500/50 hover:shadow-[0_12px_24px_rgba(6,182,212,0.12)]",
+    glow: "shadow-[0_0_25px_rgba(207,167,88,0.3)]",
+    hover: "hover:border-cyan-500/50 hover:shadow-[0_12px_24px_rgba(207,167,88,0.12)]",
     scanner: "via-cyan-400/50",
     bg: "from-cyan-500/[0.02] to-cyan-500/[0.08]",
     text: "text-cyan-600 font-black",
     textClass: "text-cyan-600",
     pulseDot: "bg-cyan-500",
-    ambientShadow: "shadow-[0_4px_15px_rgba(6,182,212,0.03)]"
+    ambientShadow: "shadow-[0_4px_15px_rgba(207,167,88,0.03)]"
   };
 
   const getInitials = (name) => {
@@ -501,8 +525,12 @@ function PartnerCard({ partner, activePartner, onSelect }) {
           </div>
         ) : (
           <img 
+            ref={imgRef}
             src={partner.logo} 
             alt={partner.name} 
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
             className={`max-h-full max-w-full object-contain transition-all duration-500 select-none z-10
               ${partner.isWhite 
                 ? 'brightness-0 opacity-40 group-hover:brightness-100 group-hover:opacity-100' 
@@ -537,17 +565,7 @@ export default function GlobalPartners() {
   const [pingLatency, setPingLatency] = useState("14 ms");
   const [logs, setLogs] = useState([]);
   
-  // Dynamic tick for simulated metrics
-  const [timeCode, setTimeCode] = useState("GPS-UTC LOCK: 15:09:22.42");
   const consoleEndRef = useRef(null);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const d = new Date();
-      setTimeCode(`GPS-UTC LOCK: ${d.toTimeString().split(' ')[0]}.${Math.floor(Math.random() * 99)}`);
-    }, 450);
-    return () => clearInterval(timer);
-  }, []);
 
   // Set up logs streaming based on selected partner
   useEffect(() => {
@@ -644,11 +662,11 @@ export default function GlobalPartners() {
   const activeColorTheme = currentMetadata.color || "cyan";
 
   const glowBorderClass = {
-    cyan: "border-cyan-200/80 shadow-[0_20px_50px_rgba(6,182,212,0.08)]",
-    blue: "border-blue-200/80 shadow-[0_20px_50px_rgba(59,130,246,0.08)]",
+    cyan: "border-cyan-200/80 shadow-[0_20px_50px_rgba(207,167,88,0.08)]",
+    blue: "border-blue-200/80 shadow-[0_20px_50px_rgba(169,122,60,0.08)]",
     emerald: "border-emerald-200/80 shadow-[0_20px_50px_rgba(16,185,129,0.08)]",
     amber: "border-amber-200/80 shadow-[0_20px_50px_rgba(245,158,11,0.08)]",
-    indigo: "border-indigo-200/80 shadow-[0_20px_50px_rgba(99,102,241,0.08)]",
+    indigo: "border-indigo-200/80 shadow-[0_20px_50px_rgba(148,101,58,0.08)]",
     orange: "border-orange-200/80 shadow-[0_20px_50px_rgba(249,115,22,0.08)]"
   }[activeColorTheme];
 
@@ -662,11 +680,11 @@ export default function GlobalPartners() {
   }[activeColorTheme];
 
   const ledDotTheme = {
-    cyan: "bg-cyan-500 shadow-[0_0_8px_#06b6d4]",
-    blue: "bg-blue-500 shadow-[0_0_8px_#3b82f6]",
+    cyan: "bg-cyan-500 shadow-[0_0_8px_#cfa758]",
+    blue: "bg-blue-500 shadow-[0_0_8px_#a97a3c]",
     emerald: "bg-emerald-500 shadow-[0_0_8px_#10b981]",
     amber: "bg-amber-500 shadow-[0_0_8px_#f59e0b]",
-    indigo: "bg-indigo-500 shadow-[0_0_8px_#6366f1]",
+    indigo: "bg-indigo-500 shadow-[0_0_8px_#94653a]",
     orange: "bg-orange-500 shadow-[0_0_8px_#f97316]"
   }[activeColorTheme];
 
@@ -689,11 +707,11 @@ export default function GlobalPartners() {
   }[activeColorTheme];
 
   const svgParticleColor = {
-    cyan: "#06b6d4",
-    blue: "#3b82f6",
+    cyan: "#cfa758",
+    blue: "#a97a3c",
     emerald: "#10b981",
     amber: "#f59e0b",
-    indigo: "#6366f1",
+    indigo: "#94653a",
     orange: "#f97316"
   }[activeColorTheme];
 
@@ -750,14 +768,14 @@ export default function GlobalPartners() {
           width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(15, 23, 42, 0.05);
+          background: rgba(18,17,14, 0.05);
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(6, 182, 212, 0.3);
+          background: rgba(207,167,88, 0.3);
           border-radius: 99px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(6, 182, 212, 0.5);
+          background: rgba(207,167,88, 0.5);
         }
       `}} />
 
@@ -866,7 +884,7 @@ export default function GlobalPartners() {
         </AnimatePresence>
 
         {/* Tactical Advisory Alert Banner */}
-        <div className="bg-gradient-to-r from-cyan-500/[0.03] to-blue-500/[0.03] border border-cyan-500/15 rounded-3xl p-5 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-5 text-xs shadow-[0_4px_20px_rgba(6,182,212,0.02)] backdrop-blur-[2px]">
+        <div className="bg-gradient-to-r from-cyan-500/[0.03] to-blue-500/[0.03] border border-cyan-500/15 rounded-3xl p-5 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-5 text-xs shadow-[0_4px_20px_rgba(207,167,88,0.02)] backdrop-blur-[2px]">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-600 relative overflow-hidden shrink-0">
               <div className="absolute inset-1 border border-cyan-400/20 rounded-xl animate-pulse" />
@@ -1003,7 +1021,7 @@ export default function GlobalPartners() {
                 <div className={`h-3 w-3 rounded-full ${ledDotTheme} animate-pulse shadow-[0_0_12px_currentColor]`} />
                 <div>
                   <div className="text-[10px] font-mono font-black text-slate-800 tracking-[0.2em] uppercase">CENTRO DE CONTROL E INTEROPERABILIDAD TÉCNICA</div>
-                  <div className="text-[8px] font-mono text-slate-450 mt-1 uppercase tracking-wider">{timeCode}</div>
+                  <GpsTimeCode />
                 </div>
               </div>
 
@@ -1108,7 +1126,7 @@ export default function GlobalPartners() {
                       id="nodeLaserPath" 
                       d="M 40 30 C 100 10, 220 50, 280 30" 
                       fill="none" 
-                      stroke={pingState === "pinging" ? "#f97316" : "rgba(226, 232, 240, 1)"} 
+                      stroke={pingState === "pinging" ? "#f97316" : "rgba(226,222,212, 1)"} 
                       strokeWidth="2.5" 
                       strokeDasharray={pingState === "pinging" ? "4 4" : "none"}
                       className="transition-colors duration-300"
@@ -1131,16 +1149,16 @@ export default function GlobalPartners() {
                     </circle>
 
                     {/* Node A: DevGiz Core */}
-                    <circle cx="40" cy="30" r="12" fill="#0f172a" />
-                    <circle cx="40" cy="30" r="16" stroke="#0ea5e9" strokeWidth="1" strokeDasharray="3 3" className="animate-spin-slow" />
-                    <circle cx="40" cy="30" r="8" fill="#38bdf8" />
-                    <text x="40" y="54" fill="#64748b" fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">DEVGIZ CORE</text>
+                    <circle cx="40" cy="30" r="12" fill="#181714" />
+                    <circle cx="40" cy="30" r="16" stroke="#b88f3e" strokeWidth="1" strokeDasharray="3 3" className="animate-spin-slow" />
+                    <circle cx="40" cy="30" r="8" fill="#ddbe7a" />
+                    <text x="40" y="54" fill="#716c63" fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">DEVGIZ CORE</text>
 
                     {/* Node B: Remote Entity */}
-                    <circle cx="280" cy="30" r="12" fill="#334155" />
+                    <circle cx="280" cy="30" r="12" fill="#3d3a35" />
                     <circle cx="280" cy="30" r="16" stroke={svgParticleColor} strokeWidth="1" strokeDasharray="3 3" />
                     <circle cx="280" cy="30" r="7.5" fill={svgParticleColor} />
-                    <text x="280" y="54" fill="#64748b" fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">{activePartnerName}</text>
+                    <text x="280" y="54" fill="#716c63" fontSize="6.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">{activePartnerName}</text>
                   </svg>
                 </div>
 

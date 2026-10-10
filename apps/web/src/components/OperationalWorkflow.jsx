@@ -18,7 +18,7 @@ export default function OperationalWorkflow() {
       desc: "Diseñamos motores de validación automática, bases de datos PostGIS optimizadas y flujos de trabajo sin fricción.",
       color: "from-cyan-500/20 to-transparent",
       accent: "bg-cyan-500",
-      glow: "shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+      glow: "shadow-[0_0_20px_rgba(207,167,88,0.2)]"
     },
     {
       id: "03",
@@ -32,7 +32,7 @@ export default function OperationalWorkflow() {
   ];
 
   return (
-    <section className="relative w-full py-12 lg:py-16 z-10 bg-[#020406] overflow-hidden">
+    <section className="relative w-full py-12 lg:py-16 z-10 bg-[#040403] overflow-hidden">
       {/* Connector Line Background */}
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-800 to-transparent hidden lg:block"></div>
       

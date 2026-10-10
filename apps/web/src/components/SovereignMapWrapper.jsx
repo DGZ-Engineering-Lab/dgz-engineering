@@ -10,7 +10,7 @@ const SpatialIntelligenceDashboard = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-[#02040a] text-cyan-400 font-mono gap-4 select-none">
+      <div className="w-full h-full flex flex-col items-center justify-center bg-[#060504] text-cyan-400 font-mono gap-4 select-none">
         <Radio className="w-8 h-8 animate-ping text-cyan-500" />
         <span className="text-[10px] tracking-[0.3em] uppercase font-black animate-pulse">
           Sincronizando Vector Flux 3D...
@@ -97,7 +97,7 @@ export default function SovereignMapWrapper() {
   return (
     <div
       ref={containerRef}
-      className="w-full h-full relative bg-[#020408] flex items-center justify-center overflow-hidden border-glow group"
+      className="w-full h-full relative bg-[#050504] flex items-center justify-center overflow-hidden border-glow group"
       style={{ minHeight: "500px" }}
     >
       {/* 3D WebGL Live Dashboard */}
@@ -113,11 +113,11 @@ export default function SovereignMapWrapper() {
         />
       ) : (
         /* Tactical HUD Skeleton Screen */
-        <div className="absolute inset-0 w-full h-full flex flex-col justify-between p-6 select-none bg-[#03050a]/95 relative">
+        <div className="absolute inset-0 w-full h-full flex flex-col justify-between p-6 select-none bg-[#060605]/95 relative">
           
           {/* Futuristic Cyber Grid Pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#080e1a_1px,transparent_1px),linear-gradient(to_bottom,#080e1a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.03)_0%,transparent_70%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(207,167,88,0.03)_0%,transparent_70%)] pointer-events-none" />
           
           {/* Pulse Concentric Scanning Lines */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -128,7 +128,7 @@ export default function SovereignMapWrapper() {
           {/* HUD Header Status */}
           <div className="flex items-center justify-between z-10 w-full">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
+              <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_8px_#ddbe7a]"></span>
               <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest font-black">
                 GEO_HUD // STANDBY_MODE
               </span>
@@ -162,7 +162,7 @@ export default function SovereignMapWrapper() {
                   SISTEMA DE SEGURIDAD 2D ACTIVO // EVITA CONGELAMIENTO
                 </span>
               ) : (
-                <span className="text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/25 px-2.5 py-1 rounded shadow-[0_0_15px_rgba(6,182,212,0.05)]">
+                <span className="text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/25 px-2.5 py-1 rounded shadow-[0_0_15px_rgba(207,167,88,0.05)]">
                   <Globe className="w-3.5 h-3.5 text-cyan-400 animate-pulse shrink-0" />
                   MODO ESTÁNDAR 3D ACTIVO // REQUIERE WEBGL HABILITADO
                 </span>
@@ -185,7 +185,7 @@ export default function SovereignMapWrapper() {
                   }}
                   className={`flex-1 py-1.5 rounded transition-all cursor-pointer font-bold ${
                     mapEngine === "mapbox"
-                      ? "bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.25)]"
+                      ? "bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 shadow-[0_0_10px_rgba(207,167,88,0.25)]"
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
@@ -216,7 +216,7 @@ export default function SovereignMapWrapper() {
               className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[9px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
                 mapEngine === "sovereign"
                   ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.5)]"
-                  : "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.2)] hover:shadow-[0_0_40px_rgba(6,182,212,0.5)]"
+                  : "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_30px_rgba(207,167,88,0.2)] hover:shadow-[0_0_40px_rgba(207,167,88,0.5)]"
               }`}
             >
               {isLoading ? (

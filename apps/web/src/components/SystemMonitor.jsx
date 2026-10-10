@@ -42,10 +42,10 @@ export default function SystemMonitor() {
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 15 }}
-      className="w-full max-w-md mx-auto mt-12 p-6 rounded-2xl border border-slate-800/60 bg-[#07070c]/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden group hover:border-cyan-500/30 transition-colors duration-500"
+      className="w-full max-w-md mx-auto mt-12 p-6 rounded-2xl border border-slate-800/60 bg-[#090807]/70 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden group hover:border-cyan-500/30 transition-colors duration-500"
     >
       {/* Patrón de Rejilla de Fondo Táctico */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none rounded-2xl" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(207,167,88,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(207,167,88,0.03)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none rounded-2xl" />
       
       {/* Brillo de Luz Diagonal (Refraction Sweep) */}
       <div className="absolute inset-0 w-full h-full -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out pointer-events-none bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent" />
@@ -61,7 +61,7 @@ export default function SystemMonitor() {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[8px] font-mono text-cyan-400/60 uppercase">Live link</span>
-          <div className={`w-2 h-2 rounded-full ${apiStatus.includes("ONLINE") ? "bg-cyan-400 animate-ping" : "bg-red-500 animate-pulse"} shadow-[0_0_10px_rgba(6,182,212,0.5)]`} />
+          <div className={`w-2 h-2 rounded-full ${apiStatus.includes("ONLINE") ? "bg-cyan-400 animate-ping" : "bg-red-500 animate-pulse"} shadow-[0_0_10px_rgba(207,167,88,0.5)]`} />
         </div>
       </div>
       

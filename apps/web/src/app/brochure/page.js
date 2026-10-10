@@ -260,7 +260,7 @@ export default function BrochurePage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4.5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_25px_rgba(6,182,212,0.3)] hover:scale-[1.02]"
+                  className="w-full py-4.5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_25px_rgba(207,167,88,0.3)] hover:scale-[1.02]"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Reclamar Mi Ahorro vía WhatsApp</span>
@@ -278,7 +278,7 @@ export default function BrochurePage() {
 
       {/* DevGiz Engineering Specialties - Bento Grid */}
       <section className="py-24 px-6 relative bg-slate-900 text-white overflow-hidden border-t border-slate-800">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.1),transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(207,167,88,0.1),transparent_50%)] pointer-events-none"></div>
         <div className="max-w-6xl mx-auto relative z-10">
 
           <div className="text-center space-y-3 mb-20">
@@ -494,7 +494,7 @@ export default function BrochurePage() {
       <section className="py-28 px-6 bg-slate-950 text-white relative overflow-hidden">
 
         {/* Decorative Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.15),transparent_70%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(207,167,88,0.15),transparent_70%)] pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-none">

@@ -10,7 +10,7 @@ export default function TrustSection() {
 
   return (
     <section className="py-12 border-y border-slate-800/50 bg-black/40 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.05),transparent)] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(221,190,122,0.05),transparent)] pointer-events-none"></div>
       
       <div className="max-w-6xl mx-auto px-6 relative flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
         <div className="w-full text-center mb-4">

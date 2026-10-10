@@ -71,11 +71,11 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-cyan-400/40",
     glow: "bg-cyan-500/5 group-hover:bg-cyan-500/10",
     badge: "text-cyan-600 bg-cyan-50 border-cyan-200",
-    dot: "bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.3)]",
+    dot: "bg-cyan-500 shadow-[0_0_8px_rgba(207,167,88,0.3)]",
     accentBg: "from-cyan-500/10 to-transparent",
     borderGlow: "group-hover:border-cyan-500/30",
     glowingText: "text-slate-900",
-    primaryButton: "bg-cyan-600 text-white hover:bg-cyan-500 shadow-[0_4px_20px_rgba(6,182,212,0.2)]",
+    primaryButton: "bg-cyan-600 text-white hover:bg-cyan-500 shadow-[0_4px_20px_rgba(207,167,88,0.2)]",
     textMuted: "text-slate-500",
     scrollbar: "scrollbar-thumb-cyan-500/20",
     shimmer: "from-cyan-500/5 via-cyan-500/10 to-cyan-500/5"
@@ -86,11 +86,11 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-indigo-400/40",
     glow: "bg-indigo-500/5 group-hover:bg-indigo-500/10",
     badge: "text-indigo-600 bg-indigo-50 border-indigo-200",
-    dot: "bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.3)]",
+    dot: "bg-indigo-500 shadow-[0_0_8px_rgba(148,101,58,0.3)]",
     accentBg: "from-indigo-500/10 to-transparent",
     borderGlow: "group-hover:border-indigo-500/30",
     glowingText: "text-slate-900",
-    primaryButton: "bg-indigo-600 text-white hover:bg-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.2)]",
+    primaryButton: "bg-indigo-600 text-white hover:bg-indigo-500 shadow-[0_4px_20px_rgba(148,101,58,0.2)]",
     textMuted: "text-slate-500",
     scrollbar: "scrollbar-thumb-indigo-500/20",
     shimmer: "from-indigo-500/5 via-indigo-500/10 to-indigo-500/5"
@@ -101,11 +101,11 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-purple-400/40",
     glow: "bg-purple-500/5 group-hover:bg-purple-500/10",
     badge: "text-purple-600 bg-purple-50 border-purple-200",
-    dot: "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.3)]",
+    dot: "bg-purple-500 shadow-[0_0_8px_rgba(181,133,82,0.3)]",
     accentBg: "from-purple-500/10 to-transparent",
     borderGlow: "group-hover:border-purple-500/30",
     glowingText: "text-slate-900",
-    primaryButton: "bg-purple-600 text-white hover:bg-purple-500 shadow-[0_4px_20px_rgba(168,85,247,0.2)]",
+    primaryButton: "bg-purple-600 text-white hover:bg-purple-500 shadow-[0_4px_20px_rgba(181,133,82,0.2)]",
     textMuted: "text-slate-500",
     scrollbar: "scrollbar-thumb-purple-500/20",
     shimmer: "from-purple-500/5 via-purple-500/10 to-purple-500/5"
@@ -116,11 +116,11 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-blue-400/40",
     glow: "bg-blue-500/5 group-hover:bg-blue-500/10",
     badge: "text-blue-600 bg-blue-50 border-blue-200",
-    dot: "bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]",
+    dot: "bg-blue-500 shadow-[0_0_8px_rgba(169,122,60,0.3)]",
     accentBg: "from-blue-500/10 to-transparent",
     borderGlow: "group-hover:border-blue-500/30",
     glowingText: "text-slate-900",
-    primaryButton: "bg-blue-600 text-white hover:bg-blue-500 shadow-[0_4px_20px_rgba(59,130,246,0.2)]",
+    primaryButton: "bg-blue-600 text-white hover:bg-blue-500 shadow-[0_4px_20px_rgba(169,122,60,0.2)]",
     textMuted: "text-slate-500",
     scrollbar: "scrollbar-thumb-blue-500/20",
     shimmer: "from-blue-500/5 via-blue-500/10 to-blue-500/5"
@@ -146,11 +146,11 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-teal-400/40",
     glow: "bg-teal-500/5 group-hover:bg-teal-500/10",
     badge: "text-teal-600 bg-teal-50 border-teal-200",
-    dot: "bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.3)]",
+    dot: "bg-teal-500 shadow-[0_0_8px_rgba(184,143,62,0.3)]",
     accentBg: "from-teal-500/10 to-transparent",
     borderGlow: "group-hover:border-teal-500/30",
     glowingText: "text-slate-900",
-    primaryButton: "bg-teal-600 text-white hover:bg-teal-500 shadow-[0_4px_20px_rgba(20,184,166,0.2)]",
+    primaryButton: "bg-teal-600 text-white hover:bg-teal-500 shadow-[0_4px_20px_rgba(184,143,62,0.2)]",
     textMuted: "text-slate-500",
     scrollbar: "scrollbar-thumb-teal-500/20",
     shimmer: "from-teal-500/5 via-teal-500/10 to-teal-500/5"
@@ -467,7 +467,7 @@ export default function ServicePage() {
             {/* Grid de fondo */}
             <defs>
               <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(15,23,42,0.03)" strokeWidth="1" />
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(18,17,14,0.03)" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -486,8 +486,8 @@ export default function ServicePage() {
                   <path
                     key={p.id}
                     d={p.d}
-                    fill={isSelected ? "rgba(6,182,212,0.15)" : isAct && p.id === Math.floor(simProgress / 20) + 1 ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.7)"}
-                    stroke={isSelected ? "#0891b2" : isAct && p.id === Math.floor(simProgress / 20) + 1 ? "#06b6d4" : "#cbd5e1"}
+                    fill={isSelected ? "rgba(207,167,88,0.15)" : isAct && p.id === Math.floor(simProgress / 20) + 1 ? "rgba(207,167,88,0.08)" : "rgba(255,255,255,0.7)"}
+                    stroke={isSelected ? "#b88f3e" : isAct && p.id === Math.floor(simProgress / 20) + 1 ? "#cfa758" : "#cac4b7"}
                     strokeWidth={isSelected ? "2.5" : "1.5"}
                     className="cursor-pointer transition-all duration-300 hover:fill-cyan-50/50"
                     onClick={() => setSelectedCell(p)}
@@ -499,10 +499,10 @@ export default function ServicePage() {
             {/* Marcadores de vértices georreferenciados */}
             {isAct && (
               <g>
-                <circle cx="120" cy="160" r="4" fill="#0891b2" className="animate-ping" />
-                <circle cx="120" cy="160" r="2.5" fill="#0891b2" />
-                <circle cx="250" cy="150" r="2.5" fill="#0891b2" />
-                <circle cx="150" cy="50" r="2.5" fill="#0891b2" />
+                <circle cx="120" cy="160" r="4" fill="#b88f3e" className="animate-ping" />
+                <circle cx="120" cy="160" r="2.5" fill="#b88f3e" />
+                <circle cx="250" cy="150" r="2.5" fill="#b88f3e" />
+                <circle cx="150" cy="50" r="2.5" fill="#b88f3e" />
               </g>
             )}
 
@@ -513,7 +513,7 @@ export default function ServicePage() {
                 y1={(simProgress / 100) * 300} 
                 x2="400" 
                 y2={(simProgress / 100) * 300} 
-                stroke="rgba(8,145,178,0.3)" 
+                stroke="rgba(184,143,62,0.3)" 
                 strokeWidth="2" 
                 strokeDasharray="4,4"
               />
@@ -522,10 +522,10 @@ export default function ServicePage() {
             {/* HUD de información en el gráfico */}
             {selectedCell && (
               <g className="translate-y-[210] translate-x-4">
-                <rect width="220" height="75" rx="8" fill="rgba(15,23,42,0.95)" />
-                <text x="12" y="24" fill="#38bdf8" fontSize="10" fontFamily="monospace" fontWeight="bold">LADM-COL REGISTRY</text>
+                <rect width="220" height="75" rx="8" fill="rgba(18,17,14,0.95)" />
+                <text x="12" y="24" fill="#ddbe7a" fontSize="10" fontFamily="monospace" fontWeight="bold">LADM-COL REGISTRY</text>
                 <text x="12" y="42" fill="white" fontSize="11" fontFamily="sans-serif">{selectedCell.label}</text>
-                <text x="12" y="58" fill="#94a3b8" fontSize="9" fontFamily="monospace">Código: {selectedCell.val}</text>
+                <text x="12" y="58" fill="#9c968a" fontSize="9" fontFamily="monospace">Código: {selectedCell.val}</text>
               </g>
             )}
           </svg>
@@ -534,11 +534,11 @@ export default function ServicePage() {
       case "charts": // BUSINESS INTELLIGENCE CHARTS
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             
             {/* Ejes */}
-            <line x1="50" y1="250" x2="350" y2="250" stroke="#cbd5e1" strokeWidth="2" />
-            <line x1="50" y1="50" x2="50" y2="250" stroke="#cbd5e1" strokeWidth="2" />
+            <line x1="50" y1="250" x2="350" y2="250" stroke="#cac4b7" strokeWidth="2" />
+            <line x1="50" y1="50" x2="50" y2="250" stroke="#cac4b7" strokeWidth="2" />
 
             {/* Barras animadas */}
             {[140, 190, 80, 220, 160, 200].map((h, i) => {
@@ -560,8 +560,8 @@ export default function ServicePage() {
             {/* Gradiente para las barras */}
             <defs>
               <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#4f46e5" />
-                <stop offset="100%" stopColor="#818cf8" />
+                <stop offset="0%" stopColor="#77502e" />
+                <stop offset="100%" stopColor="#b58552" />
               </linearGradient>
             </defs>
 
@@ -582,9 +582,9 @@ export default function ServicePage() {
       case "network": // DEEP LEARNING NEURAL NETWORK
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full" fill="none">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Conexiones */}
-            <g stroke="rgba(139,92,246,0.15)" strokeWidth="1.5">
+            <g stroke="rgba(148,101,58,0.15)" strokeWidth="1.5">
               {/* Capa 1 a Capa 2 */}
               {[60, 140, 220].map((y1) => 
                 [50, 110, 170, 230].map((y2) => (
@@ -602,14 +602,14 @@ export default function ServicePage() {
             {/* Señales eléctricas fluyendo */}
             {isAct && (
               <g>
-                <circle r="4" fill="#a855f7" className="transition-all duration-1000">
+                <circle r="4" fill="#b58552" className="transition-all duration-1000">
                   <animateMotion 
                     path="M 80 140 L 200 110 L 320 180" 
                     dur="1.5s" 
                     repeatCount="indefinite" 
                   />
                 </circle>
-                <circle r="4" fill="#a855f7">
+                <circle r="4" fill="#b58552">
                   <animateMotion 
                     path="M 80 60 L 200 170 L 320 100" 
                     dur="1.2s" 
@@ -622,11 +622,11 @@ export default function ServicePage() {
             {/* Nodos de neuronas */}
             {/* Capa de entrada */}
             {[60, 140, 220].map((y, idx) => (
-              <circle key={`n1-${idx}`} cx="80" cy={y} r="10" fill="#e9d5ff" stroke="#a855f7" strokeWidth="2" className={isAct ? "animate-pulse" : ""} />
+              <circle key={`n1-${idx}`} cx="80" cy={y} r="10" fill="#eedfcf" stroke="#b58552" strokeWidth="2" className={isAct ? "animate-pulse" : ""} />
             ))}
             {/* Capa oculta */}
             {[50, 110, 170, 230].map((y, idx) => (
-              <circle key={`n2-${idx}`} cx="200" cy={y} r="10" fill="#ddd6fe" stroke="#6d28d9" strokeWidth="2" />
+              <circle key={`n2-${idx}`} cx="200" cy={y} r="10" fill="#eedfcf" stroke="#5f4027" strokeWidth="2" />
             ))}
             {/* Capa de salida */}
             {[100, 180].map((y, idx) => (
@@ -637,10 +637,10 @@ export default function ServicePage() {
 
       case "wireframe": // BIM ISOMETRIC WIREFRAME
         return (
-          <svg viewBox="0 0 400 300" className="w-full h-full" stroke="#2563eb" fill="none">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+          <svg viewBox="0 0 400 300" className="w-full h-full" stroke="#85602c" fill="none">
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Rejilla estructural */}
-            <g stroke="rgba(37,99,235,0.06)" strokeWidth="1">
+            <g stroke="rgba(133,96,44,0.06)" strokeWidth="1">
               <path d="M 50 150 L 200 70 L 350 150 L 200 230 Z" />
               <path d="M 50 200 L 200 120 L 350 200 L 200 280 Z" />
             </g>
@@ -648,20 +648,20 @@ export default function ServicePage() {
             {/* Estructura 3D del Edificio */}
             <g strokeWidth={isAct ? "2" : "1.5"} className="transition-all">
               {/* Columnas base */}
-              <line x1="120" y1="210" x2="120" y2="90" stroke={isAct ? "#2563eb" : "#93c5fd"} />
-              <line x1="200" y1="250" x2="200" y2="130" stroke={isAct ? "#1d4ed8" : "#60a5fa"} />
-              <line x1="280" y1="210" x2="280" y2="90" stroke={isAct ? "#2563eb" : "#93c5fd"} />
-              <line x1="200" y1="170" x2="200" y2="50" stroke="rgba(37,99,235,0.4)" strokeDasharray="3,3" />
+              <line x1="120" y1="210" x2="120" y2="90" stroke={isAct ? "#85602c" : "#e2c6a0"} />
+              <line x1="200" y1="250" x2="200" y2="130" stroke={isAct ? "#6a4c25" : "#c4955a"} />
+              <line x1="280" y1="210" x2="280" y2="90" stroke={isAct ? "#85602c" : "#e2c6a0"} />
+              <line x1="200" y1="170" x2="200" y2="50" stroke="rgba(133,96,44,0.4)" strokeDasharray="3,3" />
 
               {/* Anillos de vigas horizontales */}
               {/* Nivel inferior */}
-              <path d="M 120 210 L 200 250 L 280 210 L 200 170 Z" stroke="#3b82f6" />
+              <path d="M 120 210 L 200 250 L 280 210 L 200 170 Z" stroke="#a97a3c" />
               
               {/* Nivel medio */}
-              <path d="M 120 150 L 200 190 L 280 150 L 200 110 Z" stroke="#2563eb" className={isAct ? "animate-pulse" : ""} />
+              <path d="M 120 150 L 200 190 L 280 150 L 200 110 Z" stroke="#85602c" className={isAct ? "animate-pulse" : ""} />
 
               {/* Nivel superior */}
-              <path d="M 120 90 L 200 130 L 280 90 L 200 50 Z" stroke="#1d4ed8" />
+              <path d="M 120 90 L 200 130 L 280 90 L 200 50 Z" stroke="#6a4c25" />
             </g>
 
             {/* Puntos de cargas estructurales */}
@@ -678,16 +678,16 @@ export default function ServicePage() {
       case "road": // ROAD GEOMETRIC CROSS-SECTION
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Terreno natural original */}
-            <path d="M 20 240 Q 120 200 200 180 T 380 90" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4,4" />
+            <path d="M 20 240 Q 120 200 200 180 T 380 90" fill="none" stroke="#9c968a" strokeWidth="2" strokeDasharray="4,4" />
 
             {/* Rasante / Vía implantada */}
             <g className="transition-all duration-500">
               {/* Capas asfálticas */}
-              <polygon points="120,160 280,160 270,175 130,175" fill="#475569" stroke="#334155" strokeWidth="1.5" />
+              <polygon points="120,160 280,160 270,175 130,175" fill="#57534c" stroke="#3d3a35" strokeWidth="1.5" />
               {/* Capa de subbase */}
-              <polygon points="130,175 270,175 260,190 140,190" fill="#94a3b8" />
+              <polygon points="130,175 270,175 260,190 140,190" fill="#9c968a" />
               
               {/* Taludes de corte y terraplén */}
               <line x1="120" y1="160" x2="60" y2="230" stroke="#10b981" strokeWidth="2.5" />
@@ -695,7 +695,7 @@ export default function ServicePage() {
             </g>
 
             {/* Drenajes longitudinales (Cunetas) */}
-            <path d="M 60 230 L 45 235 L 30 220" fill="none" stroke="#2563eb" strokeWidth="2" />
+            <path d="M 60 230 L 45 235 L 30 220" fill="none" stroke="#85602c" strokeWidth="2" />
 
             {/* Mira láser de precisión */}
             {isAct && (
@@ -712,7 +712,7 @@ export default function ServicePage() {
       case "grid": // MULTI-SPECTRAL NDVI GRID
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Grid 8x6 */}
             <g>
               {Array.from({ length: 6 }).map((_, r) => 
@@ -721,7 +721,7 @@ export default function ServicePage() {
                   const isScanned = simProgress > (id / 48) * 100;
                   
                   // Generar colores espectrales: saludables (verdes), estresados (amarillos/rojos)
-                  let color = "#e2e8f0"; // Inactivo
+                  let color = "#e2ded4"; // Inactivo
                   if (isScanned) {
                     if (id === 12 || id === 13 || id === 20 || id === 21) {
                       color = "#fca5a5"; // Estrés hídrico (rojo suave)
@@ -743,7 +743,7 @@ export default function ServicePage() {
                       height="34"
                       rx="3"
                       fill={color}
-                      stroke={isSelected ? "#0d9488" : "#ffffff"}
+                      stroke={isSelected ? "#8a6825" : "#ffffff"}
                       strokeWidth={isSelected ? "2" : "1"}
                       className="cursor-pointer transition-all duration-300 hover:opacity-85"
                       onClick={() => setSelectedCell(isSelected ? null : id)}
@@ -760,8 +760,8 @@ export default function ServicePage() {
                 y="20"
                 width="350"
                 height="10"
-                fill="rgba(20,184,166,0.1)"
-                stroke="#14b8a6"
+                fill="rgba(184,143,62,0.1)"
+                stroke="#b88f3e"
                 strokeWidth="1"
                 style={{
                   transform: `translateY(${(simProgress / 100) * 230}px)`,
@@ -775,8 +775,8 @@ export default function ServicePage() {
               <g className="translate-y-[220] translate-x-24">
                 <rect width="180" height="60" rx="8" fill="rgba(13,148,136,0.95)" />
                 <text x="12" y="20" fill="white" fontSize="10" fontFamily="monospace" fontWeight="bold">SATELLITE TELEMETRY</text>
-                <text x="12" y="36" fill="#ccfbf1" fontSize="10" fontFamily="sans-serif">NDVI Index: {selectedCell === 12 || selectedCell === 13 || selectedCell === 20 || selectedCell === 21 ? "0.24 (Crítico)" : selectedCell === 18 || selectedCell === 34 || selectedCell === 35 ? "0.48 (Estrés)" : "0.82 (Óptimo)"}</text>
-                <text x="12" y="48" fill="#99f6e4" fontSize="8" fontFamily="monospace">Lote: {Math.floor(selectedCell / 8) + 1} - Surco: {(selectedCell % 8) + 1}</text>
+                <text x="12" y="36" fill="#f4ead2" fontSize="10" fontFamily="sans-serif">NDVI Index: {selectedCell === 12 || selectedCell === 13 || selectedCell === 20 || selectedCell === 21 ? "0.24 (Crítico)" : selectedCell === 18 || selectedCell === 34 || selectedCell === 35 ? "0.48 (Estrés)" : "0.82 (Óptimo)"}</text>
+                <text x="12" y="48" fill="#e9d5a6" fontSize="8" fontFamily="monospace">Lote: {Math.floor(selectedCell / 8) + 1} - Surco: {(selectedCell % 8) + 1}</text>
               </g>
             )}
           </svg>
@@ -785,12 +785,12 @@ export default function ServicePage() {
       case "basin": // BASIN WATER RUNOFF
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full" fill="none">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Contornos del relieve */}
-            <path d="M 50 80 Q 200 40 350 80 M 50 150 Q 200 110 350 150 M 50 220 Q 200 180 350 220" stroke="#cbd5e1" strokeWidth="1" />
+            <path d="M 50 80 Q 200 40 350 80 M 50 150 Q 200 110 350 150 M 50 220 Q 200 180 350 220" stroke="#cac4b7" strokeWidth="1" />
 
             {/* Red Hídrica (Ríos vectoriales) */}
-            <g stroke="#3b82f6" strokeLinecap="round">
+            <g stroke="#a97a3c" strokeLinecap="round">
               <path d="M 80 70 Q 150 120 200 150" strokeWidth="1.5" />
               <path d="M 320 60 Q 250 110 200 150" strokeWidth="1.5" />
               <path d="M 200 150 Q 210 210 200 280" strokeWidth="3" />
@@ -798,13 +798,13 @@ export default function ServicePage() {
 
             {/* Partículas de lluvia simuladas descendiendo */}
             {isAct && (
-              <g fill="#2563eb">
+              <g fill="#85602c">
                 <circle cx="100" cy="80" r="2.5"><animate attributeName="cy" values="80;110" dur="1s" repeatCount="indefinite" /></circle>
                 <circle cx="130" cy="90" r="2"><animate attributeName="cy" values="90;125" dur="1.4s" repeatCount="indefinite" /></circle>
                 <circle cx="280" cy="70" r="2.5"><animate attributeName="cy" values="70;115" dur="0.9s" repeatCount="indefinite" /></circle>
                 
                 {/* Flujo en el cauce principal */}
-                <circle r="3.5" fill="#3b82f6">
+                <circle r="3.5" fill="#a97a3c">
                   <animateMotion path="M 200 150 Q 210 210 200 280" dur="2s" repeatCount="indefinite" />
                 </circle>
               </g>
@@ -820,10 +820,10 @@ export default function ServicePage() {
       case "pods": // KUBERNETES DEVOPS PODS
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Clúster Virtual Box */}
-            <rect x="30" y="30" width="340" height="240" rx="16" fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="4,4" />
-            <text x="45" y="52" fill="#64748b" fontSize="9" fontFamily="monospace" fontWeight="bold">K8S CLUSTER: EKS-GEO-PROD</text>
+            <rect x="30" y="30" width="340" height="240" rx="16" fill="none" stroke="#cac4b7" strokeWidth="2" strokeDasharray="4,4" />
+            <text x="45" y="52" fill="#716c63" fontSize="9" fontFamily="monospace" fontWeight="bold">K8S CLUSTER: EKS-GEO-PROD</text>
 
             {/* Pods que escalan dinámicamente con el progreso */}
             <g>
@@ -847,12 +847,12 @@ export default function ServicePage() {
                       width="48"
                       height="48"
                       rx="10"
-                      fill={isActivated ? "#ffedd5" : "#f1f5f9"}
-                      stroke={isActivated ? "#f97316" : "#cbd5e1"}
+                      fill={isActivated ? "#ffedd5" : "#f0ede6"}
+                      stroke={isActivated ? "#f97316" : "#cac4b7"}
                       strokeWidth="2"
                     />
-                    <circle cx={pod.cx} cy={pod.cy - 6} r="5" fill={isActivated ? "#10b981" : "#94a3b8"} className={isActivated ? "animate-pulse" : ""} />
-                    <text x={pod.cx} y={pod.cy + 12} textAnchor="middle" fill="#475569" fontSize="7" fontFamily="monospace">pod-0{pod.id}</text>
+                    <circle cx={pod.cx} cy={pod.cy - 6} r="5" fill={isActivated ? "#10b981" : "#9c968a"} className={isActivated ? "animate-pulse" : ""} />
+                    <text x={pod.cx} y={pod.cy + 12} textAnchor="middle" fill="#57534c" fontSize="7" fontFamily="monospace">pod-0{pod.id}</text>
                   </g>
                 );
               })}
@@ -863,7 +863,7 @@ export default function ServicePage() {
       case "cloud": // DRONE LIDAR POINT CLOUD
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Nube de puntos simulada con pequeños círculos */}
             <g fill="#f43f5e" opacity="0.6">
               {Array.from({ length: 15 }).map((_, r) => 
@@ -899,8 +899,8 @@ export default function ServicePage() {
                 {/* Cono láser del sensor LiDAR */}
                 <polygon points="20,50 60,50 10,130 70,130" fill="rgba(225,29,72,0.06)" />
                 {/* Cuerpo del Dron */}
-                <rect x="25" y="38" width="30" height="12" rx="4" fill="#1e293b" />
-                <line x1="15" y1="44" x2="65" y2="44" stroke="#475569" strokeWidth="2.5" />
+                <rect x="25" y="38" width="30" height="12" rx="4" fill="#282622" />
+                <line x1="15" y1="44" x2="65" y2="44" stroke="#57534c" strokeWidth="2.5" />
                 <circle cx="15" cy="44" r="3" fill="#e11d48" />
                 <circle cx="65" cy="44" r="3" fill="#e11d48" />
               </g>
@@ -911,16 +911,16 @@ export default function ServicePage() {
       case "api": // API GATEWAY REQUEST PIPELINE
         return (
           <svg viewBox="0 0 400 300" className="w-full h-full" fill="none">
-            <rect width="100%" height="100%" fill="rgba(248,250,252,0.5)" />
+            <rect width="100%" height="100%" fill="rgba(248,246,241,0.5)" />
             {/* Nodos de arquitectura */}
-            <g stroke="#cbd5e1" strokeWidth="2">
+            <g stroke="#cac4b7" strokeWidth="2">
               {/* Cliente */}
               <rect x="40" y="110" width="60" height="80" rx="8" fill="white" stroke="#db2777" />
               <text x="70" y="155" textAnchor="middle" fill="#db2777" fontSize="9" fontFamily="monospace" fontWeight="bold">CLIENT</text>
               
               {/* API Gateway */}
-              <rect x="170" y="110" width="60" height="80" rx="8" fill="white" stroke="#2563eb" />
-              <text x="200" y="155" textAnchor="middle" fill="#2563eb" fontSize="9" fontFamily="monospace" fontWeight="bold">API GW</text>
+              <rect x="170" y="110" width="60" height="80" rx="8" fill="white" stroke="#85602c" />
+              <text x="200" y="155" textAnchor="middle" fill="#85602c" fontSize="9" fontFamily="monospace" fontWeight="bold">API GW</text>
 
               {/* Database Relacional */}
               <rect x="300" y="110" width="60" height="80" rx="8" fill="white" stroke="#16a34a" />
@@ -928,7 +928,7 @@ export default function ServicePage() {
             </g>
 
             {/* Vectores de conexión */}
-            <g stroke="#94a3b8" strokeWidth="2" strokeLinecap="round">
+            <g stroke="#9c968a" strokeWidth="2" strokeLinecap="round">
               <path d="M 100 150 L 170 150" />
               <path d="M 230 150 L 300 150" />
             </g>
@@ -1484,7 +1484,7 @@ export default function ServicePage() {
                         <button
                           key={cmd}
                           onClick={() => runTerminalCommand(cmd)}
-                          className="px-2 py-1 bg-[#060a13] hover:bg-[#0c1224] hover:text-white border border-slate-850 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer"
+                          className="px-2 py-1 bg-[#0c0b09] hover:bg-[#171612] hover:text-white border border-slate-850 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer"
                         >
                           {cmd}
                         </button>
@@ -1564,7 +1564,7 @@ export default function ServicePage() {
                     }}
                     className={`w-full py-4 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 group/btn shadow-md ${
                       isPopular
-                        ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_4px_20px_rgba(6,182,212,0.15)]"
+                        ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_4px_20px_rgba(207,167,88,0.15)]"
                         : "bg-slate-900 hover:bg-slate-800 text-white"
                     }`}
                   >

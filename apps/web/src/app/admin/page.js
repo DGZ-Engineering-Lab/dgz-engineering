@@ -392,7 +392,7 @@ export default function AdminPage() {
   // ─── RENDER ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-[#0a0c10] text-slate-200 font-sans relative overflow-hidden selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#0d0c0a] text-slate-200 font-sans relative overflow-hidden selection:bg-cyan-500/30">
 
       {/* Background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-900/15 blur-[120px] rounded-full pointer-events-none" />
@@ -758,7 +758,7 @@ export default function AdminPage() {
           {selectedMsg && (
             <div className="fixed inset-0 z-50 md:hidden">
               <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setSelectedMsg(null)} />
-              <div className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[#0f1117] border-t border-slate-800 rounded-t-[2rem] overflow-y-auto animate-in slide-in-from-bottom duration-300">
+              <div className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[#13120f] border-t border-slate-800 rounded-t-[2rem] overflow-y-auto animate-in slide-in-from-bottom duration-300">
                 {/* Handle */}
                 <div className="flex justify-center py-3"><div className="w-10 h-1 bg-slate-700 rounded-full" /></div>
                 <div className="px-5 pb-8 space-y-5">
@@ -827,7 +827,7 @@ export default function AdminPage() {
           {isModalOpen && aiDraftMsg && (
             <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6">
               <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => !isGeneratingAI && setIsModalOpen(false)} />
-              <div className="relative w-full sm:max-w-2xl bg-[#0f1117] border border-slate-800 rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[80vh]">
+              <div className="relative w-full sm:max-w-2xl bg-[#13120f] border border-slate-800 rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[80vh]">
                 {/* Header */}
                 <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-800/60 bg-slate-900/30 flex justify-between items-center shrink-0">
                   <div className="flex items-center gap-3">

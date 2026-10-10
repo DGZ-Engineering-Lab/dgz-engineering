@@ -26,7 +26,7 @@ export default function SimpleValueSection() {
   return (
     <section className="py-12 lg:py-16 bg-white text-black relative overflow-hidden">
       {/* Decorative Light Elements */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#02040a] to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#060504] to-transparent"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center space-y-4 mb-12">

@@ -68,16 +68,16 @@ export default function RtkSatelliteHud() {
             <circle cx="80" cy="80" r="10" className="fill-cyan-500/10 stroke-cyan-400/40 stroke-0.5" />
             
             {/* Orbits */}
-            <circle cx="80" cy="80" r="38" fill="none" stroke="rgba(6, 182, 212, 0.12)" strokeWidth="1" strokeDasharray="3,2" />
-            <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(6, 182, 212, 0.08)" strokeWidth="1" />
+            <circle cx="80" cy="80" r="38" fill="none" stroke="rgba(207,167,88, 0.12)" strokeWidth="1" strokeDasharray="3,2" />
+            <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(207,167,88, 0.08)" strokeWidth="1" />
             
             {/* Pulsing signal beams back to earth */}
             {isLocked && (
               <g opacity="0.3">
-                <line x1="30" y1="40" x2="80" y2="80" stroke="#22d3ee" strokeWidth="0.8" className="animate-pulse" />
-                <line x1="130" y1="40" x2="80" y2="80" stroke="#22d3ee" strokeWidth="0.8" />
-                <line x1="80" y1="20" x2="80" y2="80" stroke="#22d3ee" strokeWidth="0.8" />
-                <line x1="120" y1="120" x2="80" y2="80" stroke="#22d3ee" strokeWidth="0.8" />
+                <line x1="30" y1="40" x2="80" y2="80" stroke="#ddbe7a" strokeWidth="0.8" className="animate-pulse" />
+                <line x1="130" y1="40" x2="80" y2="80" stroke="#ddbe7a" strokeWidth="0.8" />
+                <line x1="80" y1="20" x2="80" y2="80" stroke="#ddbe7a" strokeWidth="0.8" />
+                <line x1="120" y1="120" x2="80" y2="80" stroke="#ddbe7a" strokeWidth="0.8" />
               </g>
             )}
 
@@ -152,7 +152,7 @@ export default function RtkSatelliteHud() {
                   className={`h-2 flex-1 rounded-sm transition-all duration-300 ${
                     i < activeSats 
                       ? isLocked 
-                        ? "bg-cyan-500 shadow-[0_0_6px_#06b6d4]" 
+                        ? "bg-cyan-500 shadow-[0_0_6px_#cfa758]" 
                         : "bg-amber-500 shadow-[0_0_6px_#f59e0b]"
                       : "bg-slate-900"
                   }`} 

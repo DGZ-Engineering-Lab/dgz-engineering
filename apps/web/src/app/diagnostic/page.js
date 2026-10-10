@@ -13,7 +13,7 @@ import RtkSatelliteHud from "../../components/RtkSatelliteHud";
 
 function BlueprintSkeleton() {
   return (
-    <div className="w-full h-[450px] bg-[#020408] rounded-[2rem] border border-cyan-500/20 relative overflow-hidden p-6 flex flex-col justify-between select-none">
+    <div className="w-full h-[450px] bg-[#050504] rounded-[2rem] border border-cyan-500/20 relative overflow-hidden p-6 flex flex-col justify-between select-none">
       {/* Cyber Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#091426_1px,transparent_1px),linear-gradient(to_bottom,#091426_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-45" />
       
@@ -22,7 +22,7 @@ function BlueprintSkeleton() {
         initial={{ y: "-100%" }}
         animate={{ y: "100%" }}
         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        className="absolute left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10 pointer-events-none"
+        className="absolute left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_rgba(207,167,88,0.8)] z-10 pointer-events-none"
       />
       
       {/* Concentric blueprint lines */}
@@ -308,17 +308,17 @@ export default function DiagnosticPage() {
     <div className="pt-32 pb-24 px-6 max-w-7xl mx-auto w-full relative z-10 flex-grow">
       
       {/* Background radial effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100%)] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-10 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header and Brand Presentation */}
       <div className="space-y-6 text-center max-w-4xl mx-auto mb-16">
         <div className="flex items-center justify-center gap-3">
-          <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#06b6d4]"></span>
+          <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#cfa758]"></span>
           <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-400 font-semibold">
             Interactive Diagnostics Portal
           </span>
-          <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#06b6d4]"></span>
+          <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#cfa758]"></span>
         </div>
         
         <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white leading-tight">
@@ -338,7 +338,7 @@ export default function DiagnosticPage() {
             onClick={() => setActiveTab("sandbox")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "sandbox"
-                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
+                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(207,167,88,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
             }`}
           >
@@ -348,7 +348,7 @@ export default function DiagnosticPage() {
             onClick={() => setActiveTab("roi")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "roi"
-                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
+                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(207,167,88,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
             }`}
           >
@@ -358,7 +358,7 @@ export default function DiagnosticPage() {
             onClick={() => setActiveTab("audit")}
             className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
               activeTab === "audit"
-                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
+                ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(207,167,88,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
             }`}
           >
@@ -401,7 +401,7 @@ export default function DiagnosticPage() {
                           try { window.dgzSynth.playClick(); } catch (e) {}
                         }
                       }}
-                      className="px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono text-[8px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                      className="px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono text-[8px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(207,167,88,0.1)]"
                     >
                       <Globe className="w-3 h-3 animate-pulse" />
                       {viewAdvancedDashboard ? "Consola Básica" : "Consola Avanzada 3D"}
@@ -413,7 +413,7 @@ export default function DiagnosticPage() {
                 </div>
 
                 {viewAdvancedDashboard ? (
-                  <div className="flex-grow flex flex-col rounded-2xl overflow-hidden min-h-[400px] border border-slate-900/60 bg-[#020408]">
+                  <div className="flex-grow flex flex-col rounded-2xl overflow-hidden min-h-[400px] border border-slate-900/60 bg-[#050504]">
                     <SpatialIntelligenceDashboard forceSovereign={true} />
                   </div>
                 ) : (
@@ -423,7 +423,7 @@ export default function DiagnosticPage() {
                       
                       {/* Grid Lines Overlay */}
                       <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-                        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '25px 25px' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(221,190,122,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(221,190,122,0.2) 1px, transparent 1px)', backgroundSize: '25px 25px' }}></div>
                       </div>
 
                       {/* Laser Scan Beam */}
@@ -432,7 +432,7 @@ export default function DiagnosticPage() {
                           initial={{ y: "-100%" }}
                           animate={{ y: "100%" }}
                           transition={{ duration: 2.2, ease: "easeInOut", repeat: 0 }}
-                          className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#06b6d4] z-20 pointer-events-none"
+                          className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#cfa758] z-20 pointer-events-none"
                         />
                       )}
 
@@ -550,7 +550,7 @@ export default function DiagnosticPage() {
                     </div>
 
                     {/* Sub-terminal with active logs */}
-                    <div className="mt-6 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
+                    <div className="mt-6 bg-[#030302] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
                       <div className="flex items-center justify-between border-b border-slate-900 pb-2 mb-2">
                         <span className="text-[7px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
                           <Terminal className="w-3 h-3 text-cyan-400" />
@@ -599,7 +599,7 @@ export default function DiagnosticPage() {
                       onClick={() => selectPathology("TRASLAPES")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "TRASLAPES"
-                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
+                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(207,167,88,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
                       }`}
                     >
@@ -624,7 +624,7 @@ export default function DiagnosticPage() {
                       onClick={() => selectPathology("MEJORAS")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "MEJORAS"
-                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
+                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(207,167,88,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
                       }`}
                     >
@@ -649,7 +649,7 @@ export default function DiagnosticPage() {
                       onClick={() => selectPathology("AMBIENTAL")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "AMBIENTAL"
-                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
+                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(207,167,88,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
                       }`}
                     >
@@ -674,7 +674,7 @@ export default function DiagnosticPage() {
                       onClick={() => selectPathology("REGISTRO")}
                       className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
                         selectedPathology === "REGISTRO"
-                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
+                          ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(207,167,88,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
                       }`}
                     >
@@ -708,7 +708,7 @@ export default function DiagnosticPage() {
                         ? "bg-slate-900/20 border border-slate-900 text-slate-600 cursor-not-allowed"
                         : isScanning 
                         ? "bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 cursor-wait animate-pulse"
-                        : "bg-white text-black hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] shadow-[0_4px_20px_rgba(255,255,255,0.05)] cursor-pointer"
+                        : "bg-white text-black hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_25px_rgba(207,167,88,0.4)] shadow-[0_4px_20px_rgba(255,255,255,0.05)] cursor-pointer"
                     }`}
                   >
                     {isScanning ? (
@@ -885,7 +885,7 @@ export default function DiagnosticPage() {
                         try { window.dgzSynth.playClick(); } catch (e) {}
                       }
                     }}
-                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer"
+                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(207,167,88,0.3)] cursor-pointer"
                   >
                     <span>Solicitar Auditoría de Municipio</span>
                     <ArrowRight className="w-4 h-4" />
@@ -1014,7 +1014,7 @@ export default function DiagnosticPage() {
 
                       <button
                         type="submit"
-                        className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all duration-300 text-[10px] font-black uppercase tracking-[0.25em] rounded-xl flex items-center justify-center gap-3 cursor-pointer shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
+                        className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all duration-300 text-[10px] font-black uppercase tracking-[0.25em] rounded-xl flex items-center justify-center gap-3 cursor-pointer shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(207,167,88,0.3)]"
                       >
                         <span>Generar Pre-Auditoría Territorial en Vivo</span>
                         <Zap className="w-4 h-4" />
@@ -1031,7 +1031,7 @@ export default function DiagnosticPage() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    className="p-8 md:p-12 glass-card-premium rounded-[2.5rem] border-glow bg-[#02040b] min-h-[420px] flex flex-col justify-between"
+                    className="p-8 md:p-12 glass-card-premium rounded-[2.5rem] border-glow bg-[#060605] min-h-[420px] flex flex-col justify-between"
                   >
                     <div className="space-y-4 border-b border-slate-900 pb-6 flex items-center justify-between">
                       <div className="space-y-1">

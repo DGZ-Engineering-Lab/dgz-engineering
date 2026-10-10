@@ -51,7 +51,7 @@ export default function TimelineSection() {
   ];
 
   return (
-    <section id="timeline" className="relative w-full py-24 z-10 bg-gradient-to-b from-[#05070a] to-[#020406] overflow-hidden">
+    <section id="timeline" className="relative w-full py-24 z-10 bg-gradient-to-b from-[#080706] to-[#040403] overflow-hidden">
       
       {/* Background decor */}
       <div className="absolute inset-0 pointer-events-none">
@@ -90,7 +90,7 @@ export default function TimelineSection() {
                       : "bg-slate-900 border-slate-600 group-hover:border-cyan-500 transition-colors"
                   }`}></div>
 
-                  <div className={`p-8 rounded-2xl bg-[#0a0f16] border transition-all duration-300 ${
+                  <div className={`p-8 rounded-2xl bg-[#100f0d] border transition-all duration-300 ${
                     exp.current
                       ? "border-[#f3ca20]/30 hover:border-[#f3ca20]/60 shadow-[0_0_30px_rgba(243,202,32,0.05)]"
                       : "border-slate-800 hover:border-cyan-500/40"

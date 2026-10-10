@@ -162,7 +162,7 @@ export default function ShapefileUploader() {
           onDrop={handleDrop}
           className={`border-2 border-dashed transition-all duration-300 bg-black/40 rounded-2xl p-8 text-center relative group ${
             isDragging 
-              ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-[1.02]" 
+              ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_30px_rgba(207,167,88,0.4)] scale-[1.02]" 
               : "border-slate-700 hover:border-cyan-500/50"
           }`}
         >
@@ -176,7 +176,7 @@ export default function ShapefileUploader() {
           <div className="flex flex-col items-center gap-3 pointer-events-none">
             <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
               isDragging 
-                ? "bg-cyan-500/20 scale-110 shadow-[0_0_15px_rgba(6,182,212,0.5)]" 
+                ? "bg-cyan-500/20 scale-110 shadow-[0_0_15px_rgba(207,167,88,0.5)]" 
                 : "bg-slate-800 group-hover:scale-110"
             }`}>
               <UploadCloud className={`w-6 h-6 ${isDragging ? "text-cyan-300 animate-bounce" : "text-cyan-400"}`} />
@@ -233,7 +233,7 @@ export default function ShapefileUploader() {
         <button
           onClick={uploadFile}
           disabled={!file || status === "UPLOADING" || status === "PROCESSING"}
-          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white font-bold tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 active:brightness-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 text-white font-bold tracking-widest text-xs uppercase rounded-xl transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] hover:brightness-110 active:brightness-95 shadow-[0_0_20px_rgba(207,167,88,0.3)] disabled:shadow-none flex items-center justify-center gap-2 cursor-pointer"
         >
           {status === "IDLE" && "Iniciar Análisis Topológico"}
           {status === "UPLOADING" && <><Loader2 className="w-4 h-4 animate-spin" /> Subiendo archivo...</>}

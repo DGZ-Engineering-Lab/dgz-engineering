@@ -34,7 +34,7 @@ export default function ProfessionalProfile() {
   const badges = ["Cloud Native", "DevOps", "GeoAI", "LADM Expert", "FullStack"];
 
   return (
-    <section id="profile" className="relative w-full py-12 lg:py-16 z-10 bg-[#05070a] border-t border-slate-800/50 overflow-hidden">
+    <section id="profile" className="relative w-full py-12 lg:py-16 z-10 bg-[#080706] border-t border-slate-800/50 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-cyan-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
       
@@ -110,7 +110,7 @@ export default function ProfessionalProfile() {
 
           {/* Timeline Column */}
           <div className="lg:col-span-7">
-            <div className="relative p-6 lg:p-8 rounded-3xl bg-[#0a0f16]/80 backdrop-blur-xl border border-slate-800 shadow-2xl">
+            <div className="relative p-6 lg:p-8 rounded-3xl bg-[#100f0d]/80 backdrop-blur-xl border border-slate-800 shadow-2xl">
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none"></div>
               
               <div className="flex items-center justify-between mb-8 border-b border-slate-800/50 pb-4">
@@ -130,7 +130,7 @@ export default function ProfessionalProfile() {
                     {/* Vertical Line Connector */}
                     <div className="absolute left-0 top-2 bottom-0 w-[1px] bg-slate-800 group-last:bg-gradient-to-b group-last:from-slate-800 group-last:to-transparent"></div>
                     {/* Glowing Dot */}
-                    <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-slate-700 border border-slate-900 group-hover:bg-cyan-400 group-hover:scale-150 transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0)] group-hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div>
+                    <div className="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-slate-700 border border-slate-900 group-hover:bg-cyan-400 group-hover:scale-150 transition-all duration-300 shadow-[0_0_10px_rgba(207,167,88,0)] group-hover:shadow-[0_0_15px_rgba(207,167,88,0.5)]"></div>
                     
                     <div className="space-y-3">
                       <div className="flex items-center gap-4">

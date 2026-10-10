@@ -68,7 +68,7 @@ export default function InfrastructureSection() {
               href={item.url} 
               target="_blank" 
               rel="noreferrer"
-              className="group flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-[#0a0f16] border border-slate-800 hover:border-blue-500/50 hover:bg-[#0d1420] hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all relative overflow-hidden"
+              className="group flex flex-col items-center justify-center gap-4 p-6 rounded-2xl bg-[#100f0d] border border-slate-800 hover:border-blue-500/50 hover:bg-[#171511] hover:shadow-[0_0_30px_rgba(169,122,60,0.15)] transition-all relative overflow-hidden"
             >
               {/* Tooltip on hover */}
               <div className="absolute -top-10 group-hover:top-2 opacity-0 group-hover:opacity-100 transition-all text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded border border-cyan-500/20 text-center pointer-events-none">
@@ -91,7 +91,7 @@ export default function InfrastructureSection() {
 
         {/* Callout PRO-TIP */}
         <div className="relative p-1 rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500">
-          <div className="bg-[#05070a] p-8 md:p-10 rounded-xl relative overflow-hidden">
+          <div className="bg-[#080706] p-8 md:p-10 rounded-xl relative overflow-hidden">
             {/* Background texture for callout */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px]"></div>
             
