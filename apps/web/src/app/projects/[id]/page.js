@@ -17,7 +17,7 @@ const PROJECTS_DATA = {
     title: "Catastro Multipropósito Valle del Cauca",
     category: "Infraestructura Territorial",
     tagline: "Soberanía fiscal y seguridad jurídica predial mediante la implementación nativa del estándar LADM-COL e INTERLIS.",
-    image: "/assets/img/blog-ladm-col.png",
+    image: "/assets/img/blog-ladm-col.webp",
     description: "Esta iniciativa lidera la vanguardia en administración y gobernanza de tierras en Colombia. Implementamos un ecosistema digital completo basado en la norma internacional ISO 19152 (LADM-COL) para descentralizar la gestión catastral del departamento, garantizando interoperabilidad transaccional absoluta con el Instituto Geográfico Agustín Codazzi (IGAC) y la Superintendencia de Notariado y Registro (SNR).",
     goals: [
       "Armonización de datos alfanuméricos y geográficos bajo modelos INTERLIS.",
@@ -36,7 +36,7 @@ const PROJECTS_DATA = {
     title: "Validador LADM-COL QGIS Plugin",
     category: "Software de Ingeniería",
     tagline: "Control de calidad topológico nativo y verificación estructurada de consistencia parcelaria en tiempo real.",
-    image: "/assets/img/geoai_before.png",
+    image: "/assets/img/geoai_before.webp",
     description: "Herramienta de software industrial y de código abierto diseñada para la validación espacial instantánea de bases de datos territoriales bajo el estándar LADM-COL. Optimiza los flujos de trabajo de los operadores catastrales eliminando errores manuales en la digitalización cartográfica.",
     goals: [
       "Detección automática de traslapes, slivers y microvacíos topológicos.",
@@ -55,7 +55,7 @@ const PROJECTS_DATA = {
     title: "Territorial ETL & Data Pipelines",
     category: "Infraestructura de Datos",
     tagline: "Ingeniería de datos geoespaciales masivos para gobernaciones, alcaldías y gestores catastrales habilitados.",
-    image: "/assets/img/topo-bg.png",
+    image: "/assets/img/topo-bg.webp",
     description: "Sistemas de orquestación de datos masivos para la migración, transformación y validación automática de archivos GML, GeoJSON, KML e INTERLIS (XTF). Diseñados bajo esquemas de tolerancia a fallos para entornos corporativos y públicos de alta escala.",
     goals: [
       "Orquestación de carga masiva desatendida mediante contenedores y motores GDAL/OGR.",
@@ -74,7 +74,7 @@ const PROJECTS_DATA = {
     title: "Inteligencia GeoAI & Geo-LLM",
     category: "Inteligencia Artificial",
     tagline: "Modelos híbridos de procesamiento de lenguaje natural y motores GIS para análisis territorial estratégico de alta escala.",
-    image: "/assets/img/blog-cybersecurity.png",
+    image: "/assets/img/blog-cybersecurity.webp",
     description: "Arquitectura avanzada de inteligencia artificial generativa aplicada al territorio que permite interactuar con bases de datos catastrales complejas y capas geográficas mediante lenguaje natural en español. Traduce instrucciones complejas a operaciones de análisis espacial geoespacial.",
     goals: [
       "Traducción precisa de consultas coloquiales en español a sentencias Spatial SQL robustas.",

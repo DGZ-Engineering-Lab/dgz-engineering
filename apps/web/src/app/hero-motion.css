@@ -1,0 +1,29 @@
+/*
+ * Hero entrance, done in CSS so it starts with the first paint of the
+ * server-rendered HTML instead of waiting for hydration (keeps LCP low).
+ * Same timing as the previous framer-motion version.
+ */
+@keyframes hero-enter-left {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-enter-right {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero-enter-left {
+  animation: hero-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-enter-right {
+  animation: hero-enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter-left,
+  .hero-enter-right {
+    animation: none;
+  }
+}
