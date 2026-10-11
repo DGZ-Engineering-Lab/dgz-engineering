@@ -32,6 +32,7 @@ export async function GET() {
     });
 
   } catch (error) {
-    return NextResponse.json({ status: "ERROR", message: error.message }, { status: 500 });
+    console.error("❌ [telemetry]", error);
+    return NextResponse.json({ status: "ERROR", message: "Telemetry unavailable" }, { status: 500 });
   }
 }

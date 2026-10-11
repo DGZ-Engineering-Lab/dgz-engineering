@@ -1106,7 +1106,7 @@ export default function DiagnosticPage() {
                           Informe de Salud Territorial
                         </h3>
                         <p className="text-xs font-mono text-slate-500 uppercase tracking-widest">
-                          Municipio: {formData.municipio} // Consultor: {formData.name}
+                          Municipio: {formData.municipio} {"//"} Consultor: {formData.name}
                         </p>
                       </div>
                     </div>

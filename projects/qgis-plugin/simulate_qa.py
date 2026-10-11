@@ -14,7 +14,6 @@ try:
     from core.db_connector import DevGizDBConnector
     from core.vur_depurator import DgzVurDepurator
     from core.partitioning_engine import MunicipalSpatialPartitioner
-    from core.task_assigner import DgzTaskAssigner
     from core.ladm_engine import DgzLadmColEngine
     logging.info("🟢 SUCCESS: All DGZ-LADM-COL core plugin modules imported flawlessly!")
 except Exception as e:

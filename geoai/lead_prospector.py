@@ -2,8 +2,6 @@
 import json
 import csv
 import os
-import sys
-import random
 
 # High-Fidelity Pre-compiled B2B Prospect Database for Colombian Real Estate & Construction Sectors
 COLOMBIAN_LEAD_MARKET = [
@@ -87,7 +85,7 @@ def search_colombian_market(query_city=None, query_tier=None):
     and georeferenced real estate directories.
     Provides fallback premium structured leads when offline or restricted.
     """
-    print(f"[*] Starting Colombian GIS & Real Estate B2B Market Scan...")
+    print("[*] Starting Colombian GIS & Real Estate B2B Market Scan...")
     if query_city:
         print(f"[*] Filtering by City: {query_city}")
     if query_tier:

@@ -1,7 +1,7 @@
 import os
 import logging
 from PyQt5.QtCore import QObject, Qt
-from PyQt5.QtWidgets import QAction, QMessageBox, QFileDialog, QDockWidget
+from PyQt5.QtWidgets import QAction, QMessageBox, QFileDialog
 from PyQt5.QtGui import QIcon
 
 # Graceful QGIS Imports to allow headless/standalone testing
@@ -148,7 +148,6 @@ class DgzDepuratorPlugin(QObject):
         fields = active_layer.fields()
         
         # Check columns or create them dynamically
-        missing_fields = []
         if fields.indexFromName("dgz_cruce") == -1:
             from PyQt5.QtCore import QVariant
             from qgis.core import QgsField

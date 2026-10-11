@@ -1001,7 +1001,7 @@ export default function ServicePage() {
             >
               <div className={`flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] font-black tracking-widest uppercase ${theme.badge}`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${theme.dot}`}></span>
-                {service.capaLabel} // {service.id}
+                {service.capaLabel} {"//"} {service.id}
               </div>
             </motion.div>
 
@@ -1621,7 +1621,7 @@ export default function ServicePage() {
                       
                       <h3 className="text-xl font-black text-slate-900 uppercase tracking-wider">¡Solicitud Registrada Exitosamente!</h3>
                       <p className="text-slate-500 text-xs font-light leading-relaxed max-w-md mx-auto">
-                        Hemos catalogado tu ticket en el nodo de soporte para "{service.title}". Un ingeniero de soluciones se pondrá en contacto contigo para verificar viabilidad y requerimientos técnicos en las próximas horas.
+                        Hemos catalogado tu ticket en el nodo de soporte para “{service.title}”. Un ingeniero de soluciones se pondrá en contacto contigo para verificar viabilidad y requerimientos técnicos en las próximas horas.
                       </p>
                       
                       <button
