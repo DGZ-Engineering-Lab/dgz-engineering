@@ -299,7 +299,21 @@ html {
   background: radial-gradient(var(--in-oklch), oklch(0.7 0.15 160 / 0.08), transparent 70%);
 }
 
-/* --- 11. Soft edge content fade for overflowing panels --- */
+/* --- 11. Italic gradient text: keep the slanted last glyph inside the clipped background --- */
+.bg-clip-text.italic {
+  padding-inline-end: 0.12em;
+  margin-inline-end: -0.04em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* --- 12. Selection colour aligned with the brand accent --- */
+::selection {
+  background: rgba(6, 182, 212, 0.18);
+  color: var(--foreground);
+}
+
+/* --- 13. Soft edge content fade for overflowing panels --- */
 .fade-edge-bottom {
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }

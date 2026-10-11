@@ -1088,7 +1088,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <h3 className={`font-black text-sm transition-colors ${isSelected ? "text-white" : "text-slate-350 hover:text-white"}`}>{director.name}</h3>
+                      <h3 className={`font-black text-sm transition-colors ${isSelected ? "text-white" : "text-slate-300 hover:text-white"}`}>{director.name}</h3>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider truncate block">{director.role.split("&")[0]}</span>
                         <span className="text-slate-700 font-mono text-[9px]">•</span>
@@ -1097,7 +1097,7 @@ export default function AboutPage() {
                     </div>
 
                     <DirIcon className={`w-4 h-4 transition-colors ${
-                      isSelected ? "text-cyan-400" : "text-slate-650"
+                      isSelected ? "text-cyan-400" : "text-slate-600"
                     }`} />
                   </button>
                 );
@@ -1151,7 +1151,7 @@ export default function AboutPage() {
                     <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-2">BOARD PROFILE TELEMETRY</span>
                     <h3 className="text-3xl font-black text-white tracking-tight">{activeDirector.name}</h3>
                     <p className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider mt-1">{activeDirector.role}</p>
-                    <p className="text-slate-350 text-sm font-light leading-relaxed mt-4 max-w-2xl">{activeDirector.desc}</p>
+                    <p className="text-slate-300 text-sm font-light leading-relaxed mt-4 max-w-2xl">{activeDirector.desc}</p>
                   </div>
 
                   {/* Skills/Capabilities Area with Segmented LED Bars */}

@@ -161,9 +161,9 @@ export default function TechTicker() {
               <button
                 key={area.id}
                 onClick={() => setActiveTab(area.id)}
-                className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 flex items-center gap-2
+                className={`px-4 md:px-5 py-2.5 md:py-3 rounded-2xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 flex items-center gap-2
                   ${isTabActive 
-                    ? `bg-white text-slate-900 shadow-md border border-slate-200/50 scale-102` 
+                    ? `bg-white text-slate-900 shadow-md border border-slate-200/50 scale-[1.02]` 
                     : `text-slate-500 hover:text-slate-900 hover:bg-white/40`
                   }
                 `}
@@ -193,7 +193,7 @@ export default function TechTicker() {
 
             {/* Description & Metrics Bar */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-slate-200/50 pb-8 mb-8">
-              <div className="lg:col-span-8 space-y-3 col-span-12">
+              <div className="lg:col-span-8 space-y-3">
                 <div className="flex items-center gap-2.5">
                   <div className={`w-9 h-9 rounded-2xl ${currentArea.bgColor} flex items-center justify-center ${currentArea.textColor}`}>
                     <IconComponent className="w-4.5 h-4.5" />
@@ -211,7 +211,7 @@ export default function TechTicker() {
               </div>
 
               {/* Performance Indicator */}
-              <div className="lg:col-span-4 flex justify-start lg:justify-end col-span-12">
+              <div className="lg:col-span-4 flex justify-start lg:justify-end">
                 <div className="flex bg-slate-50 border border-slate-200/50 p-4 rounded-2xl items-center gap-3">
                   <div className="flex h-3.5 w-3.5 relative">
                     <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75
@@ -247,7 +247,7 @@ export default function TechTicker() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
-                  className="bg-white/90 rounded-2xl border border-slate-200/60 p-5 hover:border-slate-350 hover:shadow-md transition-all duration-300 relative group flex flex-col justify-between"
+                  className="bg-white/90 rounded-2xl border border-slate-200/60 p-5 hover:border-slate-300 hover:shadow-md transition-all duration-300 relative group flex flex-col justify-between"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -260,7 +260,7 @@ export default function TechTicker() {
                         </span>
                       )}
                     </div>
-                    <p className="text-slate-650 text-xs font-light leading-normal pr-4">
+                    <p className="text-slate-600 text-xs font-light leading-normal pr-4">
                       {plat.desc}
                     </p>
                   </div>

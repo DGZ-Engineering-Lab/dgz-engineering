@@ -95,7 +95,7 @@ export default function Navbar() {
   
   const ctaBtnStyle = isDarkPage
     ? "bg-white text-black hover:bg-cyan-500 hover:text-black shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-    : "bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-xl";
+    : "bg-slate-950 text-white hover:bg-cyan-500 hover:text-slate-950 shadow-xl hover:shadow-[0_8px_24px_rgba(6,182,212,0.3)]";
 
   const burgerColor = isDarkPage ? "text-white" : "text-[#1a1a1a]";
 
@@ -147,7 +147,7 @@ export default function Navbar() {
 
             <Link
               href="/#contact"
-              className={`px-8 py-3 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm ${ctaBtnStyle}`}
+              className={`px-7 py-3 text-[10px] font-black tracking-[0.2em] uppercase transition-all rounded-xl ${ctaBtnStyle}`}
             >
               Consultoría
             </Link>
@@ -230,12 +230,12 @@ export default function Navbar() {
                         
                         <div className="space-y-1 text-left">
                           <span className={`text-xs font-black tracking-tight flex items-center gap-1.5 transition-colors ${
-                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-850 group-hover/item:text-[#1a1a1a]"
+                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-800 group-hover/item:text-[#1a1a1a]"
                           }`}>
                             {item.name}
                             <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-cyan-500 shrink-0" />
                           </span>
-                          <p className="text-slate-450 text-[10px] font-light leading-snug">
+                          <p className="text-slate-500 text-[10px] font-light leading-snug">
                             {item.desc}
                           </p>
                         </div>
@@ -353,7 +353,7 @@ export default function Navbar() {
               <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`w-full py-4.5 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm flex items-center justify-center gap-3 ${
+                className={`w-full py-4.5 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-xl flex items-center justify-center gap-3 ${
                   isDarkPage
                     ? 'bg-cyan-500 text-black hover:bg-cyan-400 font-black'
                     : 'bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-md'

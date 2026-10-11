@@ -1721,19 +1721,19 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           
                           {/* Stat Cards Grid */}
                           <div className="grid grid-cols-4 gap-2">
-                            <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                            <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                               <div className="text-[7px] text-slate-500 uppercase tracking-wider font-mono">Catastro IGAC</div>
                               <div className="text-xs font-black text-white font-mono">{crossRefResult.total_catastro}</div>
                             </div>
-                            <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                            <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                               <div className="text-[7px] text-slate-500 uppercase tracking-wider font-mono">SNR Registros</div>
                               <div className="text-xs font-black text-white font-mono">{crossRefResult.total_registro}</div>
                             </div>
-                            <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                            <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                               <div className="text-[7px] text-slate-500 uppercase tracking-wider font-mono">Conciliados</div>
                               <div className="text-xs font-black text-emerald-400 font-mono">{crossRefResult.match_count}</div>
                             </div>
-                            <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                            <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                               <div className="text-[7px] text-slate-500 uppercase tracking-wider font-mono">Conciliación</div>
                               <div className="text-xs font-black text-cyan-400 font-mono">
                                 {((crossRefResult.match_count / crossRefResult.total_catastro) * 100).toFixed(0)}%
@@ -1742,7 +1742,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           </div>
 
                           {/* Donut Match Chart & Anomaly Summary */}
-                          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center bg-black/30 p-2.5 rounded-2xl border border-slate-850">
+                          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center bg-black/30 p-2.5 rounded-2xl border border-slate-800">
                             <div className="sm:col-span-3 flex justify-center">
                               {/* Circle progress */}
                               <svg className="w-16 h-16" viewBox="0 0 36 36">
@@ -1785,7 +1785,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="space-y-1">
                               <div className="text-[8px] font-bold text-amber-400 tracking-wide uppercase font-mono">Físico Sin Registro ({filteredMissingInRegistro.length})</div>
-                              <div className="bg-black/40 rounded-xl p-2 border border-slate-850/80 max-h-20 overflow-y-auto custom-scrollbar text-[9px] space-y-1">
+                              <div className="bg-black/40 rounded-xl p-2 border border-slate-800/80 max-h-20 overflow-y-auto custom-scrollbar text-[9px] space-y-1">
                                 {filteredMissingInRegistro.map((x, i) => (
                                   <div key={i} className="flex justify-between items-center font-mono bg-slate-950 p-1.5 rounded border border-slate-900 hover:border-slate-800 transition-colors">
                                     <span className="text-slate-400 truncate max-w-[90px]">{x.npu}</span>
@@ -1813,7 +1813,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                                           setSnappedVertex(false);
                                           addLog(`CROSS_FOCUS: Inspeccionando error físico de ${x.npu} en mapa 3D`, "info");
                                         }}
-                                        className="p-1 bg-slate-900 border border-slate-850 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
+                                        className="p-1 bg-slate-900 border border-slate-800 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
                                       >
                                         🔍
                                       </button>
@@ -1828,7 +1828,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                             
                             <div className="space-y-1">
                               <div className="text-[8px] font-bold text-red-400 tracking-wide uppercase font-mono">Matrículas Sin Linderos ({filteredMissingInCatastro.length})</div>
-                              <div className="bg-black/40 rounded-xl p-2 border border-slate-850/80 max-h-20 overflow-y-auto custom-scrollbar text-[9px] space-y-1">
+                              <div className="bg-black/40 rounded-xl p-2 border border-slate-800/80 max-h-20 overflow-y-auto custom-scrollbar text-[9px] space-y-1">
                                 {filteredMissingInCatastro.map((x, i) => (
                                   <div key={i} className="flex justify-between items-center font-mono bg-slate-950 p-1.5 rounded border border-slate-900 hover:border-slate-800 transition-colors">
                                     <span className="text-slate-400 truncate max-w-[90px]">{x.npu}</span>
@@ -1846,7 +1846,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                                           });
                                           addLog(`CROSS_FOCUS: Inspeccionando desfase SNR de ${x.npu} en mapa 3D`, "info");
                                         }}
-                                        className="p-1 bg-slate-900 border border-slate-850 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
+                                        className="p-1 bg-slate-900 border border-slate-800 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
                                       >
                                         🔍
                                       </button>
@@ -1863,9 +1863,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           {/* Area Discrepancy Table */}
                           <div className="space-y-1">
                             <div className="text-[8px] font-bold text-cyan-400 tracking-wide uppercase font-mono">Anomalías de Área (&gt;10% Discrepancia - Total: {filteredAreaDiscrepancies.length})</div>
-                            <div className="bg-black/40 rounded-xl border border-slate-850 overflow-hidden text-[9px] max-h-24 overflow-y-auto custom-scrollbar">
+                            <div className="bg-black/40 rounded-xl border border-slate-800 overflow-hidden text-[9px] max-h-24 overflow-y-auto custom-scrollbar">
                               <table className="w-full text-left font-mono">
-                                <thead className="bg-slate-950 text-slate-500 border-b border-slate-850 sticky top-0">
+                                <thead className="bg-slate-950 text-slate-500 border-b border-slate-800 sticky top-0">
                                   <tr>
                                     <th className="p-1.5">Código / NPU</th>
                                     <th className="p-1.5">Catastro (m²)</th>
@@ -1906,7 +1906,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                                             setSnappedVertex(false);
                                             addLog(`CROSS_FOCUS: Inspeccionando desfase de área de ${x.npu} (${x.diferencia_pct}%)`, "info");
                                           }}
-                                          className="p-0.5 bg-slate-900 border border-slate-850 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
+                                          className="p-0.5 bg-slate-900 border border-slate-800 rounded hover:border-cyan-500 text-slate-300 text-[8px] cursor-pointer"
                                         >
                                           🔍
                                         </button>
@@ -1937,7 +1937,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                   <div className="h-full flex flex-col items-center justify-center p-8 text-center text-slate-500 font-mono select-none">
                     <Cpu className="w-10 h-10 text-slate-700 animate-pulse mb-3" />
                     <div className="text-xs uppercase tracking-wider font-bold">Awaiting Execution</div>
-                    <div className="text-[9px] text-slate-450 max-w-sm mt-2 leading-relaxed font-medium">
+                    <div className="text-[9px] text-slate-500 max-w-sm mt-2 leading-relaxed font-medium">
                       Cargue la cartografía catastral y el listado de matrículas inmobiliarias a la izquierda (o pulse el botón &quot;⚡ Cargar Demo&quot;) y presione &quot;Ejecutar Cruce&quot;.
                     </div>
                   </div>
@@ -1963,7 +1963,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     <span className="text-cyan-400 font-mono text-xs tracking-widest font-bold uppercase" style={{ textShadow: '0 0 12px rgba(0,229,255,0.4)' }}>Territorial OS v6.2</span>
                   </div>
                   <h2 className="text-2xl lg:text-3xl font-black text-white tracking-tighter leading-tight" style={{ textShadow: '0 0 30px rgba(0,229,255,0.08)' }}>Spatial Intelligence <br/><span className="text-slate-500 italic" style={{ textShadow: 'none' }}>Digital Twin</span></h2>
-                  <p className="text-slate-350 text-[10px] leading-relaxed font-medium">
+                  <p className="text-slate-300 text-[10px] leading-relaxed font-medium">
                     Interoperabilidad avanzada con Neon (PostGIS), IGAC y motor analítico acelerado por Polars & DuckDB.
                   </p>
 
@@ -2138,7 +2138,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       ) : (
                         <div className="space-y-0.5">
                           <span className="text-slate-300 font-bold block hover:text-orange-400 transition-colors">CARGAR CAPA CATASTRAL</span>
-                          <span className="text-slate-550 text-[8px] block">Arrastra o haz clic (.geojson / .json)</span>
+                          <span className="text-slate-500 text-[8px] block">Arrastra o haz clic (.geojson / .json)</span>
                         </div>
                       )}
                     </label>
@@ -2167,21 +2167,21 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
 
                       <div className="grid grid-cols-2 gap-2 text-slate-300">
                         <div>
-                          <span className="text-slate-550 block text-[8px] uppercase">Vértices</span>
+                          <span className="text-slate-500 block text-[8px] uppercase">Vértices</span>
                           <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.vertices}</span>
                         </div>
                         <div>
-                          <span className="text-slate-550 block text-[8px] uppercase">Polígonos</span>
+                          <span className="text-slate-500 block text-[8px] uppercase">Polígonos</span>
                           <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.polygons}</span>
                         </div>
                         <div>
-                          <span className="text-slate-550 block text-[8px] uppercase">Lazo Cerrado</span>
+                          <span className="text-slate-500 block text-[8px] uppercase">Lazo Cerrado</span>
                           <span className={`font-bold text-[10px] ${uploadedDiagnostics.isClosed ? "text-emerald-400" : "text-red-400"}`}>
                             {uploadedDiagnostics.isClosed ? "SÍ" : "NO"}
                           </span>
                         </div>
                         <div>
-                          <span className="text-slate-550 block text-[8px] uppercase">Área Calculada</span>
+                          <span className="text-slate-500 block text-[8px] uppercase">Área Calculada</span>
                           <span className="font-bold text-white text-[10px]">{uploadedDiagnostics.areaSumSqM.toLocaleString('es-CO')} m²</span>
                         </div>
                       </div>
@@ -2250,7 +2250,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     exit={{ opacity: 0, y: 15 }}
                     className="absolute top-16 left-4 right-4 sm:right-auto sm:w-80 bg-slate-950/95 backdrop-blur-2xl border border-cyan-500/35 rounded-2xl p-4 space-y-3.5 shadow-[0_0_50px_rgba(0,0,0,0.8)] z-20"
                   >
-                    <div className="flex justify-between items-center border-b border-slate-850 pb-1.5">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
                       <span className="text-[9px] font-mono text-cyan-400 font-black uppercase tracking-wider">
                         {selectedParcel === "OMITTED" || selectedParcel === "OMITTED_INCORPORATED" ? "LiDAR Improvement Scan" : "Cadastral Inspector"}
                       </span>
@@ -2264,20 +2264,20 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           <span className="text-xs font-mono font-bold text-white">050011100000000030006</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-[9px] font-mono">
-                          <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                          <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                             <span className="text-slate-500 block">Área Física (Live)</span>
                             <span className="text-white font-bold">{liveNominalArea.toFixed(1)} m²</span>
                           </div>
-                          <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                          <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                             <span className="text-slate-500 block">Desviación Delta</span>
-                            <span className={`font-bold ${Math.abs(areaDelta) < 0.1 ? 'text-emerald-400' : 'text-rose-450'}`}>
+                            <span className={`font-bold ${Math.abs(areaDelta) < 0.1 ? 'text-emerald-400' : 'text-rose-400'}`}>
                               {areaDelta >= 0 ? "+" : ""}{areaDelta.toFixed(1)} m² ({areaDeltaPct >= 0 ? "+" : ""}{areaDeltaPct.toFixed(1)}%)
                             </span>
                           </div>
                         </div>
 
                         {/* Sandbox de Vértices */}
-                        <div className="p-2.5 bg-black/60 border border-slate-850 rounded-xl space-y-2 text-[9px] font-mono">
+                        <div className="p-2.5 bg-black/60 border border-slate-800 rounded-xl space-y-2 text-[9px] font-mono">
                           <span className="text-cyan-400 font-bold block">Sandbox: Desplazar Vértice P4</span>
                           
                           <div className="space-y-1">
@@ -2352,7 +2352,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                         )}
 
                         {/* Audit Ledger Terminal */}
-                        <div className="space-y-1.5 border-t border-slate-850 pt-2.5">
+                        <div className="space-y-1.5 border-t border-slate-800 pt-2.5">
                           <span className="text-[8px] font-mono text-slate-400 font-bold uppercase tracking-wider block">
                             Bitácora Catastral:
                           </span>
@@ -2361,7 +2361,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                               <div key={idx} className="flex gap-1.5 text-slate-400">
                                 <span className="text-cyan-500/70 shrink-0 font-bold">[{entry.time}]</span>
                                 <span className="text-amber-500 font-bold uppercase shrink-0">{entry.action}:</span>
-                                <span className="text-slate-350 break-words">{entry.message}</span>
+                                <span className="text-slate-300 break-words">{entry.message}</span>
                               </div>
                             ))}
                           </div>
@@ -2373,7 +2373,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           <span className="text-[9px] text-slate-400 font-mono">ID Catastral:</span>
                           <span className="text-xs font-mono font-bold text-white">050N-654321</span>
                         </div>
-                        <p className="text-[9px] text-slate-350 leading-relaxed font-mono">
+                        <p className="text-[9px] text-slate-300 leading-relaxed font-mono">
                           Predio verificado contra Folio de Matrícula SNR. Estatus: <span className="text-emerald-400 font-bold">100% Conciliado</span>. No presenta anomalías físicas ni jurídicas bajo estándares LADM-COL.
                         </p>
                       </div>
@@ -2385,13 +2385,13 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                             : "Canal LiDAR detectó una edificación clandestina no registrada en la base catastral tradicional de papel."}
                         </p>
                         <div className="grid grid-cols-2 gap-2 text-[9px] font-mono">
-                          <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                          <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                             <span className="text-slate-500 block">Área No Declarada</span>
                             <span className="text-amber-400 font-bold">120 m²</span>
                           </div>
-                          <div className="p-2 bg-black/40 border border-slate-850 rounded-xl">
+                          <div className="p-2 bg-black/40 border border-slate-800 rounded-xl">
                             <span className="text-slate-500 block">Pérdida Recaudo</span>
-                            <span className="text-rose-450 font-bold">COP $5.4M / año</span>
+                            <span className="text-rose-400 font-bold">COP $5.4M / año</span>
                           </div>
                         </div>
 
@@ -2422,7 +2422,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     exit={{ opacity: 0, x: 20 }}
                     className="absolute top-4 right-4 left-4 sm:left-auto w-auto sm:w-72 bg-slate-900/95 backdrop-blur-2xl border border-cyan-500/40 rounded-2xl p-4 space-y-3.5 shadow-[0_0_50px_rgba(0,0,0,0.7)] z-20 animate-none"
                   >
-                    <div className="flex justify-between items-center border-b border-slate-850 pb-1.5">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
                       <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">Analysis_Core</div>
                       <button onClick={() => setActiveAnalysis(null)} className="text-slate-400 hover:text-white cursor-pointer transition-colors p-0.5">✕</button>
                     </div>
@@ -2439,13 +2439,13 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                          />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
-                          <div className="p-2.5 bg-black/40 rounded-xl border border-slate-850">
+                          <div className="p-2.5 bg-black/40 rounded-xl border border-slate-800">
                             <div className="text-[8px] text-slate-500 uppercase font-mono">Radius</div>
                             <div className="text-xs font-bold text-white font-mono">{activeAnalysis.impact_radius_m}m</div>
                           </div>
-                          <div className="p-2.5 bg-black/40 rounded-xl border border-slate-850">
+                          <div className="p-2.5 bg-black/40 rounded-xl border border-slate-800">
                             <div className="text-[8px] text-slate-500 uppercase font-mono">Risk</div>
-                            <div className={`text-xs font-bold font-mono ${activeAnalysis.risk_assessment === 'Bajo' || activeAnalysis.score === 100 ? 'text-emerald-400' : 'text-rose-455'}`}>
+                            <div className={`text-xs font-bold font-mono ${activeAnalysis.risk_assessment === 'Bajo' || activeAnalysis.score === 100 ? 'text-emerald-400' : 'text-rose-400'}`}>
                               {activeAnalysis.risk_assessment}
                             </div>
                           </div>
@@ -2453,7 +2453,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
 
                       {/* AI Topology Auto-Healer Widget */}
                       {activeAnalysis.id === "PREDIO_001" && (
-                        <div className="pt-2 border-t border-slate-850 space-y-2">
+                        <div className="pt-2 border-t border-slate-800 space-y-2">
                           {parcelAStatus === "CLEAN" ? (
                             <div className="p-2 bg-emerald-500/10 border border-emerald-500/25 rounded-xl flex items-center gap-2 text-[9px] font-mono text-emerald-400">
                               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -2462,7 +2462,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           ) : (
                             <>
                               <div className="p-2 bg-red-500/10 border border-red-500/25 rounded-xl flex items-center gap-2 text-[9px] font-mono text-red-300">
-                                <AlertTriangle className="w-4 h-4 text-rose-455 shrink-0 animate-pulse" />
+                                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 animate-pulse" />
                                 <span>Traslape de 15% detectado con PREDIO_002.</span>
                               </div>
                               <button
@@ -2493,22 +2493,22 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     exit={{ opacity: 0, y: 20 }}
                     className="absolute bottom-4 left-4 right-4 sm:right-auto w-auto sm:w-72 bg-slate-900/95 backdrop-blur-2xl border border-emerald-500/40 rounded-2xl p-4 space-y-3 shadow-2xl z-20 animate-none"
                   >
-                    <div className="flex justify-between items-center border-b border-slate-850 pb-1.5">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
                       <div className="text-[9px] font-mono text-emerald-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5" /> VUR_SNR_RECORDS
                       </div>
                       <button onClick={() => setVurData(null)} className="text-slate-400 hover:text-white cursor-pointer transition-colors p-0.5">✕</button>
                     </div>
                     <div className="space-y-2 text-sm">
-                      <div className="flex justify-between border-b border-slate-850 pb-1">
+                      <div className="flex justify-between border-b border-slate-800 pb-1">
                         <span className="text-slate-400 text-[9px] uppercase font-mono">Matrícula</span>
                         <span className="text-white font-mono font-bold text-xs">{vurData.matricula}</span>
                       </div>
-                      <div className="flex justify-between border-b border-slate-850 pb-1">
+                      <div className="flex justify-between border-b border-slate-800 pb-1">
                         <span className="text-slate-400 text-[9px] uppercase font-mono">Estado</span>
                         <span className="text-emerald-400 font-bold text-xs">{vurData.status}</span>
                       </div>
-                      <div className="flex justify-between border-b border-slate-850 pb-1">
+                      <div className="flex justify-between border-b border-slate-800 pb-1">
                         <span className="text-slate-400 text-[9px] uppercase font-mono">Propietario</span>
                         <span className="text-white truncate max-w-[120px] text-xs">VERIFICADO (SNR)</span>
                       </div>

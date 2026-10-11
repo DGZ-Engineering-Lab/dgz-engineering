@@ -8,7 +8,8 @@ export default function FloatingTelemetry() {
   const [time, setTime] = useState("");
   const [load, setLoad] = useState(12);
   const [activeNodes, setActiveNodes] = useState(1240);
-  const [isMinimized, setIsMinimized] = useState(false);
+  // Minimizado por defecto: expandido tapaba el texto y los CTA del hero.
+  const [isMinimized, setIsMinimized] = useState(true);
 
   useEffect(() => {
     // Simulamos la telemetría directamente en el cliente para mayor fluidez 
@@ -91,7 +92,7 @@ export default function FloatingTelemetry() {
                 <span>Encryption</span>
                 <span className="text-emerald-400 font-bold tracking-widest">DGZ_SECURE</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-850 pt-2 mt-2">
+              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-800 pt-2 mt-2">
                 <span>Active_Nodes</span>
                 <span className="text-cyan-400 font-black">{activeNodes}</span>
               </div>

@@ -205,7 +205,7 @@ export default function CareersPage() {
               <div 
                 key={job.id} 
                 className={`group p-8 lg:p-12 bg-white border border-slate-100 hover:border-slate-300 transition-all duration-500 rounded-2xl relative overflow-hidden ${
-                  isExpanded ? 'shadow-2xl border-slate-350 bg-slate-50/50' : 'hover:shadow-lg'
+                  isExpanded ? 'shadow-2xl border-slate-300 bg-slate-50/50' : 'hover:shadow-lg'
                 }`}
               >
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 relative z-10">

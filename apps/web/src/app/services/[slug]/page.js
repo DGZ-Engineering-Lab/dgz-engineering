@@ -1365,7 +1365,7 @@ export default function ServicePage() {
                     {service.useCases.map((uc, ucIdx) => (
                       <div
                         key={ucIdx}
-                        className="bg-white border border-slate-200 hover:border-slate-350 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-sm"
+                        className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-sm"
                       >
                         <div className="text-left">
                           <div className="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 text-cyan-600 flex items-center justify-center font-mono text-xs font-bold mb-6">
@@ -1397,14 +1397,14 @@ export default function ServicePage() {
                   {/* Inputs */}
                   <div className="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
                     <div className="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4 justify-start">
-                      <Database className="w-5 h-5 text-cyan-650" />
+                      <Database className="w-5 h-5 text-cyan-600" />
                       <h3 className="text-sm font-mono font-black text-slate-800 uppercase tracking-wider">Formatos de Entrada Compatibles</h3>
                     </div>
                     <div className="flex flex-wrap gap-2.5 justify-start">
                       {service.specs.inputs.map((inp, idx) => (
                         <span
                           key={idx}
-                          className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-650 text-xs font-mono rounded-lg transition-colors cursor-default"
+                          className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-mono rounded-lg transition-colors cursor-default"
                         >
                           {inp}
                         </span>
@@ -1415,14 +1415,14 @@ export default function ServicePage() {
                   {/* Outputs */}
                   <div className="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
                     <div className="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4 justify-start">
-                      <ExternalLink className="w-5 h-5 text-cyan-650" />
+                      <ExternalLink className="w-5 h-5 text-cyan-600" />
                       <h3 className="text-sm font-mono font-black text-slate-800 uppercase tracking-wider">Productos / Salidas Estándar</h3>
                     </div>
                     <div className="flex flex-wrap gap-2.5 justify-start">
                       {service.specs.outputs.map((out, idx) => (
                         <span
                           key={idx}
-                          className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-650 text-xs font-mono rounded-lg transition-colors cursor-default"
+                          className="px-3.5 py-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-mono rounded-lg transition-colors cursor-default"
                         >
                           {out}
                         </span>
@@ -1484,7 +1484,7 @@ export default function ServicePage() {
                         <button
                           key={cmd}
                           onClick={() => runTerminalCommand(cmd)}
-                          className="px-2 py-1 bg-[#060a13] hover:bg-[#0c1224] hover:text-white border border-slate-850 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer"
+                          className="px-2 py-1 bg-[#060a13] hover:bg-[#0c1224] hover:text-white border border-slate-800 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer"
                         >
                           {cmd}
                         </button>

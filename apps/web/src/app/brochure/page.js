@@ -102,7 +102,7 @@ export default function BrochurePage() {
             </a>
             <Link
               href="/"
-              className="px-8 py-4.5 border border-slate-200 hover:border-slate-355 bg-white/80 hover:bg-slate-50 text-slate-700 text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm"
+              className="px-8 py-4.5 border border-slate-200 hover:border-slate-300 bg-white/80 hover:bg-slate-50 text-slate-700 text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm"
             >
               Ver Mapa Interactivo
             </Link>
@@ -296,7 +296,7 @@ export default function BrochurePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             {/* 1. Automatización & DevOps */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-all">
                 <Settings className="w-6 h-6" />
               </div>
@@ -309,7 +309,7 @@ export default function BrochurePage() {
             </div>
 
             {/* 2. Procesamiento Satelital & LiDAR */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-black transition-all">
                 <Layers className="w-6 h-6" />
               </div>
@@ -322,7 +322,7 @@ export default function BrochurePage() {
             </div>
 
             {/* 3. Planos & Digitalización */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-black transition-all">
                 <Map className="w-6 h-6" />
               </div>
@@ -335,7 +335,7 @@ export default function BrochurePage() {
             </div>
 
             {/* 4. Arquitectura de Bases de Datos */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-all">
                 <Database className="w-6 h-6" />
               </div>
@@ -348,7 +348,7 @@ export default function BrochurePage() {
             </div>
 
             {/* 5. Desarrollo Web & Plataformas */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-black transition-all">
                 <Globe className="w-6 h-6" />
               </div>
@@ -361,7 +361,7 @@ export default function BrochurePage() {
             </div>
 
             {/* 6. Inteligencia Geoespacial & GeoAI */}
-            <div className="bg-slate-955 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
+            <div className="bg-slate-950 border border-slate-800/80 rounded-3xl p-8 space-y-6 hover:border-cyan-500/40 transition-all group relative">
               <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-all">
                 <Cpu className="w-6 h-6" />
               </div>

@@ -177,7 +177,7 @@ export default function ContactSection() {
 
             <div className="space-y-8">
               <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-sm flex-shrink-0 shadow-sm">
+                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-xl flex-shrink-0 shadow-sm">
                   <MapPin className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
@@ -186,7 +186,7 @@ export default function ContactSection() {
                 </div>
               </div>
               <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-sm flex-shrink-0 shadow-sm">
+                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-xl flex-shrink-0 shadow-sm">
                   <Mail className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
@@ -198,6 +198,7 @@ export default function ContactSection() {
 
             <div className="pt-10 flex items-center gap-6">
               <Logo className="w-12 h-12 opacity-10" />
+              {process.env.NODE_ENV !== "production" && (
               <button 
                 type="button"
                 onClick={triggerMockSentryException}
@@ -206,11 +207,12 @@ export default function ContactSection() {
                 <Bug className="w-3.5 h-3.5" />
                 Simular Error (Test Sentry)
               </button>
+              )}
             </div>
           </div>
 
           {/* Form Side */}
-          <div className="bg-white p-8 md:p-12 border border-slate-100 shadow-2xl rounded-sm relative overflow-hidden">
+          <div className="bg-white p-8 md:p-12 border border-slate-100 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.18)] rounded-[2rem] relative overflow-hidden">
             <AnimatePresence mode="wait">
               {status === "success" ? (
                 <motion.div 
@@ -270,7 +272,7 @@ export default function ContactSection() {
                           onBlur={handleBlur}
                           required
                           placeholder="Ing. Carlos Pérez" 
-                          className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                          className={`w-full bg-slate-50/70 rounded-t-lg border-b-2 p-4 focus:bg-white text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                             touched.name 
                               ? validateName(formData.name)
                                 ? "border-emerald-500/50 focus:border-emerald-500"
@@ -305,7 +307,7 @@ export default function ContactSection() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder="Entidad / Empresa" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                        className={`w-full bg-slate-50/70 rounded-t-lg border-b-2 p-4 focus:bg-white text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                           touched.company && formData.company.trim()
                             ? "border-emerald-500/30 focus:border-emerald-500"
                             : "border-slate-100 focus:border-[#1a1a1a]"
@@ -342,7 +344,7 @@ export default function ContactSection() {
                         onBlur={handleBlur}
                         required
                         placeholder="cperez@organizacion.com" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                        className={`w-full bg-slate-50/70 rounded-t-lg border-b-2 p-4 focus:bg-white text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
                           touched.email 
                             ? !validateEmail(formData.email)
                               ? "border-red-500/50 focus:border-red-500"
@@ -403,7 +405,7 @@ export default function ContactSection() {
                       value={formData.subject}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full bg-[#fcfcfc] border-b border-slate-100 p-4 text-xs text-[#1a1a1a] font-medium focus:outline-none focus:border-[#1a1a1a] transition-colors appearance-none"
+                      className="w-full bg-slate-50/70 rounded-t-lg border-b-2 border-slate-100 p-4 focus:bg-white text-xs text-[#1a1a1a] font-medium focus:outline-none focus:border-[#1a1a1a] transition-colors appearance-none"
                     >
                       <option>Auditoría de Datos LADM-COL</option>
                       <option>Implementación de Digital Twin</option>
@@ -430,7 +432,7 @@ export default function ContactSection() {
                         required
                         rows="4" 
                         placeholder="Breve descripción del alcance del proyecto (por ejemplo, el área del levantamiento LiDAR, requisitos de precisión catastral)..." 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors resize-none ${
+                        className={`w-full bg-slate-50/70 rounded-t-lg border-b-2 p-4 focus:bg-white text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors resize-none ${
                           touched.description
                             ? validateDescription(formData.description)
                               ? "border-emerald-500/50 focus:border-emerald-500"
@@ -453,7 +455,7 @@ export default function ContactSection() {
                   <button 
                     type="submit"
                     disabled={status === "sending"}
-                    className="w-full py-5 bg-[#1a1a1a] text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-800 transition-all flex items-center justify-center gap-4 shadow-xl disabled:opacity-50 cursor-pointer"
+                    className="w-full py-5 bg-slate-950 text-white text-[11px] font-black uppercase tracking-[0.25em] rounded-xl hover:bg-cyan-500 hover:text-slate-950 hover:shadow-[0_12px_30px_rgba(6,182,212,0.3)] transition-all flex items-center justify-center gap-4 shadow-xl disabled:opacity-50 cursor-pointer"
                   >
                     {status === "sending" ? "PROCESANDO..." : "Agendar Sesión Técnica"} 
                     <Send className={`w-3 h-3 ${status === "sending" ? "animate-pulse" : ""}`} />

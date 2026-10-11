@@ -54,7 +54,7 @@ export default function Home() {
     <main className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
       
       {/* Hero Section - Elite Digital Sovereignty */}
-      <section className="relative pt-52 pb-36 px-6 overflow-hidden">
+      <section className="relative pt-36 md:pt-52 pb-24 md:pb-36 px-6 overflow-hidden">
         {/* Luces decorativas superiores */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/5 to-transparent opacity-30 rounded-full blur-[120px] pointer-events-none z-0"></div>
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/5 to-transparent opacity-20 rounded-full blur-[100px] pointer-events-none z-0"></div>
@@ -70,12 +70,12 @@ export default function Home() {
             >
               <div className="flex items-center gap-4">
                 <span className="w-12 h-px bg-cyan-500/40 shadow-[0_0_8px_rgba(6,182,212,0.3)]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-semibold">
+                <span className="text-[10px] font-mono uppercase tracking-[0.3em] sm:tracking-[0.5em] text-cyan-600 font-semibold">
                   Inteligencia Territorial Práctica // 2026
                 </span>
               </div>
               
-              <h1 className="text-6xl md:text-8xl lg:text-[105px] font-black tracking-tighter leading-[0.95] text-slate-950">
+              <h1 className="text-[44px] leading-[0.95] sm:text-6xl md:text-8xl lg:text-[105px] font-black tracking-tighter text-slate-950">
                 Arquitectura <br /> 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Territorial</span> <br />
                 Inteligente.
@@ -87,18 +87,19 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 pt-4">
                 <Link
                   href="/projects"
                   prefetch={false}
-                  className="w-full sm:w-auto px-10 py-5 bg-slate-950 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-cyan-500 hover:text-black transition-all duration-300 shadow-xl hover:shadow-[0_8px_30px_rgba(6,182,212,0.25)] rounded-sm text-center"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 bg-slate-950 text-white text-[11px] font-black uppercase tracking-[0.25em] hover:bg-cyan-500 hover:text-slate-950 hover:-translate-y-0.5 transition-all duration-300 shadow-xl hover:shadow-[0_12px_30px_rgba(6,182,212,0.3)] rounded-xl text-center"
                 >
                   Explorar Proyectos
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
                 <Link
                   href="/about"
                   prefetch={false}
-                  className="w-full sm:w-auto px-10 py-5 border border-slate-200 bg-white/70 text-slate-700 hover:text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-50 hover:border-slate-350 transition-all duration-300 backdrop-blur-md rounded-sm text-center"
+                  className="w-full sm:w-auto px-10 py-5 border border-slate-200 bg-white/70 text-slate-700 hover:text-slate-950 text-[11px] font-black uppercase tracking-[0.25em] hover:bg-white hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-md rounded-xl text-center"
                 >
                   Nuestro Manifiesto
                 </Link>
@@ -820,7 +821,7 @@ export default function Home() {
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-14 h-14 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Shield className="w-6 h-6 text-cyan-600" />
               </div>
@@ -834,7 +835,7 @@ export default function Home() {
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-14 h-14 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Settings className="w-6 h-6 text-blue-600" />
               </div>
@@ -848,7 +849,7 @@ export default function Home() {
             <div 
               className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-14 h-14 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Brain className="w-6 h-6 text-emerald-600" />
               </div>
@@ -895,7 +896,7 @@ export default function Home() {
             </div>
             
             <div 
-              className="lg:col-span-7 h-[540px] bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden relative group shadow-2xl hover:border-slate-350 transition-all"
+              className="lg:col-span-7 h-[540px] bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden relative group shadow-2xl hover:border-slate-300 transition-all"
             >
               <SovereignMapWrapper />
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-slate-200/50 z-20 shadow-md">

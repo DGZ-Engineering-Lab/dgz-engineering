@@ -314,7 +314,7 @@ function CadastreViewer() {
               <span>Seleccionado</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 bg-slate-800/40 border border-slate-650 rounded-sm" />
+              <div className="w-2 h-2 bg-slate-800/40 border border-slate-600 rounded-sm" />
               <span>Predio Normal</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -721,7 +721,7 @@ function PipelineMonitor() {
                 <span className="text-slate-400">Progreso Total</span>
                 <span className="text-white font-bold">{progress}%</span>
               </div>
-              <div className="h-1.5 w-full bg-slate-900 border border-slate-850 rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-slate-900 border border-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-cyan-400 transition-all duration-300"
                   style={{ width: `${progress}%` }}
@@ -1009,7 +1009,7 @@ LIMIT 5;`,
               onChange={(e) => setCustomQuery(e.target.value)}
               placeholder="Haz una pregunta catastral o de SQL espacial libre..."
               disabled={isSearchingLive || isTyping}
-              className="w-full bg-[#030712] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
+              className="w-full bg-[#030712] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
             />
             <button
               onClick={() => handleLiveQuery(customQuery)}
@@ -1116,7 +1116,7 @@ LIMIT 5;`,
                 setLiveResponse(null);
                 setLiveError(null);
               }}
-              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
+              className="w-full bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
             >
               ← Volver al Centro de Demostración
             </button>

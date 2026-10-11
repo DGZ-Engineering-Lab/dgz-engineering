@@ -60,7 +60,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-blue-500/40",
     glow: "bg-blue-500/5 group-hover:bg-blue-500/10",
     badge: "text-blue-600 bg-blue-50 border-blue-200",
-    dot: "bg-blue-505 shadow-[0_0_8px_rgba(59,130,246,0.3)]",
+    dot: "bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]",
   },
   emerald: {
     text: "text-emerald-600",
@@ -100,7 +100,7 @@ const COLOR_THEMES = {
     border: "border-slate-200 hover:border-pink-500/40",
     glow: "bg-pink-500/5 group-hover:bg-pink-500/10",
     badge: "text-pink-600 bg-pink-50 border-pink-200",
-    dot: "bg-pink-505 shadow-[0_0_8px_rgba(236,72,153,0.3)]",
+    dot: "bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.3)]",
   }
 };
 
@@ -441,7 +441,7 @@ export default function ServicesSection() {
                   <button
                     key={idx}
                     onClick={() => handlePipelineClick(step)}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-slate-200/60 bg-white/50 text-left hover:border-slate-350 hover:bg-white z-10 transition-all group"
+                    className="flex items-center gap-3 p-3 rounded-xl border border-slate-200/60 bg-white/50 text-left hover:border-slate-300 hover:bg-white z-10 transition-all group"
                   >
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-black transition-all ${
                       isActive 
@@ -472,7 +472,7 @@ export default function ServicesSection() {
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[500px] lg:min-h-[640px]">
             
             {/* Panel Izquierdo: Selectores de Capa y de Servicios (col-span-4) */}
-            <div className="col-span-12 lg:col-span-4 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200/80 flex flex-col gap-6 bg-slate-50/20">
+            <div className="lg:col-span-4 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200/80 flex flex-col gap-6 bg-slate-50/20">
               
               {/* Segmented Control de Capas */}
               <div>
@@ -547,7 +547,7 @@ export default function ServicesSection() {
                             )}
                           </div>
                           <div className={`text-xs font-bold leading-tight truncate ${
-                            isSelected ? "text-slate-900" : "text-slate-650"
+                            isSelected ? "text-slate-900" : "text-slate-600"
                           }`}>
                             {svc.title}
                           </div>
@@ -569,7 +569,7 @@ export default function ServicesSection() {
             </div>
 
             {/* Panel Derecho: Detalles del Servicio + Simulador Interactivo (col-span-8) */}
-            <div className="col-span-12 lg:col-span-8 p-6 md:p-8 flex flex-col gap-8 bg-slate-50/10 justify-between">
+            <div className="lg:col-span-8 p-6 md:p-8 flex flex-col gap-8 bg-slate-50/10 justify-between">
               
               {activeService ? (
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch h-full">
@@ -604,7 +604,7 @@ export default function ServicesSection() {
                         </span>
                         <div className="space-y-1.5">
                           {activeService.capacidades.slice(0, 4).map((cap, cIdx) => (
-                            <div key={cIdx} className="flex gap-2 items-start text-[11px] text-slate-650 font-light leading-snug">
+                            <div key={cIdx} className="flex gap-2 items-start text-[11px] text-slate-600 font-light leading-snug">
                               <Check className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-cyan-600`} />
                               <span>{cap}</span>
                             </div>
@@ -1259,7 +1259,7 @@ function AiAutomationSimulator() {
             {boxes.map((box, i) => (
               <g key={i}>
                 <path d={box.points} className={`${box.color} stroke-[1.5] transition-all`} />
-                <rect x={box.tagX} y={box.tagY} width="50" height="12" rx="2" className="fill-black border border-slate-850" />
+                <rect x={box.tagX} y={box.tagY} width="50" height="12" rx="2" className="fill-black border border-slate-800" />
                 <text x={box.tagX + 4} y={box.tagY + 9} className="fill-white text-[7px] font-bold font-mono">
                   {box.label} {box.confidence}
                 </text>
@@ -1345,7 +1345,7 @@ function SmartArchitectureSimulator() {
         {/* Telemetría del gemelo digital */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
           <div className="text-slate-500 font-bold mb-1 uppercase text-[8px]">Propiedades del Modelo:</div>
-          <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-350">
+          <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-300">
             <div>• Nivel de Detalle: <span className="text-blue-400 font-bold">LOD 400</span></div>
             <div>• Formato: <span className="text-blue-400 font-bold">IFC 4.3</span></div>
             <div>• Interoperabilidad: <span className="text-blue-400 font-bold">GIS + BIM</span></div>
