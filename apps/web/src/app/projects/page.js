@@ -13,7 +13,7 @@ const PROJECTS = [
     category: "Infraestructura Territorial",
     tagline: "Soberanía fiscal y seguridad jurídica predial mediante la implementación nativa del estándar LADM-COL e INTERLIS.",
     impact: ["+300.000 Predios Actualizados", "100% Interoperabilidad XTF", "Optimización de Procesos en 70%"],
-    image: "/assets/img/blog-ladm-col.png",
+    image: "/assets/img/blog-ladm-col.webp",
     stats: { label: "Estándar Oficial", value: "LADM-COL v3.0" }
   },
   {
@@ -22,7 +22,7 @@ const PROJECTS = [
     category: "Software de Ingeniería",
     tagline: "Control de calidad topológico nativo y verificación estructurada de consistencia parcelaria en tiempo real.",
     impact: ["Error Humano Mitigado al 95%", "Consistencia Transaccional PostGIS", "Reportes de Conformidad Automáticos"],
-    image: "/assets/img/geoai_before.png",
+    image: "/assets/img/geoai_before.webp",
     stats: { label: "Núcleo", value: "PyQGIS / Python 3" }
   },
   {
@@ -31,7 +31,7 @@ const PROJECTS = [
     category: "Infraestructura de Datos",
     tagline: "Ingeniería de datos geoespaciales masivos para gobernaciones, alcaldías y gestores catastrales habilitados.",
     impact: ["500k+ Registros Validados/Día", "Integridad e Interoperabilidad INTERLIS", "Esquema de Seguridad AES-256"],
-    image: "/assets/img/topo-bg.png",
+    image: "/assets/img/topo-bg.webp",
     stats: { label: "Intercambio", value: "XTF / INTERLIS" }
   },
   {
@@ -40,7 +40,7 @@ const PROJECTS = [
     category: "Inteligencia Artificial",
     tagline: "Modelos híbridos de procesamiento de lenguaje natural y motores GIS para análisis territorial estratégico de alta escala.",
     impact: ["Consultas Naturales SQL-GIS", "Modelos Predictivos de Valoración", "Generación Automatizada de Memorias"],
-    image: "/assets/img/blog-cybersecurity.png",
+    image: "/assets/img/blog-cybersecurity.webp",
     stats: { label: "Modelo", value: "LLM-Hybrid Spatial" }
   }
 ];
@@ -141,6 +141,8 @@ export default function ProjectsPage() {
                     src={project.image} 
                     alt={project.title}
                     fetchPriority={idx === 0 ? "high" : "low"}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    decoding="async"
                     className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 w-full h-full absolute inset-0"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
