@@ -1090,7 +1090,7 @@ const BLOG_DATA = {
     date: "12 Mayo, 2026",
     author: "Dirección de Ciberseguridad",
     readTime: "12 min",
-    image: "/assets/img/blog-cybersecurity.png",
+    image: "/assets/img/blog-cybersecurity.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1118,7 +1118,7 @@ const BLOG_DATA = {
     date: "10 Mayo, 2026",
     author: "Ingeniería Territorial",
     readTime: "8 min",
-    image: "/assets/img/blog-ladm-col.png",
+    image: "/assets/img/blog-ladm-col.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1146,7 +1146,7 @@ const BLOG_DATA = {
     date: "05 Mayo, 2026",
     author: "Laboratorio Geo-AI",
     readTime: "10 min",
-    image: "/assets/img/geoai_after.png",
+    image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1174,7 +1174,7 @@ const BLOG_DATA = {
     date: "01 Mayo, 2026",
     author: "Laboratorio de IA Espacial",
     readTime: "14 min",
-    image: "/assets/img/geoai_after.png",
+    image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">

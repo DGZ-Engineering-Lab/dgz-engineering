@@ -1,10 +1,9 @@
-"use client";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import "./hero-motion.css";
 import SovereignMapWrapper from "../components/SovereignMapWrapper";
 import Image from "next/image";
 import Logo from "../components/Logo";
+import LiveTelemetry from "../components/LiveTelemetry";
 import ContactSection from "../components/ContactSection";
 import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
@@ -12,44 +11,7 @@ import GlobalPartners from "../components/GlobalPartners";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
 import ServicesSection from "../components/ServicesSection";
 
-// Configuración de variantes de animación premium
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-};
-
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.15 } },
-  viewport: { once: true }
-};
-
 export default function Home() {
-  const [telemetry, setTelemetry] = useState({
-    lat: "4°35'12.45''N",
-    lng: "75°23'41.08''W",
-    alt: "45.22 m",
-    ping: "12 ms"
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTelemetry(prev => {
-        const randomAlt = (45.10 + Math.random() * 0.3).toFixed(2);
-        const randomPing = Math.floor(8 + Math.random() * 10);
-        return {
-          lat: `N 4°35'${(12.45 + Math.random() * 0.25).toFixed(2)}''`,
-          lng: `W 75°23'${(41.08 + Math.random() * 0.25).toFixed(2)}''`,
-          alt: `${randomAlt} m`,
-          ping: `${randomPing} ms`
-        };
-      });
-    }, 450);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
       
@@ -62,12 +24,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-7 space-y-12 animate-fade-in"
-            >
+            <div className="lg:col-span-7 space-y-12 hero-enter-left">
               <div className="flex items-center gap-4">
                 <span className="w-12 h-px bg-cyan-500/40 shadow-[0_0_8px_rgba(6,182,212,0.3)]"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-semibold">
@@ -103,14 +60,9 @@ export default function Home() {
                   Nuestro Manifiesto
                 </Link>
               </div>
-            </motion.div>
+            </div>
             {/* Core Standards HUD Card (Lateral Hero) - Ultra premium 3D Digital Twin CAD Console */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:block lg:col-span-5 pt-10"
-            >
+            <div className="hidden lg:block lg:col-span-5 pt-10 hero-enter-right">
               <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-md">
                 {/* 3D ambient space back-glow */}
                 <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-cyan-500/20 via-indigo-500/10 to-orange-500/5 blur-3xl animate-pulse-soft" aria-hidden="true"></div>
@@ -366,8 +318,8 @@ export default function Home() {
 
                     {/* Geographic Bounding Real-time Info Ticks on Grid Edge */}
                     <g fill="rgba(255,255,255,0.4)" fontFamily="monospace" fontSize="5.5" textAnchor="middle">
-                      <text x="32" y="196" transform="rotate(-26.5 32 196)">{telemetry.lng}</text>
-                      <text x="200" y="110">{telemetry.lat}</text>
+                      <text x="32" y="196" transform="rotate(-26.5 32 196)"><LiveTelemetry field="lng" /></text>
+                      <text x="200" y="110"><LiveTelemetry field="lat" /></text>
                       <text x="368" y="196" transform="rotate(26.5 368 196)">W 75°23&apos;41.55&apos;&apos;</text>
                       <text x="200" y="294">S 4°35&apos;58.20&apos;&apos;</text>
                     </g>
@@ -719,7 +671,7 @@ export default function Home() {
                     <g transform="translate(15, 38)" className="hud-callout" opacity="0.85">
                       <rect x="-5" y="-5" width="84" height="34" fill="rgba(2, 6, 23, 0.9)" stroke="rgba(6,182,212,0.3)" strokeWidth="0.8" rx="5" />
                       <text x="3" y="6" fill="#7dd9ff" fontFamily="monospace" fontSize="6.5" fontWeight="bold">DRONE TELEM</text>
-                      <text x="3" y="14" fill="#ffffff" fontFamily="monospace" fontSize="5">ALT: {telemetry.alt}</text>
+                      <text x="3" y="14" fill="#ffffff" fontFamily="monospace" fontSize="5">ALT: <LiveTelemetry field="alt" /></text>
                       <text x="3" y="22" fill="rgba(255,255,255,0.5)" fontFamily="monospace" fontSize="4.5">GPS: 3D_DGPS LOCK</text>
                       
                       {/* Animated mini green radar dot inside tag */}
@@ -755,7 +707,7 @@ export default function Home() {
                         <animate attributeName="d" values="M 0,4 Q 5,-2 10,4 T 20,4 T 30,10 T 40,4 T 50,0 T 60,4 T 70,4; M 0,4 Q 5,10 10,4 T 20,-2 T 30,4 T 40,8 T 50,4 T 60,-2 T 70,4; M 0,4 Q 5,-2 10,4 T 20,4 T 30,10 T 40,4 T 50,0 T 60,4 T 70,4" dur="2.4s" repeatCount="indefinite" />
                       </path>
                       
-                      <text x="50" y="8" fill="#7dd9ff" fontFamily="monospace" fontSize="4.5" textAnchor="middle">PING: {telemetry.ping}</text>
+                      <text x="50" y="8" fill="#7dd9ff" fontFamily="monospace" fontSize="4.5" textAnchor="middle">PING: <LiveTelemetry field="ping" /></text>
                     </g>
 
                   </svg>
@@ -780,7 +732,7 @@ export default function Home() {
 
                 </div>
               </div>
-            </motion.div>
+            </div>
 
           </div>
         </div>
@@ -950,7 +902,7 @@ export default function Home() {
                 <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
-                    src="/assets/img/blog-ladm-col.png" 
+                    src="/assets/img/blog-ladm-col.webp" 
                     alt="" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -974,7 +926,7 @@ export default function Home() {
                 <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
-                    src="/assets/img/blog-cybersecurity.png" 
+                    src="/assets/img/blog-cybersecurity.webp" 
                     alt="" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
