@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { internalError } from "../../../lib/http";
 import { get } from "@vercel/edge-config";
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET() {
   try {

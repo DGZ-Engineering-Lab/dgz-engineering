@@ -10,6 +10,7 @@ import TechTicker from "../components/TechTicker";
 import GlobalPartners from "../components/GlobalPartners";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
 import ServicesSection from "../components/ServicesSection";
+import ProfessionalProfile from "../components/ProfessionalProfile";
 
 export default function Home() {
   return (
@@ -28,37 +29,44 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <span className="w-12 h-px bg-cyan-500/40 shadow-[0_0_8px_rgba(6,182,212,0.3)]"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-semibold">
-                  Inteligencia Territorial Práctica // 2026
+                  Ingeniería Territorial // Portafolio de Autor 2026
                 </span>
               </div>
               
-              <h1 className="text-6xl md:text-8xl lg:text-[105px] font-black tracking-tighter leading-[0.95] text-slate-950">
-                Arquitectura <br /> 
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Territorial</span> <br />
-                Inteligente.
+              <h1 className="text-5xl md:text-7xl lg:text-[88px] font-black tracking-tighter leading-[0.95] text-slate-950">
+                Albert Daniel <br /> 
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Gaviria Zapata</span> <br />
+                <span className="text-2xl md:text-4xl lg:text-5xl font-mono font-bold tracking-tight text-slate-800">DevGiz Engineering.</span>
               </h1>
 
               <div className="max-w-2xl">
                 <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed">
-                  Hacemos simple lo geográfico. Aseguramos la legalidad de tus linderos, evitamos retrasos costosos en licencias de construcción y optimizamos tus terrenos en minutos, cumpliendo al 100% con los estándares de ordenamiento territorial colombiano <span className="text-cyan-600 font-mono text-xs border border-cyan-500/20 bg-cyan-500/5 px-1.5 py-0.5 rounded">LADM-COL v3.0</span>.
+                  Estudiante de Ingeniería en Desarrollo Territorial y Profesional SIG. Especialista en arquitectura de bases de datos espaciales, automatización geoespacial con Python y gestión integral del Catastro Multipropósito bajo el estándar oficial <span className="text-cyan-600 font-mono text-xs border border-cyan-500/20 bg-cyan-500/5 px-1.5 py-0.5 rounded font-bold">LADM-COL v3.0</span>.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                <a
+                  href="#portfolio-dossier"
+                  className="w-full sm:w-auto px-8 py-4 bg-slate-950 text-white text-[10px] font-black uppercase tracking-[0.25em] hover:bg-cyan-500 hover:text-black transition-all duration-300 shadow-xl hover:shadow-[0_8px_30px_rgba(6,182,212,0.25)] rounded-sm text-center"
+                >
+                  Ver Dossier & Trayectoria
+                </a>
                 <Link
                   href="/projects"
                   prefetch={false}
-                  className="w-full sm:w-auto px-10 py-5 bg-slate-950 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-cyan-500 hover:text-black transition-all duration-300 shadow-xl hover:shadow-[0_8px_30px_rgba(6,182,212,0.25)] rounded-sm text-center"
+                  className="w-full sm:w-auto px-8 py-4 border border-slate-300 bg-white/80 text-slate-800 hover:text-slate-950 text-[10px] font-black uppercase tracking-[0.25em] hover:bg-slate-100 hover:border-slate-400 transition-all duration-300 backdrop-blur-md rounded-sm text-center"
                 >
-                  Explorar Proyectos
+                  Proyectos & Lab
                 </Link>
-                <Link
-                  href="/about"
-                  prefetch={false}
-                  className="w-full sm:w-auto px-10 py-5 border border-slate-200 bg-white/70 text-slate-700 hover:text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-50 hover:border-slate-350 transition-all duration-300 backdrop-blur-md rounded-sm text-center"
+                <a
+                  href="https://wa.me/573053261466"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-4 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-[0.25em] hover:bg-emerald-500 transition-all duration-300 shadow-md rounded-sm text-center flex items-center justify-center gap-2"
                 >
-                  Nuestro Manifiesto
-                </Link>
+                  WhatsApp Directo
+                </a>
               </div>
             </div>
             {/* Core Standards HUD Card (Lateral Hero) - Ultra premium 3D Digital Twin CAD Console */}
@@ -737,6 +745,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ========================================================= */}
+      {/* DOSSIER MAESTRO DE INGENIERÍA: ALBERT DANIEL GAVIRIA ZAPATA */}
+      {/* ========================================================= */}
+      <ProfessionalProfile />
 
       {/* Ecosistema Tecnológico de Elite */}
       <section className="py-28 border-t border-slate-100 bg-transparent relative overflow-hidden">

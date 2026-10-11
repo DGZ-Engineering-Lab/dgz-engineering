@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../../lib/upstash";
 import { getClientIp } from "../../../../lib/security";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 // Uploads are public and unauthenticated, so only accept small geospatial files.
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // stays under Vercel's 4.5 MB body limit

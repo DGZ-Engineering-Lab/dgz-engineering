@@ -1,7 +1,7 @@
 import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // ─── SECURITY CONSTANTS ────────────────────────────────────────────────────────
 const MAX_ATTEMPTS       = 5;

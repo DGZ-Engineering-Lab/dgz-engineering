@@ -146,9 +146,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Inicio", href: "/" },
+    { name: "Dossier CV", href: "/#portfolio-dossier" },
+    { name: "Proyectos", href: "/projects", dropdownKey: "Proyectos" },
     { name: "Nosotros", href: "/about" },
     { name: "Estándares", href: "/standards" },
-    { name: "Proyectos", href: "/projects", dropdownKey: "Proyectos" },
     { name: "Diagnóstico", href: "/diagnostic" },
     { name: "Blogs", href: "/blog", dropdownKey: "Blogs" },
     { name: "Lab", href: "/lab/gesture-sandbox", isBeta: true },

@@ -6,7 +6,7 @@ import { getClientIp } from '../../../lib/security';
 const MAX_PROMPT_CHARS = 6000;
 const MAX_CONTEXT_CHARS = 12000;
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // Initialize Groq SDK if key is configured
 let groq = null;

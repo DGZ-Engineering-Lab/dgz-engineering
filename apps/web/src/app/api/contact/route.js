@@ -5,7 +5,7 @@ import { emailService } from "../../../lib/email-service";
 import { boundedString, getClientIp, isValidEmail } from "../../../lib/security";
 
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function POST(req) {
   try {

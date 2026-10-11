@@ -29,28 +29,28 @@ const ACHIEVEMENTS = [
 
 const DIRECTORS = [
   { 
-    name: "Ing. Albert G.", 
-    role: "Director Técnico & Arquitecto Geoespacial", 
-    desc: "Arquitecto de sistemas de misión crítica y líder en la implementación del estándar LADM-COL en Colombia. Especialista en automatización geoespacial de alto rendimiento y analítica de datos a gran escala.",
-    initials: "AG",
+    name: "Albert Daniel Gaviria Zapata", 
+    role: "Fundador, Desarrollador Principal & Profesional SIG", 
+    desc: "Estudiante de Ingeniería en Desarrollo Territorial y Profesional SIG. Diseñador de la plataforma SaaS DevGiz bajo el estándar LADM-COL v3.0. Especialista en PostgreSQL/PostGIS, SQL Server, automatización con Python (GeoPandas, Pandas, Shapely), interfaces web interactivas (TypeScript, React, Next.js), coordinador de brigadas de barrido predial, operador de drones/RPAS y especialista en telemetría GNSS/GPS RTK.",
+    initials: "AGZ",
     icon: Cpu,
-    publicKey: "0xDGZ_ALB_87B3F...D90E",
-    signatureHash: "7d0d0f7a93138b3756c23ef8e2ef8a1cfd0cb860fcd8ab51ad0ea84589d9ea8e",
+    publicKey: "ID: 1007533510 // LADM-COL V3.0 // MEDELLÍN",
+    signatureHash: "Albert Daniel Gaviria Zapata // IGAC QA/QC // ICDE Certified",
     status: "ONLINE",
-    latency: "8ms",
-    coordinates: "LAT: 4.749° N // LON: 75.912° W", // Cartago, Valle
+    latency: "6ms",
+    coordinates: "LAT: 6.2442° N // LON: 75.5812° W", // Medellín, Colombia
     capabilities: [
-      { name: "Arquitectura LADM-COL & INTERLIS", level: 98 },
-      { name: "Procesamiento Geoespacial (Polars/Shapely)", level: 99 },
-      { name: "Ingeniería de Software & C++ Plugins", level: 95 },
-      { name: "Automatización de Topologías Autocurativas", level: 97 }
+      { name: "Estándar LADM-COL v3.0 & ISO 19152", level: 100 },
+      { name: "QGIS (PyQGIS) & ArcGIS Pro Suite", level: 100 },
+      { name: "Bases Espaciales (PostGIS / SQL Server)", level: 95 },
+      { name: "Drones RPAS & Telemetría GNSS RTK (<0.05m)", level: 95 }
     ],
     logs: [
-      "[INIT] Iniciando validador topológico geoespacial...",
-      "[LOAD] Cargando modelo físico de datos LADM_COL_V3_1...",
-      "[SCAN] Ejecutando depuración de 450,000 parcelas catastrales en Cartago...",
-      "[OK] 100% de consistencia topológica establecida sin solapes ni microvacíos.",
-      "[SIGN] Firma criptográfica SHA-256 generada y estampada con éxito."
+      "[INIT] Cargando entorno de ingeniería territorial DevGiz...",
+      "[MODEL] Modelo conceptual y físico LADM_COL_V3_0 validado conforme a IGAC/SNR...",
+      "[AUDIT] Verificación QA/QC de reconocimiento predial y consistencia topológica...",
+      "[SURVEY] Conexión GNSS RTK submétrica establecida (< 0.05 m de tolerancia)...",
+      "[VERIFIED] Credenciales institucionales ICDE, UC Davis y SENA autenticadas."
     ]
   },
   { 
