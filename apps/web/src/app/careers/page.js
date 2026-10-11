@@ -145,7 +145,7 @@ export default function CareersPage() {
   };
 
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32 overflow-x-hidden">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32 overflow-x-hidden">
       
       {/* Header Section */}
       <section className="max-w-7xl mx-auto px-6 mb-32">
@@ -220,7 +220,10 @@ export default function CareersPage() {
                   </div>
                   
                   <button 
+                    type="button"
                     onClick={() => toggleExpand(job.id)}
+                    aria-expanded={isExpanded}
+                    aria-controls={`job-details-${job.id}`}
                     className="w-full lg:w-auto px-10 py-5 bg-[#1a1a1a] hover:bg-slate-800 text-white text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-4 rounded-xl cursor-pointer"
                   >
                      {isExpanded ? 'Cerrar Detalles' : 'Ver Detalles'} 
@@ -232,6 +235,7 @@ export default function CareersPage() {
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
+                      id={`job-details-${job.id}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -288,8 +292,8 @@ export default function CareersPage() {
                             {!formSubmitted ? (
                                <form onSubmit={(e) => submitApplication(e, job.title)} className="space-y-4">
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Nombre Completo</label>
-                                     <input 
+                                     <label htmlFor={`apply-${job.id}-name`} className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Nombre Completo</label>
+                                     <input id={`apply-${job.id}-name`} autoComplete="name" 
                                        required
                                        type="text" 
                                        name="name"
@@ -300,8 +304,8 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
-                                     <input 
+                                     <label htmlFor={`apply-${job.id}-email`} className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
+                                     <input id={`apply-${job.id}-email`} autoComplete="email" 
                                        required
                                        type="email" 
                                        name="email"
@@ -312,8 +316,8 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
-                                     <input 
+                                     <label htmlFor={`apply-${job.id}-portfolio`} className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
+                                     <input id={`apply-${job.id}-portfolio`} autoComplete="url" 
                                        type="url" 
                                        name="portfolio"
                                        value={formData.portfolio}
@@ -323,8 +327,8 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
-                                     <textarea 
+                                     <label htmlFor={`apply-${job.id}-pitch`} className="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
+                                     <textarea id={`apply-${job.id}-pitch`} 
                                        name="pitch"
                                        value={formData.pitch}
                                        onChange={handleInputChange}
@@ -336,7 +340,7 @@ export default function CareersPage() {
 
                                   {/* Cyber-processing console during submit */}
                                   {consoleLogs.length > 0 && (
-                                     <div className="bg-black p-4 rounded-lg font-mono text-[9px] text-cyan-400 space-y-1 max-h-[120px] overflow-y-auto">
+                                     <div role="log" aria-live="polite" aria-label="Progreso del envío" className="bg-black p-4 rounded-lg font-mono text-[9px] text-cyan-400 space-y-1 max-h-[120px] overflow-y-auto">
                                         {consoleLogs.map((log, i) => (
                                            <div key={i}>{log}</div>
                                         ))}
@@ -358,6 +362,7 @@ export default function CareersPage() {
                                <motion.div 
                                  initial={{ scale: 0.95, opacity: 0 }}
                                  animate={{ scale: 1, opacity: 1 }}
+                                 role="status"
                                  className="text-center py-10 space-y-6"
                                >
                                   <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500">
@@ -373,6 +378,7 @@ export default function CareersPage() {
                                      CANDIDATE_HASH: 0x8a7f92023d8c1c4f
                                   </div>
                                   <button
+                                    type="button"
                                     onClick={resetForm}
                                     className="text-[9px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer"
                                   >
@@ -427,6 +433,6 @@ export default function CareersPage() {
         </Link>
       </div>
 
-    </main>
+    </div>
   );
 }

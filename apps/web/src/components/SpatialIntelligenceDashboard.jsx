@@ -1608,9 +1608,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                   
                   {/* Spatial File Upload */}
                   <div className="space-y-1.5">
-                    <label className="text-[8px] font-mono uppercase text-slate-400 tracking-wider block">1. Cartografía Catastral (GeoJSON / Shapefile .zip)</label>
-                    <div className="border border-dashed border-slate-800 hover:border-cyan-500/50 bg-black/40 rounded-2xl p-1.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative group overflow-hidden h-14">
-                      <input 
+                    <label htmlFor="crossref-spatial-file" className="text-[8px] font-mono uppercase text-slate-400 tracking-wider block">1. Cartografía Catastral (GeoJSON / Shapefile .zip)</label>
+                    <div className="border border-dashed border-slate-800 hover:border-cyan-500/50 focus-within:ring-2 focus-within:ring-cyan-400 bg-black/40 rounded-2xl p-1.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative group overflow-hidden h-14">
+                      <input id="crossref-spatial-file" 
                         type="file" 
                         accept=".zip,.json,.geojson" 
                         onChange={(e) => {
@@ -1627,9 +1627,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                   
                   {/* Legal File Upload */}
                   <div className="space-y-1.5">
-                    <label className="text-[8px] font-mono uppercase text-slate-400 tracking-wider block">2. Registros Legales SNR (Excel .xlsx / CSV)</label>
-                    <div className="border border-dashed border-slate-800 hover:border-emerald-500/50 bg-black/40 rounded-2xl p-1.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative group overflow-hidden h-14">
-                      <input 
+                    <label htmlFor="crossref-legal-file" className="text-[8px] font-mono uppercase text-slate-400 tracking-wider block">2. Registros Legales SNR (Excel .xlsx / CSV)</label>
+                    <div className="border border-dashed border-slate-800 hover:border-emerald-500/50 focus-within:ring-2 focus-within:ring-emerald-400 bg-black/40 rounded-2xl p-1.5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 relative group overflow-hidden h-14">
+                      <input id="crossref-legal-file" 
                         type="file" 
                         accept=".xlsx,.csv" 
                         onChange={(e) => {
@@ -1647,8 +1647,8 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                   {/* Join Column & Actions */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-[8px] font-mono uppercase text-slate-500">Columna Clave</label>
-                      <input 
+                      <label htmlFor="crossref-join-col" className="text-[8px] font-mono uppercase text-slate-500">Columna Clave</label>
+                      <input id="crossref-join-col" 
                         type="text"
                         value={joinCol}
                         onChange={(e) => setJoinCol(e.target.value)}
@@ -1708,6 +1708,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                             <div className="flex items-center gap-2 flex-1 max-w-[200px]">
                               <input 
                                 type="text" 
+                                aria-label="Filtrar discrepancias por NPU"
                                 value={crossRefSearchQuery} 
                                 onChange={(e) => setCrossRefSearchQuery(e.target.value)} 
                                 placeholder="Filtrar por NPU..." 
@@ -1971,6 +1972,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                   <form onSubmit={handleSemanticSearch} className="relative group">
                     <input 
                       type="text"
+                      aria-label="Búsqueda geoespacial en lenguaje natural"
                       value={semanticQuery}
                       onChange={(e) => setSemanticQuery(e.target.value)}
                       placeholder="Buscador Geo-LLM (ej: premium en Antioquia)..."
@@ -1988,11 +1990,14 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                           : "bg-slate-800/20 border-slate-700/30 text-slate-400 hover:text-white"
                       }`}
                       title="Búsqueda por voz (Speech-to-GIS)"
+                      aria-label={isListening ? "Detener búsqueda por voz" : "Búsqueda por voz"}
+                      aria-pressed={isListening}
                     >
                       {isListening ? <MicOff className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
                     </button>
                     <button 
                       type="submit"
+                      aria-label="Buscar"
                       className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-cyan-600/20 hover:bg-cyan-600/40 border border-cyan-500/30 rounded-lg text-cyan-400 transition-all cursor-pointer"
                     >
                       <Zap className={`w-3 h-3 ${isSearching ? "animate-spin" : ""}`} />
@@ -2105,7 +2110,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     onDragOver={handleDrag}
                     onDragLeave={handleDrag}
                     onDrop={handleDrop}
-                    className={`relative border rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 ${
+                    className={`relative border rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 focus-within:ring-2 focus-within:ring-orange-400 ${
                       isDragActive
                         ? "border-orange-500 bg-orange-950/20 shadow-[0_0_20px_rgba(249,115,22,0.3)]"
                         : "border-slate-800 bg-black/40 hover:border-orange-500/50 hover:bg-orange-950/5"
@@ -2117,7 +2122,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                     <input
                       type="file"
                       id="geojson-file-input"
-                      className="hidden"
+                      className="sr-only"
                       accept=".geojson,.json"
                       onChange={handleFileInputChange}
                       disabled={isUploading}
@@ -2285,7 +2290,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                               <span>Eje X (Horizontal):</span>
                               <span className="text-white">{offsetX}px</span>
                             </div>
-                            <input 
+                            <input aria-label="Desplazamiento del vértice P4 en el eje X" aria-valuetext={`${offsetX} píxeles`} 
                               type="range" 
                               min="-50" 
                               max="50" 
@@ -2304,7 +2309,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                               <span>Eje Y (Vertical):</span>
                               <span className="text-white">{offsetY}px</span>
                             </div>
-                            <input 
+                            <input aria-label="Desplazamiento del vértice P4 en el eje Y" aria-valuetext={`${offsetY} píxeles`} 
                               type="range" 
                               min="-50" 
                               max="50" 

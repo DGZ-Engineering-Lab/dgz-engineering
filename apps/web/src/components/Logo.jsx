@@ -4,6 +4,8 @@ export default function Logo({ className = "w-10 h-10", animated = true }) {
   return (
     <div className={`relative group ${className}`}>
       <svg
+        aria-hidden="true"
+        focusable="false"
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

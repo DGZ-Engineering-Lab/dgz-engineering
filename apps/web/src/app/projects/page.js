@@ -139,7 +139,7 @@ export default function ProjectsPage() {
                 <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
                   <img 
                     src={project.image} 
-                    alt={project.title}
+                    alt=""
                     fetchPriority={idx === 0 ? "high" : "low"}
                     loading={idx === 0 ? "eager" : "lazy"}
                     decoding="async"

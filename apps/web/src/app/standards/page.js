@@ -39,7 +39,7 @@ export default function StandardsPage() {
   const diagramInView = useInView(diagramRef, { once: true, margin: "-80px" });
 
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
       
       {/* Header Section */}
       <section className="max-w-7xl mx-auto px-6 mb-32">
@@ -219,6 +219,6 @@ export default function StandardsPage() {
         </Link>
       </div>
 
-    </main>
+    </div>
   );
 }

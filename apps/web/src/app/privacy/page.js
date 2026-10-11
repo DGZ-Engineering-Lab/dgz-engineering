@@ -4,7 +4,7 @@ import Logo from "../../components/Logo";
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
       <div className="max-w-4xl mx-auto px-6">
         <div className="space-y-12 mb-20">
           <div className="flex items-center gap-3">
@@ -53,6 +53,6 @@ export default function PrivacyPage() {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

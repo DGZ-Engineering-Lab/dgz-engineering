@@ -853,13 +853,14 @@ export default function GlobalPartners() {
               <div className="relative">
                 <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-500" />
                 <input 
-                  type="text"
+                  type="search"
+                  aria-label="Buscar socio estratégico por nombre"
                   placeholder="Buscar socio estratégico por nombre (ej. IGAC, SNR, ISA, EPM)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-16 py-4 bg-white/70 border border-slate-200/80 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20 backdrop-blur-md shadow-sm transition-all"
                 />
-                <span className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+                <span aria-live="polite" className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
                   {filteredPartners.length} COINCIDENCIAS
                 </span>
               </div>

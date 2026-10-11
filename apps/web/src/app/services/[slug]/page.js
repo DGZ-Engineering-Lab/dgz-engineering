@@ -1121,10 +1121,10 @@ export default function ServicePage() {
 
                   {/* Regulador de Frecuencia/Velocidad */}
                   <div className="pt-2">
-                    <label className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
+                    <label htmlFor="sim-speed" className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
                       Frecuencia de Muestreo / Velocidad: {simSpeed}x
                     </label>
-                    <input
+                    <input id="sim-speed" aria-valuetext={`${simSpeed}x`}
                       type="range"
                       min="0.5"
                       max="3"
@@ -1473,7 +1473,7 @@ export default function ServicePage() {
                         </div>
                       ))}
                       {terminalTyping && (
-                        <div className="text-cyan-400 animate-pulse">Running query...</div>
+                        <div role="status" className="text-cyan-400 animate-pulse">Running query...</div>
                       )}
                     </div>
 
@@ -1609,6 +1609,7 @@ export default function ServicePage() {
                   {submitSuccess ? (
                     <motion.div
                       key="success-form"
+                      role="status"
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0.95, opacity: 0 }}
@@ -1638,8 +1639,8 @@ export default function ServicePage() {
                     >
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Tu Nombre *</label>
-                          <input
+                          <label htmlFor="quote-name" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Tu Nombre *</label>
+                          <input id="quote-name" autoComplete="name"
                             type="text"
                             name="name"
                             required
@@ -1650,8 +1651,8 @@ export default function ServicePage() {
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Email Institucional *</label>
-                          <input
+                          <label htmlFor="quote-email" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Email Institucional *</label>
+                          <input id="quote-email" autoComplete="email"
                             type="email"
                             name="email"
                             required
@@ -1665,8 +1666,8 @@ export default function ServicePage() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Organización / Alcaldía *</label>
-                          <input
+                          <label htmlFor="quote-org" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Organización / Alcaldía *</label>
+                          <input id="quote-org" autoComplete="organization"
                             type="text"
                             name="org"
                             required
@@ -1677,8 +1678,8 @@ export default function ServicePage() {
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Teléfono de Contacto</label>
-                          <input
+                          <label htmlFor="quote-phone" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Teléfono de Contacto</label>
+                          <input id="quote-phone" autoComplete="tel"
                             type="tel"
                             name="phone"
                             value={formData.phone}
@@ -1690,9 +1691,9 @@ export default function ServicePage() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Plan / Alcance Seleccionado</label>
+                        <label htmlFor="quote-scope" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Plan / Alcance Seleccionado</label>
                         <div className="relative">
-                          <select
+                          <select id="quote-scope"
                             name="scope"
                             value={formData.scope}
                             onChange={handleInputChange}
@@ -1711,8 +1712,8 @@ export default function ServicePage() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Especificaciones del Requerimiento *</label>
-                        <textarea
+                        <label htmlFor="quote-msg" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Especificaciones del Requerimiento *</label>
+                        <textarea id="quote-msg"
                           name="msg"
                           rows={4}
                           required

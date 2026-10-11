@@ -49,10 +49,12 @@ export default function InteractiveCarousel() {
           </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 bg-slate-900/60 p-2.5 rounded-2xl border border-slate-800/80 backdrop-blur-xl shadow-2xl">
+        <div role="group" aria-label="Laboratorios interactivos" className="flex flex-wrap items-center gap-3 bg-slate-900/60 p-2.5 rounded-2xl border border-slate-800/80 backdrop-blur-xl shadow-2xl">
           {sections.map((s, i) => (
             <button
               key={s.id}
+              type="button"
+              aria-pressed={activeIndex === i}
               onClick={() => scrollTo(i)}
               className={`px-4 py-2 rounded-xl text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.15em] transition-all duration-300 ${
                 activeIndex === i
@@ -102,7 +104,7 @@ export default function InteractiveCarousel() {
       </div>
 
       {/* Scroll Indicators */}
-      <div className="flex justify-center gap-3 mt-8">
+      <div aria-hidden="true" className="flex justify-center gap-3 mt-8">
         {sections.map((_, i) => (
           <div 
             key={i}

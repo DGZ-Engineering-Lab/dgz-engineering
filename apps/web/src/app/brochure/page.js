@@ -52,7 +52,7 @@ export default function BrochurePage() {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hola%20DevGiz%20Colombia,%20calcul%C3%A9%20mi%20ahorro%20en%20el%20brochure%20interactivo%20(%20${encodeURIComponent(formatCOP(totalSavings))}%20)%20y%20me%20gustar%C3%ADa%20agendar%20una%20demostraci%C3%B3n%20sin%20costo%20para%20mi%20empresa.`;
 
   return (
-    <main className="min-h-screen text-slate-900 bg-slate-50 selection:bg-cyan-500/20 overflow-x-hidden relative font-sans">
+    <div className="min-h-screen text-slate-900 bg-slate-50 selection:bg-cyan-500/20 overflow-x-hidden relative font-sans">
 
       {/* Dynamic Background Light Gradients */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/10 to-transparent opacity-45 rounded-full blur-[150px] pointer-events-none z-0"></div>
@@ -61,7 +61,7 @@ export default function BrochurePage() {
       {/* Header / Navigation */}
       <header className="absolute top-0 left-0 right-0 z-50 py-8 px-6 backdrop-blur-md bg-white/40 border-b border-slate-200/30">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/" className="hover:opacity-90 transition-opacity">
+          <Link href="/" aria-label="DevGiz, ir al inicio" className="hover:opacity-90 transition-opacity">
             <Logo />
           </Link>
           <a
@@ -135,7 +135,7 @@ export default function BrochurePage() {
               {/* Slider 1 */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <label htmlFor="roi-projects" className="text-sm font-bold text-slate-800 flex items-center gap-2">
                     <Building2 className="w-4 h-4 text-cyan-600" />
                     Proyectos activos al año
                   </label>
@@ -143,7 +143,7 @@ export default function BrochurePage() {
                     {projects} {projects === 1 ? "proyecto" : "proyectos"}
                   </span>
                 </div>
-                <input
+                <input id="roi-projects" aria-valuetext={`${projects} ${projects === 1 ? "proyecto" : "proyectos"}`}
                   type="range"
                   min="1"
                   max="30"
@@ -160,7 +160,7 @@ export default function BrochurePage() {
               {/* Slider 2 */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <label htmlFor="roi-delay" className="text-sm font-bold text-slate-800 flex items-center gap-2">
                     <Clock className="w-4 h-4 text-orange-500" />
                     Retraso promedio (días esperando planos/POT)
                   </label>
@@ -168,7 +168,7 @@ export default function BrochurePage() {
                     {delayDays} días
                   </span>
                 </div>
-                <input
+                <input id="roi-delay" aria-valuetext={`${delayDays} días`}
                   type="range"
                   min="5"
                   max="120"
@@ -185,7 +185,7 @@ export default function BrochurePage() {
               {/* Slider 3 */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <label htmlFor="roi-daily-cost" className="text-sm font-bold text-slate-800 flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-emerald-500" />
                     Costo operativo diario de parálisis
                   </label>
@@ -193,7 +193,7 @@ export default function BrochurePage() {
                     {formatCOP(dailyCost)} / día
                   </span>
                 </div>
-                <input
+                <input id="roi-daily-cost" aria-valuetext={`${formatCOP(dailyCost)} por día`}
                   type="range"
                   min="1000000"
                   max="20000000"
@@ -528,6 +528,6 @@ export default function BrochurePage() {
       </section>
 
       <FooterSection />
-    </main>
+    </div>
   );
 }

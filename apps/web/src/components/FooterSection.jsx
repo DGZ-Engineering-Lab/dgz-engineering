@@ -31,7 +31,7 @@ export default function FooterSection() {
           
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-8">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" aria-label="DevGiz Engineering Lab, ir al inicio" className="flex items-center gap-3">
               <Logo className="w-10 h-10" />
               <div className="flex flex-col leading-none">
                 <span className="text-2xl font-black tracking-tighter">DevGiz</span>
@@ -42,9 +42,9 @@ export default function FooterSection() {
               Líderes en infraestructura de datos territoriales y soberanía digital para el sector público y privado en Colombia.
             </p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><Globe className="w-5 h-5" /></a>
-              <a href="#" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><ExternalLink className="w-5 h-5" /></a>
-              <a href="mailto:info@devgiz.com" className="text-slate-400 hover:text-[#1a1a1a] transition-colors"><Mail className="w-5 h-5" /></a>
+              <a href="#" aria-label="Sitio web de DevGiz" className="text-slate-500 hover:text-[#1a1a1a] transition-colors"><Globe className="w-5 h-5" /></a>
+              <a href="#" aria-label="Perfil profesional externo" className="text-slate-500 hover:text-[#1a1a1a] transition-colors"><ExternalLink className="w-5 h-5" /></a>
+              <a href="mailto:info@devgiz.com" aria-label="Escribir a info@devgiz.com" className="text-slate-500 hover:text-[#1a1a1a] transition-colors"><Mail className="w-5 h-5" /></a>
             </div>
           </div>
 
@@ -95,10 +95,10 @@ export default function FooterSection() {
           <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
             © {currentYear} DevGiz Engineering Lab // All Rights Reserved.
           </div>
-          <div className="flex gap-8">
+          <nav aria-label="Enlaces legales" className="flex gap-8">
             <Link href="/terms" className="text-[9px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#1a1a1a]">Terms</Link>
             <Link href="/privacy" className="text-[9px] font-bold text-slate-400 uppercase tracking-widest hover:text-[#1a1a1a]">Privacy</Link>
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

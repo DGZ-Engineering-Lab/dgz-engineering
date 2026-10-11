@@ -42,6 +42,8 @@ export default function FloatingTelemetry() {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             onClick={() => setIsMinimized(false)}
+            aria-label="Mostrar panel de telemetría"
+            aria-expanded={false}
             className="pointer-events-auto flex items-center gap-2 p-2 px-4 rounded-full bg-slate-950/80 hover:bg-slate-900/90 border border-cyan-500/30 hover:border-cyan-400/50 backdrop-blur-md text-cyan-400 transition-all cursor-pointer shadow-[0_8px_25px_rgba(0,0,0,0.6)] group/tele"
           >
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
@@ -67,6 +69,8 @@ export default function FloatingTelemetry() {
               </div>
               <button
                 onClick={() => setIsMinimized(true)}
+                aria-label="Minimizar panel de telemetría"
+                aria-expanded={true}
                 className="p-1 hover:bg-white/5 rounded text-slate-500 hover:text-white cursor-pointer transition-all duration-200 hover:scale-110"
                 title="Minimizar Telemetría"
               >

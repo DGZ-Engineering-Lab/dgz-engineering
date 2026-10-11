@@ -52,6 +52,8 @@ export default function Navbar() {
   const [expandedMobileSection, setExpandedMobileSection] = useState(null);
   const pathname = usePathname();
   const dropdownRef = useRef(null);
+  const dropdownTriggerRefs = useRef({});
+  const mobileToggleRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -64,6 +66,81 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
   }, [pathname]);
+
+  // Teclado: Escape cierra el submenú o el menú móvil y devuelve el foco a su disparador
+  useEffect(() => {
+    if (!activeDropdown && !isMobileMenuOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key !== "Escape") return;
+      if (activeDropdown) {
+        dropdownTriggerRefs.current[activeDropdown]?.focus();
+        setActiveDropdown(null);
+      } else if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+        mobileToggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [activeDropdown, isMobileMenuOpen]);
+
+  // Bloquea el scroll del fondo mientras el menú móvil (pantalla completa) está abierto
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isMobileMenuOpen]);
+
+  // Cierra el submenú de escritorio cuando el foco sale de la barra de navegación
+  const handleNavBlur = (e) => {
+    if (activeDropdown && !e.currentTarget.contains(e.relatedTarget)) {
+      setActiveDropdown(null);
+    }
+  };
+
+  // Abre/cierra el submenú desde teclado y lleva el foco al primer enlace
+  const toggleDropdownFromKeyboard = (key) => {
+    if (activeDropdown === key) {
+      setActiveDropdown(null);
+      return;
+    }
+    setActiveDropdown(key);
+    requestAnimationFrame(() => {
+      dropdownRef.current?.querySelector("a")?.focus();
+    });
+  };
+
+  // El panel se renderiza al final de la barra: al salir con Tab se devuelve el foco
+  // a la secuencia natural de enlaces (después o antes del disparador).
+  const handleDropdownKeyDown = (e) => {
+    if (e.key !== "Tab" || !dropdownRef.current) return;
+    const links = Array.from(dropdownRef.current.querySelectorAll("a"));
+    const trigger = dropdownTriggerRefs.current[activeDropdown];
+    if (!trigger || links.length === 0) return;
+    const isFirst = document.activeElement === links[0];
+    const isLast = document.activeElement === links[links.length - 1];
+    if (e.shiftKey && isFirst) {
+      e.preventDefault();
+      setActiveDropdown(null);
+      trigger.focus();
+    } else if (!e.shiftKey && isLast) {
+      const focusables = Array.from(
+        e.currentTarget.closest("nav").querySelectorAll("[data-nav-focusable]")
+      );
+      const next = focusables[focusables.indexOf(trigger) + 1];
+      if (next) {
+        e.preventDefault();
+        setActiveDropdown(null);
+        next.focus();
+      }
+    }
+  };
+
+  const isActive = (href) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname?.startsWith(`${href}/`);
 
   const isDarkPage = pathname?.startsWith("/lab") || pathname?.startsWith("/diagnostic");
 
@@ -102,13 +179,15 @@ export default function Navbar() {
   return (
     <>
       <nav 
+        aria-label="Navegación principal"
         className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${navBackground}`}
         onMouseLeave={() => setActiveDropdown(null)}
+        onBlur={handleNavBlur}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
           
           {/* Logo Section */}
-          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+          <Link href="/" aria-label="DevGiz Engineering, ir al inicio" className="flex items-center gap-3 group cursor-pointer">
             <Logo className={`w-8 h-8 transition-transform group-hover:scale-110 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
             <div className="flex flex-col leading-none">
               <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
@@ -121,7 +200,7 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <div 
                 key={link.name} 
-                className="relative"
+                className="relative flex items-center"
                 onMouseEnter={() => {
                   if (link.dropdownKey) setActiveDropdown(link.dropdownKey);
                   else setActiveDropdown(null);
@@ -129,12 +208,11 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
+                  data-nav-focusable
+                  aria-current={isActive(link.href) ? "page" : undefined}
                   className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all py-2.5 relative group flex items-center gap-1 cursor-pointer ${linkTextColor}`}
                 >
                   <span>{link.name}</span>
-                  {link.dropdownKey && (
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
-                  )}
                   {link.isBeta && (
                     <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[7px] tracking-widest rounded-sm font-black scale-90">
                       BETA
@@ -142,11 +220,26 @@ export default function Navbar() {
                   )}
                   <span className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full ${activeLineColor}`}></span>
                 </Link>
+                {link.dropdownKey && (
+                  <button
+                    type="button"
+                    data-nav-focusable
+                    ref={(el) => { dropdownTriggerRefs.current[link.dropdownKey] = el; }}
+                    onClick={() => toggleDropdownFromKeyboard(link.dropdownKey)}
+                    aria-expanded={activeDropdown === link.dropdownKey}
+                    aria-controls="nav-mega-dropdown"
+                    aria-label={`Submenú de ${link.name}`}
+                    className="ml-1 p-1 rounded-sm cursor-pointer"
+                  >
+                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
+                  </button>
+                )}
               </div>
             ))}
 
             <Link
               href="/#contact"
+              data-nav-focusable
               className={`px-8 py-3 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm ${ctaBtnStyle}`}
             >
               Consultoría
@@ -155,9 +248,13 @@ export default function Navbar() {
 
           {/* Mobile Toggle Button */}
           <button
+            type="button"
+            ref={mobileToggleRef}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 -mr-2 transition-colors rounded-full focus:outline-none hover:bg-slate-500/10 ${burgerColor}`}
-            aria-label="Toggle Menu"
+            className={`md:hidden p-2 -mr-2 transition-colors rounded-full hover:bg-slate-500/10 ${burgerColor}`}
+            aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -169,6 +266,8 @@ export default function Navbar() {
         <AnimatePresence>
           {activeDropdown && (
             <motion.div
+              id="nav-mega-dropdown"
+              ref={dropdownRef}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
@@ -180,27 +279,28 @@ export default function Navbar() {
               }`}
               onMouseEnter={() => setActiveDropdown(activeDropdown)}
               onMouseLeave={() => setActiveDropdown(null)}
+              onKeyDown={handleDropdownKeyDown}
             >
               {/* Technical Blueprint Underlay Grid */}
-              <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div aria-hidden="true" className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
               
               <div className="max-w-7xl mx-auto px-6 py-9 grid grid-cols-12 gap-8 items-stretch relative z-10">
                 
                 {/* Left Side: Summary Context */}
                 <div className="col-span-4 border-r border-slate-200/50 pr-8 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
+                    <div aria-hidden="true" className="flex items-center gap-2 mb-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_6px_#22d3ee]" />
                       <span className="text-[8px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DEVGIZ_ROUTING // HUD_INFO</span>
                     </div>
-                    <h4 className="text-lg font-black tracking-tight mb-2 uppercase">{activeDropdown}</h4>
+                    <p className="text-lg font-black tracking-tight mb-2 uppercase">{activeDropdown}</p>
                     <p className="text-slate-500 text-xs font-light leading-relaxed">
                       {DROPDOWNS_DATA[activeDropdown]?.desc}
                     </p>
                   </div>
                   
                   {/* Micro telemetry footer */}
-                  <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[7px] font-mono text-slate-400">
+                  <div aria-hidden="true" className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[7px] font-mono text-slate-400">
                     <span>SYS_LOCK: SECURE</span>
                     <span>COINCIDENCIAS: {DROPDOWNS_DATA[activeDropdown]?.items.length} PÁGINAS</span>
                   </div>
@@ -255,7 +355,9 @@ export default function Navbar() {
       {/* ========================================================= */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
+          <motion.nav
+            id="mobile-menu"
+            aria-label="Menú móvil"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -273,7 +375,7 @@ export default function Navbar() {
             )}
 
             <div className="flex flex-col gap-5 relative z-10">
-              <div className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
+              <div aria-hidden="true" className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
                 MENÚ DE INTEGRACIÓN DE RED
               </div>
               
@@ -287,6 +389,7 @@ export default function Navbar() {
                       <div className="flex items-center justify-between w-full">
                         <Link
                           href={link.href}
+                          aria-current={isActive(link.href) ? "page" : undefined}
                           onClick={() => {
                             if (!hasDropdown) setIsMobileMenuOpen(false);
                           }}
@@ -304,7 +407,11 @@ export default function Navbar() {
                         
                         {hasDropdown && (
                           <button
+                            type="button"
                             onClick={() => setExpandedMobileSection(isExpanded ? null : link.dropdownKey)}
+                            aria-expanded={isExpanded}
+                            aria-controls={`mobile-submenu-${link.dropdownKey}`}
+                            aria-label={`${isExpanded ? "Ocultar" : "Mostrar"} subpáginas de ${link.name}`}
                             className={`p-2 rounded-lg ${isDarkPage ? 'bg-slate-900/50' : 'bg-slate-100'} transition-all`}
                           >
                             <ChevronDown className={`w-4 h-4 transition-transform duration-350 ${isExpanded ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
@@ -316,6 +423,7 @@ export default function Navbar() {
                       <AnimatePresence>
                         {hasDropdown && isExpanded && (
                           <motion.div
+                            id={`mobile-submenu-${link.dropdownKey}`}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
@@ -331,7 +439,7 @@ export default function Navbar() {
                                   isDarkPage ? 'text-slate-400 hover:text-cyan-400' : 'text-slate-500 hover:text-slate-900'
                                 }`}
                               >
-                                <span className="w-1 h-1 rounded-full bg-cyan-500" />
+                                <span aria-hidden="true" className="w-1 h-1 rounded-full bg-cyan-500" />
                                 {subItem.name}
                               </Link>
                             ))}
@@ -366,7 +474,7 @@ export default function Navbar() {
                 DevGiz Spatial Systems // 2026
               </div>
             </motion.div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </>

@@ -19,6 +19,7 @@ import AudioInitializer from "../components/AudioInitializer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "../components/PostHogProvider";
+import MotionPreferences from "../components/MotionPreferences";
 import JsonLd from "../components/JsonLd";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_LOCALE, SITE_LANG, FOUNDER, siteJsonLd } from "../lib/seo";
 
@@ -76,16 +77,21 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col text-[var(--foreground)] bg-[var(--background)]" suppressHydrationWarning>
+        <a href="#main-content" className="skip-link">
+          Saltar al contenido principal
+        </a>
         <JsonLd data={siteJsonLd()} />
         <PostHogProvider>
-          <AudioInitializer />
-          <Background />
-          <SystemStatusHeader />
-          <Navbar />
-          <FloatingTelemetry />
-          <main className="relative z-10 flex flex-col min-h-screen">
-            {children}
-          </main>
+          <MotionPreferences>
+            <AudioInitializer />
+            <Background />
+            <SystemStatusHeader />
+            <Navbar />
+            <FloatingTelemetry />
+            <main id="main-content" tabIndex={-1} className="relative z-10 flex flex-col min-h-screen">
+              {children}
+            </main>
+          </MotionPreferences>
           <Analytics />
           <SpeedInsights />
         </PostHogProvider>

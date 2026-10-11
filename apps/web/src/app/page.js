@@ -13,7 +13,7 @@ import ServicesSection from "../components/ServicesSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
+    <div className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
       
       {/* Hero Section - Elite Digital Sovereignty */}
       <section className="relative pt-52 pb-36 px-6 overflow-hidden">
@@ -63,7 +63,7 @@ export default function Home() {
             </div>
             {/* Core Standards HUD Card (Lateral Hero) - Ultra premium 3D Digital Twin CAD Console */}
             <div className="hidden lg:block lg:col-span-5 pt-10 hero-enter-right">
-              <div className="relative mx-auto aspect-square w-full max-w-md">
+              <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-md">
                 {/* 3D ambient space back-glow */}
                 <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-cyan-500/20 via-indigo-500/10 to-orange-500/5 blur-3xl animate-pulse-soft" aria-hidden="true"></div>
                 
@@ -903,7 +903,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
                     src="/assets/img/blog-ladm-col.webp" 
-                    alt="LADM-COL" 
+                    alt="" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
@@ -927,7 +927,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
                     src="/assets/img/blog-cybersecurity.webp" 
-                    alt="Cybersecurity" 
+                    alt="" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700" 
@@ -953,6 +953,6 @@ export default function Home() {
 
       <ContactSection />
       <FooterSection />
-    </main>
+    </div>
   );
 }

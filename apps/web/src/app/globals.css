@@ -14,6 +14,9 @@
   --accent-glow: rgba(8, 145, 178, 0.06);
   --border-glass: rgba(15, 23, 42, 0.08); /* Bordes oscuros suaves */
   --bg-glass: rgba(255, 255, 255, 0.75);  /* Cristal blanco translúcido */
+  /* Anillo de foco: #0e7490 (cyan 700) ≥ 3:1 sobre fondos claros y halo blanco para fondos oscuros */
+  --focus-ring: #0e7490;
+  --focus-ring-halo: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
@@ -191,17 +194,27 @@ body {
   contain-intrinsic-block-size: auto 50rem;
 }
 
-/* --- 2. Accessibility: Reduced motion preference --- */
+/* --- 2. Accessibility: Reduced motion preference (WCAG 2.3.3) --- */
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .animate-scan,
-  .animate-pulse-soft {
-    animation: none !important;
+  html,
+  * {
+    scroll-behavior: auto !important;
   }
 
-  /* Disable Framer Motion managed transitions via class hook */
-  [data-framer-motion] {
-    transition: none !important;
+  /* Detiene animaciones decorativas en bucle (scan, pulse, marquees, fondos) */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Los elementos que entran con opacity:0 deben quedar visibles */
+  .reveal {
+    opacity: 1;
+    animation: none !important;
   }
 }
 
@@ -245,10 +258,47 @@ p, blockquote, li {
   }
 }
 
-/* --- 5. Focus Management: visible focus rings --- */
+/* --- 5. Focus Management: visible focus rings (WCAG 2.4.7 / 2.4.13) --- */
+/* !important para prevalecer sobre utilidades "outline-none" en controles. */
 :focus-visible {
-  outline: 2px solid var(--cyan-500);
-  outline-offset: 2px;
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 5px var(--focus-ring-halo);
+}
+
+/* Destino del enlace "Saltar al contenido": recibe foco programático sin anillo */
+#main-content:focus,
+#main-content:focus-visible {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/* --- 5b. Skip link (WCAG 2.4.1) --- */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* --- 5c. Alto contraste forzado (Windows) --- */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight !important;
+  }
 }
 
 /* --- 6. Cross-browser scrollbar (standards-based) --- */

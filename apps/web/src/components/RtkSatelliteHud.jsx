@@ -164,10 +164,10 @@ export default function RtkSatelliteHud() {
           {/* Interactive Dial Slider */}
           <div className="space-y-2 pt-2">
             <div className="flex justify-between items-center text-[8px] font-mono text-slate-500 uppercase tracking-widest">
-              <span>Ajustar Señal (PDOP)</span>
+              <label htmlFor="rtk-pdop">Ajustar Señal (PDOP)</label>
               <span>1.0 (Óptimo) - 4.5 (Inestable)</span>
             </div>
-            <input
+            <input id="rtk-pdop" aria-valuetext={`PDOP ${pdop}`}
               type="range"
               min="0.8"
               max="4.5"

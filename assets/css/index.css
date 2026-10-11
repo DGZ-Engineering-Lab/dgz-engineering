@@ -7993,3 +7993,49 @@ footer a:hover {
 .geoai-viz-meta span.red { color: #ff4b2b; }
 .geoai-viz-meta span.green { color: #4ade80; }
 
+
+
+/* ===================================================================
+   Accessibility (WCAG 2.2 AA)
+   =================================================================== */
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 10000;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-200%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+#main-content:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 3px solid #00e5ff !important;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
