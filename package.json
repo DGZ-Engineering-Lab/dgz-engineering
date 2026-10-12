@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npm --prefix apps/web run dev",
     "build": "npm --prefix apps/web run build",
+    "build:webpack": "npm --prefix apps/web run build:webpack",
     "start": "npm --prefix apps/web run start",
     "install:all": "npm install && npm --prefix apps/web install",
     "lint": "npm --prefix apps/web run lint",

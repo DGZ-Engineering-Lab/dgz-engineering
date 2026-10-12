@@ -5,7 +5,11 @@ import Logo from "../../../components/Logo";
 
 export default function GestureSandboxPage() {
   const [isCalibrating, setIsCalibrating] = useState(false);
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState([
+    "[SYSTEM] Gesture Kernel v4.2 Initialized",
+    "[AUTH] Neural Link Established",
+    "[SENSOR] DepthMap Active"
+  ]);
   const [activeCoords, setActiveCoords] = useState("4.6486° N, 74.0592° W");
 
   const videoRef = useRef(null);
@@ -26,7 +30,6 @@ export default function GestureSandboxPage() {
     }
     
     startCamera();
-    setLogs(["[SYSTEM] Gesture Kernel v4.2 Initialized", "[AUTH] Neural Link Established", "[SENSOR] DepthMap Active"]);
     
     // Simulated gesture stream
     const interval = setInterval(() => {

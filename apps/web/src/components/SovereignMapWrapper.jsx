@@ -20,33 +20,28 @@ const SpatialIntelligenceDashboard = dynamic(
   }
 );
 
+const BOOT_LOGS = [
+  { time: "0.01s", text: "DGZ_SPATIAL_OS: BOOT SEQUENCE ACTIVE", type: "info" },
+  { time: "0.08s", text: "POLARS_ENGINE: MULTI-THREAD VECTOR JOIN ACTIVE", type: "info" },
+  { time: "0.15s", text: "DUCKDB_CORE: PARQUET SWARM SQL QUERY ENGINE ONLINE", type: "success" },
+  { time: "0.22s", text: "POSTGIS_STREAM: LINK ESTABLISHED WITH MEDELLÍN_HQ", type: "success" },
+  { time: "0.35s", text: "LADM_COL_V3: TOPOLOGICAL HEALER ENGINE READY", type: "success" },
+  { time: "0.48s", text: "SYSTEM_STATUS: WAITING FOR OPERATOR COMPILING TRIGGER...", type: "warn" }
+];
+
 export default function SovereignMapWrapper() {
   const containerRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [isActivated, setIsActivated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState([]);
-  const [mapEngine, setMapEngine] = useState("mapbox");
-
-  // Read engine from localStorage on mount
-  useEffect(() => {
+  const [mapEngine, setMapEngine] = useState(() => {
     if (typeof window !== "undefined") {
-      const savedEngine = localStorage.getItem("dgz_map_engine");
-      if (savedEngine === "sovereign" || savedEngine === "mapbox") {
-        setMapEngine(savedEngine);
-      }
+      const saved = localStorage.getItem("dgz_map_engine");
+      if (saved === "sovereign" || saved === "mapbox") return saved;
     }
-  }, []);
-
-  // Boot logs simulation for the high-fidelity tactical skeleton
-  const bootLogs = [
-    { time: "0.01s", text: "DGZ_SPATIAL_OS: BOOT SEQUENCE ACTIVE", type: "info" },
-    { time: "0.08s", text: "POLARS_ENGINE: MULTI-THREAD VECTOR JOIN ACTIVE", type: "info" },
-    { time: "0.15s", text: "DUCKDB_CORE: PARQUET SWARM SQL QUERY ENGINE ONLINE", type: "success" },
-    { time: "0.22s", text: "POSTGIS_STREAM: LINK ESTABLISHED WITH MEDELLÍN_HQ", type: "success" },
-    { time: "0.35s", text: "LADM_COL_V3: TOPOLOGICAL HEALER ENGINE READY", type: "success" },
-    { time: "0.48s", text: "SYSTEM_STATUS: WAITING FOR OPERATOR COMPILING TRIGGER...", type: "warn" }
-  ];
+    return "mapbox";
+  });
 
   // 1. Intersection Observer to defer code chunk parsing
   useEffect(() => {
@@ -72,8 +67,8 @@ export default function SovereignMapWrapper() {
 
     let currentLogIdx = 0;
     const interval = setInterval(() => {
-      if (currentLogIdx < bootLogs.length) {
-        const logEntry = bootLogs[currentLogIdx];
+      if (currentLogIdx < BOOT_LOGS.length) {
+        const logEntry = BOOT_LOGS[currentLogIdx];
         if (logEntry) {
           setConsoleLogs((prev) => [...prev, logEntry]);
         }

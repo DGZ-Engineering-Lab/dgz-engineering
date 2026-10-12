@@ -49,3 +49,14 @@ if (dsn) {
     setTimeout(initSentry, 2000);
   }
 }
+
+export const onRouterTransitionStart = (href) => {
+  if (dsn && typeof window !== "undefined") {
+    import("@sentry/nextjs")
+      .then((Sentry) => {
+        Sentry.captureRouterTransitionStart?.(href);
+      })
+      .catch(() => {});
+  }
+};
+

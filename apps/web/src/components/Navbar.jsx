@@ -61,11 +61,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menus on path changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setActiveDropdown(null);
-  }, [pathname]);
+  // Close menus on path changes without cascading effect renders
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+    if (activeDropdown) setActiveDropdown(null);
+  }
 
   // Teclado: Escape cierra el submenú o el menú móvil y devuelve el foco a su disparador
   useEffect(() => {

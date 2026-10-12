@@ -85,8 +85,8 @@ export default function OperationSimulator() {
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">INGESTION_PIPELINE.LOG</span>
             </div>
             <div className="flex-1 p-6 font-mono text-[11px] overflow-hidden space-y-1.5" ref={scrollRef}>
-              {logs.map((log) => log && (
-                <div key={log?.id || Math.random()} className={`flex gap-3 transition-opacity duration-300 ${log?.type === 'alert' ? 'text-amber-400' : 'text-cyan-400/80'}`}>
+              {logs.map((log, idx) => log && (
+                <div key={log?.id || `sim-log-${log?.time || idx}-${idx}`} className={`flex gap-3 transition-opacity duration-300 ${log?.type === 'alert' ? 'text-amber-400' : 'text-cyan-400/80'}`}>
                   <span className="text-slate-600">[{log?.time || ""}]</span>
                   <span className="break-all">{log?.msg || ""}</span>
                 </div>

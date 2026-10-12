@@ -551,22 +551,24 @@ export default function GlobalPartners() {
     return () => clearInterval(timer);
   }, []);
 
-  // Set up logs streaming based on selected partner
-  useEffect(() => {
-    const metadata = INTEGRATIONS_METADATA[activePartnerName] || INTEGRATIONS_METADATA["IGAC"];
-    setPingLatency(metadata.latency);
-    
-    const initialLogs = [
+  const [prevPartner, setPrevPartner] = useState(activePartnerName);
+  if (prevPartner !== activePartnerName) {
+    setPrevPartner(activePartnerName);
+    const meta = INTEGRATIONS_METADATA[activePartnerName] || INTEGRATIONS_METADATA["IGAC"];
+    setPingLatency(meta.latency);
+    setLogs([
       `[SYSTEM] NODO LOCAL: CARGANDO PROTOCOLOS DE COMUNICACIÓN...`,
       `[SECURITY] NODO REMOTO: ESTABLECIENDO TUNEL SEGURO TLS v1.3...`,
       `[CONNECT] ASOCIANDO CANAL CON ${activePartnerName} [OK]`,
-      `[PROTOCOL] ${metadata.protocol} · CARGADO CORRECTAMENTE`,
-      `[METRIC] LATENCIA: ${metadata.latency} | VELOCIDAD: ${metadata.rate}`,
+      `[PROTOCOL] ${meta.protocol} · CARGADO CORRECTAMENTE`,
+      `[METRIC] LATENCIA: ${meta.latency} | VELOCIDAD: ${meta.rate}`,
       `[SYNC] CONEXIÓN CATASTRAL SINCRONIZADA. EN ESPERA DE TELEMETRÍA...`
-    ];
-    setLogs(initialLogs);
+    ]);
+  }
 
-    // Periodic simulation log additions
+  // Periodic simulation log additions
+  useEffect(() => {
+    const metadata = INTEGRATIONS_METADATA[activePartnerName] || INTEGRATIONS_METADATA["IGAC"];
     const logInterval = setInterval(() => {
       const randomTaps = [
         `[SYNC] Sincronizando capas vectoriales prediales... [OK]`,

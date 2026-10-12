@@ -372,6 +372,17 @@ const LANGUAGES = [
 export default function ProfessionalProfile() {
   const [activeTab, setActiveTab] = useState("missions"); // 'missions' | 'skills' | 'education' | 'languages'
   const [selectedMission, setSelectedMission] = useState(0);
+  const [certQuery, setCertQuery] = useState("");
+
+  const filteredCerts = CERTIFICATIONS.filter((c) => {
+    if (!certQuery.trim()) return true;
+    const q = certQuery.toLowerCase();
+    return (
+      c.title.toLowerCase().includes(q) ||
+      c.category.toLowerCase().includes(q) ||
+      c.issuer.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <section id="portfolio-dossier" className="relative w-full py-24 z-20 bg-[#060911] text-slate-100 overflow-hidden border-t border-slate-800/80">
@@ -487,10 +498,21 @@ export default function ProfessionalProfile() {
         {/* ==================================================================== */}
         {/* INTERACTIVE DOSSIER NAVIGATION TABS */}
         {/* ==================================================================== */}
-        <div className="flex flex-wrap items-center gap-2 mb-8 p-1.5 rounded-2xl bg-[#0a0f18] border border-slate-800/90 max-w-fit">
+        {/* INTERACTIVE DOSSIER NAVIGATION TABS */}
+        {/* ==================================================================== */}
+        <div
+          role="tablist"
+          aria-label="Secciones del Dossier Profesional"
+          className="flex flex-wrap items-center gap-2 mb-8 p-1.5 rounded-2xl bg-[#0a0f18] border border-slate-800/90 max-w-fit"
+        >
           <button
+            type="button"
+            role="tab"
+            id="tab-missions"
+            aria-selected={activeTab === "missions"}
+            aria-controls="panel-missions"
             onClick={() => setActiveTab("missions")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "missions"
                 ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -501,8 +523,13 @@ export default function ProfessionalProfile() {
           </button>
           
           <button
+            type="button"
+            role="tab"
+            id="tab-skills"
+            aria-selected={activeTab === "skills"}
+            aria-controls="panel-skills"
             onClick={() => setActiveTab("skills")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "skills"
                 ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -513,8 +540,13 @@ export default function ProfessionalProfile() {
           </button>
 
           <button
+            type="button"
+            role="tab"
+            id="tab-education"
+            aria-selected={activeTab === "education"}
+            aria-controls="panel-education"
             onClick={() => setActiveTab("education")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "education"
                 ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -525,8 +557,13 @@ export default function ProfessionalProfile() {
           </button>
 
           <button
+            type="button"
+            role="tab"
+            id="tab-languages"
+            aria-selected={activeTab === "languages"}
+            aria-controls="panel-languages"
             onClick={() => setActiveTab("languages")}
-            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-xs font-mono tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "languages"
                 ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -542,25 +579,38 @@ export default function ProfessionalProfile() {
         {/* ==================================================================== */}
         {activeTab === "missions" && (
           <motion.div
+            id="panel-missions"
+            role="tabpanel"
+            aria-labelledby="tab-missions"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
           >
             {/* Mission Selector List */}
-            <div className="lg:col-span-5 space-y-3 max-h-[720px] overflow-y-auto pr-2 custom-scrollbar">
+            <div
+              role="tablist"
+              aria-label="Misiones oficiales de ingeniería"
+              aria-orientation="vertical"
+              className="lg:col-span-5 space-y-3 max-h-[720px] overflow-y-auto pr-2 custom-scrollbar"
+            >
               {MISSIONS.map((m, idx) => (
-                <div
+                <button
+                  type="button"
                   key={idx}
+                  role="tab"
+                  id={`mission-btn-${idx}`}
+                  aria-selected={selectedMission === idx}
+                  aria-controls="mission-detail-view"
                   onClick={() => setSelectedMission(idx)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                  className={`w-full text-left p-4 rounded-xl border transition-all active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                     selectedMission === idx
                       ? "bg-cyan-500/10 border-cyan-500/50 shadow-lg shadow-cyan-500/5"
                       : "bg-[#090e17] border-slate-800/80 hover:border-slate-700 hover:bg-[#0c131f]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-mono text-slate-400">{m.period}</span>
+                    <span className="text-[10px] font-mono tabular-nums text-slate-400">{m.period}</span>
                     <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded border ${m.badgeColor}`}>
                       {m.badge}
                     </span>
@@ -570,7 +620,7 @@ export default function ProfessionalProfile() {
                     <span>{m.company}</span>
                     <span className="text-[10px] text-slate-500 font-mono">{m.location}</span>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 
@@ -707,17 +757,27 @@ export default function ProfessionalProfile() {
 
             {/* Credenciales y Cursos Verificables */}
             <div className="lg:col-span-7 bg-[#0a0f18] p-6 rounded-2xl border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
                 <div className="text-xs font-mono uppercase tracking-widest text-slate-400">
                   DIPLOMAS & CERTIFICACIONES VERIFICABLES
                 </div>
-                <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/30">
-                  {CERTIFICATIONS.length} REGISTROS
-                </span>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="search"
+                    value={certQuery}
+                    onChange={(e) => setCertQuery(e.target.value)}
+                    placeholder="Filtrar acreditación…"
+                    className="w-44 px-3 py-1.5 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 font-mono"
+                    aria-label="Filtrar certificaciones"
+                  />
+                  <span className="text-[10px] font-mono tabular-nums text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded border border-cyan-500/30 shrink-0">
+                    {filteredCerts.length} REGISTROS
+                  </span>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[640px] overflow-y-auto pr-2 custom-scrollbar">
-                {CERTIFICATIONS.map((cert, idx) => (
+                {filteredCerts.map((cert, idx) => (
                   <div
                     key={idx}
                     className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 transition-colors flex flex-col justify-between"

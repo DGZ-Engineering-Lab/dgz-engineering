@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Radio, Cpu, ShieldCheck } from "lucide-react";
 
 export default function RtkSatelliteHud() {
   const [pdop, setPdop] = useState(1.1);
-  const [activeSats, setActiveSats] = useState(12);
-  const [isLocked, setIsLocked] = useState(true);
-
-  useEffect(() => {
-    setIsLocked(pdop <= 1.5);
-    setActiveSats(Math.max(4, Math.round(16 - pdop * 3)));
-  }, [pdop]);
+  const isLocked = pdop <= 1.5;
+  const activeSats = Math.max(4, Math.round(16 - pdop * 3));
 
   const handlePdopChange = (e) => {
     const val = parseFloat(e.target.value);

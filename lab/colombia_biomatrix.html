@@ -1,0 +1,2308 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colombia Bio-Spatial Matrix 4D | DGZ Spatial OS</title>
+    <meta name="description"
+        content="Simulador bio-digital y gemelo territorial 4D de Colombia: optimización de redes con Physarum polycephalum sobre topografía real, coliseo multi-agente institucional y analítica catastral LADM-COL.">
+
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            --bg-deep: #020408;
+            --bg-card: rgba(8, 14, 26, 0.78);
+            --bg-card-hover: rgba(14, 24, 44, 0.88);
+            --border-glass: rgba(0, 229, 255, 0.14);
+            --border-active: rgba(0, 229, 255, 0.45);
+            --accent-cyan: #00e5ff;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-purple: #a855f7;
+            --accent-gold: #fbbf24;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #475569;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Syne', sans-serif;
+            --glow-cyan: 0 0 20px rgba(0, 229, 255, 0.35);
+            --glow-emerald: 0 0 20px rgba(16, 185, 129, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        /* TOPBAR NAVIGATION & TELEMETRY */
+        .hud-header {
+            height: 60px;
+            background: rgba(2, 6, 14, 0.88);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 100;
+        }
+
+        .hud-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hud-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .hud-logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(168, 85, 247, 0.2));
+            border: 1px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .hud-title-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hud-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            background: linear-gradient(90deg, #ffffff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hud-sub {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent-cyan);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .hud-metrics-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+        }
+
+        .metric-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .metric-pill span.val {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-emerald);
+            box-shadow: var(--glow-emerald);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .hud-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-hud {
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hud:hover {
+            background: rgba(0, 229, 255, 0.18);
+            border-color: var(--accent-cyan);
+            color: #ffffff;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-hud.active {
+            background: rgba(0, 229, 255, 0.22);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* MAIN 3-COLUMN WORKSPACE */
+        .matrix-workspace {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 320px 1fr 340px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* SIDEBARS */
+        .hud-panel {
+            background: rgba(3, 7, 18, 0.82);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 20;
+            padding: 1.1rem;
+            gap: 1.1rem;
+        }
+
+        .hud-panel.right-panel {
+            border-right: none;
+            border-left: 1px solid var(--border-glass);
+        }
+
+        .panel-section-title {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.16em;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* PRESET SELECTOR */
+        .preset-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .preset-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        .preset-card:hover {
+            background: rgba(0, 229, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.25);
+        }
+
+        .preset-card.active {
+            background: rgba(0, 229, 255, 0.08);
+            border-color: var(--accent-cyan);
+        }
+
+        .preset-card.active::before {
+            background: var(--accent-cyan);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .preset-card-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .preset-card-desc {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* SLIDERS & CONTROLS */
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .slider-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+        }
+
+        .slider-label span.val {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            cursor: pointer;
+            box-shadow: var(--glow-cyan);
+            transition: transform 0.15s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* LAYER TOGGLES */
+        .layer-toggles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.45rem;
+        }
+
+        .layer-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 0.5rem 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+
+        .layer-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+        }
+
+        .layer-btn.active {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* VIEWPORT CANVAS CONTAINER */
+        .viewport-stage {
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, #030814 0%, #010307 100%);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #spatial-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* HUD OVERLAYS ON CANVAS */
+        .canvas-hud-overlay {
+            position: absolute;
+            pointer-events: none;
+            inset: 0;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .canvas-hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .geo-reticle {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent-cyan);
+            background: rgba(3, 7, 18, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            pointer-events: auto;
+        }
+
+        .reticle-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .simulation-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            align-items: flex-end;
+        }
+
+        .sim-badge {
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-badge.highlight {
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+        }
+
+        /* CANVAS BOTTOM BAR: CROSS-SECTION PROFILER */
+        .bottom-profiler {
+            height: 170px;
+            background: rgba(2, 6, 14, 0.92);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            z-index: 30;
+            padding: 0.75rem 1.25rem;
+            gap: 0.5rem;
+        }
+
+        .profiler-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+        }
+
+        .profiler-selector {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .profiler-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 0.25rem 0.55rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .profiler-btn:hover, .profiler-btn.active {
+            background: rgba(0, 229, 255, 0.12);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .profiler-canvas-wrap {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+
+        #profiler-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* RIGHT PANEL: COLISEO MULTI-AGENTE */
+        .agent-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 8px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            transition: border-color 0.2s;
+        }
+
+        .agent-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .agent-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .agent-ani { color: var(--accent-cyan); }
+        .agent-anla { color: var(--accent-emerald); }
+        .agent-igac { color: var(--accent-gold); }
+        .agent-ungrd { color: var(--accent-rose); }
+
+        .agent-score {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .agent-bar-wrap {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .agent-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .agent-ani .agent-bar { background: var(--accent-cyan); }
+        .agent-anla .agent-bar { background: var(--accent-emerald); }
+        .agent-igac .agent-bar { background: var(--accent-gold); }
+        .agent-ungrd .agent-bar { background: var(--accent-rose); }
+
+        .agent-verdict {
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        /* RADAR CHART & PARETO WRAP */
+        .radar-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #pareto-canvas {
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+
+        .consensus-dial {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.4rem 0.6rem;
+            background: rgba(0, 229, 255, 0.05);
+            border-radius: 6px;
+            border: 1px solid var(--border-glass);
+        }
+
+        /* LIVE TELEMETRY TERMINAL */
+        .terminal-box {
+            background: #010307;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .terminal-line {
+            line-height: 1.4;
+            color: var(--text-secondary);
+            word-break: break-all;
+        }
+
+        .terminal-line .t-time { color: var(--text-muted); }
+        .terminal-line .t-cyan { color: var(--accent-cyan); }
+        .terminal-line .t-green { color: var(--accent-emerald); }
+        .terminal-line .t-amber { color: var(--accent-amber); }
+        .terminal-line .t-rose { color: var(--accent-rose); }
+
+        /* NODE DETAIL MODAL / POPUP */
+        .node-inspect-popup {
+            position: absolute;
+            bottom: 1.25rem;
+            left: 1.25rem;
+            background: rgba(3, 7, 18, 0.94);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 8px;
+            padding: 0.85rem;
+            min-width: 280px;
+            z-index: 50;
+            display: none;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7), var(--glow-cyan);
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .inspect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.4rem;
+        }
+
+        .inspect-name {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .inspect-dept {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent-cyan);
+        }
+
+        .inspect-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+        }
+
+        .inspect-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inspect-item .lbl {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        .inspect-item .val {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 229, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TOPBAR HUD -->
+    <header class="hud-header">
+        <div class="hud-brand">
+            <a href="../index.html" class="hud-logo" title="DevGiz Spatial OS">
+                <div class="hud-logo-icon">
+                    <i class="ph ph-hexagon"></i>
+                </div>
+                <div class="hud-title-wrap">
+                    <span class="hud-title">COLOMBIA BIO-SPATIAL MATRIX 4D</span>
+                    <span class="hud-sub">TERRITORIAL AUTONOMOUS OS // LAB NODE 05</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="hud-metrics-strip">
+            <div class="metric-pill">
+                <div class="status-dot"></div>
+                <span>ENGINE:</span>
+                <span class="val" id="engine-status">PHYSARUM BIO-CORE</span>
+            </div>
+            <div class="metric-pill">
+                <span>AGENTS:</span>
+                <span class="val" id="agent-count-val">16,000</span>
+            </div>
+            <div class="metric-pill">
+                <span>SRID:</span>
+                <span class="val">MAGNA-SIRGAS (9377)</span>
+            </div>
+            <div class="metric-pill">
+                <span>FPS:</span>
+                <span class="val" id="fps-counter">60</span>
+            </div>
+            <div class="metric-pill">
+                <span>ELEVACIÓN:</span>
+                <span class="val" id="cursor-elev">2,625 m</span>
+            </div>
+        </div>
+
+        <div class="hud-actions">
+            <button class="btn-hud" id="btn-audio-toggle" title="Alternar Audio Procedimental">
+                <i class="ph ph-speaker-high" id="audio-icon"></i>
+                <span id="audio-status-txt">AUDIO SYNTH: ON</span>
+            </button>
+            <button class="btn-hud" id="btn-reset-agents" title="Reinicializar Esporas">
+                <i class="ph ph-arrows-clockwise"></i>
+                <span>RESET</span>
+            </button>
+            <a href="../lab/map.html" class="btn-hud" title="Abrir Visor Catastral">
+                <i class="ph ph-map-trifold"></i>
+                <span>MAP LAB</span>
+            </a>
+            <a href="../index.html" class="btn-hud" title="Volver a DevGiz Root">
+                <i class="ph ph-sign-out"></i>
+                <span>SALIR</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- 3-PANEL WORKSPACE -->
+    <main class="matrix-workspace">
+        <!-- LEFT PANEL: BIO-COMPUTING & CONTROL -->
+        <aside class="hud-panel">
+            <div class="panel-section-title">
+                <i class="ph ph-dna"></i>
+                <span>ESCENARIOS TERRITORIALES REALES</span>
+            </div>
+
+            <div class="preset-grid">
+                <div class="preset-card active" data-preset="multimodal">
+                    <div class="preset-card-title">
+                        <span>1. Corredor Multimodal Central</span>
+                        <i class="ph ph-train"></i>
+                    </div>
+                    <div class="preset-card-desc">
+                        Optimización bio-digital entre Buenaventura, Bogotá, Medellín y el Caribe bordeando el Río Magdalena y cruzando La Línea.
+                    </div>
+                </div>
+
+                <div class="preset-card" data-preset="climatic">
+                    <div class="preset-card-title">
+                        <span>2. Crisis Climática / La Niña</span>
+                        <i class="ph ph-cloud-rain"></i>
+                    </div>
+                    <div class="preset-card-desc">
+                        Inundaciones críticas en La Mojana y deslizamientos en Falla de Romeral; las esporas evitan tramos con riesgo UNGRD.
+                    </div>
+                </div>
+
+                <div class="preset-card" data-preset="paramos">
+                    <div class="preset-card-title">
+                        <span>3. Blindaje Páramos & SINAP</span>
+                        <i class="ph ph-shield-check"></i>
+                    </div>
+                    <div class="preset-card-desc">
+                        Aplicación estricta de Ley 1930 de 2018; barreras químicas repelen cualquier trazo en Sumapaz, Chingaza y Santurbán.
+                    </div>
+                </div>
+
+                <div class="preset-card" data-preset="interoceanic">
+                    <div class="preset-card-title">
+                        <span>4. Canal Férreo Interoceánico</span>
+                        <i class="ph ph-arrows-left-right"></i>
+                    </div>
+                    <div class="preset-card-desc">
+                        Conexión del Pacífico (Bahía Cupica / Buenaventura) con el Caribe (Golfo de Urabá) sorteando la serranía del Darién.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section-title">
+                <i class="ph ph-sliders"></i>
+                <span>FÍSICA DEL PHYSARUM POLYCEPHALUM</span>
+            </div>
+
+            <div class="control-group">
+                <div class="slider-row">
+                    <div class="slider-label">
+                        <span>POBLACIÓN DE AGENTES:</span>
+                        <span class="val" id="val-agents">16,000</span>
+                    </div>
+                    <input type="range" id="slider-agents" min="4000" max="32000" step="2000" value="16000">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-label">
+                        <span>FRICCIÓN TOPOGRÁFICA (PENDIENTE):</span>
+                        <span class="val" id="val-slope">1.75x</span>
+                    </div>
+                    <input type="range" id="slider-slope" min="0.5" max="3.5" step="0.25" value="1.75">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-label">
+                        <span>BARRERA AMBIENTAL SINAP:</span>
+                        <span class="val" id="val-barrier">MÁXIMA (VETO)</span>
+                    </div>
+                    <input type="range" id="slider-barrier" min="0" max="1" step="0.1" value="1.0">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-label">
+                        <span>EVAPORACIÓN DEL RASTRO:</span>
+                        <span class="val" id="val-evap">0.94</span>
+                    </div>
+                    <input type="range" id="slider-evap" min="0.85" max="0.99" step="0.01" value="0.94">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-label">
+                        <span>ÁNGULO QUIMIOTÁCTICO DEL SENSOR:</span>
+                        <span class="val" id="val-angle">32°</span>
+                    </div>
+                    <input type="range" id="slider-angle" min="15" max="65" step="1" value="32">
+                </div>
+            </div>
+
+            <div class="panel-section-title">
+                <i class="ph ph-stack"></i>
+                <span>CAPAS DEL GEMELO DIGITAL</span>
+            </div>
+
+            <div class="layer-toggles">
+                <button class="layer-btn active" data-layer="bionet">
+                    <i class="ph ph-sparkle"></i> BIONET (MOHO)
+                </button>
+                <button class="layer-btn active" data-layer="topo">
+                    <i class="ph ph-mountains"></i> RELIEVE 3D
+                </button>
+                <button class="layer-btn active" data-layer="ladm">
+                    <i class="ph ph-buildings"></i> LADM-COL
+                </button>
+                <button class="layer-btn active" data-layer="sinap">
+                    <i class="ph ph-tree"></i> SINAP PÁRAMOS
+                </button>
+                <button class="layer-btn active" data-layer="flows">
+                    <i class="ph ph-truck"></i> FLUJOS CARGA
+                </button>
+                <button class="layer-btn active" data-layer="hudgrid">
+                    <i class="ph ph-crosshair"></i> RADAR HUD
+                </button>
+            </div>
+        </aside>
+
+        <!-- CENTER VIEWPORT & CANVAS -->
+        <section class="viewport-stage">
+            <canvas id="spatial-canvas"></canvas>
+
+            <!-- CANVAS HUD OVERLAYS -->
+            <div class="canvas-hud-overlay">
+                <div class="canvas-hud-top">
+                    <div class="geo-reticle">
+                        <div class="reticle-row">
+                            <span style="color:var(--text-muted)">COORDENADAS:</span>
+                            <span id="reticle-coords">4°42'39"N 74°04'19"W</span>
+                        </div>
+                        <div class="reticle-row">
+                            <span style="color:var(--text-muted)">ORIGEN NAL:</span>
+                            <span id="reticle-magna">N: 5,000,210 m | E: 5,000,120 m</span>
+                        </div>
+                        <div class="reticle-row">
+                            <span style="color:var(--text-muted)">SECTOR:</span>
+                            <span id="reticle-region" style="color:#ffffff; font-weight:700;">ANDINA // VALLE DEL MAGDALENA</span>
+                        </div>
+                    </div>
+
+                    <div class="simulation-badges">
+                        <div class="sim-badge highlight">
+                            <i class="ph ph-shield-check"></i>
+                            <span>LEY 1930 DE PÁRAMOS: PROTEGIDO</span>
+                        </div>
+                        <div class="sim-badge">
+                            <i class="ph ph-graph"></i>
+                            <span>CONPES 3958: CATASTRO MULTIPROPÓSITO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NODE INSPECT FLOATING POPUP -->
+            <div class="node-inspect-popup" id="node-popup">
+                <div class="inspect-header">
+                    <div>
+                        <div class="inspect-name" id="popup-name">Bogotá D.C.</div>
+                        <div class="inspect-dept" id="popup-dept">Cundinamarca / Distrito Capital</div>
+                    </div>
+                    <span class="hud-sub" id="popup-type">NODO CENTRAL</span>
+                </div>
+                <div class="inspect-grid">
+                    <div class="inspect-item">
+                        <span class="lbl">Población DANE:</span>
+                        <span class="val" id="popup-pop">7,901,066 hab</span>
+                    </div>
+                    <div class="inspect-item">
+                        <span class="lbl">Aporte PIB Nal:</span>
+                        <span class="val" id="popup-pib">25.4%</span>
+                    </div>
+                    <div class="inspect-item">
+                        <span class="lbl">Carga Logística:</span>
+                        <span class="val" id="popup-cargo">14.8M Ton/año</span>
+                    </div>
+                    <div class="inspect-item">
+                        <span class="lbl">Catastro LADM:</span>
+                        <span class="val" id="popup-cadastre" style="color:var(--accent-emerald)">Habilitado (Actualizado)</span>
+                    </div>
+                    <div class="inspect-item">
+                        <span class="lbl">Elevación msnm:</span>
+                        <span class="val" id="popup-elevation">2,625 m</span>
+                    </div>
+                    <div class="inspect-item">
+                        <span class="lbl">Riesgo Geotécnico:</span>
+                        <span class="val" id="popup-risk" style="color:var(--accent-amber)">Medio (Falla Sabana)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM DOCK: 4D CROSS-SECTION TOPOGRAPHIC PROFILER -->
+            <div class="bottom-profiler">
+                <div class="profiler-header">
+                    <div style="display:flex; align-items:center; gap:0.6rem;">
+                        <i class="ph ph-chart-line" style="color:var(--accent-cyan); font-size:1rem;"></i>
+                        <span style="font-weight:700; letter-spacing:0.1em; color:#ffffff;">PERFIL TOPOGRÁFICO DE CORTE LONGITUDINAL (msnm)</span>
+                        <span style="color:var(--text-muted)">// RESOLUCIÓN MAGNA-SIRGAS</span>
+                    </div>
+                    <div class="profiler-selector">
+                        <button class="profiler-btn active" data-corridor="cordilleras">BUENAVENTURA → CALI → IBAGUÉ → BOGOTÁ</button>
+                        <button class="profiler-btn" data-corridor="magdalena">BOGOTÁ → LA DORADA → CARIBE (MAGDALENA MEDIO)</button>
+                        <button class="profiler-btn" data-corridor="occidente">MEDELLÍN → CHOCÓ → URABÁ</button>
+                    </div>
+                </div>
+                <div class="profiler-canvas-wrap">
+                    <canvas id="profiler-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: COLISEO MULTI-AGENTE & GAME THEORY -->
+        <aside class="hud-panel right-panel">
+            <div class="panel-section-title">
+                <i class="ph ph-scales"></i>
+                <span>COLISEO MULTI-AGENTE INSTITUCIONAL</span>
+            </div>
+
+            <!-- AGENTE 1: ANI / MINTRANSPORTE -->
+            <div class="agent-card agent-ani">
+                <div class="agent-header">
+                    <div class="agent-tag">
+                        <i class="ph ph-truck"></i>
+                        <span>ANI / MINTRANSPORTE</span>
+                    </div>
+                    <span class="agent-score" id="score-ani">88%</span>
+                </div>
+                <div class="agent-bar-wrap">
+                    <div class="agent-bar" id="bar-ani" style="width: 88%;"></div>
+                </div>
+                <div class="agent-verdict" id="verdict-ani">
+                    Trazado bio-óptimo maximiza pendientes menores a 3.5%; flete estimado proyecta ahorro del 34% Bogotá-Buenaventura.
+                </div>
+            </div>
+
+            <!-- AGENTE 2: ANLA / PARQUES NACIONALES -->
+            <div class="agent-card agent-anla">
+                <div class="agent-header">
+                    <div class="agent-tag">
+                        <i class="ph ph-shield"></i>
+                        <span>ANLA / PARQUES NACIONALES</span>
+                    </div>
+                    <span class="agent-score" id="score-anla">94%</span>
+                </div>
+                <div class="agent-bar-wrap">
+                    <div class="agent-bar" id="bar-anla" style="width: 94%;"></div>
+                </div>
+                <div class="agent-verdict" id="verdict-anla">
+                    Cumplimiento irrestricto de Ley 1930 de 2018; cero invasión de polígonos de Páramo de Sumapaz y Chingaza.
+                </div>
+            </div>
+
+            <!-- AGENTE 3: IGAC / GESTOR CATASTRAL -->
+            <div class="agent-card agent-igac">
+                <div class="agent-header">
+                    <div class="agent-tag">
+                        <i class="ph ph-certificate"></i>
+                        <span>IGAC / LADM-COL</span>
+                    </div>
+                    <span class="agent-score" id="score-igac">79%</span>
+                </div>
+                <div class="agent-bar-wrap">
+                    <div class="agent-bar" id="bar-igac" style="width: 79%;"></div>
+                </div>
+                <div class="agent-verdict" id="verdict-igac">
+                    Captura de plusvalía predial habilitada en 42 municipios categoría 5 y 6. Reducción de informalidad rural estimada en +12%.
+                </div>
+            </div>
+
+            <!-- AGENTE 4: UNGRD / IDEAM -->
+            <div class="agent-card agent-ungrd">
+                <div class="agent-header">
+                    <div class="agent-tag">
+                        <i class="ph ph-warning-octagon"></i>
+                        <span>UNGRD / IDEAM</span>
+                    </div>
+                    <span class="agent-score" id="score-ungrd">85%</span>
+                </div>
+                <div class="agent-bar-wrap">
+                    <div class="agent-bar" id="bar-ungrd" style="width: 85%;"></div>
+                </div>
+                <div class="agent-verdict" id="verdict-ungrd">
+                    Mitigación de riesgo geotécnico validada en Falla de Romeral; trazo evita zonas de amenaza de inundación en La Mojana.
+                </div>
+            </div>
+
+            <!-- PARETO FRONTIER RADAR -->
+            <div class="panel-section-title">
+                <i class="ph ph-compass"></i>
+                <span>FRONTERA DE PARETO & EQUILIBRIO DE NASH</span>
+            </div>
+
+            <div class="radar-box">
+                <canvas id="pareto-canvas"></canvas>
+                <div class="consensus-dial">
+                    <span>ÍNDICE DE CONSENSO NACIONAL:</span>
+                    <span id="consensus-val" style="color:var(--accent-emerald); font-weight:800;">86.5% (SOBERANO)</span>
+                </div>
+            </div>
+
+            <!-- LIVE TELEMETRY LOG -->
+            <div class="panel-section-title">
+                <i class="ph ph-terminal"></i>
+                <span>TELEMETRÍA DE DEBATE INSTITUCIONAL</span>
+            </div>
+
+            <div class="terminal-box" id="telemetry-log">
+                <div class="terminal-line"><span class="t-time">[17:44:02]</span> <span class="t-cyan">SYS_INIT:</span> Magma Sirgas 9377 cargado correctamente.</div>
+                <div class="terminal-line"><span class="t-time">[17:44:03]</span> <span class="t-green">ANLA:</span> Buffer de protección de 10km activo en Chingaza.</div>
+                <div class="terminal-line"><span class="t-time">[17:44:05]</span> <span class="t-amber">ANI:</span> Red bio-férrea convergiendo en La Dorada - Chiriguaná.</div>
+                <div class="terminal-line"><span class="t-time">[17:44:08]</span> <span class="t-cyan">IGAC:</span> Modelo ISO 19152 LADM-COL sincronizado con 1.103 municipios.</div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- SPATIAL SIMULATION SCRIPT -->
+    <script>
+        /**
+         * COLOMBIA BIO-SPATIAL MATRIX 4D
+         * Engineering Lab // Albert Daniel Gaviria Zapata (DevGiz)
+         */
+
+        // --- 1. PROCEDURAL AUDIO SYNTH (Web Audio API) ---
+        class BioMatrixAudio {
+            constructor() {
+                this.ctx = null;
+                this.masterGain = null;
+                this.droneOsc = null;
+                this.droneGain = null;
+                this.muted = false;
+                this.initialized = false;
+            }
+
+            init() {
+                if (this.initialized) return;
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                    this.masterGain = this.ctx.createGain();
+                    this.masterGain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+                    this.masterGain.connect(this.ctx.destination);
+
+                    // Low-frequency ambient bio-drone (harmonic slime pulse)
+                    this.droneOsc = this.ctx.createOscillator();
+                    this.droneOsc.type = 'sawtooth';
+                    this.droneOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // A1 note
+
+                    const filter = this.ctx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(140, this.ctx.currentTime);
+
+                    this.droneGain = this.ctx.createGain();
+                    this.droneGain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+
+                    this.droneOsc.connect(filter);
+                    filter.connect(this.droneGain);
+                    this.droneGain.connect(this.masterGain);
+                    this.droneOsc.start();
+
+                    this.initialized = true;
+                } catch (e) {
+                    console.warn("AudioContext init error:", e);
+                }
+            }
+
+            toggle() {
+                if (!this.initialized) this.init();
+                this.muted = !this.muted;
+                if (this.masterGain && this.ctx) {
+                    this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.4, this.ctx.currentTime);
+                }
+                return !this.muted;
+            }
+
+            playBlip(freq = 880, dur = 0.04, type = 'sine') {
+                if (this.muted || !this.initialized || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.ctx.currentTime + dur);
+                    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + dur);
+                } catch(e) {}
+            }
+
+            playChord(frequencies = [440, 554.37, 659.25, 830.61]) { // A Major 7th
+                if (this.muted || !this.initialized || !this.ctx) return;
+                try {
+                    frequencies.forEach(f => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+                        gain.gain.setValueAtTime(0.03, this.ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.8);
+                        osc.connect(gain);
+                        gain.connect(this.masterGain);
+                        osc.start();
+                        osc.stop(this.ctx.currentTime + 0.8);
+                    });
+                } catch(e) {}
+            }
+
+            playAlarm() {
+                if (this.muted || !this.initialized || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(220, this.ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.15);
+                } catch(e) {}
+            }
+        }
+
+        const audio = new BioMatrixAudio();
+
+        // --- 2. COLOMBIA SPATIAL & INSTITUTIONAL DATA ---
+        // Real geographic nodes with DANE, IGAC, and MinTransporte figures
+        const COLOMBIA_NODES = [
+            { id: 'bogota', name: 'Bogotá D.C.', dept: 'Distrito Capital', lat: 4.7110, lon: -74.0721, elevation: 2625, pop: 7901066, pib: 25.4, cargo: 14.8, cadastre: 'Habilitado (Actualizado)', risk: 'Bajo', type: 'capital', weight: 1.0 },
+            { id: 'medellin', name: 'Medellín', dept: 'Antioquia', lat: 6.2442, lon: -75.5812, elevation: 1495, pop: 2569007, pib: 15.1, cargo: 12.1, cadastre: 'Habilitado (Actualizado)', risk: 'Medio', type: 'metropolis', weight: 0.95 },
+            { id: 'cali', name: 'Cali', dept: 'Valle del Cauca', lat: 3.4516, lon: -76.5320, elevation: 1018, pop: 2227642, pib: 9.7, cargo: 8.5, cadastre: 'Habilitado (Actualizado)', risk: 'Medio', type: 'metropolis', weight: 0.9 },
+            { id: 'barranquilla', name: 'Barranquilla', dept: 'Atlántico', lat: 10.9685, lon: -74.7813, elevation: 18, pop: 1274250, pib: 4.6, cargo: 10.4, cadastre: 'Habilitado (Actualizado)', risk: 'Bajo', type: 'port', weight: 0.85 },
+            { id: 'cartagena', name: 'Cartagena de Indias', dept: 'Bolívar', lat: 10.3910, lon: -75.4794, elevation: 2, pop: 1028736, pib: 4.3, cargo: 16.2, cadastre: 'Habilitado (Actualizado)', risk: 'Bajo', type: 'port', weight: 0.85 },
+            { id: 'buenaventura', name: 'Buenaventura', dept: 'Valle del Cauca', lat: 3.8801, lon: -77.0312, elevation: 7, pop: 432385, pib: 1.4, cargo: 18.5, cadastre: 'Desactualizado (>8 años)', risk: 'Medio', type: 'pacific_hub', weight: 0.92 },
+            { id: 'bucaramanga', name: 'Bucaramanga', dept: 'Santander', lat: 7.1254, lon: -73.1198, elevation: 959, pop: 613000, pib: 6.2, cargo: 5.3, cadastre: 'Habilitado (Actualizado)', risk: 'Alto (Falla Bucaramanga)', type: 'city', weight: 0.78 },
+            { id: 'pereira', name: 'Pereira', dept: 'Risaralda', lat: 4.8133, lon: -75.6961, elevation: 1411, pop: 477050, pib: 2.3, cargo: 4.1, cadastre: 'Habilitado', risk: 'Bajo', type: 'hub', weight: 0.75 },
+            { id: 'manizales', name: 'Manizales', dept: 'Caldas', lat: 5.0689, lon: -75.5174, elevation: 2160, pop: 434403, pib: 1.8, cargo: 3.2, cadastre: 'Habilitado', risk: 'Medio (Volcánico)', type: 'city', weight: 0.72 },
+            { id: 'ibague', name: 'Ibagué', dept: 'Tolima', lat: 4.4389, lon: -75.2322, elevation: 1285, pop: 541101, pib: 2.1, cargo: 4.7, cadastre: 'Habilitado', risk: 'Medio', type: 'hub', weight: 0.76 },
+            { id: 'santa_marta', name: 'Santa Marta', dept: 'Magdalena', lat: 11.2408, lon: -74.1990, elevation: 6, pop: 538612, pib: 1.7, cargo: 11.2, cadastre: 'Habilitado', risk: 'Bajo', type: 'port', weight: 0.75 },
+            { id: 'cucuta', name: 'Cúcuta', dept: 'Norte de Santander', lat: 7.8939, lon: -72.5078, elevation: 320, pop: 777106, pib: 2.2, cargo: 3.8, cadastre: 'Habilitado', risk: 'Bajo', type: 'border', weight: 0.7 },
+            { id: 'villavicencio', name: 'Villavicencio', dept: 'Meta', lat: 4.1420, lon: -73.6266, elevation: 467, pop: 531275, pib: 4.1, cargo: 7.6, cadastre: 'Habilitado', risk: 'Alto (Derrumbes Vía Llano)', type: 'plains_gate', weight: 0.75 },
+            { id: 'pasto', name: 'Pasto', dept: 'Nariño', lat: 1.2136, lon: -77.2811, elevation: 2527, pop: 392930, pib: 1.6, cargo: 2.8, cadastre: 'Desactualizado', risk: 'Alto (Galeras)', type: 'south_border', weight: 0.68 },
+            { id: 'neiva', name: 'Neiva', dept: 'Huila', lat: 2.9273, lon: -75.2819, elevation: 442, pop: 357392, pib: 1.9, cargo: 3.6, cadastre: 'Habilitado', risk: 'Bajo', type: 'city', weight: 0.65 },
+            { id: 'monteria', name: 'Montería', dept: 'Córdoba', lat: 8.7479, lon: -75.8814, elevation: 18, pop: 490935, pib: 1.9, cargo: 3.1, cadastre: 'Habilitado', risk: 'Medio (Inundación Sinú)', type: 'city', weight: 0.65 },
+            { id: 'la_dorada', name: 'La Dorada (Puerto Férreo)', dept: 'Caldas', lat: 5.4542, lon: -74.6644, elevation: 178, pop: 76000, pib: 0.6, cargo: 6.9, cadastre: 'Desactualizado', risk: 'Medio', type: 'rail_hub', weight: 0.8 },
+            { id: 'chiriguana', name: 'Chiriguaná (Nodo Férreo)', dept: 'Cesar', lat: 9.3639, lon: -73.6033, elevation: 50, pop: 28000, pib: 0.4, cargo: 8.5, cadastre: 'Desactualizado', risk: 'Bajo', type: 'rail_hub', weight: 0.78 }
+        ];
+
+        // SINAP Protected Areas & Páramos (Exclusion Zones under Ley 1930 / Parques Nacionales)
+        const PROTECTED_ZONES = [
+            { id: 'sumapaz', name: 'Páramo de Sumapaz', lat: 3.90, lon: -74.30, radiusKm: 42, law: 'Ley 1930 de 2018', status: 'Exclusión Absoluta' },
+            { id: 'chingaza', name: 'PNN Chingaza', lat: 4.68, lon: -73.74, radiusKm: 26, law: 'Reserva Hídrica Bogotá', status: 'Exclusión Absoluta' },
+            { id: 'los_nevados', name: 'PNN Los Nevados', lat: 4.88, lon: -75.37, radiusKm: 28, law: 'Sujeto de Derechos', status: 'Exclusión Absoluta' },
+            { id: 'farallones', name: 'PNN Farallones de Cali', lat: 3.32, lon: -76.72, radiusKm: 24, law: 'Parque Nacional', status: 'Exclusión Absoluta' },
+            { id: 'santurban', name: 'Páramo de Santurbán', lat: 7.34, lon: -72.92, radiusKm: 28, law: 'Regulador Hídrico Santander', status: 'Exclusión Absoluta' },
+            { id: 'sierra_nevada', name: 'PNN Sierra Nevada & Tayrona', lat: 10.85, lon: -73.70, radiusKm: 48, law: 'Línea Negra / Sagrado', status: 'Exclusión Absoluta' },
+            { id: 'chiribiquete', name: 'PNN Serranía de Chiribiquete', lat: 0.95, lon: -72.70, radiusKm: 65, law: 'Patrimonio Mixto UNESCO', status: 'Exclusión Absoluta' }
+        ];
+
+        // Continental & Coastal Boundary of Colombia (High precision simplified polygon)
+        const COLOMBIA_OUTLINE = [
+            [-75.8, 8.8], [-76.8, 8.1], [-77.3, 8.6], [-77.1, 7.2], [-77.4, 6.5], [-77.5, 5.7],
+            [-77.4, 4.0], [-77.1, 3.8], [-77.6, 2.5], [-78.8, 1.8], [-79.0, 1.4], [-78.7, 1.2],
+            [-77.8, 0.8], [-77.0, 0.3], [-75.8, 0.1], [-75.2, -0.2], [-74.2, -1.0], [-72.0, -1.8],
+            [-70.0, -4.2], [-69.8, -3.5], [-70.0, -2.5], [-69.7, -1.2], [-70.0, 0.0], [-69.2, 1.1],
+            [-67.0, 1.4], [-67.5, 2.0], [-67.8, 3.8], [-67.5, 6.2], [-69.0, 6.3], [-70.7, 7.0],
+            [-71.7, 7.0], [-72.4, 8.0], [-73.3, 9.1], [-73.1, 10.0], [-72.8, 11.5], [-71.7, 12.0],
+            [-71.6, 12.4], [-72.1, 12.0], [-72.9, 11.8], [-73.3, 11.3], [-74.2, 11.2], [-74.8, 11.0],
+            [-75.5, 10.4], [-75.8, 9.8], [-76.4, 8.9]
+        ];
+
+        // Geographic Bounding Box of Colombia for Canvas Projection
+        const GEO_BOUNDS = {
+            minLon: -79.4,
+            maxLon: -66.6,
+            minLat: -4.5,
+            maxLat: 12.8
+        };
+
+        // --- 3. GEOGRAPHIC PROJECTION ENGINE ---
+        function geoToCanvas(lon, lat, width, height, padding = 40) {
+            const availW = width - padding * 2;
+            const availH = height - padding * 2;
+            
+            // Aspect ratio compensation
+            const lonSpan = GEO_BOUNDS.maxLon - GEO_BOUNDS.minLon;
+            const latSpan = GEO_BOUNDS.maxLat - GEO_BOUNDS.minLat;
+            
+            const scale = Math.min(availW / lonSpan, availH / latSpan);
+            const offsetX = padding + (availW - lonSpan * scale) / 2;
+            const offsetY = padding + (availH - latSpan * scale) / 2;
+
+            const x = offsetX + (lon - GEO_BOUNDS.minLon) * scale;
+            const y = offsetY + (GEO_BOUNDS.maxLat - lat) * scale; // Inverted Y
+
+            return { x, y, scale };
+        }
+
+        function canvasToGeo(x, y, width, height, padding = 40) {
+            const availW = width - padding * 2;
+            const availH = height - padding * 2;
+            const lonSpan = GEO_BOUNDS.maxLon - GEO_BOUNDS.minLon;
+            const latSpan = GEO_BOUNDS.maxLat - GEO_BOUNDS.minLat;
+            const scale = Math.min(availW / lonSpan, availH / latSpan);
+            const offsetX = padding + (availW - lonSpan * scale) / 2;
+            const offsetY = padding + (availH - latSpan * scale) / 2;
+
+            const lon = GEO_BOUNDS.minLon + (x - offsetX) / scale;
+            const lat = GEO_BOUNDS.maxLat - (y - offsetY) / scale;
+            return { lon, lat };
+        }
+
+        // Topographic elevation model of Colombia (3 Cordilleras mathematical relief)
+        function getElevationMeters(lat, lon) {
+            // Sierra Nevada de Santa Marta (isolated peak up to 5,775m)
+            const dSM = Math.hypot(lat - 10.82, lon - (-73.69));
+            if (dSM < 0.6) return Math.min(5775, Math.floor(5775 * Math.exp(-dSM * 7)));
+
+            // Baseline plains elevation
+            let elev = 80;
+            if (lat < 1.0 && lon > -75.0) elev = 120; // Amazonía
+            if (lat > 3.0 && lon > -73.0) elev = 220; // Orinoquía / Llanos
+
+            // Cordillera Occidental (approx lon -76.6, lat 1.0 to 7.8)
+            const dOcc = Math.abs(lon - (-76.6 + (lat - 4.0) * 0.12));
+            if (dOcc < 0.8 && lat > 1.0 && lat < 8.0) {
+                elev = Math.max(elev, 2100 * Math.exp(-Math.pow(dOcc / 0.35, 2)));
+            }
+
+            // Cordillera Central (approx lon -75.4, lat 1.5 to 8.2) - High peaks (Ruiz, Huila, Tolima > 5000m)
+            const dCent = Math.abs(lon - (-75.4 + (lat - 4.5) * 0.1));
+            if (dCent < 0.9 && lat > 1.5 && lat < 8.5) {
+                let peakMult = 1.0;
+                if (Math.hypot(lat - 4.89, lon - (-75.32)) < 0.3) peakMult = 2.1; // Nevado del Ruiz / Tolima (5200m)
+                if (Math.hypot(lat - 2.92, lon - (-76.03)) < 0.3) peakMult = 2.2; // Nevado del Huila (5364m)
+                elev = Math.max(elev, 2800 * peakMult * Math.exp(-Math.pow(dCent / 0.38, 2)));
+            }
+
+            // Cordillera Oriental (approx lon -74.0, lat 2.2 to 9.2) - Altiplano & Cocuy
+            const dOri = Math.abs(lon - (-74.0 + (lat - 4.8) * 0.22));
+            if (dOri < 1.1 && lat > 2.0 && lat < 9.5) {
+                let altiplano = 1.0;
+                if (lat > 4.4 && lat < 5.8 && dOri < 0.5) altiplano = 1.1; // Altiplano Cundiboyacense (2600m)
+                if (Math.hypot(lat - 6.5, lon - (-72.3)) < 0.4) altiplano = 2.0; // Sierra Nevada del Cocuy (5330m)
+                elev = Math.max(elev, 2600 * altiplano * Math.exp(-Math.pow(dOri / 0.45, 2)));
+            }
+
+            // Inter-Andean valleys (Magdalena & Cauca) carving low elevation channels
+            const dMag = Math.abs(lon - (-74.8 + (lat - 5.0) * 0.15));
+            if (dMag < 0.25 && lat > 2.5 && lat < 8.0) {
+                elev = Math.min(elev, 220 + lat * 30); // Low valley floor
+            }
+
+            return Math.floor(Math.max(0, elev));
+        }
+
+        // --- 4. BIO-COMPUTING ENGINE (Physarum polycephalum) ---
+        class PhysarumCore {
+            constructor(width, height) {
+                this.width = width;
+                this.height = height;
+                this.scale = 2; // Simulation grid downsampled for 60fps performance
+                this.gridW = Math.floor(width / this.scale);
+                this.gridH = Math.floor(height / this.scale);
+
+                this.trailGrid = new Float32Array(this.gridW * this.gridH);
+                this.diffuseGrid = new Float32Array(this.gridW * this.gridH);
+                this.frictionGrid = new Float32Array(this.gridW * this.gridH);
+                this.barrierGrid = new Float32Array(this.gridW * this.gridH);
+
+                this.agents = [];
+                this.numAgents = 16000;
+                this.sensorAngle = 0.56; // ~32 deg
+                this.sensorDist = 9.0;
+                this.turnSpeed = 0.42;
+                this.agentSpeed = 1.4;
+                this.evapRate = 0.94;
+                this.slopeFrictionWeight = 1.75;
+                this.barrierWeight = 1.0;
+
+                this.initStaticGrids();
+                this.initAgents();
+            }
+
+            resize(width, height) {
+                this.width = width;
+                this.height = height;
+                this.gridW = Math.floor(width / this.scale);
+                this.gridH = Math.floor(height / this.scale);
+                this.trailGrid = new Float32Array(this.gridW * this.gridH);
+                this.diffuseGrid = new Float32Array(this.gridW * this.gridH);
+                this.frictionGrid = new Float32Array(this.gridW * this.gridH);
+                this.barrierGrid = new Float32Array(this.gridW * this.gridH);
+                this.initStaticGrids();
+                this.initAgents();
+            }
+
+            initStaticGrids() {
+                for (let y = 0; y < this.gridH; y++) {
+                    for (let x = 0; x < this.gridW; x++) {
+                        const idx = y * this.gridW + x;
+                        const canvasX = x * this.scale;
+                        const canvasY = y * this.scale;
+                        const geo = canvasToGeo(canvasX, canvasY, this.width, this.height);
+
+                        // Elevation gradient & slope
+                        const e = getElevationMeters(geo.lat, geo.lon);
+                        const eDx = getElevationMeters(geo.lat, geo.lon + 0.05) - e;
+                        const eDy = getElevationMeters(geo.lat + 0.05, geo.lon) - e;
+                        const slope = Math.hypot(eDx, eDy);
+                        this.frictionGrid[idx] = Math.min(1.0, slope / 600);
+
+                        // SINAP Environmental barrier zones
+                        let barrier = 0;
+                        for (const zone of PROTECTED_ZONES) {
+                            const dGeo = Math.hypot((geo.lat - zone.lat) * 111, (geo.lon - zone.lon) * 105);
+                            if (dGeo < zone.radiusKm) {
+                                barrier = Math.max(barrier, 1.0 - (dGeo / zone.radiusKm));
+                            }
+                        }
+                        this.barrierGrid[idx] = barrier;
+                    }
+                }
+            }
+
+            initAgents() {
+                this.agents = [];
+                for (let i = 0; i < this.numAgents; i++) {
+                    // Seed agents near Colombian economic nodes
+                    const node = COLOMBIA_NODES[Math.floor(Math.random() * COLOMBIA_NODES.length)];
+                    const pt = geoToCanvas(node.lon, node.lat, this.width, this.height);
+                    
+                    const spread = 25;
+                    const x = (pt.x + (Math.random() - 0.5) * spread) / this.scale;
+                    const y = (pt.y + (Math.random() - 0.5) * spread) / this.scale;
+                    const angle = Math.random() * Math.PI * 2;
+
+                    this.agents.push({
+                        x: Math.max(0, Math.min(this.gridW - 1, x)),
+                        y: Math.max(0, Math.min(this.gridH - 1, y)),
+                        angle: angle,
+                        targetNode: node
+                    });
+                }
+            }
+
+            getTrailValue(gx, gy) {
+                if (gx < 0 || gx >= this.gridW || gy < 0 || gy >= this.gridH) return 0;
+                const idx = (Math.floor(gy) * this.gridW) + Math.floor(gx);
+                
+                // Effective trail = trail chemical minus environmental barrier penalty
+                const chem = this.trailGrid[idx];
+                const penalty = this.barrierGrid[idx] * 40.0 * this.barrierWeight;
+                const slopePenalty = this.frictionGrid[idx] * 5.0 * this.slopeFrictionWeight;
+                return Math.max(0, chem - penalty - slopePenalty);
+            }
+
+            step() {
+                // 1. Agent Sense & Move
+                const w = this.gridW;
+                const h = this.gridH;
+                const sDist = this.sensorDist;
+                const sAngle = this.sensorAngle;
+
+                for (let i = 0; i < this.agents.length; i++) {
+                    const ag = this.agents[i];
+
+                    // Sample 3 forward sensory positions
+                    const fX = ag.x + Math.cos(ag.angle) * sDist;
+                    const fY = ag.y + Math.sin(ag.angle) * sDist;
+
+                    const lX = ag.x + Math.cos(ag.angle - sAngle) * sDist;
+                    const lY = ag.y + Math.sin(ag.angle - sAngle) * sDist;
+
+                    const rX = ag.x + Math.cos(ag.angle + sAngle) * sDist;
+                    const rY = ag.y + Math.sin(ag.angle + sAngle) * sDist;
+
+                    const vF = this.getTrailValue(fX, fY);
+                    const vL = this.getTrailValue(lX, lY);
+                    const vR = this.getTrailValue(rX, rY);
+
+                    // Chemotactic rotation
+                    if (vF > vL && vF > vR) {
+                        // Keep straight
+                    } else if (vF < vL && vF < vR) {
+                        ag.angle += (Math.random() < 0.5 ? 1 : -1) * this.turnSpeed;
+                    } else if (vL > vR) {
+                        ag.angle -= this.turnSpeed;
+                    } else if (vR > vL) {
+                        ag.angle += this.turnSpeed;
+                    }
+
+                    // Steer toward node attractors occasionally
+                    if (Math.random() < 0.08) {
+                        const target = COLOMBIA_NODES[Math.floor(Math.random() * COLOMBIA_NODES.length)];
+                        const tPt = geoToCanvas(target.lon, target.lat, this.width, this.height);
+                        const targetAngle = Math.atan2((tPt.y / this.scale) - ag.y, (tPt.x / this.scale) - ag.x);
+                        ag.angle += (targetAngle - ag.angle) * 0.15;
+                    }
+
+                    // Topographic friction drag
+                    const currIdx = Math.floor(ag.y) * w + Math.floor(ag.x);
+                    const slopeResistance = 1.0 / (1.0 + (this.frictionGrid[currIdx] || 0) * this.slopeFrictionWeight);
+                    const effectiveSpeed = this.agentSpeed * slopeResistance;
+
+                    ag.x += Math.cos(ag.angle) * effectiveSpeed;
+                    ag.y += Math.sin(ag.angle) * effectiveSpeed;
+
+                    // Boundary bounce
+                    if (ag.x < 1 || ag.x >= w - 1 || ag.y < 1 || ag.y >= h - 1) {
+                        ag.angle = Math.random() * Math.PI * 2;
+                        ag.x = Math.max(1, Math.min(w - 2, ag.x));
+                        ag.y = Math.max(1, Math.min(h - 2, ag.y));
+                    }
+
+                    // Deposit chemoattractant trail
+                    const depIdx = Math.floor(ag.y) * w + Math.floor(ag.x);
+                    this.trailGrid[depIdx] = Math.min(10.0, this.trailGrid[depIdx] + 1.2);
+                }
+
+                // 2. Diffuse & Evaporate chemical trail
+                for (let y = 1; y < h - 1; y++) {
+                    const row = y * w;
+                    for (let x = 1; x < w - 1; x++) {
+                        const idx = row + x;
+                        // 3x3 box blur diffusion
+                        const sum = (
+                            this.trailGrid[idx - w - 1] + this.trailGrid[idx - w] + this.trailGrid[idx - w + 1] +
+                            this.trailGrid[idx - 1]     + this.trailGrid[idx]     + this.trailGrid[idx + 1] +
+                            this.trailGrid[idx + w - 1] + this.trailGrid[idx + w] + this.trailGrid[idx + w + 1]
+                        ) / 9.0;
+
+                        this.diffuseGrid[idx] = sum * this.evapRate;
+                    }
+                }
+
+                // Swap buffers
+                const temp = this.trailGrid;
+                this.trailGrid = this.diffuseGrid;
+                this.diffuseGrid = temp;
+            }
+        }
+
+        // --- 5. MAIN APPLICATION CONTROLLER ---
+        class MatrixController {
+            constructor() {
+                this.canvas = document.getElementById('spatial-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.profilerCanvas = document.getElementById('profiler-canvas');
+                this.pCtx = this.profilerCanvas.getContext('2d');
+                this.paretoCanvas = document.getElementById('pareto-canvas');
+                this.rCtx = this.paretoCanvas.getContext('2d');
+
+                this.activeLayers = {
+                    bionet: true,
+                    topo: true,
+                    ladm: true,
+                    sinap: true,
+                    flows: true,
+                    hudgrid: true
+                };
+
+                this.currentCorridor = 'cordilleras';
+                this.currentPreset = 'multimodal';
+                this.mouse = { x: 0, y: 0, geoLon: -74.07, geoLat: 4.71, isOver: false };
+                this.inspectedNode = null;
+
+                this.initResize();
+                this.core = new PhysarumCore(this.width, this.height);
+                this.setupDOM();
+                this.setupEvents();
+
+                // Animation & metrics
+                this.frameCount = 0;
+                this.lastTime = performance.now();
+                this.fps = 60;
+                this.logTimer = 0;
+
+                this.animate = this.animate.bind(this);
+                requestAnimationFrame(this.animate);
+            }
+
+            initResize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.width = rect.width;
+                this.height = rect.height;
+
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = this.width * dpr;
+                this.canvas.height = this.height * dpr;
+                this.ctx.resetTransform();
+                this.ctx.scale(dpr, dpr);
+
+                // Profiler resize
+                const pRect = this.profilerCanvas.parentElement.getBoundingClientRect();
+                this.profilerCanvas.width = pRect.width * dpr;
+                this.profilerCanvas.height = pRect.height * dpr;
+                this.pCtx.resetTransform();
+                this.pCtx.scale(dpr, dpr);
+                this.pWidth = pRect.width;
+                this.pHeight = pRect.height;
+
+                // Pareto radar resize
+                this.paretoCanvas.width = 180 * dpr;
+                this.paretoCanvas.height = 180 * dpr;
+                this.rCtx.resetTransform();
+                this.rCtx.scale(dpr, dpr);
+            }
+
+            setupDOM() {
+                // Audio Toggle
+                const audioBtn = document.getElementById('btn-audio-toggle');
+                audioBtn.addEventListener('click', () => {
+                    const isAudioOn = audio.toggle();
+                    document.getElementById('audio-status-txt').textContent = isAudioOn ? 'AUDIO SYNTH: ON' : 'AUDIO SYNTH: OFF';
+                    document.getElementById('audio-icon').className = isAudioOn ? 'ph ph-speaker-high' : 'ph ph-speaker-slash';
+                    audioBtn.classList.toggle('active', isAudioOn);
+                });
+
+                // Reset Agents
+                document.getElementById('btn-reset-agents').addEventListener('click', () => {
+                    audio.playBlip(1200, 0.08);
+                    this.core.initAgents();
+                    this.addTelemetryLog('SYS_RESET', 'Reinicialización de esporas completada.', 'cyan');
+                });
+
+                // Sliders
+                const bindSlider = (id, valId, unit, cb) => {
+                    const s = document.getElementById(id);
+                    const v = document.getElementById(valId);
+                    s.addEventListener('input', (e) => {
+                        const val = parseFloat(e.target.value);
+                        v.textContent = val + unit;
+                        cb(val);
+                        audio.playBlip(600 + val * 10, 0.02);
+                    });
+                };
+
+                bindSlider('slider-agents', 'val-agents', '', (v) => {
+                    this.core.numAgents = v;
+                    this.core.initAgents();
+                    document.getElementById('agent-count-val').textContent = v.toLocaleString();
+                });
+
+                bindSlider('slider-slope', 'val-slope', 'x', (v) => {
+                    this.core.slopeFrictionWeight = v;
+                });
+
+                bindSlider('slider-barrier', 'val-barrier', '', (v) => {
+                    this.core.barrierWeight = v;
+                    document.getElementById('val-barrier').textContent = v >= 0.8 ? 'MÁXIMA (VETO)' : (v === 0 ? 'DESACTIVADA' : 'MODERADA');
+                });
+
+                bindSlider('slider-evap', 'val-evap', '', (v) => {
+                    this.core.evapRate = v;
+                });
+
+                bindSlider('slider-angle', 'val-angle', '°', (v) => {
+                    this.core.sensorAngle = (v * Math.PI) / 180;
+                });
+
+                // Layer Toggles
+                document.querySelectorAll('.layer-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const layer = btn.dataset.layer;
+                        this.activeLayers[layer] = !this.activeLayers[layer];
+                        btn.classList.toggle('active', this.activeLayers[layer]);
+                        audio.playBlip(this.activeLayers[layer] ? 900 : 450, 0.03);
+                    });
+                });
+
+                // Presets
+                document.querySelectorAll('.preset-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                        this.applyPreset(card.dataset.preset);
+                    });
+                });
+
+                // Profiler Corridors
+                document.querySelectorAll('.profiler-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.profiler-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentCorridor = btn.dataset.corridor;
+                        audio.playBlip(750, 0.04);
+                    });
+                });
+            }
+
+            setupEvents() {
+                window.addEventListener('resize', () => {
+                    this.initResize();
+                    this.core.resize(this.width, this.height);
+                });
+
+                this.canvas.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.mouse.x = e.clientX - rect.left;
+                    this.mouse.y = e.clientY - rect.top;
+                    this.mouse.isOver = true;
+
+                    const geo = canvasToGeo(this.mouse.x, this.mouse.y, this.width, this.height);
+                    this.mouse.geoLon = geo.lon;
+                    this.mouse.geoLat = geo.lat;
+
+                    this.updateReticle(geo);
+                    this.checkNodeHover(this.mouse.x, this.mouse.y);
+                });
+
+                this.canvas.addEventListener('mouseleave', () => {
+                    this.mouse.isOver = false;
+                    document.getElementById('node-popup').style.display = 'none';
+                });
+
+                this.canvas.addEventListener('click', () => {
+                    audio.init();
+                    if (this.inspectedNode) {
+                        audio.playChord();
+                        this.addTelemetryLog('INSPECT_NODE', `Nodo analizado: ${this.inspectedNode.name} (${this.inspectedNode.dept})`, 'green');
+                    } else {
+                        // Seed attractant chemical burst
+                        const gx = Math.floor(this.mouse.x / this.core.scale);
+                        const gy = Math.floor(this.mouse.y / this.core.scale);
+                        if (gx >= 0 && gx < this.core.gridW && gy >= 0 && gy < this.core.gridH) {
+                            const idx = gy * this.core.gridW + gx;
+                            this.core.trailGrid[idx] = 10.0;
+                            audio.playBlip(1100, 0.05);
+                        }
+                    }
+                });
+            }
+
+            applyPreset(preset) {
+                this.currentPreset = preset;
+                audio.playChord([523.25, 659.25, 783.99, 1046.50]); // C Major arpeggio
+
+                if (preset === 'multimodal') {
+                    this.core.slopeFrictionWeight = 1.75;
+                    this.core.barrierWeight = 1.0;
+                    this.currentCorridor = 'cordilleras';
+                    this.addTelemetryLog('PRESET', 'Escenario Multimodal Nacional cargado (Troncal Magdalena + La Línea).', 'cyan');
+                } else if (preset === 'climatic') {
+                    this.core.slopeFrictionWeight = 2.8;
+                    this.core.barrierWeight = 1.0;
+                    this.currentCorridor = 'occidente';
+                    this.addTelemetryLog('ALERTA_CLIMA', 'UNGRD reporta crecientes en Depresión Momposina; redireccionando flujos.', 'rose');
+                    audio.playAlarm();
+                } else if (preset === 'paramos') {
+                    this.core.slopeFrictionWeight = 1.5;
+                    this.core.barrierWeight = 1.0;
+                    this.currentCorridor = 'cordilleras';
+                    this.addTelemetryLog('LEY_1930', 'ANLA impone blindaje absoluto a complejos de Páramos de Colombia.', 'green');
+                } else if (preset === 'interoceanic') {
+                    this.core.slopeFrictionWeight = 1.2;
+                    this.core.barrierWeight = 0.4;
+                    this.currentCorridor = 'occidente';
+                    this.addTelemetryLog('CONEXIÓN', 'Modelando corredor férreo Bahía Cupica - Urabá.', 'amber');
+                }
+
+                this.core.initAgents();
+                this.updateInstitutionalScores();
+            }
+
+            updateReticle(geo) {
+                const latDeg = Math.floor(Math.abs(geo.lat));
+                const latMin = Math.floor((Math.abs(geo.lat) - latDeg) * 60);
+                const lonDeg = Math.floor(Math.abs(geo.lon));
+                const lonMin = Math.floor((Math.abs(geo.lon) - lonDeg) * 60);
+                const latStr = `${latDeg}°${latMin}'${geo.lat >= 0 ? 'N' : 'S'}`;
+                const lonStr = `${lonDeg}°${lonMin}'${geo.lon >= 0 ? 'E' : 'W'}`;
+
+                document.getElementById('reticle-coords').textContent = `${latStr} ${lonStr}`;
+
+                // MAGNA-SIRGAS Origen Nacional approximation (Offset: Lat 4.0 N, Lon -73.0 W = 5,000,000 m)
+                const northM = Math.floor(5000000 + (geo.lat - 4.0) * 110574);
+                const eastM = Math.floor(5000000 + (geo.lon - (-73.0)) * 111320);
+                document.getElementById('reticle-magna').textContent = `N: ${northM.toLocaleString()} m | E: ${eastM.toLocaleString()} m`;
+
+                const elev = getElevationMeters(geo.lat, geo.lon);
+                document.getElementById('cursor-elev').textContent = `${elev.toLocaleString()} m`;
+
+                let region = 'LLANOS ORIENTALES // ORINOQUÍA';
+                if (geo.lat < 1.5) region = 'AMAZONÍA // ESCUDO GUAYANÉS';
+                else if (geo.lon < -77.0) region = 'PACÍFICO // CHOCÓ BIOGEOGRÁFICO';
+                else if (geo.lat > 9.0) region = 'CARIBE // PLANICIE COSTERA';
+                else if (geo.lon >= -77.0 && geo.lon <= -72.5) region = 'ANDINA // SISTEMA DE 3 CORDILLERAS';
+                document.getElementById('reticle-region').textContent = region;
+            }
+
+            checkNodeHover(x, y) {
+                let found = null;
+                for (const node of COLOMBIA_NODES) {
+                    const pt = geoToCanvas(node.lon, node.lat, this.width, this.height);
+                    if (Math.hypot(pt.x - x, pt.y - y) < 18) {
+                        found = node;
+                        break;
+                    }
+                }
+
+                const popup = document.getElementById('node-popup');
+                if (found) {
+                    if (this.inspectedNode !== found) {
+                        audio.playBlip(780, 0.02);
+                    }
+                    this.inspectedNode = found;
+                    popup.style.display = 'block';
+                    popup.style.left = `${Math.min(this.width - 320, x + 15)}px`;
+                    popup.style.top = `${Math.max(15, y - 80)}px`;
+
+                    document.getElementById('popup-name').textContent = found.name;
+                    document.getElementById('popup-dept').textContent = found.dept;
+                    document.getElementById('popup-pop').textContent = `${found.pop.toLocaleString()} hab`;
+                    document.getElementById('popup-pib').textContent = `${found.pib}%`;
+                    document.getElementById('popup-cargo').textContent = `${found.cargo}M Ton/año`;
+                    document.getElementById('popup-cadastre').textContent = found.cadastre;
+                    document.getElementById('popup-elevation').textContent = `${found.elevation.toLocaleString()} msnm`;
+                    document.getElementById('popup-risk').textContent = found.risk;
+                    document.getElementById('popup-type').textContent = found.type.toUpperCase();
+                } else {
+                    this.inspectedNode = null;
+                    popup.style.display = 'none';
+                }
+            }
+
+            addTelemetryLog(tag, msg, color = 'cyan') {
+                const box = document.getElementById('telemetry-log');
+                const now = new Date();
+                const timeStr = `[${now.toTimeString().split(' ')[0]}]`;
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                line.innerHTML = `<span class="t-time">${timeStr}</span> <span class="t-${color}">${tag}:</span> ${msg}`;
+                box.appendChild(line);
+                box.scrollTop = box.scrollHeight;
+            }
+
+            updateInstitutionalScores() {
+                // Calculate dynamic scores based on scenario & bio-grid
+                let ani = 88;
+                let anla = 94;
+                let igac = 79;
+                let ungrd = 85;
+
+                if (this.currentPreset === 'climatic') {
+                    ani = 65;
+                    ungrd = 96;
+                    anla = 88;
+                    igac = 72;
+                } else if (this.currentPreset === 'paramos') {
+                    anla = 99;
+                    ani = 82;
+                    igac = 84;
+                    ungrd = 89;
+                } else if (this.currentPreset === 'interoceanic') {
+                    ani = 95;
+                    anla = 78;
+                    igac = 88;
+                    ungrd = 81;
+                }
+
+                document.getElementById('score-ani').textContent = `${ani}%`;
+                document.getElementById('bar-ani').style.width = `${ani}%`;
+
+                document.getElementById('score-anla').textContent = `${anla}%`;
+                document.getElementById('bar-anla').style.width = `${anla}%`;
+
+                document.getElementById('score-igac').textContent = `${igac}%`;
+                document.getElementById('bar-igac').style.width = `${igac}%`;
+
+                document.getElementById('score-ungrd').textContent = `${ungrd}%`;
+                document.getElementById('bar-ungrd').style.width = `${ungrd}%`;
+
+                const consensus = ((ani + anla + igac + ungrd) / 4).toFixed(1);
+                document.getElementById('consensus-val').textContent = `${consensus}% (${consensus >= 85 ? 'SOBERANO' : 'EQUILIBRADO'})`;
+            }
+
+            // --- RENDERING PIPELINE ---
+            draw() {
+                this.ctx.fillStyle = '#020409';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+                // 1. Radar HUD Grid & Coordinates
+                if (this.activeLayers.hudgrid) {
+                    this.drawHUDGrid();
+                }
+
+                // 2. Relief & Topographic Isoclines
+                if (this.activeLayers.topo) {
+                    this.drawTopography();
+                }
+
+                // 3. SINAP Protected Páramos & Exclusion Zones
+                if (this.activeLayers.sinap) {
+                    this.drawProtectedZones();
+                }
+
+                // 4. Bio-Net Physarum polycephalum luminescence
+                if (this.activeLayers.bionet) {
+                    this.drawBioNet();
+                }
+
+                // 5. Freight Flows (Animated cargo logistics)
+                if (this.activeLayers.flows) {
+                    this.drawCargoFlows();
+                }
+
+                // 6. Cadastral Polygons & Territorial Nodes
+                this.drawTerritorialNodes();
+
+                // 7. Render Sub-Canvases (Profiler & Pareto Radar)
+                this.drawProfiler();
+                this.drawParetoRadar();
+            }
+
+            drawHUDGrid() {
+                this.ctx.save();
+                this.ctx.strokeStyle = 'rgba(0, 229, 255, 0.04)';
+                this.ctx.lineWidth = 1;
+
+                const step = 60;
+                for (let x = 0; x < this.width; x += step) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, 0);
+                    this.ctx.lineTo(x, this.height);
+                    this.ctx.stroke();
+                }
+                for (let y = 0; y < this.height; y += step) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y);
+                    this.ctx.lineTo(this.width, y);
+                    this.ctx.stroke();
+                }
+
+                // Geographic outline of Colombia
+                this.ctx.strokeStyle = 'rgba(0, 229, 255, 0.35)';
+                this.ctx.lineWidth = 1.5;
+                this.ctx.beginPath();
+                COLOMBIA_OUTLINE.forEach((coord, idx) => {
+                    const pt = geoToCanvas(coord[0], coord[1], this.width, this.height);
+                    if (idx === 0) this.ctx.moveTo(pt.x, pt.y);
+                    else this.ctx.lineTo(pt.x, pt.y);
+                });
+                this.ctx.closePath();
+                this.ctx.stroke();
+
+                // Soft territorial ambient fill
+                this.ctx.fillStyle = 'rgba(0, 229, 255, 0.012)';
+                this.ctx.fill();
+                this.ctx.restore();
+            }
+
+            drawTopography() {
+                this.ctx.save();
+                // Render stylized neon contours of the 3 mountain ranges
+                const cordilleras = [
+                    { name: 'OCCIDENTAL', pts: [[-77.5, 1.2], [-76.8, 3.5], [-76.2, 5.5], [-75.8, 7.5]], color: 'rgba(0, 229, 255, 0.12)' },
+                    { name: 'CENTRAL', pts: [[-76.3, 1.8], [-75.5, 4.5], [-75.2, 6.5], [-74.8, 8.2]], color: 'rgba(168, 85, 247, 0.14)' },
+                    { name: 'ORIENTAL', pts: [[-75.0, 2.2], [-74.1, 4.7], [-73.2, 6.8], [-72.5, 8.8]], color: 'rgba(0, 229, 255, 0.12)' }
+                ];
+
+                cordilleras.forEach(c => {
+                    this.ctx.strokeStyle = c.color;
+                    this.ctx.lineWidth = 18;
+                    this.ctx.lineCap = 'round';
+                    this.ctx.beginPath();
+                    c.pts.forEach((pt, idx) => {
+                        const cpt = geoToCanvas(pt[0], pt[1], this.width, this.height);
+                        if (idx === 0) this.ctx.moveTo(cpt.x, cpt.y);
+                        else this.ctx.lineTo(cpt.x, cpt.y);
+                    });
+                    this.ctx.stroke();
+                });
+                this.ctx.restore();
+            }
+
+            drawProtectedZones() {
+                this.ctx.save();
+                PROTECTED_ZONES.forEach(z => {
+                    const pt = geoToCanvas(z.lon, z.lat, this.width, this.height);
+                    const rCanvas = (z.radiusKm / 111) * (pt.scale || 30);
+
+                    // Glowing radial barrier
+                    const grad = this.ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, rCanvas);
+                    grad.addColorStop(0, 'rgba(16, 185, 129, 0.22)');
+                    grad.addColorStop(0.7, 'rgba(16, 185, 129, 0.08)');
+                    grad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+                    this.ctx.fillStyle = grad;
+                    this.ctx.beginPath();
+                    this.ctx.arc(pt.x, pt.y, rCanvas, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+                    this.ctx.setLineDash([3, 4]);
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+
+                    // Label
+                    this.ctx.setLineDash([]);
+                    this.ctx.font = '9px "JetBrains Mono"';
+                    this.ctx.fillStyle = 'rgba(16, 185, 129, 0.7)';
+                    this.ctx.fillText(z.name.toUpperCase(), pt.x + 8, pt.y - 4);
+                });
+                this.ctx.restore();
+            }
+
+            drawBioNet() {
+                // Render Physarum slime trails using offscreen chemical grid
+                const sc = this.core.scale;
+                const gw = this.core.gridW;
+                const gh = this.core.gridH;
+
+                this.ctx.save();
+                this.ctx.globalCompositeOperation = 'screen';
+
+                // Sample trail peaks for rendering
+                this.ctx.fillStyle = 'rgba(0, 229, 255, 0.65)';
+                for (let y = 0; y < gh; y += 2) {
+                    const row = y * gw;
+                    for (let x = 0; x < gw; x += 2) {
+                        const val = this.core.trailGrid[row + x];
+                        if (val > 0.4) {
+                            const alpha = Math.min(0.85, val * 0.22);
+                            this.ctx.fillStyle = `rgba(0, 229, 255, ${alpha})`;
+                            this.ctx.fillRect(x * sc, y * sc, sc * 2, sc * 2);
+                        }
+                    }
+                }
+
+                // Render active agents as sharp bioluminescent micro-dots
+                this.ctx.fillStyle = '#ffffff';
+                const agents = this.core.agents;
+                for (let i = 0; i < agents.length; i += 2) {
+                    const ag = agents[i];
+                    this.ctx.fillRect(ag.x * sc, ag.y * sc, 1.2, 1.2);
+                }
+                this.ctx.restore();
+            }
+
+            drawCargoFlows() {
+                this.ctx.save();
+                const t = this.frameCount * 0.015;
+
+                // Real multimodal routes: Buenaventura -> Bogotá, Bogotá -> Medellín, Medellín -> Caribe
+                const routes = [
+                    ['buenaventura', 'cali', 'ibague', 'bogota'],
+                    ['bogota', 'la_dorada', 'chiriguana', 'santa_marta'],
+                    ['medellin', 'la_dorada', 'bogota'],
+                    ['cartagena', 'barranquilla', 'santa_marta']
+                ];
+
+                this.ctx.strokeStyle = 'rgba(251, 191, 36, 0.2)';
+                this.ctx.lineWidth = 1;
+                this.ctx.setLineDash([4, 6]);
+
+                routes.forEach(rt => {
+                    this.ctx.beginPath();
+                    for (let i = 0; i < rt.length; i++) {
+                        const n = COLOMBIA_NODES.find(x => x.id === rt[i]);
+                        if (!n) continue;
+                        const pt = geoToCanvas(n.lon, n.lat, this.width, this.height);
+                        if (i === 0) this.ctx.moveTo(pt.x, pt.y);
+                        else this.ctx.lineTo(pt.x, pt.y);
+                    }
+                    this.ctx.stroke();
+                });
+
+                // Animated cargo pulses
+                this.ctx.setLineDash([]);
+                this.ctx.fillStyle = '#fbbf24';
+                routes.forEach((rt, rIdx) => {
+                    for (let i = 0; i < rt.length - 1; i++) {
+                        const n1 = COLOMBIA_NODES.find(x => x.id === rt[i]);
+                        const n2 = COLOMBIA_NODES.find(x => x.id === rt[i + 1]);
+                        if (!n1 || !n2) continue;
+                        const p1 = geoToCanvas(n1.lon, n1.lat, this.width, this.height);
+                        const p2 = geoToCanvas(n2.lon, n2.lat, this.width, this.height);
+
+                        const progress = (t + (rIdx * 0.25) + (i * 0.3)) % 1.0;
+                        const px = p1.x + (p2.x - p1.x) * progress;
+                        const py = p1.y + (p2.y - p1.y) * progress;
+
+                        this.ctx.beginPath();
+                        this.ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    }
+                });
+                this.ctx.restore();
+            }
+
+            drawTerritorialNodes() {
+                this.ctx.save();
+                COLOMBIA_NODES.forEach(n => {
+                    const pt = geoToCanvas(n.lon, n.lat, this.width, this.height);
+                    const isHovered = this.inspectedNode === n;
+
+                    // Concentric pulse
+                    const pulse = (Math.sin(this.frameCount * 0.05 + n.elevation) + 1) * 0.5;
+                    this.ctx.strokeStyle = isHovered ? '#00e5ff' : 'rgba(0, 229, 255, 0.4)';
+                    this.ctx.lineWidth = isHovered ? 2 : 1;
+                    this.ctx.beginPath();
+                    this.ctx.arc(pt.x, pt.y, 4 + pulse * 4, 0, Math.PI * 2);
+                    this.ctx.stroke();
+
+                    // Core marker dot
+                    this.ctx.fillStyle = isHovered ? '#ffffff' : (n.type === 'capital' ? '#fbbf24' : '#00e5ff');
+                    this.ctx.beginPath();
+                    this.ctx.arc(pt.x, pt.y, isHovered ? 5 : 3.5, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    // Node Label
+                    this.ctx.font = isHovered ? 'bold 11px "Inter"' : '9px "JetBrains Mono"';
+                    this.ctx.fillStyle = isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.75)';
+                    this.ctx.fillText(n.name, pt.x + 8, pt.y + 3);
+                });
+                this.ctx.restore();
+            }
+
+            // --- PROFILER CANVAS ---
+            drawProfiler() {
+                const w = this.pWidth;
+                const h = this.pHeight;
+                this.pCtx.clearRect(0, 0, w, h);
+
+                // Sample points along selected corridor
+                let corridorPts = [];
+                if (this.currentCorridor === 'cordilleras') {
+                    // Buenaventura -> Cali -> Ibagué -> Bogotá
+                    corridorPts = [
+                        { name: 'Buenaventura (0m)', lon: -77.03, lat: 3.88 },
+                        { name: 'Cord. Occidental (2100m)', lon: -76.65, lat: 3.55 },
+                        { name: 'Valle del Cauca / Cali (1018m)', lon: -76.53, lat: 3.45 },
+                        { name: 'Cruce La Línea / Cord. Central (3265m)', lon: -75.52, lat: 4.45 },
+                        { name: 'Valle del Magdalena / Ibagué (1285m)', lon: -75.23, lat: 4.43 },
+                        { name: 'Altiplano / Bogotá D.C. (2625m)', lon: -74.07, lat: 4.71 }
+                    ];
+                } else if (this.currentCorridor === 'magdalena') {
+                    corridorPts = [
+                        { name: 'Bogotá (2625m)', lon: -74.07, lat: 4.71 },
+                        { name: 'Descenso Honda / La Dorada (178m)', lon: -74.66, lat: 5.45 },
+                        { name: 'Barrancabermeja (75m)', lon: -73.85, lat: 7.06 },
+                        { name: 'Chiriguaná (50m)', lon: -73.60, lat: 9.36 },
+                        { name: 'Santa Marta (6m)', lon: -74.20, lat: 11.24 }
+                    ];
+                } else {
+                    corridorPts = [
+                        { name: 'Medellín (1495m)', lon: -75.58, lat: 6.24 },
+                        { name: 'Cañón del Cauca (650m)', lon: -75.85, lat: 6.55 },
+                        { name: 'Atrato / Chocó (43m)', lon: -76.66, lat: 5.69 },
+                        { name: 'Golfo de Urabá (2m)', lon: -76.80, lat: 8.10 }
+                    ];
+                }
+
+                const numSamples = 160;
+                const elevProfile = [];
+                for (let i = 0; i <= numSamples; i++) {
+                    const ratio = i / numSamples;
+                    const segmentSpan = ratio * (corridorPts.length - 1);
+                    const sIdx = Math.min(corridorPts.length - 2, Math.floor(segmentSpan));
+                    const sRatio = segmentSpan - sIdx;
+
+                    const p1 = corridorPts[sIdx];
+                    const p2 = corridorPts[sIdx + 1];
+                    const lon = p1.lon + (p2.lon - p1.lon) * sRatio;
+                    const lat = p1.lat + (p2.lat - p1.lat) * sRatio;
+                    elevProfile.push(getElevationMeters(lat, lon));
+                }
+
+                // Render Profile Curve
+                const maxElev = 4500;
+                this.pCtx.beginPath();
+                this.pCtx.moveTo(0, h);
+                for (let i = 0; i <= numSamples; i++) {
+                    const px = (i / numSamples) * w;
+                    const py = h - (elevProfile[i] / maxElev) * (h - 25);
+                    this.pCtx.lineTo(px, py);
+                }
+                this.pCtx.lineTo(w, h);
+                this.pCtx.closePath();
+
+                // Gradient fill
+                const pGrad = this.pCtx.createLinearGradient(0, 0, 0, h);
+                pGrad.addColorStop(0, 'rgba(0, 229, 255, 0.35)');
+                pGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.15)');
+                pGrad.addColorStop(1, 'rgba(0, 229, 255, 0.02)');
+                this.pCtx.fillStyle = pGrad;
+                this.pCtx.fill();
+
+                this.pCtx.strokeStyle = '#00e5ff';
+                this.pCtx.lineWidth = 1.5;
+                this.pCtx.beginPath();
+                for (let i = 0; i <= numSamples; i++) {
+                    const px = (i / numSamples) * w;
+                    const py = h - (elevProfile[i] / maxElev) * (h - 25);
+                    if (i === 0) this.pCtx.moveTo(px, py);
+                    else this.pCtx.lineTo(px, py);
+                }
+                this.pCtx.stroke();
+
+                // Node milestone markers along bottom
+                this.pCtx.font = '9px "JetBrains Mono"';
+                this.pCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                corridorPts.forEach((pt, idx) => {
+                    const px = (idx / (corridorPts.length - 1)) * w;
+                    this.pCtx.beginPath();
+                    this.pCtx.moveTo(px, 15);
+                    this.pCtx.lineTo(px, h);
+                    this.pCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                    this.pCtx.stroke();
+                    this.pCtx.fillText(pt.name, Math.min(w - 90, Math.max(5, px - 30)), 12);
+                });
+            }
+
+            // --- PARETO RADAR CHART ---
+            drawParetoRadar() {
+                const w = 180;
+                const h = 180;
+                const cx = w / 2;
+                const cy = h / 2;
+                const r = 68;
+
+                this.rCtx.clearRect(0, 0, w, h);
+
+                // 4 Institutional Axes: ANI (Logística), ANLA (Ambiental), IGAC (Fiscal), UNGRD (Riesgo)
+                const axes = [
+                    { label: 'ANI', val: parseFloat(document.getElementById('score-ani').textContent) / 100 },
+                    { label: 'ANLA', val: parseFloat(document.getElementById('score-anla').textContent) / 100 },
+                    { label: 'IGAC', val: parseFloat(document.getElementById('score-igac').textContent) / 100 },
+                    { label: 'UNGRD', val: parseFloat(document.getElementById('score-ungrd').textContent) / 100 }
+                ];
+
+                // Background Web Circles
+                this.rCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                for (let step = 0.25; step <= 1.0; step += 0.25) {
+                    this.rCtx.beginPath();
+                    this.rCtx.arc(cx, cy, r * step, 0, Math.PI * 2);
+                    this.rCtx.stroke();
+                }
+
+                // Axes lines
+                axes.forEach((ax, idx) => {
+                    const angle = (idx * Math.PI / 2) - Math.PI / 2;
+                    const axX = cx + Math.cos(angle) * r;
+                    const axY = cy + Math.sin(angle) * r;
+
+                    this.rCtx.beginPath();
+                    this.rCtx.moveTo(cx, cy);
+                    this.rCtx.lineTo(axX, axY);
+                    this.rCtx.stroke();
+
+                    this.rCtx.font = '8px "JetBrains Mono"';
+                    this.rCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                    this.rCtx.fillText(ax.label, axX + Math.cos(angle) * 12 - 8, axY + Math.sin(angle) * 12 + 3);
+                });
+
+                // Radar Polygon
+                this.rCtx.beginPath();
+                axes.forEach((ax, idx) => {
+                    const angle = (idx * Math.PI / 2) - Math.PI / 2;
+                    const vx = cx + Math.cos(angle) * r * ax.val;
+                    const vy = cy + Math.sin(angle) * r * ax.val;
+                    if (idx === 0) this.rCtx.moveTo(vx, vy);
+                    else this.rCtx.lineTo(vx, vy);
+                });
+                this.rCtx.closePath();
+
+                this.rCtx.fillStyle = 'rgba(0, 229, 255, 0.22)';
+                this.rCtx.fill();
+                this.rCtx.strokeStyle = '#00e5ff';
+                this.rCtx.lineWidth = 1.5;
+                this.rCtx.stroke();
+            }
+
+            animate(now) {
+                this.frameCount++;
+                const delta = now - this.lastTime;
+                if (delta >= 1000) {
+                    this.fps = Math.round((this.frameCount * 1000) / delta);
+                    document.getElementById('fps-counter').textContent = this.fps;
+                    this.frameCount = 0;
+                    this.lastTime = now;
+                }
+
+                // Bio-computing step
+                this.core.step();
+
+                // Periodic Institutional Telemetry update
+                this.logTimer++;
+                if (this.logTimer > 280) {
+                    this.logTimer = 0;
+                    const msgs = [
+                        { tag: 'ANI', msg: 'Corredor férreo Central opera con costo marginal óptimo.', col: 'cyan' },
+                        { tag: 'ANLA', msg: 'Monitoreo satelital confirma cero perturbación en Páramo de Santurbán.', col: 'green' },
+                        { tag: 'IGAC', msg: 'Actualización catastral LADM-COL vincula 2.450 predios en Valle del Cauca.', col: 'amber' },
+                        { tag: 'UNGRD', msg: 'Estabilidad de talud confirmada en cruce Cordillera Central.', col: 'rose' }
+                    ];
+                    const chosen = msgs[Math.floor(Math.random() * msgs.length)];
+                    this.addTelemetryLog(chosen.tag, chosen.msg, chosen.col);
+                }
+
+                this.draw();
+                requestAnimationFrame(this.animate);
+            }
+        }
+
+        // Initialize when DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            const controller = new MatrixController();
+        });
+    </script>
+</body>
+
+</html>

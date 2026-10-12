@@ -312,10 +312,11 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
   const [vurData, setVurData] = useState(null);
   const [isVurLoading, setIsVurLoading] = useState(false);
   const [isMapboxSupported, setIsMapboxSupported] = useState(!forceSovereign);
-
-  useEffect(() => {
+  const [prevForceSovereign, setPrevForceSovereign] = useState(forceSovereign);
+  if (prevForceSovereign !== forceSovereign) {
+    setPrevForceSovereign(forceSovereign);
     setIsMapboxSupported(!forceSovereign);
-  }, [forceSovereign]);
+  }
 
   // --- PHASE 2: ELITE EXPANSION STATE & LOGIC ---
   const [activeTab, setActiveTab] = useState("SIMULATOR"); // SIMULATOR, CROSS_REFERENCE
@@ -1258,7 +1259,6 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
     if (!isMapboxSupported) return;
 
     if (forceSovereign) {
-      setIsMapboxSupported(false);
       addLog("ENGINE_MODE: Sovereign 2D Vector Engine Active (Safe Mode)", "success");
       return;
     }

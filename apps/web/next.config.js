@@ -1,4 +1,4 @@
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 // Directives that are safe to enforce today: they block clickjacking, plugin
 // content, <base> hijacking and off-site form posts without touching assets.

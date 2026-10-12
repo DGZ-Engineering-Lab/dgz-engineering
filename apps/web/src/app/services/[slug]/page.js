@@ -207,62 +207,58 @@ export default function ServicePage() {
   const router = useRouter();
   const slug = params?.slug;
 
+  const service = SERVICES_DATA[slug];
+
   const [activeTab, setActiveTab] = useState("strategy"); // "strategy" | "technical"
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(() => ({
     name: "",
     email: "",
     org: "",
     phone: "",
     scope: "Pilot",
-    msg: ""
-  });
+    msg: service
+      ? `Hola equipo de DevGiz. Estoy sumamente interesado en su servicio de "${service.title}" para nuestra organización. Nos gustaría explorar una propuesta/piloto enfocada en ${service.useCases[0]?.title || "optimización técnica"}. Quedo atento a su contacto.`
+      : ""
+  }));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   
   // Terminal simple properties
-  const [terminalLog, setTerminalLog] = useState([]);
+  const [terminalLog, setTerminalLog] = useState(() => (
+    service
+      ? [
+          `INITIALIZING DGZ TELEMETRY SYSTEM [SVC-ID: ${service.id}]`,
+          `CONNECTING TO HOST dgz-engineering.local...`,
+          `STATUS: CONNECTED // ACCESSIBILITY COMPLIANT`,
+          `SECURE ENVELOPE: ACTIVE (ZERO-TRUST)`,
+          `READY FOR SPECIFICATION SHUTTLE`
+        ]
+      : []
+  ));
   const [terminalTyping, setTerminalTyping] = useState(false);
 
   // SIMULADOR AVANZADO GEOESPACIAL PROPERTIES
   const [simStatus, setSimStatus] = useState("inactive"); // "inactive" | "running" | "paused" | "completed"
   const [simProgress, setSimProgress] = useState(0);
   const [simSpeed, setSimSpeed] = useState(1); // multiplicador de velocidad
-  const [simLogs, setSimLogs] = useState([]);
-  const [simMetrics, setSimMetrics] = useState([]);
+  const [simLogs, setSimLogs] = useState(() => (
+    service?.simulation
+      ? [
+          `[INFO] Laboratorio de Simulación iniciado para: ${service.title}`,
+          `[INFO] Estado: LISTO. Haz clic en 'INICIAR SIMULACIÓN' para arrancar.`
+        ]
+      : []
+  ));
+  const [simMetrics, setSimMetrics] = useState(() => (
+    service?.simulation
+      ? service.simulation.metrics.map(m => ({
+          ...m,
+          current: m.start
+        }))
+      : []
+  ));
   const [selectedCell, setSelectedCell] = useState(null); // Para interactivos de mapa/grid
   const simInterval = useRef(null);
-
-  const service = SERVICES_DATA[slug];
-
-  // Configuración de formulario prellenado basado en el servicio
-  useEffect(() => {
-    if (service) {
-      setFormData(prev => ({
-        ...prev,
-        msg: `Hola equipo de DevGiz. Estoy sumamente interesado en su servicio de "${service.title}" para nuestra organización. Nos gustaría explorar una propuesta/piloto enfocada en ${service.useCases[0]?.title || "optimización técnica"}. Quedo atento a su contacto.`
-      }));
-
-      // Iniciar log de terminal interactivo técnico
-      setTerminalLog([
-        `INITIALIZING DGZ TELEMETRY SYSTEM [SVC-ID: ${service.id}]`,
-        `CONNECTING TO HOST dgz-engineering.local...`,
-        `STATUS: CONNECTED // ACCESSIBILITY COMPLIANT`,
-        `SECURE ENVELOPE: ACTIVE (ZERO-TRUST)`,
-        `READY FOR SPECIFICATION SHUTTLE`
-      ]);
-
-      // Inicializar métricas del simulador
-      if (service.simulation) {
-        setSimMetrics(
-          service.simulation.metrics.map(m => ({
-            ...m,
-            current: m.start
-          }))
-        );
-        setSimLogs([`[INFO] Laboratorio de Simulación iniciado para: ${service.title}`, `[INFO] Estado: LISTO. Haz clic en 'INICIAR SIMULACIÓN' para arrancar.`]);
-      }
-    }
-  }, [service]);
 
   // Loop del Simulador
   useEffect(() => {
