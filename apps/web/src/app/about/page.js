@@ -397,7 +397,7 @@ export default function AboutPage() {
     <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200">
       
       {/* Editorial Header */}
-      <section id="history" className="pt-40 pb-24 px-6 border-b border-slate-200 overflow-hidden">
+      <section id="history" className="pt-24 md:pt-28 pb-12 md:pb-14 px-6 border-b border-slate-200 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
             <motion.div 
@@ -410,7 +410,7 @@ export default function AboutPage() {
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">About DevGiz // Engineering Manifesto</span>
               </motion.div>
-              <motion.h1 variants={fadeUp} className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
+              <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 Soberanía Digital <br /> <span className="text-slate-400 italic font-light">del Territorio</span>
               </motion.h1>
             </motion.div>
@@ -429,9 +429,9 @@ export default function AboutPage() {
       </section>
 
       {/* The Manifesto Section */}
-      <section id="vision" className="py-32 px-6 section-deferred scroll-reveal" ref={principlesRef}>
+      <section id="vision" className="py-14 md:py-16 px-6 section-deferred scroll-reveal" ref={principlesRef}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <motion.div 
               className="lg:col-span-5 space-y-10"
               initial="hidden"
@@ -462,7 +462,7 @@ export default function AboutPage() {
               </div>
             </motion.div>
             <motion.div 
-              className="lg:col-span-7 bg-white border border-slate-100 p-12 lg:p-20 shadow-sm relative group hover:shadow-xl transition-shadow duration-500"
+              className="lg:col-span-7 bg-white border border-slate-100 p-6 lg:p-10 shadow-sm relative group hover:shadow-xl transition-shadow duration-500"
               initial={{ opacity: 0, y: 40 }}
               animate={principlesInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.3, duration: 0.7 }}
@@ -501,22 +501,22 @@ export default function AboutPage() {
       </section>
 
       {/* Impact in Figures - High End Grid */}
-      <section className="py-32 bg-[#fafafa] border-y border-slate-200 section-deferred scroll-reveal" ref={impactRef}>
+      <section className="py-14 md:py-16 bg-[#fafafa] border-y border-slate-200 section-deferred scroll-reveal" ref={impactRef}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
-            className="text-center mb-20 space-y-4"
+            className="text-center mb-10 space-y-3"
             initial="hidden"
             animate={impactInView ? "visible" : "hidden"}
             variants={stagger}
           >
             <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.4em]">Strategic Results // KPI Report</motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-black tracking-tighter">Impacto en <span className="text-slate-400 italic font-light">Cifras</span></motion.h2>
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Impacto en <span className="text-slate-400 italic font-light">Cifras</span></motion.h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
             {ACHIEVEMENTS.map((item, i) => (
               <motion.div 
                 key={i} 
-                className="bg-white p-12 space-y-6 hover:bg-slate-50 transition-colors group cursor-default"
+                className="bg-white p-6 md:p-8 space-y-4 hover:bg-slate-50 transition-colors group cursor-default"
                 initial={{ opacity: 0, y: 20 }}
                 animate={impactInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
@@ -535,7 +535,7 @@ export default function AboutPage() {
       </section>
 
       {/* LADM-COL Simulator Section */}
-      <section className="py-32 bg-[#040814] text-white border-y border-slate-950 relative overflow-hidden section-deferred scroll-reveal" ref={simulatorRef}>
+      <section className="py-14 md:py-16 bg-[#040814] text-white border-y border-slate-950 relative overflow-hidden section-deferred scroll-reveal" ref={simulatorRef}>
         {/* Neon lines background */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
@@ -547,13 +547,13 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
           {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-cyan-400 font-bold block">Interoperability & Legal Lab</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-none">
                 Simulador Catastral <br /> <span className="text-slate-400 font-light italic">LADM-COL v3.1</span>
               </h2>
             </div>
@@ -1018,7 +1018,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership - Tactical Command Center Deck */}
-      <section id="team" className="py-32 px-6 overflow-hidden bg-[#03060f] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
+      <section id="team" className="py-14 md:py-16 px-6 overflow-hidden bg-[#03060f] text-white border-y border-slate-950 relative section-deferred scroll-reveal" ref={leaderRef}>
         
         {/* Subtle holographic grid lines */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ 
@@ -1302,7 +1302,7 @@ export default function AboutPage() {
       </section>
 
       {/* Sovereign Tech Stack Section */}
-      <section className="py-32 px-6 bg-[#02040a] text-white border-y border-slate-900 relative section-deferred scroll-reveal" ref={techRef}>
+      <section className="py-14 md:py-16 px-6 bg-[#02040a] text-white border-y border-slate-900 relative section-deferred scroll-reveal" ref={techRef}>
         
         {/* Ambient neon radial glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
@@ -1437,7 +1437,7 @@ export default function AboutPage() {
       </section>
 
       {/* Institutional CTA */}
-      <section className="py-40 bg-[#1a1a1a] text-white relative overflow-hidden scroll-reveal">
+      <section className="py-16 md:py-20 bg-[#1a1a1a] text-white relative overflow-hidden scroll-reveal">
         {/* Subtle animated grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
@@ -1449,7 +1449,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-tight">
             ¿Es DevGiz el aliado <br /> <span className="text-slate-500 font-light italic">que su proyecto necesita?</span>
           </h2>
           <p className="text-slate-400 text-xl font-light leading-relaxed max-w-2xl mx-auto">

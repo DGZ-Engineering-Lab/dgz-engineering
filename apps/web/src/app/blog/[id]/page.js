@@ -1214,12 +1214,12 @@ export default function BlogPostPage() {
   }
 
   return (
-    <div className="flex flex-col w-full bg-white text-[#1a1a1a] min-h-screen pt-32 pb-20">
+    <div className="flex flex-col w-full bg-white text-[#1a1a1a] min-h-screen pt-24 md:pt-28 pb-14">
       <article className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           
           <div className="lg:col-span-8">
-            <div className="space-y-8 mb-20 border-b border-slate-100 pb-16">
+            <div className="space-y-4 mb-10 border-b border-slate-100 pb-8">
               <div className="flex items-center gap-4 text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em]">
                 <span className="text-[#1a1a1a] font-bold">{post.category}</span>
                 <span>/</span>
@@ -1227,7 +1227,7 @@ export default function BlogPostPage() {
                 <span>/</span>
                 <span>{post.readTime}</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] text-[#1a1a1a]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 {post.title}
               </h1>
               <p className="text-2xl text-slate-500 font-light italic border-l-2 border-slate-200 pl-8 py-2">
@@ -1235,7 +1235,7 @@ export default function BlogPostPage() {
               </p>
             </div>
 
-            <div className="relative aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-sm">
+            <div className="relative aspect-[21/9] overflow-hidden bg-slate-100 mb-10 rounded-sm">
               <Image src={post.image} alt={post.title} fill priority sizes="(max-width: 1024px) 100vw, 800px" className="object-cover grayscale-[0.2]" />
             </div>
 

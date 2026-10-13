@@ -364,7 +364,7 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="relative w-full py-20 lg:py-28 z-10 bg-transparent border-t border-slate-100 overflow-hidden">
+    <section id="services" className="relative w-full py-14 lg:py-16 z-10 bg-transparent border-t border-slate-100 overflow-hidden">
       {/* Luces y brillos decorativos en background */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[140px] pointer-events-none"></div>
@@ -372,7 +372,7 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Encabezado Principal */}
-        <div className="flex flex-col items-center text-center mb-12 lg:mb-16 relative z-10">
+        <div className="flex flex-col items-center text-center mb-8 lg:mb-10 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -390,7 +390,7 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-black text-slate-950 tracking-tighter leading-[1.1] max-w-5xl"
+            className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-950 tracking-tighter leading-[1.1] max-w-5xl"
           >
             Ecosistema de Soluciones <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 italic">

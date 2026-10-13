@@ -77,14 +77,14 @@ export default function BrochurePage() {
       </header>
 
       {/* Hero Section - The Big Humanized Hook */}
-      <section className="relative pt-44 pb-12 px-6 overflow-hidden">
+      <section className="relative pt-28 md:pt-32 pb-8 px-6 overflow-hidden">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[9px] font-black tracking-[0.2em] text-cyan-700 uppercase">
             <Sparkles className="w-3 h-3 text-cyan-600 animate-pulse" />
             Soluciones Territoriales sin Complicaciones
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] text-slate-950">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.05] text-slate-950">
             Dile adiós a los retrasos geográficos. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Protege tus terrenos y acelera tus proyectos.</span>
           </h1>
@@ -277,11 +277,11 @@ export default function BrochurePage() {
       </section>
 
       {/* DevGiz Engineering Specialties - Bento Grid */}
-      <section className="py-24 px-6 relative bg-slate-900 text-white overflow-hidden border-t border-slate-800">
+      <section className="py-14 md:py-16 px-6 relative bg-slate-900 text-white overflow-hidden border-t border-slate-800">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.1),transparent_50%)] pointer-events-none"></div>
         <div className="max-w-6xl mx-auto relative z-10">
 
-          <div className="text-center space-y-3 mb-20">
+          <div className="text-center space-y-3 mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/10 text-[9px] font-black tracking-widest text-cyan-400 uppercase">
               CAPACIDADES DE INGENIERÍA 360
             </div>
@@ -378,7 +378,7 @@ export default function BrochurePage() {
       </section>
 
       {/* Humanized B2B Segmented Pitch Blocks */}
-      <section className="py-24 px-6 relative bg-white border-y border-slate-200/50">
+      <section className="py-14 md:py-16 px-6 relative bg-white border-y border-slate-200/50">
         <div className="max-w-6xl mx-auto">
 
           <div className="text-center space-y-3 mb-20">
@@ -491,7 +491,7 @@ export default function BrochurePage() {
       </section>
 
       {/* Professional Call To Action Banner */}
-      <section className="py-28 px-6 bg-slate-950 text-white relative overflow-hidden">
+      <section className="py-14 md:py-18 px-6 bg-slate-950 text-white relative overflow-hidden">
 
         {/* Decorative Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.15),transparent_70%)] pointer-events-none"></div>

@@ -51,19 +51,19 @@ export default function GestureSandboxPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#02040a] text-white pt-32 pb-20 relative overflow-hidden">
+    <div className="min-h-screen bg-[#02040a] text-white pt-24 md:pt-28 pb-14 relative overflow-hidden">
       {/* HUD Background Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
-           <div className="space-y-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+           <div className="space-y-3">
               <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.4em] flex items-center gap-2">
                  ← Terminal Home
               </Link>
-              <h1 className="text-7xl md:text-8xl font-black tracking-tighter leading-none">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none">
                 Gesture <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 italic">Sandbox</span>
               </h1>
               <div className="flex items-center gap-4">
@@ -245,7 +245,7 @@ export default function GestureSandboxPage() {
 
       {isCalibrating && (
         <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6 animate-in fade-in duration-500">
-           <div className="max-w-md w-full p-16 bg-[#0a0f16] border border-cyan-500/30 rounded-[4rem] text-center space-y-10 shadow-[0_0_100px_rgba(0,229,255,0.1)]">
+           <div className="max-w-md w-full p-8 md:p-10 bg-[#0a0f16] border border-cyan-500/30 rounded-2xl text-center space-y-6 shadow-[0_0_100px_rgba(0,229,255,0.1)]">
               <div className="relative w-32 h-32 mx-auto">
                  <div className="absolute inset-0 border-4 border-cyan-500/10 rounded-full"></div>
                  <div className="absolute inset-0 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>

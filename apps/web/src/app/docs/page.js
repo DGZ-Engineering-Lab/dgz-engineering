@@ -260,19 +260,19 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#05070a] text-white pt-32 pb-20 selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#05070a] text-white pt-24 md:pt-28 pb-14 selection:bg-cyan-500 selection:text-black overflow-x-hidden relative">
       {/* HUD Background Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(rgba(0,229,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.2) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
            <div className="space-y-4">
               <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.4em] flex items-center gap-2">
                  <ArrowLeft className="w-3.5 h-3.5" /> System Kernel
               </Link>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none">
                 Node <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 italic font-light">Documentation</span>
               </h1>
               <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.4em]">Developer Access // API Endpoint v1.3.0-BETA</p>
@@ -284,7 +284,7 @@ export default function DocsPage() {
            </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
            
            {/* Sidebar Navigation */}
            <div className="lg:col-span-3 space-y-8 sticky top-32 h-fit">
@@ -406,7 +406,7 @@ export default function DocsPage() {
               </AnimatePresence>
 
               {/* Interactive Live Playground Terminal Console (Business Plus Feature) */}
-              <div className="border border-slate-900 rounded-[2rem] bg-slate-950/40 backdrop-blur-md p-8 lg:p-12 space-y-8 relative overflow-hidden">
+              <div className="border border-slate-900 rounded-2xl bg-slate-950/40 backdrop-blur-md p-6 lg:p-8 space-y-6 relative overflow-hidden">
                  <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
                  
                  <div className="space-y-4">

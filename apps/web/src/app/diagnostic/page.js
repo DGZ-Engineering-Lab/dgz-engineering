@@ -305,14 +305,14 @@ export default function DiagnosticPage() {
   };
 
   return (
-    <div className="pt-32 pb-24 px-6 max-w-7xl mx-auto w-full relative z-10 flex-grow">
+    <div className="pt-24 md:pt-28 pb-14 px-6 max-w-7xl mx-auto w-full relative z-10 flex-grow">
       
       {/* Background radial effects */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-10 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header and Brand Presentation */}
-      <div className="space-y-6 text-center max-w-4xl mx-auto mb-16">
+      <div className="space-y-4 text-center max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-center gap-3">
           <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#06b6d4]"></span>
           <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-400 font-semibold">
@@ -321,7 +321,7 @@ export default function DiagnosticPage() {
           <span className="w-8 h-px bg-cyan-500/50 shadow-[0_0_8px_#06b6d4]"></span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
           Centro de Diagnóstico <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 via-slate-200 to-white italic font-light">
             Territorial e Inteligencia ROI
@@ -940,7 +940,7 @@ export default function DiagnosticPage() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    className="p-8 md:p-12 glass-card-premium rounded-[2.5rem] border-glow bg-slate-950/40 space-y-8 relative overflow-hidden"
+                    className="p-6 md:p-8 glass-card-premium rounded-2xl border-glow bg-slate-950/40 space-y-6 relative overflow-hidden"
                   >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -1054,7 +1054,7 @@ export default function DiagnosticPage() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
-                    className="p-8 md:p-12 glass-card-premium rounded-[2.5rem] border-glow bg-[#02040b] min-h-[420px] flex flex-col justify-between"
+                    className="p-6 md:p-8 glass-card-premium rounded-2xl border-glow bg-[#02040b] min-h-[350px] flex flex-col justify-between"
                   >
                     <div className="space-y-4 border-b border-slate-900 pb-6 flex items-center justify-between">
                       <div className="space-y-1">

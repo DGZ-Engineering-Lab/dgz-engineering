@@ -68,10 +68,10 @@ export default function BlogPage() {
 
 
   return (
-    <div className="flex flex-col w-full bg-[#fafafa] text-[#1a1a1a] min-h-screen pt-32">
+    <div className="flex flex-col w-full bg-[#fafafa] text-[#1a1a1a] min-h-screen pt-24 md:pt-28">
       
       {/* Editorial Header */}
-      <section className="px-6 pb-20 border-b border-slate-200">
+      <section className="px-6 pb-10 border-b border-slate-200">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div className="space-y-6 max-w-3xl">
@@ -79,7 +79,7 @@ export default function BlogPage() {
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
                 <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Insights & Engineering</span>
               </div>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] text-[#1a1a1a]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.02] text-[#1a1a1a]">
                 DevGiz <br /> <span className="text-slate-400 italic font-light">Journal</span>
               </h1>
             </div>
@@ -119,7 +119,7 @@ export default function BlogPage() {
           
           {/* Featured Entry */}
           {featuredPost && (
-            <Link href={`/blog/${featuredPost.id}`} className="group block mb-32">
+            <Link href={`/blog/${featuredPost.id}`} className="group block mb-12">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div className="lg:col-span-8 relative aspect-[16/9] overflow-hidden bg-slate-100 rounded-sm">
                   <Image 
@@ -189,9 +189,9 @@ export default function BlogPage() {
       </section>
 
       {/* Institutional Newsletter - Elegant Footer */}
-      <section className="bg-[#1a1a1a] text-white py-32 px-6">
+      <section className="bg-[#1a1a1a] text-white py-14 md:py-16 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-12">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-none">
             Reciba nuestras <br /> <span className="text-slate-500 font-light italic">perspectivas.</span>
           </h2>
           <p className="text-slate-400 font-light text-lg">

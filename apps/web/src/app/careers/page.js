@@ -151,17 +151,17 @@ export default function CareersPage() {
   };
 
   return (
-    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32 overflow-x-hidden">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-24 md:pt-28 pb-16 overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="max-w-7xl mx-auto px-6 mb-32">
+      <section className="max-w-7xl mx-auto px-6 mb-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-8 space-y-8">
             <div className="flex items-center gap-3">
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Talent Acquisition // Join the Elite</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Ingeniería de <br /> <span className="text-slate-400 italic font-light">Misión Crítica</span>
             </h1>
           </div>
@@ -174,8 +174,8 @@ export default function CareersPage() {
       </section>
 
       {/* Core Values Section */}
-      <section className="max-w-7xl mx-auto px-6 mb-40">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-y border-slate-100 py-20">
+      <section className="max-w-7xl mx-auto px-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-y border-slate-100 py-10">
           <div className="space-y-6">
             <div className="w-10 h-10 bg-slate-100 flex items-center justify-center rounded-sm"><Code className="w-5 h-5" /></div>
             <h3 className="text-xl font-black tracking-tight">Stack Moderno</h3>
@@ -225,7 +225,7 @@ export default function CareersPage() {
             return (
               <div 
                 key={job.id} 
-                className={`group p-8 lg:p-12 bg-white border border-slate-100 hover:border-slate-300 transition-all duration-500 rounded-2xl relative overflow-hidden ${
+                className={`group p-6 lg:p-8 bg-white border border-slate-100 hover:border-slate-300 transition-all duration-500 rounded-2xl relative overflow-hidden ${
                   isExpanded ? 'shadow-2xl border-slate-350 bg-slate-50/50' : 'hover:shadow-lg'
                 }`}
               >
@@ -421,12 +421,12 @@ export default function CareersPage() {
       </section>
 
       {/* Manifest Banner */}
-      <section className="max-w-7xl mx-auto px-6 mt-40">
-        <div className="bg-[#1a1a1a] text-white p-12 lg:p-24 rounded-3xl text-center space-y-10 relative overflow-hidden shadow-2xl">
+      <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-20">
+        <div className="bg-[#1a1a1a] text-white p-6 lg:p-12 rounded-2xl text-center space-y-6 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 p-12 opacity-5 pointer-events-none">
              <Logo className="w-64 h-64" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight relative z-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-tight relative z-10">
             No buscamos empleados. <br /> <span className="text-slate-500 font-light italic">Buscamos Arquitectos del Territorio.</span>
           </h2>
           <p className="max-w-2xl mx-auto text-slate-400 text-lg font-light leading-relaxed relative z-10">

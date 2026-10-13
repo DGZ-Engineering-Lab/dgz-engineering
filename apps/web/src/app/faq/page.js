@@ -82,11 +82,11 @@ export default function FAQPage() {
   const totalQuestions = FAQS.reduce((acc, cat) => acc + cat.questions.length, 0);
 
   return (
-    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-24 md:pt-28 pb-16">
       
       <div className="max-w-7xl mx-auto px-6" ref={headerRef}>
         <motion.div 
-          className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 mb-32"
+          className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-10"
           initial="hidden"
           animate={headerInView ? "visible" : "hidden"}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
@@ -99,7 +99,7 @@ export default function FAQPage() {
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Expert Support // Knowledge Center</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Consultoría de <br /> <span className="text-slate-400 italic font-light">Conocimiento</span>
             </h1>
           </motion.div>
@@ -117,7 +117,7 @@ export default function FAQPage() {
           </motion.div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-3">
             <div className="sticky top-32 space-y-4">
@@ -182,7 +182,7 @@ export default function FAQPage() {
 
           {/* Main Content */}
           <div className="lg:col-span-9">
-            <div className="bg-white border border-slate-100 p-8 lg:p-16 shadow-sm min-h-[600px] rounded-xl">
+            <div className="bg-white border border-slate-100 p-6 lg:p-10 shadow-sm min-h-[400px] rounded-xl">
               <div className="mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-100 pb-8 gap-6">
                 <h2 className="text-3xl font-black tracking-tight">{activeCategory}</h2>
                 <div className="relative">

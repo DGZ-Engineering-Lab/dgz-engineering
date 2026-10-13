@@ -385,7 +385,7 @@ export default function ProfessionalProfile() {
   });
 
   return (
-    <section id="portfolio-dossier" className="relative w-full py-24 z-20 bg-[#060911] text-slate-100 overflow-hidden border-t border-slate-800/80">
+    <section id="portfolio-dossier" className="relative w-full py-14 md:py-16 z-20 bg-[#060911] text-slate-100 overflow-hidden border-t border-slate-800/80">
       
       {/* Background Industrial Accents */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px]"></div>
@@ -397,7 +397,7 @@ export default function ProfessionalProfile() {
         {/* ==================================================================== */}
         {/* EXECUTIVE HEADER: IDENTIDAD INSTITUCIONAL IMPONENTE */}
         {/* ==================================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8 pb-8 border-b border-slate-800/80">
           
           <div className="lg:col-span-8 space-y-6">
             <div className="flex flex-wrap items-center gap-3">
@@ -414,7 +414,7 @@ export default function ProfessionalProfile() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-none">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-none">
                 Albert Daniel <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
                   Gaviria Zapata

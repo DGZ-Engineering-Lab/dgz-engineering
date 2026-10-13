@@ -67,10 +67,10 @@ export default function ServicesPage() {
   }, [allServices, selectedCapa, searchQuery]);
 
   return (
-    <div className="flex flex-col w-full bg-[#fcfcfc] text-[#1a1a1a] min-h-screen pt-32">
+    <div className="flex flex-col w-full bg-[#fcfcfc] text-[#1a1a1a] min-h-screen pt-24 md:pt-28">
       
       {/* Header Editorial */}
-      <section className="px-6 pb-16 border-b border-slate-200 overflow-hidden" ref={headerRef}>
+      <section className="px-6 pb-10 border-b border-slate-200 overflow-hidden" ref={headerRef}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
             <motion.div 
@@ -85,7 +85,7 @@ export default function ServicesPage() {
                   Catálogo de Ingeniería Espacial // 10 Soluciones Especializadas
                 </span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.95] text-[#1a1a1a]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 Servicios & <br />
                 <span className="text-slate-400 italic font-light">Capacidades Técnicas</span>
               </h1>
@@ -272,7 +272,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Interactive Bottom Banner */}
-      <section className="py-24 bg-[#111827] text-white border-t border-slate-900">
+      <section className="py-14 md:py-18 bg-[#111827] text-white border-t border-slate-900">
         <div className="max-w-5xl mx-auto px-6 text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full font-mono text-[9px] text-cyan-400 uppercase tracking-widest">
             <Sparkles className="w-3 h-3 text-cyan-400" />

@@ -1,7 +1,7 @@
 # Graph Report - DevGiz  (2026-10-12)
 
 ## Corpus Check
-- 369 files · ~878,799 words
+- 369 files · ~878,879 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 27 file(s) not represented in the graph (top: (none) 8, .css 7, .ico 3)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bd01d3e0`
+- Built from commit: `39311649`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -1143,7 +1143,7 @@ Nodes (3): Deploy on Vercel, Getting Started, Learn More
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `next` connect `next` to `internalError`, `react`, `projects/[id]/page.js`, `app/page.js`, `web/package.json`, `contact/route.js`, `framer-motion`, `app/layout.js`, `lucide-react`, `[slug]/opengraph-image.js`, `messages/route.js`, `upload/route.js`, `ServicesSection.jsx`, `GlobalPartners.jsx`, `InteractiveCarousel.jsx`, `faq/page.js`, `apple-icon.js`, `cron/route.js`, `about/page.js`?**
-  _High betweenness centrality (0.075) - this node is a cross-community bridge._
+  _High betweenness centrality (0.074) - this node is a cross-community bridge._
 - **What connects `react-dom`, `@tailwindcss/postcss`, `@vitest/coverage-v8` to the rest of the system?**
   _7 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `performance.md` be split into smaller, more focused modules?**

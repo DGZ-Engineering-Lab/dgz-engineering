@@ -17,7 +17,7 @@ export default function Home() {
     <div className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
       
       {/* Hero Section - Elite Digital Sovereignty */}
-      <section className="relative pt-52 pb-36 px-6 overflow-hidden">
+      <section className="relative pt-28 md:pt-32 pb-16 md:pb-20 px-6 overflow-hidden">
         {/* Luces decorativas superiores */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/5 to-transparent opacity-30 rounded-full blur-[120px] pointer-events-none z-0"></div>
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/5 to-transparent opacity-20 rounded-full blur-[100px] pointer-events-none z-0"></div>
@@ -33,10 +33,10 @@ export default function Home() {
                 </span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl lg:text-[88px] font-black tracking-tighter leading-[0.95] text-slate-950">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-slate-950">
                 Albert Daniel <br /> 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Gaviria Zapata</span> <br />
-                <span className="text-2xl md:text-4xl lg:text-5xl font-mono font-bold tracking-tight text-slate-800">DevGiz Engineering.</span>
+                <span className="text-xl md:text-2xl lg:text-3xl font-mono font-bold tracking-tight text-slate-800">DevGiz Engineering.</span>
               </h1>
 
               <div className="max-w-2xl">
@@ -752,7 +752,7 @@ export default function Home() {
       <ProfessionalProfile />
 
       {/* Ecosistema Tecnológico de Elite */}
-      <section className="py-28 border-t border-slate-100 bg-transparent relative overflow-hidden">
+      <section className="py-14 md:py-16 border-t border-slate-100 bg-transparent relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
         
         <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
@@ -777,13 +777,13 @@ export default function Home() {
       </section>
 
       {/* Strategic Vision - 3 Pillars (Glassmorphic Cards) */}
-      <section className="py-36 px-6 relative section-deferred bg-transparent">
+      <section className="py-14 md:py-16 px-6 relative section-deferred bg-transparent">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Seguridad Legal */}
             <div 
-              className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
+              className="glass-card-premium p-6 sm:p-8 rounded-2xl border-glow space-y-4 glow-cyan-hover scroll-reveal"
             >
               <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -829,7 +829,7 @@ export default function Home() {
       <ServicesSection />
 
       {/* Territorial Control - Interactive Section */}
-      <section className="py-24 relative overflow-hidden section-deferred bg-transparent">
+      <section className="py-14 md:py-16 relative overflow-hidden section-deferred bg-transparent">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
@@ -840,7 +840,7 @@ export default function Home() {
                 <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping"></span>
                 Live Intelligence Stream
               </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight text-slate-950">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-tight text-slate-950">
                 Control Total del <br /> 
                 <span className="text-slate-400 font-light italic">Activo Espacial.</span>
               </h2>
@@ -889,9 +889,9 @@ export default function Home() {
       </section>
 
       {/* Featured Insights - Link to Journal */}
-      <section className="py-32 px-6 relative section-deferred">
+      <section className="py-14 md:py-16 px-6 relative section-deferred">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
             <div className="space-y-4">
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Engineering Journal</div>
               <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950">

@@ -963,7 +963,7 @@ export default function ServicePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/5 to-transparent opacity-10 rounded-full blur-[130px]"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-32 pb-24 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 pt-24 md:pt-28 pb-14 relative z-10">
         
         {/* Botón Volver & Breadcrumbs */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-16 border-b border-slate-200/60 pb-6">
@@ -985,7 +985,7 @@ export default function ServicePage() {
         </div>
 
         {/* HERO SECTION DE PRODUCTO */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-10">
           
           <div className="lg:col-span-8 space-y-8">
             {/* Capa Estratégica Badge */}
@@ -1006,7 +1006,7 @@ export default function ServicePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className={`text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.05] ${theme.glowingText}`}
+              className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter leading-[1.05] ${theme.glowingText}`}
             >
               {service.title}
             </motion.h1>
@@ -1065,7 +1065,7 @@ export default function ServicePage() {
         {/* GRAND INTERACTIVE SPATIAL SANDBOX SIMULATOR SECTION */}
         {/* ---------------------------------------------------- */}
         {service.simulation && (
-          <section className="mb-24 relative">
+          <section className="mb-12 relative">
             <div className="text-left mb-8">
               <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-[0.3em] font-black block mb-3">Spatial Sandbox // Demostración Técnica</span>
               <h2 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
@@ -1244,7 +1244,7 @@ export default function ServicePage() {
         {/* ENGINEERED SOFTWARE STACK CAROUSEL SECTION */}
         {/* ---------------------------------------------------- */}
         {service.software && (
-          <section className="mb-24 relative overflow-hidden">
+          <section className="mb-12 relative overflow-hidden">
             <div className="text-left mb-8">
               <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-[0.3em] font-black block mb-3">Software Stack // Tecnologías Utilizadas</span>
               <h2 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
@@ -1286,7 +1286,7 @@ export default function ServicePage() {
         )}
 
         {/* TAB INTERACTIVA: VALOR ESTRATÉGICO VS ESPECIFICACIONES DE INGENIERÍA */}
-        <div className="mb-24">
+        <div className="mb-12">
           
           {/* Cabezote de Control de Pestañas */}
           <div role="tablist" aria-label="Planos de servicio: comercial y técnico" className="flex border-b border-slate-200 mb-12 relative z-10">
@@ -1509,7 +1509,7 @@ export default function ServicePage() {
         </div>
 
         {/* MARKETPLACE & INTEGRATION TIERS */}
-        <div className="mb-28">
+        <div className="mb-12">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-[0.3em] font-black block mb-4">Marketplace // Integration Plans</span>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Modelos de Despliegue e Integración</h2>

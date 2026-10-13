@@ -32,6 +32,16 @@
   --color-accent-500: #e07a1f;
 }
 
+html {
+  font-size: 14.5px;
+}
+
+@media (min-width: 1536px) {
+  html {
+    font-size: 15.5px;
+  }
+}
+
 * {
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;

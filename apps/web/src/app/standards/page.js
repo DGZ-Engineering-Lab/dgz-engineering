@@ -84,17 +84,17 @@ export default function StandardsPage() {
   const activeStd = STANDARDS.find(s => s.id === selectedStandardId) || STANDARDS[0];
 
   return (
-    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-24 md:pt-28 pb-16">
       
       {/* Header Section */}
-      <section className="max-w-7xl mx-auto px-6 mb-32">
+      <section className="max-w-7xl mx-auto px-6 mb-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-8 space-y-8">
             <div className="flex items-center gap-3">
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
               <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Technical Governance // Standard Hub</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Protocolos de <br /> <span className="text-slate-400 italic font-light">Gobernanza Digital</span>
             </h1>
           </div>
@@ -120,7 +120,7 @@ export default function StandardsPage() {
                 aria-controls="standards-inspector-panel"
                 onClick={() => setSelectedStandardId(std.id)}
                 key={std.id} 
-                className={`group p-12 bg-white border transition-all relative overflow-hidden duration-300 rounded-xl text-left cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none ${
+                className={`group p-6 md:p-8 bg-white border transition-all relative overflow-hidden duration-300 rounded-xl text-left cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none ${
                   isSelected 
                     ? "border-cyan-500 shadow-xl ring-1 ring-cyan-500/20 translate-y-[-2px]" 
                     : "border-slate-100 hover:border-slate-300 hover:shadow-lg hover:-translate-y-1"
@@ -132,7 +132,7 @@ export default function StandardsPage() {
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
                   <std.icon className="w-40 h-40" />
                 </div>
-                <div className="space-y-8 relative z-10">
+                <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
                     <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">{std.tag}</div>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
@@ -170,7 +170,7 @@ export default function StandardsPage() {
           id="standards-inspector-panel"
           role="tabpanel"
           aria-labelledby={`std-tab-${activeStd.id}`}
-          className="mt-12 p-8 md:p-12 bg-white border border-slate-200 rounded-2xl shadow-lg space-y-8"
+          className="mt-8 p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-lg space-y-6"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
@@ -218,7 +218,7 @@ export default function StandardsPage() {
       {/* Interactive Diagram Section - Simulated Visual */}
       <section className="max-w-7xl mx-auto px-6 mt-32" ref={diagramRef}>
         <motion.div 
-          className="bg-[#1a1a1a] text-white p-12 lg:p-20 rounded-2xl relative overflow-hidden group"
+          className="bg-[#1a1a1a] text-white p-6 lg:p-10 rounded-2xl relative overflow-hidden group"
           initial={{ opacity: 0, y: 30 }}
           animate={diagramInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
@@ -233,7 +233,7 @@ export default function StandardsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
             <div className="space-y-8">
               <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.5em]">Interactive Engine // Visual Standard</div>
-              <h3 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-tight">
                 El Modelo <span className="text-slate-500 font-light italic">Universal de Tierras</span>
               </h3>
               <p className="text-slate-400 text-lg font-light leading-relaxed">
