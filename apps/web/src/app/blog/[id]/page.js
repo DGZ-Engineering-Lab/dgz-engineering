@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import Logo from "../../../components/Logo";
 
@@ -229,8 +230,7 @@ const CybersecurityLab = () => {
             {isRunning && <div className="text-cyan-400 animate-pulse">█</div>}
           </div>
         </div>
-        <button 
-          onClick={runAudit}
+        <button type="button" onClick={runAudit}
           disabled={isRunning}
           className={`w-full py-4 text-[10px] font-bold uppercase tracking-[0.2em] transition-all rounded-xl flex items-center justify-center gap-3 cursor-pointer ${
             isRunning 
@@ -508,8 +508,7 @@ const InteroperabilityLab = () => {
       </div>
 
       <div className="px-8 pb-8 bg-[#fafafa] flex items-center justify-between gap-4">
-        <button
-          onClick={handleNextStep}
+        <button type="button" onClick={handleNextStep}
           disabled={isProcessing}
           className={`flex-1 py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-lg flex items-center justify-center gap-2 ${
             isProcessing
@@ -529,8 +528,7 @@ const InteroperabilityLab = () => {
           )}
         </button>
         
-        <button
-          onClick={() => { runStep(0); setTimeout(() => runStep(1), 3000); setTimeout(() => runStep(2), 6000); }}
+        <button type="button" onClick={() => { runStep(0); setTimeout(() => runStep(1), 3000); setTimeout(() => runStep(2), 6000); }}
           disabled={isProcessing}
           className={`px-6 py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] border rounded-lg transition-all duration-300 ${
             isProcessing
@@ -749,8 +747,7 @@ const GeoAILab = () => {
         </div>
 
         {/* Action */}
-        <button
-          onClick={runDetection}
+        <button type="button" onClick={runDetection}
           disabled={status === "RUNNING"}
           className={`w-full py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer ${
             status === "RUNNING" ? "bg-orange-500/10 border border-orange-500/30 text-orange-400 cursor-wait animate-pulse"
@@ -930,7 +927,7 @@ const LidarLab = () => {
             </div>
 
             <div className="px-8 pb-8">
-              <button onClick={runAnalysis} className="w-full py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-slate-800 transition-all hover:shadow-lg cursor-pointer flex items-center justify-center gap-2">
+              <button type="button" onClick={runAnalysis} className="w-full py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-slate-800 transition-all hover:shadow-lg cursor-pointer flex items-center justify-center gap-2">
                 ▶ Ejecutar Diagnóstico Territorial de {MUNICIPIO.nombre}
               </button>
             </div>
@@ -1069,7 +1066,7 @@ const LidarLab = () => {
                 </div>
               </div>
 
-              <button onClick={() => { setPhase(0); setLogs([]); setSelectedBarrio(null); }} className="w-full py-3 bg-white border border-slate-200 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 rounded-xl hover:bg-slate-50 hover:border-slate-400 transition-all cursor-pointer">
+              <button type="button" onClick={() => { setPhase(0); setLogs([]); setSelectedBarrio(null); }} className="w-full py-3 bg-white border border-slate-200 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 rounded-xl hover:bg-slate-50 hover:border-slate-400 transition-all cursor-pointer">
                 ↻ Reiniciar Diagnóstico
               </button>
             </div>
@@ -1238,8 +1235,8 @@ export default function BlogPostPage() {
               </p>
             </div>
 
-            <div className="aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-sm">
-              <img src={post.image} alt={post.title} className="w-full h-full object-cover grayscale-[0.2]" />
+            <div className="relative aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-sm">
+              <Image src={post.image} alt={post.title} fill priority sizes="(max-width: 1024px) 100vw, 800px" className="object-cover grayscale-[0.2]" />
             </div>
 
             {/* Immersion Lab - This makes it unique */}

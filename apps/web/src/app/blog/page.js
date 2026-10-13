@@ -1,6 +1,8 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const CATEGORIES = [
   "Todos", "Ciberseguridad", "Interoperabilidad", "Casos de Éxito", "Ingeniería", "Gobernanza"
@@ -54,8 +56,16 @@ const BLOG_POSTS = [
 ];
 
 export default function BlogPage() {
-  const featuredPost = BLOG_POSTS.find(post => post.featured);
-  const recentPosts = BLOG_POSTS.filter(post => !post.featured);
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const filteredPosts = selectedCategory === "Todos"
+    ? BLOG_POSTS
+    : BLOG_POSTS.filter(post => post.category === selectedCategory);
+  const featuredPost = filteredPosts.find(post => post.featured) || filteredPosts[0];
+  const recentPosts = filteredPosts.filter(post => post.id !== featuredPost?.id);
+
 
   return (
     <div className="flex flex-col w-full bg-[#fafafa] text-[#1a1a1a] min-h-screen pt-32">
@@ -84,17 +94,19 @@ export default function BlogPage() {
       <section className="sticky top-20 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex overflow-x-auto gap-8 no-scrollbar scroll-smooth">
-            {CATEGORIES.map((cat, idx) => (
+            {CATEGORIES.map((cat) => (
               <button 
                 key={cat}
                 type="button"
-                aria-pressed={idx === 0}
-                className={`whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative py-2 ${
-                  idx === 0 ? 'text-[#1a1a1a]' : 'text-slate-400 hover:text-[#1a1a1a]'
+                role="tab"
+                aria-selected={selectedCategory === cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative py-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded ${
+                  selectedCategory === cat ? 'text-[#1a1a1a]' : 'text-slate-400 hover:text-[#1a1a1a]'
                 }`}
               >
                 {cat}
-                {idx === 0 && <motion.div layoutId="activeCat" className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1a1a1a]" />}
+                {selectedCategory === cat && <motion.div layoutId="activeCat" className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1a1a1a]" />}
               </button>
             ))}
           </div>
@@ -110,11 +122,13 @@ export default function BlogPage() {
             <Link href={`/blog/${featuredPost.id}`} className="group block mb-32">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div className="lg:col-span-8 relative aspect-[16/9] overflow-hidden bg-slate-100 rounded-sm">
-                  <img 
+                  <Image 
                     src={featuredPost.image} 
-                    alt=""
-                    fetchPriority="high"
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
+                    alt={featuredPost.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
                 </div>
@@ -144,12 +158,12 @@ export default function BlogPage() {
             {recentPosts.map((post) => (
               <Link key={post.id} href={`/blog/${post.id}`} className="group flex flex-col space-y-8">
                 <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 rounded-sm">
-                  <img 
+                  <Image 
                     src={post.image} 
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-[1.05]"
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-[1.05]"
                   />
                 </div>
                 <div className="space-y-4">
@@ -183,18 +197,25 @@ export default function BlogPage() {
           <p className="text-slate-400 font-light text-lg">
             Análisis trimestrales exclusivos para líderes gubernamentales y técnicos.
           </p>
-          <div className="flex flex-col sm:flex-row gap-0 border-b border-slate-700 pb-2">
-            <input 
-              type="email" 
-              aria-label="Correo institucional para el boletín"
-              autoComplete="email"
-              placeholder="Correo institucional"
-              className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-700"
-            />
-            <button className="px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all">
-              Suscribirse
-            </button>
-          </div>
+          {subscribed ? (
+            <div className="py-4 text-emerald-400 font-mono text-sm">✓ Suscripción Confirmada — Bienvenido a DevGiz Journal</div>
+          ) : (
+            <form onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }} className="flex flex-col sm:flex-row gap-0 border-b border-slate-700 pb-2">
+              <input 
+                type="email" 
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-label="Correo institucional para el boletín"
+                autoComplete="email"
+                placeholder="Correo institucional"
+                className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-700 focus-visible:ring-1 focus-visible:ring-cyan-400 rounded"
+              />
+              <button type="submit" className="px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
+                Suscribirse
+              </button>
+            </form>
+          )}
           <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">
             Privacidad garantizada // Repositorio DevGiz
           </p>

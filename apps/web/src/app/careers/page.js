@@ -85,6 +85,7 @@ const POSITIONS = [
 
 export default function CareersPage() {
   const [expandedJob, setExpandedJob] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState("ALL");
   
   // Application Form State
   const [formData, setFormData] = useState({
@@ -96,6 +97,11 @@ export default function CareersPage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState([]);
+
+  const teams = ["ALL", ...Array.from(new Set(POSITIONS.map(p => p.team)))];
+  const filteredPositions = selectedTeam === "ALL" 
+    ? POSITIONS 
+    : POSITIONS.filter(p => p.team === selectedTeam);
 
   const toggleExpand = (jobId) => {
     if (expandedJob === jobId) {
@@ -190,16 +196,31 @@ export default function CareersPage() {
 
       {/* Open Positions Grid */}
       <section className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-end mb-16">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div className="space-y-2">
             <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Active Search</div>
             <h2 className="text-4xl font-black tracking-tighter">Posiciones <span className="text-slate-400 italic font-light">Abiertas</span></h2>
           </div>
-          <div className="text-xs font-bold text-[#1a1a1a] uppercase tracking-widest">{POSITIONS.length} Oportunidades</div>
+          <div className="flex flex-wrap items-center gap-2">
+            {teams.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setSelectedTeam(t)}
+                className={`px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none ${
+                  selectedTeam === t
+                    ? "bg-[#1a1a1a] text-white font-bold shadow-sm"
+                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                }`}
+              >
+                {t === "ALL" ? `Todas (${POSITIONS.length})` : t}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="space-y-6">
-          {POSITIONS.map((job) => {
+          {filteredPositions.map((job) => {
             const isExpanded = expandedJob === job.id;
             return (
               <div 
@@ -224,7 +245,7 @@ export default function CareersPage() {
                     onClick={() => toggleExpand(job.id)}
                     aria-expanded={isExpanded}
                     aria-controls={`job-details-${job.id}`}
-                    className="w-full lg:w-auto px-10 py-5 bg-[#1a1a1a] hover:bg-slate-800 text-white text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-4 rounded-xl cursor-pointer"
+                    className="w-full lg:w-auto px-10 py-5 bg-[#1a1a1a] hover:bg-slate-800 text-white text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-4 rounded-xl cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
                   >
                      {isExpanded ? 'Cerrar Detalles' : 'Ver Detalles'} 
                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -300,7 +321,7 @@ export default function CareersPage() {
                                        value={formData.name}
                                        onChange={handleInputChange}
                                        placeholder="Juan Pérez" 
-                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors" 
+                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900" 
                                      />
                                   </div>
                                   <div className="space-y-1.5">
@@ -312,7 +333,7 @@ export default function CareersPage() {
                                        value={formData.email}
                                        onChange={handleInputChange}
                                        placeholder="juan.perez@devgiz.com" 
-                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors" 
+                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900" 
                                      />
                                   </div>
                                   <div className="space-y-1.5">
@@ -323,7 +344,7 @@ export default function CareersPage() {
                                        value={formData.portfolio}
                                        onChange={handleInputChange}
                                        placeholder="https://github.com/juanperez" 
-                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors" 
+                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900" 
                                      />
                                   </div>
                                   <div className="space-y-1.5">
@@ -334,7 +355,7 @@ export default function CareersPage() {
                                        onChange={handleInputChange}
                                        rows="3"
                                        placeholder="Describa brevemente su trayectoria geoespacial o de software..." 
-                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors resize-none" 
+                                       className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 resize-none" 
                                      />
                                   </div>
 
@@ -353,7 +374,7 @@ export default function CareersPage() {
                                   <button
                                     type="submit"
                                     disabled={formLoading}
-                                    className="w-full bg-[#1a1a1a] hover:bg-slate-800 text-white text-[9px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                                    className="w-full bg-[#1a1a1a] hover:bg-slate-800 text-white text-[9px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                                   >
                                      <Send className="w-3 h-3" /> Registrar Postulación
                                   </button>
@@ -380,7 +401,7 @@ export default function CareersPage() {
                                   <button
                                     type="button"
                                     onClick={resetForm}
-                                    className="text-[9px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer"
+                                    className="text-[9px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none p-1 rounded"
                                   >
                                      Postular a otro nodo
                                   </button>

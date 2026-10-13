@@ -1,10 +1,18 @@
 "use client";
-import { useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import SovereignMapWrapper from "../../components/SovereignMapWrapper";
 import Image from "next/image";
+
+const CATEGORIES = [
+  "TODOS",
+  "Infraestructura Territorial",
+  "Software de Ingeniería",
+  "Infraestructura de Datos",
+  "Inteligencia Artificial"
+];
 
 const PROJECTS = [
   {
@@ -46,16 +54,22 @@ const PROJECTS = [
 ];
 
 export default function ProjectsPage() {
+  const [activeCategory, setActiveCategory] = useState("TODOS");
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true });
   const showcaseRef = useRef(null);
   const showcaseInView = useInView(showcaseRef, { once: true, margin: "-80px" });
 
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === "TODOS") return PROJECTS;
+    return PROJECTS.filter(p => p.category === activeCategory);
+  }, [activeCategory]);
+
   return (
     <div className="flex flex-col w-full bg-[#fcfcfc] text-[#1a1a1a] min-h-screen pt-32">
       
       {/* Header Editorial */}
-      <section className="px-6 pb-24 border-b border-slate-200 overflow-hidden" ref={headerRef}>
+      <section className="px-6 pb-16 border-b border-slate-200 overflow-hidden" ref={headerRef}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
             <motion.div 
@@ -83,21 +97,63 @@ export default function ProjectsPage() {
               </p>
             </motion.div>
           </div>
+
+          {/* Interactive Category Filter Pills */}
+          <div className="mt-12 pt-8 border-t border-slate-200/60">
+            <div 
+              role="tablist" 
+              aria-label="Filtro de categorías de proyectos"
+              className="flex flex-wrap items-center gap-2"
+            >
+              {CATEGORIES.map((cat) => {
+                const isSelected = activeCategory === cat;
+                const count = cat === "TODOS" ? PROJECTS.length : PROJECTS.filter(p => p.category === cat).length;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    role="tab"
+                    id={`cat-tab-${cat}`}
+                    aria-selected={isSelected}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none flex items-center gap-2 ${
+                      isSelected 
+                        ? "bg-[#1a1a1a] text-white shadow-md"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-black"
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold tabular-nums ${
+                      isSelected ? "bg-white/20 text-white" : "bg-white text-slate-500"
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* Projects Showcase - Masterpieces */}
       <section className="bg-white" ref={showcaseRef}>
         <div className="max-w-7xl mx-auto">
-          {PROJECTS.map((project, idx) => (
+          {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 40 }}
               animate={showcaseInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: idx * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-            <Link href={`/projects/${project.id}`} prefetch={false} className="group block border-b border-slate-100 last:border-0 overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+            <Link 
+              href={`/projects/${project.id}`} 
+              prefetch={false} 
+              aria-label={`Ver caso de estudio técnico: ${project.title}`}
+              className="group block border-b border-slate-100 last:border-0 overflow-hidden focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch min-h-[420px]">
                 {/* Text Info */}
                 <div className={`lg:col-span-6 p-12 lg:p-20 flex flex-col justify-center space-y-10 ${idx % 2 !== 0 ? 'lg:order-2 lg:border-l border-slate-100' : 'lg:border-r border-slate-100'}`}>
                   <div className="space-y-4">
@@ -136,17 +192,17 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Visual */}
-                <div className={`lg:col-span-6 relative overflow-hidden bg-slate-50 ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                  <img 
+                <div className={`lg:col-span-6 relative overflow-hidden bg-slate-100 min-h-[360px] lg:min-h-full ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                  <Image 
                     src={project.image} 
-                    alt=""
-                    fetchPriority={idx === 0 ? "high" : "low"}
-                    loading={idx === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 w-full h-full absolute inset-0"
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={idx === 0}
+                    className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-10 right-10 p-6 bg-white/90 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-10 right-10 p-6 bg-white/95 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 z-10 border border-slate-100">
                     <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">{project.stats.label}</div>
                     <div className="text-lg font-black text-[#1a1a1a] tracking-tight">{project.stats.value}</div>
                   </div>

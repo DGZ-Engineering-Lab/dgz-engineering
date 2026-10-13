@@ -4,8 +4,25 @@ import Logo from "../../components/Logo";
 
 export default function TermsPage() {
   return (
-    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-40 pb-32">
+    <div className="bg-[#fcfcfc] min-h-screen text-[#1a1a1a] selection:bg-slate-200 pt-36 pb-32">
       <div className="max-w-4xl mx-auto px-6">
+        
+        {/* Top Navigation */}
+        <div className="flex items-center justify-between mb-12 pb-6 border-b border-slate-100">
+          <Link 
+            href="/" 
+            className="text-[10px] font-mono uppercase tracking-[0.25em] text-slate-500 hover:text-[#1a1a1a] transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded p-1"
+          >
+            ← Volver al Inicio
+          </Link>
+          <Link 
+            href="/privacy" 
+            className="text-[10px] font-mono uppercase tracking-[0.25em] text-slate-400 hover:text-[#1a1a1a] transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded p-1"
+          >
+            Privacidad de Datos →
+          </Link>
+        </div>
+
         <div className="space-y-12 mb-20">
           <div className="flex items-center gap-3">
             <span className="w-12 h-px bg-[#1a1a1a]"></span>
@@ -48,7 +65,10 @@ export default function TermsPage() {
 
         <div className="mt-24 pt-12 border-t border-slate-100 flex justify-between items-center">
           <Logo className="w-12 h-12 opacity-20" />
-          <Link href="/" className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-1">
+          <Link 
+            href="/" 
+            className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-1 hover:text-slate-600 transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
+          >
             Volver al Inicio
           </Link>
         </div>

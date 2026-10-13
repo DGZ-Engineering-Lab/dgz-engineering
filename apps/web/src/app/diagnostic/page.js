@@ -333,12 +333,14 @@ export default function DiagnosticPage() {
         </p>
 
         {/* Dynamic Navigation Tabs */}
-        <div role="group" aria-label="Herramientas de diagnóstico" className="flex justify-center p-1 bg-slate-950/60 border border-slate-900 rounded-xl max-w-lg mx-auto backdrop-blur-md">
+        <div role="tablist" aria-label="Herramientas de diagnóstico territorial" className="flex justify-center p-1 bg-slate-950/60 border border-slate-900 rounded-xl max-w-lg mx-auto backdrop-blur-md">
           <button
             type="button"
-            aria-pressed={activeTab === "sandbox"}
+            role="tab"
+            id="diag-tab-sandbox"
+            aria-selected={activeTab === "sandbox"}
             onClick={() => setActiveTab("sandbox")}
-            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
+            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "sandbox"
                 ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
@@ -348,9 +350,11 @@ export default function DiagnosticPage() {
           </button>
           <button
             type="button"
-            aria-pressed={activeTab === "roi"}
+            role="tab"
+            id="diag-tab-roi"
+            aria-selected={activeTab === "roi"}
             onClick={() => setActiveTab("roi")}
-            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
+            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "roi"
                 ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
@@ -360,9 +364,11 @@ export default function DiagnosticPage() {
           </button>
           <button
             type="button"
-            aria-pressed={activeTab === "audit"}
+            role="tab"
+            id="diag-tab-audit"
+            aria-selected={activeTab === "audit"}
             onClick={() => setActiveTab("audit")}
-            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all ${
+            className={`flex-1 py-3 text-[10px] font-black uppercase tracking-[0.15em] rounded-lg transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
               activeTab === "audit"
                 ? "bg-slate-900 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)] border border-slate-800"
                 : "text-slate-500 hover:text-slate-300"
@@ -401,13 +407,14 @@ export default function DiagnosticPage() {
                   
                   <div className="flex items-center gap-3">
                     <button
+                      type="button"
                       onClick={() => {
                         setViewAdvancedDashboard(!viewAdvancedDashboard);
                         if (window.dgzSynth) {
                           try { window.dgzSynth.playClick(); } catch (e) {}
                         }
                       }}
-                      className="px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono text-[8px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                      className="px-3 py-1 border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:bg-cyan-500 hover:text-black font-mono text-[8px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.1)] active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
                     >
                       <Globe className="w-3 h-3 animate-pulse" />
                       {viewAdvancedDashboard ? "Consola Básica" : "Consola Avanzada 3D"}
@@ -605,7 +612,7 @@ export default function DiagnosticPage() {
                       type="button"
                       aria-pressed={selectedPathology === "TRASLAPES"}
                       onClick={() => selectPathology("TRASLAPES")}
-                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
+                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 cursor-pointer active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                         selectedPathology === "TRASLAPES"
                           ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
@@ -632,7 +639,7 @@ export default function DiagnosticPage() {
                       type="button"
                       aria-pressed={selectedPathology === "MEJORAS"}
                       onClick={() => selectPathology("MEJORAS")}
-                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
+                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 cursor-pointer active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                         selectedPathology === "MEJORAS"
                           ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
@@ -659,7 +666,7 @@ export default function DiagnosticPage() {
                       type="button"
                       aria-pressed={selectedPathology === "AMBIENTAL"}
                       onClick={() => selectPathology("AMBIENTAL")}
-                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
+                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 cursor-pointer active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                         selectedPathology === "AMBIENTAL"
                           ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
@@ -686,7 +693,7 @@ export default function DiagnosticPage() {
                       type="button"
                       aria-pressed={selectedPathology === "REGISTRO"}
                       onClick={() => selectPathology("REGISTRO")}
-                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 ${
+                      className={`w-full p-4 rounded-xl border transition-all text-left flex items-start gap-4 cursor-pointer active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                         selectedPathology === "REGISTRO"
                           ? "bg-slate-900/80 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.08)]"
                           : "bg-slate-950/30 border-slate-900 hover:border-slate-800 hover:bg-slate-900/20"
@@ -715,9 +722,10 @@ export default function DiagnosticPage() {
                   <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Acción Tecnológica</h4>
                   
                   <button
+                    type="button"
                     onClick={runDevGizEngine}
                     disabled={!selectedPathology || isScanning}
-                    className={`w-full py-5 rounded-xl text-[10px] font-black uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 ${
+                    className={`w-full py-5 rounded-xl text-[10px] font-black uppercase tracking-[0.25em] transition-all flex items-center justify-center gap-3 active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                       !selectedPathology 
                         ? "bg-slate-900/20 border border-slate-900 text-slate-600 cursor-not-allowed"
                         : isScanning 
@@ -893,13 +901,14 @@ export default function DiagnosticPage() {
                   <RtkSatelliteHud />
                   
                   <button
+                    type="button"
                     onClick={() => {
                       setActiveTab("audit");
                       if (window.dgzSynth) {
                         try { window.dgzSynth.playClick(); } catch (e) {}
                       }
                     }}
-                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer"
+                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
                   >
                     <span>Solicitar Auditoría de Municipio</span>
                     <ArrowRight className="w-4 h-4" />
@@ -1028,7 +1037,7 @@ export default function DiagnosticPage() {
 
                       <button
                         type="submit"
-                        className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all duration-300 text-[10px] font-black uppercase tracking-[0.25em] rounded-xl flex items-center justify-center gap-3 cursor-pointer shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
+                        className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all duration-300 text-[10px] font-black uppercase tracking-[0.25em] rounded-xl flex items-center justify-center gap-3 cursor-pointer shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
                       >
                         <span>Generar Pre-Auditoría Territorial en Vivo</span>
                         <Zap className="w-4 h-4" />
@@ -1181,8 +1190,9 @@ export default function DiagnosticPage() {
                         </Link>
                         
                         <button
+                          type="button"
                           onClick={() => setAuditStep(0)}
-                          className="w-full sm:w-auto px-6 py-5 border border-slate-800 text-slate-400 hover:text-white text-center text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all"
+                          className="w-full sm:w-auto px-6 py-5 border border-slate-800 text-slate-400 hover:text-white text-center text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
                         >
                           Reiniciar Simulador
                         </button>

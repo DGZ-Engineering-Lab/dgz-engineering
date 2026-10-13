@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import Logo from "../../../components/Logo";
 import { 
@@ -410,18 +411,20 @@ function CadastreViewer() {
             {/* Contextual actions depend on selected parcel status */}
             {(selectedParcel.id === "P-76001-C03" || selectedParcel.id === "P-76001-F06") && !selectedParcel.status.includes("CONFORME") ? (
               <button
+                type="button"
                 onClick={() => executeDevGizAction(selectedParcel.id, "repair")}
                 disabled={isProcessing}
-                className="flex-1 py-2.5 bg-white text-black hover:bg-cyan-500 hover:text-black font-black uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed"
+                className="flex-1 py-2.5 bg-white text-black hover:bg-cyan-500 hover:text-black font-black uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:bg-slate-900 disabled:text-slate-600 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Saneamiento Topológico</span>
               </button>
             ) : (
               <button
+                type="button"
                 onClick={() => executeDevGizAction(selectedParcel.id, "lidar")}
                 disabled={isProcessing}
-                className="flex-1 py-2.5 bg-cyan-950/20 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 font-bold uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-2.5 bg-cyan-950/20 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 font-bold uppercase text-[9px] tracking-wider rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95"
               >
                 <Cpu className="w-3.5 h-3.5" />
                 <span>Auditar Nube LiDAR</span>
@@ -591,17 +594,19 @@ function PluginSimulator() {
         <div className="pt-4 border-t border-slate-900 mt-4 flex gap-3">
           {!isRepaired && !isAnimating ? (
             <button
+              type="button"
               onClick={startRepair}
-              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
+              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
             >
               <Zap className="w-3 h-3 text-slate-950 fill-slate-950" />
               Reparar Topología
             </button>
           ) : (
             <button
+              type="button"
               onClick={resetSimulator}
               disabled={isAnimating}
-              className="flex-1 py-2 px-3 bg-slate-800 text-slate-200 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-slate-700 active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-2 px-3 bg-slate-800 text-slate-200 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-slate-700 active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
             >
               <RefreshCw className="w-3 h-3 text-slate-200" />
               Restablecer Simulación
@@ -767,16 +772,18 @@ function PipelineMonitor() {
         <div className="pt-6 border-t border-slate-900 mt-6 flex gap-2">
           {isRunning ? (
             <button
+              type="button"
               onClick={pausePipeline}
-              className="flex-1 py-2 px-3 bg-amber-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-2 px-3 bg-amber-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-400 focus:outline-none"
             >
               <Pause className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
               Pausar
             </button>
           ) : (
             <button
+              type="button"
               onClick={startPipeline}
-              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10"
+              className="flex-1 py-2 px-3 bg-cyan-500 text-slate-950 font-bold text-[9px] font-mono tracking-wider uppercase rounded hover:bg-cyan-400 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyan-500/10 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
             >
               <Play className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
               {progress > 0 ? "Reanudar Ingesta" : "Iniciar Orquestación"}
@@ -1016,9 +1023,10 @@ LIMIT 5;`,
               className="w-full bg-[#030712] border border-slate-800 rounded-lg p-3 pr-10 text-[10px] text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500/80 transition-all font-mono resize-none h-20 leading-relaxed"
             />
             <button
+              type="button"
               onClick={() => handleLiveQuery(customQuery)}
               disabled={isSearchingLive || isTyping || !customQuery.trim()}
-              className="absolute right-2.5 bottom-3.5 p-1.5 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-30 disabled:hover:bg-cyan-500 flex items-center justify-center cursor-pointer shadow-lg shadow-cyan-500/10"
+              className="absolute right-2.5 bottom-3.5 p-1.5 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all disabled:opacity-30 disabled:hover:bg-cyan-500 flex items-center justify-center cursor-pointer shadow-lg shadow-cyan-500/10 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95"
               title="Preguntar a Llama 3.3"
               aria-label="Preguntar a Llama 3.3"
             >
@@ -1060,8 +1068,9 @@ LIMIT 5;`,
                   {liveError}
                 </p>
                 <button
+                  type="button"
                   onClick={() => handleLiveQuery(customQuery || queries[activeQueryIndex]?.q)}
-                  className="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/25 rounded-md text-[9px] font-mono text-rose-400 cursor-pointer transition-all"
+                  className="px-4 py-1.5 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/25 rounded-md text-[9px] font-mono text-rose-400 cursor-pointer transition-all focus-visible:ring-2 focus-visible:ring-rose-400 focus:outline-none active:scale-95"
                 >
                   Reintentar Operación
                 </button>
@@ -1116,12 +1125,13 @@ LIMIT 5;`,
             ) : null}
 
             <button
+              type="button"
               onClick={() => {
                 setIsLiveMode(false);
                 setLiveResponse(null);
                 setLiveError(null);
               }}
-              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider"
+              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-850 hover:border-slate-800 rounded-lg py-2 text-[9px] font-mono text-slate-400 hover:text-slate-200 transition-all text-center cursor-pointer uppercase tracking-wider focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95"
             >
               ← Volver al Centro de Demostración
             </button>
@@ -1174,11 +1184,12 @@ LIMIT 5;`,
 
                 {/* Botón táctico para re-ejecutar en vivo contra Groq */}
                 <button
+                  type="button"
                   onClick={() => {
                     setCustomQuery(queries[activeQueryIndex].q);
                     handleLiveQuery(queries[activeQueryIndex].q);
                   }}
-                  className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded-lg py-2 text-[9px] font-mono text-cyan-400 hover:text-cyan-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded-lg py-2 text-[9px] font-mono text-cyan-400 hover:text-cyan-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95"
                 >
                   <Zap className="w-3.5 h-3.5 text-cyan-400" />
                   Ejecutar Análisis en Vivo con Groq Llama-3.3
@@ -1254,9 +1265,15 @@ export default function ProjectDetailPage() {
               </p>
             </div>
 
-            <div className="aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale-[0.2]" />
+            <div className="relative aspect-[21/9] overflow-hidden bg-slate-100 mb-20 rounded-xl shadow-md">
+              <Image 
+                src={project.image} 
+                alt={project.title} 
+                fill 
+                priority 
+                sizes="(max-width: 1200px) 100vw, 800px" 
+                className="object-cover grayscale-[0.2]" 
+              />
             </div>
 
             <div className="space-y-16">

@@ -290,16 +290,17 @@ export default function DocsPage() {
            <div className="lg:col-span-3 space-y-8 sticky top-32 h-fit">
               <div className="space-y-2">
                  <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Core Sections</div>
-                 <nav className="flex flex-col gap-1.5">
+                 <nav role="tablist" aria-label="Secciones de documentación" className="flex flex-col gap-1.5">
                     {Object.keys(ENDPOINTS).map((key) => {
                        const Icon = ENDPOINTS[key].icon;
                        return (
                           <button 
                             key={key} 
                             type="button"
-                            aria-current={activeTab === key ? "true" : undefined}
+                            role="tab"
+                            aria-selected={activeTab === key}
                             onClick={() => { setActiveTab(key); }}
-                            className={`text-left px-5 py-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-3.5 transition-all duration-300 border cursor-pointer ${
+                            className={`text-left px-5 py-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-3.5 transition-all duration-300 border cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
                               activeTab === key 
                                 ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)]' 
                                 : 'text-slate-400 border-transparent hover:text-white hover:bg-white/5'
@@ -362,14 +363,15 @@ export default function DocsPage() {
                     {ENDPOINTS[activeTab].codeSnippets && (
                        <div className="space-y-4">
                           <div className="flex justify-between items-center bg-slate-950 px-6 py-3 border border-slate-900 rounded-t-2xl">
-                             <div className="flex items-center gap-3">
+                             <div role="tablist" aria-label="Lenguajes de código" className="flex items-center gap-3">
                                 {["curl", "python", "js"].map((lang) => (
                                    <button
                                      key={lang}
                                      type="button"
-                                     aria-pressed={activeLang === lang}
+                                     role="tab"
+                                     aria-selected={activeLang === lang}
                                      onClick={() => setActiveLang(lang)}
-                                     className={`text-[9px] font-mono uppercase tracking-widest px-3 py-1.5 rounded transition-all cursor-pointer ${
+                                     className={`text-[9px] font-mono uppercase tracking-widest px-3 py-1.5 rounded transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
                                        activeLang === lang 
                                          ? 'bg-cyan-500/10 text-cyan-400 font-bold border border-cyan-500/20' 
                                          : 'text-slate-500 hover:text-slate-300'
@@ -383,7 +385,7 @@ export default function DocsPage() {
                                type="button"
                                aria-live="polite"
                                onClick={() => handleCopy(ENDPOINTS[activeTab].codeSnippets[activeLang])}
-                               className="text-slate-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest"
+                               className="text-slate-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none p-1 rounded"
                              >
                                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                                 {copied ? "Copiado!" : "Copiar"}
@@ -423,8 +425,8 @@ export default function DocsPage() {
                  {/* Console Actions Selector */}
                  <div className="flex flex-wrap gap-3">
                     <button 
-                      onClick={() => { setPlaygroundType("auth"); setConsoleLogs([]); setConsoleResult(null); }}
-                      className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all border cursor-pointer ${
+                      type="button" role="tab" aria-selected={playgroundType === "auth"} onClick={() => { setPlaygroundType("auth"); setConsoleLogs([]); setConsoleResult(null); }}
+                      className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all border cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
                         playgroundType === "auth" 
                           ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400' 
                           : 'border-slate-900 bg-slate-950 text-slate-400 hover:text-white'
@@ -433,7 +435,7 @@ export default function DocsPage() {
                        POST /auth/validate
                     </button>
                     <button 
-                      onClick={() => { setPlaygroundType("query"); setConsoleLogs([]); setConsoleResult(null); }}
+                      type="button" role="tab" aria-selected={playgroundType === "query"} onClick={() => { setPlaygroundType("query"); setConsoleLogs([]); setConsoleResult(null); }}
                       className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all border cursor-pointer ${
                         playgroundType === "query" 
                           ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400' 
@@ -443,7 +445,7 @@ export default function DocsPage() {
                        POST /spatial/query
                     </button>
                     <button 
-                      onClick={() => { setPlaygroundType("validate"); setConsoleLogs([]); setConsoleResult(null); }}
+                      type="button" role="tab" aria-selected={playgroundType === "validate"} onClick={() => { setPlaygroundType("validate"); setConsoleLogs([]); setConsoleResult(null); }}
                       className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all border cursor-pointer ${
                         playgroundType === "validate" 
                           ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400' 
@@ -489,7 +491,7 @@ export default function DocsPage() {
                           <button
                             onClick={runPlayground}
                             disabled={consoleLoading}
-                            className="px-6 py-2.5 bg-white hover:bg-cyan-500 text-black text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:hover:bg-white cursor-pointer"
+                            type="button" className="px-6 py-2.5 bg-white hover:bg-cyan-500 text-black text-[10px] font-black uppercase tracking-widest rounded-lg flex items-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:hover:bg-white cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
                           >
                              <Play className="w-3 h-3 fill-black" /> Procesar Solicitud
                           </button>

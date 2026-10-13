@@ -287,7 +287,7 @@ function AnimatedCounter({ value, suffix, duration = 2000 }) {
   const displayValue = Number.isInteger(value) ? Math.floor(count) : count.toFixed(1);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className="font-mono tabular-nums">
       {displayValue}{suffix}
     </span>
   );
@@ -563,14 +563,18 @@ export default function AboutPage() {
           </div>
 
           {/* Selector de Municipios */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div role="tablist" aria-label="Casos de estudio municipal" className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {SIMULATOR_SCENARIOS.map((scen, idx) => {
               const isSelected = selectedScenarioIndex === idx;
               return (
                 <button
+                  type="button"
+                  role="tab"
+                  id={`scenario-tab-${idx}`}
+                  aria-selected={isSelected}
                   key={scen.id}
                   onClick={() => handleScenarioChange(idx)}
-                  className={`p-5 border rounded-xl font-mono text-xs uppercase tracking-wider text-left transition-all duration-300 cursor-pointer ${
+                  className={`p-5 border rounded-xl font-mono text-xs uppercase tracking-wider text-left transition-all duration-300 cursor-pointer active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                     isSelected 
                       ? "bg-slate-900/80 border-cyan-500/40 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]"
                       : "bg-[#080d1a]/40 border-slate-900/60 text-slate-500 hover:border-slate-800 hover:text-slate-300 hover:bg-[#080d1a]/80"
@@ -734,6 +738,7 @@ export default function AboutPage() {
                       </p>
                       {!step1Snapped && (
                         <button
+                          type="button"
                           onClick={() => {
                             setStep1Snapped(true);
                             setSimConsoleLogs(prev => [
@@ -747,7 +752,7 @@ export default function AboutPage() {
                               try { window.dgzSynth.playSuccess(); } catch(e){}
                             }
                           }}
-                          className="px-6 py-2.5 bg-red-500 text-white font-mono text-[9px] font-black uppercase tracking-widest rounded border border-red-400 hover:bg-red-600 transition-all cursor-pointer"
+                          className="px-6 py-2.5 bg-red-500 text-white font-mono text-[9px] font-black uppercase tracking-widest rounded border border-red-400 hover:bg-red-600 transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-red-400 focus:outline-none"
                         >
                           Auto-Depurar Linderos
                         </button>
@@ -783,6 +788,7 @@ export default function AboutPage() {
                         Compile los datos topológicos limpios al formato de transferencia estandarizado LADM-COL (.XTF).
                       </p>
                       <button
+                        type="button"
                         disabled={step2Compiling || step2Compiled}
                         onClick={() => {
                           setStep2Compiling(true);
@@ -805,7 +811,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95 ${
                           step2Compiled
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                             : step2Compiling
@@ -867,6 +873,7 @@ export default function AboutPage() {
                         Ejecute el motor de reconciliación aplicando las tolerancias de la Resolución Conjunta IGAC-SNR.
                       </p>
                       <button
+                        type="button"
                         disabled={step3Conciliating || step3Conciliated}
                         onClick={() => {
                           setStep3Conciliating(true);
@@ -889,7 +896,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95 ${
                           step3Conciliated
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                             : step3Conciliating
@@ -946,6 +953,7 @@ export default function AboutPage() {
                         Genere la firma criptográfica de seguridad catastral para certificar la base de datos municipal.
                       </p>
                       <button
+                        type="button"
                         disabled={step4Stamping || step4Stamped}
                         onClick={() => {
                           setStep4Stamping(true);
@@ -968,7 +976,7 @@ export default function AboutPage() {
                             }
                           }, 1500);
                         }}
-                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 font-mono text-[9px] font-black uppercase tracking-widest rounded border transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none active:scale-95 ${
                           step4Stamped
                             ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,182,129,0.05)]"
                             : step4Stamping
@@ -1043,13 +1051,17 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left selector - vertical tab list */}
-            <div className="lg:col-span-4 space-y-4">
+            <div role="tablist" aria-label="Directores de ingeniería" aria-orientation="vertical" className="lg:col-span-4 space-y-4">
               {DIRECTORS.map((director, i) => {
                 const isSelected = selectedDirector === i;
                 const DirIcon = director.icon;
                 
                 return (
                   <button
+                    type="button"
+                    role="tab"
+                    id={`director-tab-${i}`}
+                    aria-selected={isSelected}
                     key={i}
                     onClick={() => {
                       setSelectedDirector(i);
@@ -1058,7 +1070,7 @@ export default function AboutPage() {
                         try { window.dgzSynth.playClick(); } catch (e){}
                       }
                     }}
-                    className={`w-full text-left p-6 border rounded-xl relative overflow-hidden transition-all duration-300 cursor-pointer flex items-center gap-5 ${
+                    className={`w-full text-left p-6 border rounded-xl relative overflow-hidden transition-all duration-300 cursor-pointer flex items-center gap-5 active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                       isSelected 
                         ? `bg-slate-900/80 border-slate-800 shadow-[0_4px_30px_rgba(0,0,0,0.4)] translate-x-2`
                         : "bg-[#070b15]/40 border-slate-900/60 hover:border-slate-800 hover:bg-[#0c1224]/60 text-slate-400"
@@ -1250,9 +1262,10 @@ export default function AboutPage() {
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => handleVerifySignature(activeDirector.name)}
                       disabled={verifiedSignatures[activeDirector.name] || verifyingDirector !== null}
-                      className={`px-6 py-3 rounded-lg font-mono text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 select-none shrink-0 border ${
+                      className={`px-6 py-3 rounded-lg font-mono text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 select-none shrink-0 border focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none ${
                         verifiedSignatures[activeDirector.name]
                           ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 cursor-default"
                           : verifyingDirector === activeDirector.name

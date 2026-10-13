@@ -34,6 +34,21 @@ const MAX_ATTEMPTS = 5;
 const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // Check session every 5 min
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000;    // Auto-logout after 30 min idle
 
+// ─── SECTOR BADGE (HOISTED FOR REACT 19 COMPILER) ───────────────────────────
+function SectorBadge({ sector }) {
+  const styles = {
+    GOV: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    CORP: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    PUBLIC: "bg-slate-800 text-slate-300 border-slate-700"
+  };
+  const labels = { GOV: "Government", CORP: "Corporate", PUBLIC: "Public" };
+  return (
+    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${styles[sector] || styles.PUBLIC}`}>
+      {labels[sector] || "Public"}
+    </span>
+  );
+}
+
 export default function AdminPage() {
   // Auth state
   const [passcode, setPasscode] = useState("");
@@ -63,7 +78,7 @@ export default function AdminPage() {
   const [selectedMsg, setSelectedMsg] = useState(null);
 
   // Inactivity tracking
-  const lastActivityRef = useRef(Date.now());
+  const lastActivityRef = useRef(0);
   const inactivityTimerRef = useRef(null);
 
   // Escape cierra el modal de IA o el panel de detalle móvil
@@ -108,26 +123,6 @@ export default function AdminPage() {
     }
   }, []);
 
-  // Inactivity auto-logout
-  useEffect(() => {
-    if (!isAuthorized) return;
-
-    const resetActivity = () => { lastActivityRef.current = Date.now(); };
-    const events = ["mousedown", "keydown", "touchstart", "scroll"];
-    events.forEach(e => window.addEventListener(e, resetActivity, { passive: true }));
-
-    inactivityTimerRef.current = setInterval(() => {
-      if (Date.now() - lastActivityRef.current > INACTIVITY_TIMEOUT) {
-        handleLogout("Session expired due to inactivity.");
-      }
-    }, 60_000);
-
-    return () => {
-      events.forEach(e => window.removeEventListener(e, resetActivity));
-      clearInterval(inactivityTimerRef.current);
-    };
-  }, [isAuthorized]);
-
   // Lockout countdown timer
   useEffect(() => {
     if (!isLocked || lockCountdown <= 0) return;
@@ -152,6 +147,39 @@ export default function AdminPage() {
     setToast({ show: true, message, type });
     setTimeout(() => setToast({ show: false, message: "", type: "success" }), 4000);
   }, []);
+
+  // ─── LOGOUT ─────────────────────────────────────────────────────────────────
+  const handleLogout = useCallback((reason) => {
+    setPasscode("");
+    setIsAuthorized(false);
+    setSessionToken(null);
+    setMessages([]);
+    sessionStorage.removeItem("dgz_session_token");
+    if (reason) showToast(reason, "info");
+  }, [showToast]);
+
+  // Inactivity auto-logout
+  useEffect(() => {
+    if (!isAuthorized) return;
+
+    const resetActivity = () => { lastActivityRef.current = Date.now(); };
+    const events = ["mousedown", "keydown", "touchstart", "scroll"];
+    events.forEach(e => window.addEventListener(e, resetActivity, { passive: true }));
+
+    inactivityTimerRef.current = setInterval(() => {
+      if (Date.now() - lastActivityRef.current > INACTIVITY_TIMEOUT) {
+        handleLogout("Session expired due to inactivity.");
+      }
+    }, 60_000);
+
+    return () => {
+      events.forEach(e => window.removeEventListener(e, resetActivity));
+      clearInterval(inactivityTimerRef.current);
+    };
+  }, [isAuthorized, handleLogout]);
+
+
+
 
   // ─── AUTH: Login via POST (issues session token) ────────────────────────────
 
@@ -230,17 +258,6 @@ export default function AdminPage() {
       setIsLoading(false);
     }
   };
-
-  // ─── LOGOUT ─────────────────────────────────────────────────────────────────
-
-  const handleLogout = useCallback((reason) => {
-    setPasscode("");
-    setIsAuthorized(false);
-    setSessionToken(null);
-    setMessages([]);
-    sessionStorage.removeItem("dgz_session_token");
-    if (reason) showToast(reason, "info");
-  }, [showToast]);
 
   // ─── DELETE MESSAGE ─────────────────────────────────────────────────────────
 
@@ -385,21 +402,7 @@ export default function AdminPage() {
     if (passcode.length < 24) setPasscode(prev => prev + val);
   };
 
-  // ─── SECTOR BADGE ──────────────────────────────────────────────────────────
 
-  const SectorBadge = ({ sector }) => {
-    const styles = {
-      GOV: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-      CORP: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-      PUBLIC: "bg-slate-800 text-slate-300 border-slate-700"
-    };
-    const labels = { GOV: "Government", CORP: "Corporate", PUBLIC: "Public" };
-    return (
-      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${styles[sector] || styles.PUBLIC}`}>
-        {labels[sector] || "Public"}
-      </span>
-    );
-  };
 
   // ─── RENDER ─────────────────────────────────────────────────────────────────
 
@@ -505,7 +508,7 @@ export default function AdminPage() {
                 <div className="grid grid-cols-3 gap-2.5">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
                     <button key={n} type="button" onClick={() => handleKeypadPress(String(n))} disabled={isLocked}
-                      className="py-3.5 sm:py-4 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-800/80 active:scale-95 rounded-xl font-medium text-lg text-slate-300 transition-all cursor-pointer disabled:opacity-30"
+                      className="py-3.5 sm:py-4 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-800/80 active:scale-95 rounded-xl font-medium text-lg text-slate-300 transition-all cursor-pointer disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
                     >{n}</button>
                   ))}
                   <button type="button" onClick={() => { setPasscode(""); setAuthError(""); }} disabled={isLocked}
@@ -646,8 +649,8 @@ export default function AdminPage() {
                 ))}
               </div>
               {filteredMessages.length > 0 && (
-                <button onClick={handleExportCSV}
-                  className="flex items-center gap-1.5 px-3 py-2 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-xs font-bold shadow-sm shrink-0 cursor-pointer">
+                <button type="button" onClick={handleExportCSV}
+                  className="flex items-center gap-1.5 px-3 py-2 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-xs font-bold shadow-sm shrink-0 cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
                   <Download className="w-3.5 h-3.5" /> Export
                 </button>
               )}

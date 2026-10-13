@@ -22,7 +22,7 @@ function FAQAccordion({ q, a, index }) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className="w-full py-8 flex items-center justify-between text-left group cursor-pointer"
+        className="w-full py-8 flex items-center justify-between text-left group cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded-lg"
       >
         <span className={`text-xl font-bold tracking-tight transition-colors duration-300 ${isOpen ? 'text-[#1a1a1a]' : 'text-slate-500 group-hover:text-[#1a1a1a]'}`}>
           {q}
@@ -56,8 +56,19 @@ function FAQAccordion({ q, a, index }) {
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState(FAQS[0].category);
   const [searchQuery, setSearchQuery] = useState("");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true });
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterEmail.includes("@")) return;
+    setSubscribed(true);
+    setTimeout(() => {
+      setNewsletterEmail("");
+    }, 4000);
+  };
 
   const activeFAQs = useMemo(() => {
     const cat = FAQS.find(cat => cat.category === activeCategory);
@@ -100,8 +111,8 @@ export default function FAQPage() {
               Resolvemos los desafíos técnicos y estratégicos más complejos de la gestión territorial moderna.
             </p>
             <div className="mt-4 flex items-center gap-4 text-[10px] font-mono text-slate-400">
-              <span className="px-3 py-1.5 bg-slate-100 rounded-full font-bold">{totalQuestions} Respuestas</span>
-              <span className="px-3 py-1.5 bg-slate-100 rounded-full font-bold">{FAQS.length} Categorías</span>
+              <span className="px-3 py-1.5 bg-slate-100 rounded-full font-bold tabular-nums">{totalQuestions} Respuestas</span>
+              <span className="px-3 py-1.5 bg-slate-100 rounded-full font-bold tabular-nums">{FAQS.length} Categorías</span>
             </div>
           </motion.div>
         </motion.div>
@@ -111,37 +122,60 @@ export default function FAQPage() {
           <div className="lg:col-span-3">
             <div className="sticky top-32 space-y-4">
               <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-8">Categorías</div>
-              {FAQS.map(cat => {
-                const Icon = cat.icon;
-                return (
-                  <button
-                    key={cat.category}
-                    type="button"
-                    aria-pressed={activeCategory === cat.category}
-                    onClick={() => { setActiveCategory(cat.category); setSearchQuery(""); }}
-                    className={`block w-full text-left text-xs font-bold uppercase tracking-[0.15em] py-4 px-6 border-l-2 transition-all duration-300 flex items-center gap-3 cursor-pointer ${
-                      activeCategory === cat.category 
-                        ? 'border-[#1a1a1a] text-[#1a1a1a] bg-white shadow-sm rounded-r-lg' 
-                        : 'border-slate-100 text-slate-400 hover:border-slate-300 hover:text-slate-600 hover:bg-white/50'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 flex-shrink-0 ${activeCategory === cat.category ? 'text-[#1a1a1a]' : 'text-slate-300'}`} />
-                    {cat.category}
-                  </button>
-                );
-              })}
+              <div role="tablist" aria-label="Categorías de soporte" className="space-y-2">
+                {FAQS.map(cat => {
+                  const Icon = cat.icon;
+                  return (
+                    <button
+                      key={cat.category}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeCategory === cat.category}
+                      onClick={() => { setActiveCategory(cat.category); setSearchQuery(""); }}
+                      className={`block w-full text-left text-xs font-bold uppercase tracking-[0.15em] py-4 px-6 border-l-2 transition-all duration-300 flex items-center gap-3 cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none ${
+                        activeCategory === cat.category 
+                          ? 'border-[#1a1a1a] text-[#1a1a1a] bg-white shadow-sm rounded-r-lg' 
+                          : 'border-slate-100 text-slate-400 hover:border-slate-300 hover:text-slate-600 hover:bg-white/50'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 flex-shrink-0 ${activeCategory === cat.category ? 'text-[#1a1a1a]' : 'text-slate-300'}`} />
+                      {cat.category}
+                    </button>
+                  );
+                })}
+              </div>
 
               <div className="mt-16 p-8 bg-white border border-slate-100 rounded-xl space-y-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
                 <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Newsletter</div>
                 <h3 className="text-sm font-black leading-tight uppercase">Territorial Intelligence Brief</h3>
                 <p className="text-xs text-slate-500 font-light leading-relaxed">Reciba mensualmente análisis técnicos sobre el catastro en Colombia.</p>
-                <div className="flex flex-col gap-3">
-                  <input type="email" aria-label="Email institucional para el newsletter" autoComplete="email" placeholder="Email institucional" className="bg-[#fafafa] border border-slate-100 p-3 text-[10px] font-mono focus:outline-none focus:border-slate-400 rounded-lg transition-colors" />
-                  <button type="button" className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2">
-                    <Mail className="w-3 h-3" />
-                    Suscribirse
-                  </button>
-                </div>
+                
+                {subscribed ? (
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono rounded-lg flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    ✓ Suscripción Confirmada
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
+                    <input 
+                      type="email" 
+                      required
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      aria-label="Email institucional para el newsletter" 
+                      autoComplete="email" 
+                      placeholder="Email institucional" 
+                      className="bg-[#fafafa] border border-slate-100 p-3 text-[10px] font-mono focus:outline-none focus:border-slate-400 focus-visible:ring-2 focus-visible:ring-slate-900 rounded-lg transition-colors" 
+                    />
+                    <button 
+                      type="submit" 
+                      className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
+                    >
+                      <Mail className="w-3 h-3" />
+                      Suscribirse
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
           </div>
@@ -159,7 +193,7 @@ export default function FAQPage() {
                     placeholder="Buscar solución..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-2.5 bg-[#fafafa] border border-slate-100 text-xs font-mono rounded-full focus:outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-100 transition-all w-48" 
+                    className="pl-10 pr-4 py-2.5 bg-[#fafafa] border border-slate-100 text-xs font-mono rounded-full focus:outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900 focus-visible:outline-none transition-all w-48" 
                   />
                 </div>
               </div>
@@ -183,7 +217,11 @@ export default function FAQPage() {
                         <Search className="w-6 h-6 text-slate-300" />
                       </div>
                       <p className="text-slate-400 font-light">No se encontraron resultados para “{searchQuery}”</p>
-                      <button onClick={() => setSearchQuery("")} className="text-[10px] font-bold text-[#1a1a1a] uppercase tracking-widest hover:text-slate-500 transition-colors cursor-pointer">
+                      <button 
+                        type="button"
+                        onClick={() => setSearchQuery("")} 
+                        className="text-[10px] font-bold text-[#1a1a1a] uppercase tracking-widest hover:text-slate-500 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none p-1 rounded"
+                      >
                         Limpiar Búsqueda
                       </button>
                     </div>

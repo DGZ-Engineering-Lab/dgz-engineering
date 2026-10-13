@@ -149,7 +149,7 @@ export default function BrochurePage() {
                   max="30"
                   value={projects}
                   onChange={(e) => setProjects(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>1 Proyecto</span>
@@ -164,7 +164,7 @@ export default function BrochurePage() {
                     <Clock className="w-4 h-4 text-orange-500" />
                     Retraso promedio (días esperando planos/POT)
                   </label>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-900 font-mono text-xs font-bold rounded-full">
+                  <span className="px-3 py-1 bg-slate-100 text-slate-900 font-mono text-xs font-bold rounded-full tabular-nums">
                     {delayDays} días
                   </span>
                 </div>
@@ -174,7 +174,7 @@ export default function BrochurePage() {
                   max="120"
                   value={delayDays}
                   onChange={(e) => setDelayDays(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>5 días</span>
@@ -189,7 +189,7 @@ export default function BrochurePage() {
                     <DollarSign className="w-4 h-4 text-emerald-500" />
                     Costo operativo diario de parálisis
                   </label>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-900 font-mono text-xs font-bold rounded-full">
+                  <span className="px-3 py-1 bg-slate-100 text-slate-900 font-mono text-xs font-bold rounded-full tabular-nums">
                     {formatCOP(dailyCost)} / día
                   </span>
                 </div>
@@ -200,7 +200,7 @@ export default function BrochurePage() {
                   step="500000"
                   value={dailyCost}
                   onChange={(e) => setDailyCost(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-mono">
                   <span>$1M COP</span>
@@ -231,10 +231,10 @@ export default function BrochurePage() {
 
                 <div className="space-y-1">
                   <div className="text-2xl font-light text-slate-400">Tu costo oculto:</div>
-                  <div className="text-3xl md:text-4xl font-black text-red-400 tracking-tight">
+                  <div className="text-3xl md:text-4xl font-black text-red-400 tracking-tight font-mono tabular-nums">
                     {formatCOP(totalLoss)}
                   </div>
-                  <div className="text-[10px] text-slate-500 font-mono">
+                  <div className="text-[10px] text-slate-500 font-mono tabular-nums">
                     ({projects} proy. × {delayDays} días × {formatCOP(dailyCost)})
                   </div>
                 </div>
@@ -246,7 +246,7 @@ export default function BrochurePage() {
                     <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
                     Con DevGiz Spatial OS:
                   </div>
-                  <div className="text-4xl md:text-5xl font-black text-cyan-400 tracking-tight">
+                  <div className="text-4xl md:text-5xl font-black text-cyan-400 tracking-tight font-mono tabular-nums">
                     {formatCOP(totalSavings)}
                   </div>
                   <div className="text-[10px] text-slate-400">
@@ -260,7 +260,7 @@ export default function BrochurePage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4.5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_25px_rgba(6,182,212,0.3)] hover:scale-[1.02]"
+                  className="w-full py-4.5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_25px_rgba(6,182,212,0.3)] hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:outline-none"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Reclamar Mi Ahorro vía WhatsApp</span>
@@ -508,13 +508,13 @@ export default function BrochurePage() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm shadow-xl text-center"
+              className="w-full sm:w-auto px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm shadow-xl text-center focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:outline-none"
             >
               Agendar Demo Gratuita de 15 Minutos
             </a>
             <Link
               href="/"
-              className="w-full sm:w-auto px-10 py-5 border border-white/20 hover:border-white/40 hover:bg-white/5 text-white text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm text-center"
+              className="w-full sm:w-auto px-10 py-5 border border-white/20 hover:border-white/40 hover:bg-white/5 text-white text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm text-center focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
             >
               Conocer Más de la Plataforma
             </Link>

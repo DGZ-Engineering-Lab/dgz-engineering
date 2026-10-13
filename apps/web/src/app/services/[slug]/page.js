@@ -1090,16 +1090,18 @@ export default function ServicePage() {
                   <div className="flex flex-wrap gap-3">
                     {simStatus !== "running" ? (
                       <button
+                        type="button"
                         onClick={startSimulation}
-                        className="px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-md hover:shadow-cyan-500/20 flex items-center gap-2"
+                        className="px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-md hover:shadow-cyan-500/20 flex items-center gap-2 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none"
                       >
                         <Play className="w-3.5 h-3.5" />
                         <span>{simStatus === "paused" ? "Reanudar" : "Iniciar Simulación"}</span>
                       </button>
                     ) : (
                       <button
+                        type="button"
                         onClick={pauseSimulation}
-                        className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
+                        className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-amber-500 focus:outline-none"
                       >
                         <Pause className="w-3.5 h-3.5" />
                         <span>Pausar</span>
@@ -1107,8 +1109,9 @@ export default function ServicePage() {
                     )}
 
                     <button
+                      type="button"
                       onClick={resetSimulation}
-                      className="px-5 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 font-mono text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-2"
+                      className="px-5 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 font-mono text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>Reiniciar</span>
@@ -1286,10 +1289,15 @@ export default function ServicePage() {
         <div className="mb-24">
           
           {/* Cabezote de Control de Pestañas */}
-          <div className="flex border-b border-slate-200 mb-12 relative z-10">
+          <div role="tablist" aria-label="Planos de servicio: comercial y técnico" className="flex border-b border-slate-200 mb-12 relative z-10">
             <button
+              type="button"
+              role="tab"
+              id="tab-strategy"
+              aria-selected={activeTab === "strategy"}
+              aria-controls="panel-strategy"
               onClick={() => setActiveTab("strategy")}
-              className={`flex-1 sm:flex-initial px-8 py-5 text-sm font-mono uppercase tracking-widest font-black transition-all duration-300 border-b-2 flex items-center justify-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-8 py-5 text-sm font-mono uppercase tracking-widest font-black transition-all duration-300 border-b-2 flex items-center justify-center gap-2 cursor-pointer active:scale-98 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none ${
                 activeTab === "strategy"
                   ? `${theme.text} border-cyan-500 bg-cyan-50/40`
                   : "text-slate-400 border-transparent hover:text-slate-600"
@@ -1299,8 +1307,13 @@ export default function ServicePage() {
               <span>Commercial Blueprint</span>
             </button>
             <button
+              type="button"
+              role="tab"
+              id="tab-technical"
+              aria-selected={activeTab === "technical"}
+              aria-controls="panel-technical"
               onClick={() => setActiveTab("technical")}
-              className={`flex-1 sm:flex-initial px-8 py-5 text-sm font-mono uppercase tracking-widest font-black transition-all duration-300 border-b-2 flex items-center justify-center gap-2 ${
+              className={`flex-1 sm:flex-initial px-8 py-5 text-sm font-mono uppercase tracking-widest font-black transition-all duration-300 border-b-2 flex items-center justify-center gap-2 cursor-pointer active:scale-98 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none ${
                 activeTab === "technical"
                   ? `${theme.text} border-cyan-500 bg-cyan-50/40`
                   : "text-slate-400 border-transparent hover:text-slate-600"
@@ -1479,8 +1492,9 @@ export default function ServicePage() {
                       {["specs", "compliance", "system", "telemetry", "clear"].map((cmd) => (
                         <button
                           key={cmd}
+                          type="button"
                           onClick={() => runTerminalCommand(cmd)}
-                          className="px-2 py-1 bg-[#060a13] hover:bg-[#0c1224] hover:text-white border border-slate-850 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer"
+                          className="px-2 py-1 bg-[#060a13] hover:bg-[#0c1224] hover:text-white border border-slate-850 rounded text-[10px] font-mono text-cyan-400 transition-colors cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none"
                         >
                           {cmd}
                         </button>
@@ -1621,8 +1635,9 @@ export default function ServicePage() {
                       </p>
                       
                       <button
+                        type="button"
                         onClick={() => setSubmitSuccess(false)}
-                        className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-[10px] font-mono text-white uppercase tracking-widest transition-colors cursor-pointer"
+                        className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 rounded-xl text-[10px] font-mono text-white uppercase tracking-widest transition-colors cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none"
                       >
                         Enviar otra solicitud
                       </button>

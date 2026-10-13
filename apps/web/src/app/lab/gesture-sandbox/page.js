@@ -98,6 +98,7 @@ export default function GestureSandboxPage() {
                  
                  {/* Map Content - Dynamic Satellite Simulation */}
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img loading="lazy" decoding="async" src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
                  </div>
 
@@ -160,8 +161,8 @@ export default function GestureSandboxPage() {
 
                  {/* Action Bar */}
                  <div className="absolute bottom-10 right-10 flex gap-3">
-                    <button className="px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">Save Node</button>
-                    <button className="px-6 py-3 bg-cyan-600 border border-cyan-400/50 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-500 transition-all">Export GIS</button>
+                    <button type="button" className="px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none">Save Node</button>
+                    <button type="button" className="px-6 py-3 bg-cyan-600 border border-cyan-400/50 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-500 transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none">Export GIS</button>
                  </div>
               </div>
 
