@@ -3,7 +3,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, MapPin, Mail, CheckCircle2, AlertTriangle, ShieldCheck, Bug, Check, AlertCircle } from "lucide-react";
 import Logo from "./Logo";
-import * as Sentry from "@sentry/nextjs";
+// Sentry is loaded on demand so it stays out of the home page bundle.
+const withSentry = (fn) => import("@sentry/nextjs").then(fn).catch(() => {});
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -81,14 +82,14 @@ export default function ContactSection() {
     setErrorMessage("");
 
     // Telemetry capture: Log submission event in Sentry for instant validation
-    Sentry.captureMessage("Lead Contact Session Request", {
+    withSentry((Sentry) => Sentry.captureMessage("Lead Contact Session Request", {
       level: "info",
       // Sin datos personales: Sentry no es un CRM.
       extra: {
         subject: formData.subject,
         length: formData.description.length
       }
-    });
+    }));
 
     try {
       const response = await fetch("/api/contact", {
@@ -120,7 +121,7 @@ export default function ContactSection() {
       }
     } catch (err) {
       console.error("Submission failed:", err);
-      Sentry.captureException(err);
+      withSentry((Sentry) => Sentry.captureException(err));
       setErrorMessage(err.message || "Fallo de red al enviar al servidor.");
       setStatus("error");
     }
@@ -136,7 +137,7 @@ export default function ContactSection() {
       // Create a division-by-zero style error to force Sentry to record a critical stack trace
       const testErr = new Error(msg);
       testErr.name = "SentryTestError";
-      Sentry.captureException(testErr);
+      withSentry((Sentry) => Sentry.captureException(testErr));
       
       // Also trigger a window error event to verify global catchers
       console.error(msg, testErr);

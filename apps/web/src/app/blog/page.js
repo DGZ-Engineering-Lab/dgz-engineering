@@ -15,7 +15,7 @@ const BLOG_POSTS = [
     date: "12 Mayo, 2026",
     readTime: "12 min",
     complexity: "Nivel Institucional",
-    image: "/assets/img/blog-cybersecurity.png",
+    image: "/assets/img/blog-cybersecurity.webp",
     featured: true
   },
   {
@@ -26,7 +26,7 @@ const BLOG_POSTS = [
     date: "10 Mayo, 2026",
     readTime: "8 min",
     complexity: "Técnico Avanzado",
-    image: "/assets/img/blog-ladm-col.png",
+    image: "/assets/img/blog-ladm-col.webp",
     featured: false
   },
   {
@@ -37,7 +37,7 @@ const BLOG_POSTS = [
     date: "05 Mayo, 2026",
     readTime: "10 min",
     complexity: "Reporte de Ingeniería",
-    image: "/assets/img/geoai_after.png",
+    image: "/assets/img/geoai_after.webp",
     featured: false
   },
   {
@@ -48,7 +48,7 @@ const BLOG_POSTS = [
     date: "28 Abril, 2026",
     readTime: "7 min",
     complexity: "Estratégico",
-    image: "/assets/img/topo-bg.png",
+    image: "/assets/img/topo-bg.webp",
     featured: false
   }
 ];
@@ -111,6 +111,7 @@ export default function BlogPage() {
                   <img 
                     src={featuredPost.image} 
                     alt={featuredPost.title}
+                    fetchPriority="high"
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
@@ -144,6 +145,8 @@ export default function BlogPage() {
                   <img 
                     src={post.image} 
                     alt={post.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-[1.05]"
                   />
                 </div>

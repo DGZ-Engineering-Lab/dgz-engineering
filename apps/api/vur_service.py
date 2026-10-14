@@ -1,7 +1,7 @@
 import os
 import httpx
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 # Environment variables for security
 VUR_USER = os.getenv("VUR_USER", "")
@@ -242,7 +242,7 @@ class VURService:
                 "Content-Type": "application/x-www-form-urlencoded",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             }
-            response = await self.client.post(self.login_url, data=payload, headers=headers)
+            await self.client.post(self.login_url, data=payload, headers=headers)
             
             # Extract cookies from the unified client jar (correctly captures SMSESSION and JSESSIONID scoped to .vur.gov.co)
             self.cookies = {name: value for name, value in self.client.cookies.items()}
@@ -271,7 +271,7 @@ class VURService:
             matricula = parts[1].strip()
 
         # 2. Resolve ORIP Office database parameters
-        office_info = ORIP_OFFICES.get(circulo, {"id": 1, "nombre": f"ORIP - BOGOTA NORTE - ( 50N )"})
+        office_info = ORIP_OFFICES.get(circulo, {"id": 1, "nombre": "ORIP - BOGOTA NORTE - ( 50N )"})
         circulo_id = office_info["id"]
         circulo_nombre = office_info["nombre"]
 

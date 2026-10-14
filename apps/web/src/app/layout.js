@@ -9,6 +9,8 @@ import AudioInitializer from "../components/AudioInitializer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "../components/PostHogProvider";
+import JsonLd from "../components/JsonLd";
+import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_LOCALE, SITE_LANG, FOUNDER, siteJsonLd } from "../lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,82 +32,62 @@ const displaySerif = Bodoni_Moda({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://devgiz.vercel.app";
-const TITLE = "DevGiz | Ingeniería Geoespacial, Catastro LADM-COL y DevOps Territorial";
-const DESCRIPTION =
-  "Plataforma de ingeniería territorial: catastro multipropósito LADM-COL, SIG empresarial, GeoAI y pipelines DevOps para el sector público y privado en Colombia.";
-
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: TITLE,
-    template: "%s | DevGiz",
+    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: DESCRIPTION,
-  applicationName: "DevGiz",
-  keywords: [
-    "LADM-COL",
-    "catastro multipropósito",
-    "SIG",
-    "GIS",
-    "GeoAI",
-    "PostGIS",
-    "QGIS",
-    "ingeniería geoespacial",
-    "DevOps",
-    "Colombia",
-  ],
-  authors: [{ name: "DevGiz Engineering Lab" }],
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: FOUNDER.name, url: SITE_URL }],
+  creator: FOUNDER.name,
+  publisher: SITE_NAME,
+  category: "technology",
   alternates: { canonical: "/" },
   openGraph: {
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
     type: "website",
-    locale: "es_CO",
-    url: SITE_URL,
-    siteName: "DevGiz",
-    title: TITLE,
-    description: DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  formatDetection: { telephone: false },
+  // Códigos de verificación de Google Search Console y Bing Webmaster Tools (variables de entorno en Vercel).
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } } : {}),
+  },
+  other: { "geo.region": "CO-ANT", "geo.placename": "Medellín" },
 };
 
 export const viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0b0a08" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0a08" },
-  ],
+  themeColor: "#0b0a08",
   colorScheme: "light",
-};
-
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "DevGiz Engineering",
-  url: SITE_URL,
-  email: "engineering@devgiz.com",
-  description: DESCRIPTION,
-  areaServed: "CO",
-  address: { "@type": "PostalAddress", addressCountry: "CO", addressLocality: "Medellín" },
-  knowsAbout: ["LADM-COL", "Catastro multipropósito", "Sistemas de Información Geográfica", "GeoAI", "DevOps"],
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="es"
+      lang={SITE_LANG}
       className={`${geistSans.variable} ${geistMono.variable} ${displaySerif.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col text-[var(--foreground)] bg-[var(--background)]" suppressHydrationWarning>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <JsonLd data={siteJsonLd()} />
         <a
           href="#contenido"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-obsidian focus:text-gold focus:rounded"

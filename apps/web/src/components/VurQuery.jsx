@@ -219,7 +219,7 @@ const VurQuery = () => {
            <div className="flex items-center gap-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em]">Interoperando con:</span>
                {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_de_Colombia.svg/1200px-Escudo_de_Colombia.svg.png" alt="Colombia" className="h-8" />
+              <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_de_Colombia.svg/1200px-Escudo_de_Colombia.svg.png" alt="Colombia" className="h-8" />
               <div className="h-8 w-px bg-slate-800"></div>
               <span className="text-[10px] font-bold text-slate-400">VUR_NODE_ACTIVE_051</span>
            </div>

@@ -468,7 +468,7 @@ const InteroperabilityLab = () => {
         </div>
         <div ref={consoleRef} className="p-4 font-mono text-[10px] space-y-1 h-[140px] overflow-y-auto scrollbar-thin">
           {logs.length === 0 && !isProcessing && (
-            <div className="text-slate-600 italic">Esperando ejecución. Haga clic en un paso o presione "Ejecutar Pipeline".</div>
+            <div className="text-slate-600 italic">Esperando ejecución. Haga clic en un paso o presione “Ejecutar Pipeline”.</div>
           )}
           {logs.map((log, i) => (
             <motion.div
@@ -885,7 +885,7 @@ const LidarLab = () => {
           <div className={`w-2.5 h-2.5 rounded-full ${phase === 1 ? 'bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.6)]' : phase === 2 ? 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 'bg-slate-500'}`} />
           <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em] font-bold">Caso Real // Diagnóstico Municipal</span>
         </div>
-        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">DANE {MUNICIPIO.codigoDANE} // IGAC 2023</span>
+        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">DANE {MUNICIPIO.codigoDANE} {"//"} IGAC 2023</span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -1090,7 +1090,7 @@ const BLOG_DATA = {
     date: "12 Mayo, 2026",
     author: "Dirección de Ciberseguridad",
     readTime: "12 min",
-    image: "/assets/img/blog-cybersecurity.png",
+    image: "/assets/img/blog-cybersecurity.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1118,7 +1118,7 @@ const BLOG_DATA = {
     date: "10 Mayo, 2026",
     author: "Ingeniería Territorial",
     readTime: "8 min",
-    image: "/assets/img/blog-ladm-col.png",
+    image: "/assets/img/blog-ladm-col.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1146,7 +1146,7 @@ const BLOG_DATA = {
     date: "05 Mayo, 2026",
     author: "Laboratorio Geo-AI",
     readTime: "10 min",
-    image: "/assets/img/geoai_after.png",
+    image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
@@ -1174,7 +1174,7 @@ const BLOG_DATA = {
     date: "01 Mayo, 2026",
     author: "Laboratorio de IA Espacial",
     readTime: "14 min",
-    image: "/assets/img/geoai_after.png",
+    image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">

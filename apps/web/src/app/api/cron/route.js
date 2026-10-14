@@ -76,7 +76,7 @@ export async function GET(req) {
     let deleted = 0;
 
     for (const key of allKeys) {
-      const msg = await kv.hgetall(key);
+      const msg = /** @type {{ createdAt?: string } | null} */ (await kv.hgetall(key));
       if (msg?.createdAt && new Date(msg.createdAt).getTime() < thirtyDaysAgo) {
         await kv.del(key);
         deleted++;

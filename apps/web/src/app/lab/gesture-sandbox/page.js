@@ -95,7 +95,7 @@ export default function GestureSandboxPage() {
                  
                  {/* Map Content - Dynamic Satellite Simulation */}
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
-                    <img src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
+                    <img loading="lazy" decoding="async" src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
                  </div>
 
                  {/* Camera Feed Overlay */}

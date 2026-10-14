@@ -183,7 +183,7 @@ export default function Home() {
                 <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
-                    src="/assets/img/blog-ladm-col.png" 
+                    src="/assets/img/blog-ladm-col.webp" 
                     alt="LADM-COL" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -207,7 +207,7 @@ export default function Home() {
                 <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
-                    src="/assets/img/blog-cybersecurity.png" 
+                    src="/assets/img/blog-cybersecurity.webp" 
                     alt="Cybersecurity" 
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"

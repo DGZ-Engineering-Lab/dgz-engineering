@@ -1,9 +1,8 @@
-import os
 import json
 import logging
 import urllib.request
 import urllib.parse
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 class DevGizDBConnector:
     """

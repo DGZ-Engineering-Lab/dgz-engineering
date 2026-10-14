@@ -474,7 +474,7 @@ export default function DocsPage() {
                              </div>
                           )}
                           {!consoleLoading && consoleLogs.length === 0 && (
-                             <div className="text-slate-600 italic">Listo para ejecutar proceso catastral. Presione 'PROCESAR SOLICITUD'.</div>
+                             <div className="text-slate-600 italic">Listo para ejecutar proceso catastral. Presione ‘PROCESAR SOLICITUD’.</div>
                           )}
                        </div>
 
