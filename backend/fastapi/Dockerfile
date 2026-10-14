@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.14-slim
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 COPY requirements.txt /app/requirements.txt
