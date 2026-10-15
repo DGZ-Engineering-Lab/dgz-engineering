@@ -45,3 +45,27 @@ describe("SERVICES_DATA", () => {
     }
   });
 });
+
+describe("marketplace tiers", () => {
+  it("every tier has a name, price and duration", () => {
+    for (const [, service] of services) {
+      for (const tier of service.marketplace ?? []) {
+        expect(tier.name).toBeTruthy();
+        expect(tier.price).toBeTruthy();
+        expect(tier.duration).toBeTruthy();
+      }
+    }
+  });
+
+  it("tiers with a deposit declare a percent between 30 and 50", () => {
+    for (const [, service] of services) {
+      for (const tier of service.marketplace ?? []) {
+        if (!tier.deposit) continue;
+        expect(tier.deposit.percent).toBeGreaterThanOrEqual(30);
+        expect(tier.deposit.percent).toBeLessThanOrEqual(50);
+        expect(tier.deposit.amount).toBeTruthy();
+        expect(typeof tier.deposit.url).toBe("string");
+      }
+    }
+  });
+});
