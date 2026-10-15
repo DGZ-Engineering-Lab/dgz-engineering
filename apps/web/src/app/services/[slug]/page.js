@@ -1548,6 +1548,7 @@ export default function ServicePage() {
                     <div className="flex items-baseline gap-1.5 mb-8 border-b border-slate-100 pb-6 justify-start">
                       <span className="text-xs text-slate-400 font-light font-mono">Inversión:</span>
                       <span className={`text-2xl font-black ${isPopular ? "text-cyan-600" : "text-slate-800"}`}>{tier.price}</span>
+                      {tier.priceNote && <span className="text-[10px] text-slate-400 font-mono">{tier.priceNote}</span>}
                     </div>
 
                     <div className="space-y-3.5 mb-10">
@@ -1581,6 +1582,16 @@ export default function ServicePage() {
                     <span>Adquirir Plan</span>
                     <ArrowRight className={`w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform ${isPopular ? "text-white" : "text-cyan-400"}`} />
                   </a>
+                  {tier.deposit?.url && (
+                    <a
+                      href={tier.deposit.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 w-full py-4 rounded-xl text-[9px] font-mono uppercase tracking-[0.2em] font-black transition-all duration-300 flex items-center justify-center gap-2 border border-cyan-600 text-cyan-700 hover:bg-cyan-50"
+                    >
+                      <span>Pagar anticipo {tier.deposit.percent}% · {tier.deposit.amount}</span>
+                    </a>
+                  )}
                 </div>
               );
             })}

@@ -41,7 +41,16 @@ export const SERVICES_DATA = {
     marketplace: [
       {
         name: "Piloto WebGIS Municipal",
-        price: "Consultar",
+        // Precio de referencia: Daniel confirma el valor final antes de publicar.
+        price: "COP 18.000.000",
+        priceNote: "Precio fijo + IVA",
+        // Anticipo por link de pago Wompi (sin backend). Si la variable no está
+        // definida en Vercel, el botón de anticipo no se muestra.
+        deposit: {
+          percent: 40,
+          amount: "COP 7.200.000",
+          url: process.env.NEXT_PUBLIC_WOMPI_PILOTO_WEBGIS_URL || ""
+        },
         duration: "4 Semanas",
         deliverables: [
           "Visor WebGIS básico para 1 zona",
