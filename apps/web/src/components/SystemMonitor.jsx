@@ -60,7 +60,7 @@ export default function SystemMonitor() {
           <h3 className="text-slate-200 font-mono text-xs tracking-widest font-black uppercase">SYSTEM_TELEMETRY</h3>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[8px] font-mono text-cyan-400/60 uppercase">Live link</span>
+          <span className="text-[9.5px] font-mono text-cyan-400/60 uppercase">Live link</span>
           <div className={`w-2 h-2 rounded-full ${apiStatus.includes("ONLINE") ? "bg-cyan-400 animate-ping" : "bg-red-500 animate-pulse"} shadow-[0_0_10px_rgba(6,182,212,0.5)]`} />
         </div>
       </div>

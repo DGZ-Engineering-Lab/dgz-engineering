@@ -32,7 +32,7 @@ export default function SpatialLabSection() {
 
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 space-y-6">
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.28em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
             DGZ Engineering / Innovation Lab
           </div>

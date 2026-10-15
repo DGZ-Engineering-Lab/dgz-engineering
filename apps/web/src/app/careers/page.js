@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Code, Map, Shield, Zap, ArrowRight, ChevronDown, ChevronUp, Send, Terminal, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Logo from "../../components/Logo";
+import { CONTACT } from "../../lib/seo";
 
 const POSITIONS = [
   {
@@ -159,7 +160,7 @@ export default function CareersPage() {
           <div className="lg:col-span-8 space-y-8">
             <div className="flex items-center gap-3">
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
-              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Talent Acquisition // Join the Elite</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Talent Acquisition // Join the Elite</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Ingeniería de <br /> <span className="text-slate-400 italic font-light">Misión Crítica</span>
@@ -332,7 +333,7 @@ export default function CareersPage() {
                                        name="email"
                                        value={formData.email}
                                        onChange={handleInputChange}
-                                       placeholder="juan.perez@devgiz.com" 
+                                       placeholder="juan.perez@correo.com" 
                                        className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900" 
                                      />
                                   </div>
@@ -422,7 +423,7 @@ export default function CareersPage() {
 
       {/* Manifest Banner */}
       <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-20">
-        <div className="bg-[#1a1a1a] text-white p-6 lg:p-12 rounded-2xl text-center space-y-6 relative overflow-hidden shadow-2xl">
+        <div className="bg-[#0b1220] text-white p-8 lg:p-14 rounded-[var(--radius-lg)] ring-1 ring-white/10 text-center space-y-6 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 p-12 opacity-5 pointer-events-none">
              <Logo className="w-64 h-64" />
           </div>
@@ -433,26 +434,12 @@ export default function CareersPage() {
             Si cree que tiene lo necesario para integrarse en una de las firmas de ingeniería geoespacial más avanzadas del país, queremos conocerle.
           </p>
           <div className="pt-8 relative z-10">
-            <a href="mailto:careers@devgiz.com" className="text-[11px] font-black uppercase tracking-[0.3em] border-b-2 border-white pb-2 hover:text-slate-400 hover:border-slate-400 transition-all">
-              careers@devgiz.com
+            <a href={`mailto:${CONTACT.email}?subject=Postulaci%C3%B3n%20DevGiz`} className="btn bg-white text-[#0b1220] hover:bg-cyan-300">
+              Enviar hoja de vida
             </a>
           </div>
         </div>
       </section>
-
-      {/* Footer link */}
-      <div className="max-w-7xl mx-auto px-6 mt-32 flex flex-col md:flex-row justify-between items-center border-t border-slate-100 pt-20 gap-8">
-        <div className="flex items-center gap-4">
-           <Logo className="w-12 h-12 opacity-80" />
-           <div className="flex flex-col">
-              <span className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">DevGiz Talent Portal</span>
-              <span className="text-[10px] text-slate-400 font-mono">Build with Purpose // 2026</span>
-           </div>
-        </div>
-        <Link href="/" className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 hover:text-[#1a1a1a] transition-all">
-           Volver al Inicio
-        </Link>
-      </div>
 
     </div>
   );

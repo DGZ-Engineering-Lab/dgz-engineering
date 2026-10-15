@@ -219,7 +219,7 @@ const VurQuery = () => {
       {result && (
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-4">
            <div className="flex items-center gap-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-              <span className="text-[8px] font-mono text-slate-500 uppercase tracking-[0.4em]">Interoperando con:</span>
+              <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-[0.28em]">Interoperando con:</span>
                {/* eslint-disable-next-line @next/next/no-img-element */}
               <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_de_Colombia.svg/1200px-Escudo_de_Colombia.svg.png" alt="Colombia" className="h-8" />
               <div className="h-8 w-px bg-slate-800"></div>

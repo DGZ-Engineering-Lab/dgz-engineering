@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, MapPin, Mail, CheckCircle2, AlertTriangle, ShieldCheck, Bug, Check, AlertCircle } from "lucide-react";
-import Logo from "./Logo";
+import { Send, MapPin, Mail, CheckCircle2, AlertTriangle, ShieldCheck, Check, AlertCircle, MessageCircle, Clock } from "lucide-react";
+import { CONTACT } from "../lib/seo";
 // Sentry is loaded on demand so it stays out of the home page bundle.
 const withSentry = (fn) => import("@sentry/nextjs").then(fn).catch(() => {});
 
@@ -11,7 +11,7 @@ export default function ContactSection() {
     name: "",
     company: "",
     email: "",
-    subject: "Auditoría de Datos LADM-COL",
+    subject: "Catastro multipropósito / LADM-COL",
     description: ""
   });
   
@@ -85,21 +85,12 @@ export default function ContactSection() {
     withSentry((Sentry) => Sentry.captureMessage("Lead Contact Session Request", {
       level: "info",
       extra: {
-        name: formData.name,
-        company: formData.company,
-        email: formData.email,
         subject: formData.subject,
         length: formData.description.length
       }
     }));
 
     try {
-      // Deliberate test error triggers if "error" or "debug" is in the email address
-      if (formData.email.toLowerCase().includes("error") || formData.email.toLowerCase().includes("sentry")) {
-        const deliberateError = new Error(`Sentry Lead Debugger: Deliberate crash triggered by lead email (${formData.email})`);
-        withSentry((Sentry) => Sentry.captureException(deliberateError));
-        throw deliberateError;
-      }
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -136,82 +127,54 @@ export default function ContactSection() {
     }
   };
 
-  const triggerMockSentryException = () => {
-    const errorMsg = "DGZ_SYSTEM_SIMULATED_EXCEPTION: Sentry integration active check triggered by user button.";
-    addSentryLog(errorMsg);
-  };
-
-  const addSentryLog = (msg) => {
-    try {
-      // Create a division-by-zero style error to force Sentry to record a critical stack trace
-      const testErr = new Error(msg);
-      testErr.name = "SentryTestError";
-      withSentry((Sentry) => Sentry.captureException(testErr));
-      
-      // Also trigger a window error event to verify global catchers
-      console.error(msg, testErr);
-      alert("🚨 ¡Excepción simulada enviada a Sentry! Revisa tu panel en sentry.io para ver la actividad.");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   return (
-    <section id="contact" className="py-32 bg-[#fafafa] border-t border-slate-100 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
+    <section id="contact" className="py-20 md:py-28 bg-gradient-to-b from-transparent via-white/60 to-white border-t border-slate-200/60 relative scroll-mt-20">
+      <div className="container-dgz">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20 items-start">
           
           {/* Info Side */}
-          <div className="space-y-12">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <span className="w-12 h-px bg-[#1a1a1a]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Contact // Technical Session</span>
-              </div>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight text-[#1a1a1a]">
-                Hablemos de <br /> <span className="text-slate-400 font-light italic">Ingeniería.</span>
+          <div className="space-y-10 lg:sticky lg:top-28">
+            <div className="space-y-5">
+              <span className="eyebrow">Contacto · Sesión técnica</span>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[1.02] text-[#0b1220]">
+                Hablemos de <br /> <span className="text-gradient-brand font-light italic">ingeniería.</span>
               </h2>
-              <p className="text-slate-500 text-xl font-light leading-relaxed max-w-md">
-                Estamos listos para desplegar soluciones de alta precisión para sus desafíos territoriales más complejos.
+              <p className="text-slate-600 text-lg font-light leading-relaxed max-w-md">
+                Cuéntanos tu reto territorial y te proponemos una ruta técnica concreta, con alcance y tiempos claros.
               </p>
             </div>
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-sm flex-shrink-0 shadow-sm">
-                  <MapPin className="w-5 h-5 text-slate-400" />
-                </div>
-                <div>
-                  <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Global Presence</div>
-                  <div className="text-sm font-bold uppercase tracking-widest">Bogotá // Medellín // Cali</div>
-                </div>
-              </div>
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-white border border-slate-100 flex items-center justify-center rounded-sm flex-shrink-0 shadow-sm">
-                  <Mail className="w-5 h-5 text-slate-400" />
-                </div>
-                <div>
-                  <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Direct Inquiry</div>
-                  <div className="text-sm font-bold uppercase tracking-widest">engineering@devgiz.com</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-10 flex items-center gap-6">
-              <Logo className="w-12 h-12 opacity-10" />
-              <button 
-                type="button"
-                onClick={triggerMockSentryException}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-dashed border-red-200 text-red-500 text-[9px] font-mono uppercase rounded-lg hover:bg-red-50/50 transition-all cursor-pointer"
-              >
-                <Bug className="w-3.5 h-3.5" />
-                Simular Error (Test Sentry)
-              </button>
-            </div>
+            <ul className="space-y-3">
+              <li>
+                <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="card-dgz card-hover flex items-center gap-4 p-4 !rounded-[var(--radius-md)]">
+                  <span className="w-11 h-11 rounded-[var(--radius-sm)] bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0"><MessageCircle className="w-5 h-5" /></span>
+                  <span>
+                    <span className="block text-[0.68rem] font-mono text-slate-500 uppercase tracking-[0.18em]">WhatsApp · respuesta más rápida</span>
+                    <span className="block text-sm font-bold text-[#0b1220]">{CONTACT.whatsappDisplay}</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${CONTACT.email}`} className="card-dgz card-hover flex items-center gap-4 p-4 !rounded-[var(--radius-md)]">
+                  <span className="w-11 h-11 rounded-[var(--radius-sm)] bg-cyan-50 text-cyan-700 flex items-center justify-center flex-shrink-0"><Mail className="w-5 h-5" /></span>
+                  <span>
+                    <span className="block text-[0.68rem] font-mono text-slate-500 uppercase tracking-[0.18em]">Correo directo</span>
+                    <span className="block text-sm font-bold text-[#0b1220] break-all">{CONTACT.email}</span>
+                  </span>
+                </a>
+              </li>
+              <li className="flex items-center gap-4 px-4 py-2 text-sm text-slate-600">
+                <MapPin className="w-4 h-4 text-slate-400" aria-hidden="true" /> {CONTACT.city} · Proyectos en todo el país
+              </li>
+              <li className="flex items-center gap-4 px-4 py-2 text-sm text-slate-600">
+                <Clock className="w-4 h-4 text-slate-400" aria-hidden="true" /> Respuesta en menos de 24 horas hábiles
+              </li>
+            </ul>
           </div>
 
           {/* Form Side */}
-          <div className="bg-white p-8 md:p-12 border border-slate-100 shadow-2xl rounded-sm relative overflow-hidden">
+          <div className="bg-white p-6 sm:p-8 md:p-10 border border-slate-200/70 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.35)] rounded-[var(--radius-lg)] relative overflow-hidden">
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600" />
             <AnimatePresence mode="wait">
               {status === "success" ? (
                 <motion.div 
@@ -221,20 +184,21 @@ export default function ContactSection() {
                   role="status"
                   className="py-16 text-center space-y-6 flex flex-col items-center justify-center h-full"
                 >
-                  <CheckCircle2 className="w-16 h-16 text-emerald-500 stroke-[1.5] animate-bounce" />
+                  <CheckCircle2 className="w-16 h-16 text-emerald-500 stroke-[1.5]" />
                   <div className="space-y-2">
                     <h3 className="text-2xl font-black tracking-tight text-[#1a1a1a]">¡Sesión Solicitada!</h3>
-                    <p className="text-slate-500 text-xs font-light leading-relaxed max-w-sm">
-                      Su requerimiento técnico ha sido procesado y guardado en nuestra capa de datos distribuida. Nos comunicaremos de inmediato.
+                    <p className="text-slate-600 text-sm font-light leading-relaxed max-w-sm">
+                      Recibimos tu requerimiento. Te escribiremos en menos de 24 horas hábiles con una propuesta de siguiente paso.
                     </p>
                   </div>
                   <button 
                     type="button"
                     onClick={() => {
                       setStatus("idle");
-                      setFormData({ name: "", company: "", email: "", subject: "Auditoría de Datos LADM-COL", description: "" });
+                      setFormData({ name: "", company: "", email: "", subject: "Catastro multipropósito / LADM-COL", description: "" });
+                      setTouched({ name: false, email: false, company: false, description: false });
                     }} 
-                    className="px-6 py-2.5 border border-slate-200 text-[9px] font-black uppercase tracking-wider text-slate-500 hover:bg-slate-50 transition-all"
+                    className="btn btn-secondary btn-sm"
                   >
                     Agendar otra sesión
                   </button>
@@ -247,22 +211,22 @@ export default function ContactSection() {
                   onSubmit={handleSubmit} 
                   noValidate
                   aria-label="Solicitud de sesión técnica"
-                  className="space-y-8"
+                  className="space-y-6"
                 >
                   {status === "error" && (
-                    <div role="alert" className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-xs font-mono rounded flex items-center gap-3">
+                    <div role="alert" className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-[var(--radius-sm)] flex items-center gap-3">
                       <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label htmlFor="contact-name" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Nombre Completo <span aria-hidden="true">*</span></label>
+                        <label htmlFor="contact-name" className="label-dgz !mb-0">Nombre Completo <span aria-hidden="true">*</span></label>
                         {touched.name && (
-                          <span id="contact-name-status" className={`text-[8px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
-                            {validateName(formData.name) ? "[ VÁLIDO ]" : "[ CORTO ]"}
+                          <span id="contact-name-status" className={`text-[9.5px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
+                            {validateName(formData.name) ? "[ VÁLIDO ]" : "Mínimo 3 caracteres"}
                           </span>
                         )}
                       </div>
@@ -279,12 +243,12 @@ export default function ContactSection() {
                           onBlur={handleBlur}
                           required
                           placeholder="Ing. Carlos Pérez" 
-                          className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                          className={`field-dgz ${
                             touched.name 
                               ? validateName(formData.name)
                                 ? "border-emerald-500/50 focus:border-emerald-500"
                                 : "border-red-500/50 focus:border-red-500"
-                              : "border-slate-100 focus:border-[#1a1a1a]"
+                              : ""
                           }`}
                         />
                         {touched.name && (
@@ -300,9 +264,9 @@ export default function ContactSection() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between pl-1">
-                        <label htmlFor="contact-company" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Organización</label>
+                        <label htmlFor="contact-company" className="label-dgz !mb-0">Organización</label>
                         {touched.company && formData.company.trim() && (
-                          <span className="text-[8px] font-mono uppercase tracking-widest text-emerald-500">
+                          <span className="text-[9.5px] font-mono uppercase tracking-widest text-emerald-700">
                             [ INGRESADO ]
                           </span>
                         )}
@@ -316,10 +280,10 @@ export default function ContactSection() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder="Entidad / Empresa" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                        className={`field-dgz ${
                           touched.company && formData.company.trim()
                             ? "border-emerald-500/30 focus:border-emerald-500"
-                            : "border-slate-100 focus:border-[#1a1a1a]"
+                            : ""
                         }`}
                       />
                     </div>
@@ -327,9 +291,9 @@ export default function ContactSection() {
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label htmlFor="contact-email" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Email Institucional <span aria-hidden="true">*</span></label>
+                      <label htmlFor="contact-email" className="label-dgz !mb-0">Correo electrónico <span aria-hidden="true">*</span></label>
                       {touched.email && (
-                        <span id="contact-email-status" className={`text-[8px] font-mono uppercase tracking-widest ${
+                        <span id="contact-email-status" className={`text-[9.5px] font-mono uppercase tracking-widest ${
                           !validateEmail(formData.email)
                             ? "text-red-600"
                             : isInstitutionalEmail(formData.email)
@@ -337,10 +301,10 @@ export default function ContactSection() {
                               : "text-amber-700"
                         }`}>
                           {!validateEmail(formData.email) 
-                            ? "[ INVÁLIDO ]" 
+                            ? "Revisa el formato: nombre@dominio.com" 
                             : isInstitutionalEmail(formData.email)
                               ? "[ PRIORIDAD ALTA ]"
-                              : "[ CORREO PERSONAL ]"}
+                              : "[ PERSONAL ]"}
                         </span>
                       )}
                     </div>
@@ -357,14 +321,14 @@ export default function ContactSection() {
                         onBlur={handleBlur}
                         required
                         placeholder="cperez@organizacion.com" 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors ${
+                        className={`field-dgz ${
                           touched.email 
                             ? !validateEmail(formData.email)
                               ? "border-red-500/50 focus:border-red-500"
                               : isInstitutionalEmail(formData.email)
                                 ? "border-emerald-500/50 focus:border-emerald-500"
                                 : "border-amber-500/50 focus:border-amber-500"
-                            : "border-slate-100 focus:border-[#1a1a1a]"
+                            : ""
                         }`}
                       />
                       {touched.email && (
@@ -386,11 +350,11 @@ export default function ContactSection() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="pt-1 text-[10px] text-amber-600 font-light flex items-center gap-1.5"
+                          className="pt-1 text-xs text-amber-700 font-light flex items-center gap-1.5"
                         >
                           <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                           <span>
-                            <strong>Recomendación:</strong> Utilice su correo corporativo o gubernamental para priorizar su solicitud en nuestra cola de ingeniería de misión crítica.
+                            Correo personal aceptado. Si tienes uno corporativo o institucional, úsalo para priorizar tu solicitud.
                           </span>
                         </motion.div>
                       )}
@@ -400,7 +364,7 @@ export default function ContactSection() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="pt-1 text-[10px] text-emerald-600 font-light flex items-center gap-1.5"
+                          className="pt-1 text-xs text-emerald-700 font-light flex items-center gap-1.5"
                         >
                           <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
                           <span>
@@ -412,26 +376,28 @@ export default function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="contact-subject" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest pl-1">Asunto de la Sesión</label>
+                    <label htmlFor="contact-subject" className="label-dgz !mb-0">Asunto de la Sesión</label>
                     <select 
                       id="contact-subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className="w-full bg-[#fcfcfc] border-b border-slate-100 p-4 text-xs text-[#1a1a1a] font-medium focus:outline-none focus:border-[#1a1a1a] transition-colors appearance-none"
+                      className="field-dgz"
                     >
-                      <option>Auditoría de Datos LADM-COL</option>
-                      <option>Implementación de Digital Twin</option>
-                      <option>Consultoría en Estándares ICDE</option>
-                      <option>Otros requerimientos técnicos</option>
+                      <option>Catastro multipropósito / LADM-COL</option>
+                      <option>WebGIS y visores geográficos</option>
+                      <option>Analítica de datos y tableros BI</option>
+                      <option>Drones, fotogrametría y GNSS</option>
+                      <option>Automatización e IA geoespacial</option>
+                      <option>Otro requerimiento técnico</option>
                     </select>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
-                      <label htmlFor="contact-description" className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Descripción del Desafío <span aria-hidden="true">*</span></label>
-                      <span id="contact-description-count" className={`text-[8px] font-mono uppercase tracking-widest ${
+                      <label htmlFor="contact-description" className="label-dgz !mb-0">Descripción del Desafío <span aria-hidden="true">*</span></label>
+                      <span id="contact-description-count" className={`text-[9.5px] font-mono uppercase tracking-widest ${
                         formData.description.length >= 30 ? "text-emerald-700" : "text-slate-500"
                       }`}>
                         {formData.description.length} / 30 mín.
@@ -442,19 +408,19 @@ export default function ContactSection() {
                         id="contact-description"
                         name="description"
                         aria-invalid={touched.description && !validateDescription(formData.description)}
-                        aria-describedby="contact-description-count"
+                        aria-describedby={touched.description && !validateDescription(formData.description) ? "contact-description-count contact-description-error" : "contact-description-count"}
                         value={formData.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required
                         rows="4" 
                         placeholder="Breve descripción del alcance del proyecto (por ejemplo, el área del levantamiento LiDAR, requisitos de precisión catastral)..." 
-                        className={`w-full bg-[#fcfcfc] border-b p-4 text-xs text-[#1a1a1a] font-medium placeholder:text-slate-400 focus:outline-none transition-colors resize-none ${
+                        className={`field-dgz resize-none ${
                           touched.description
                             ? validateDescription(formData.description)
                               ? "border-emerald-500/50 focus:border-emerald-500"
                               : "border-red-500/50 focus:border-red-500"
-                            : "border-slate-100 focus:border-[#1a1a1a]"
+                            : ""
                         }`}
                       />
                       {touched.description && (
@@ -467,15 +433,20 @@ export default function ContactSection() {
                         </div>
                       )}
                     </div>
+                    {touched.description && !validateDescription(formData.description) && (
+                      <p id="contact-description-error" className="text-xs text-red-700">
+                        Describe tu reto con al menos 30 caracteres para poder preparar una propuesta.
+                      </p>
+                    )}
                   </div>
 
                   <button 
                     type="submit"
                     disabled={status === "sending"}
-                    className="w-full py-5 bg-[#1a1a1a] text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-slate-800 transition-all flex items-center justify-center gap-4 shadow-xl disabled:opacity-50 cursor-pointer"
+                    className="btn btn-primary w-full !min-h-[3.5rem] disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                   >
-                    {status === "sending" ? "PROCESANDO..." : "Agendar Sesión Técnica"} 
-                    <Send className={`w-3 h-3 ${status === "sending" ? "animate-pulse" : ""}`} />
+                    {status === "sending" ? "Enviando…" : "Agendar sesión técnica"} 
+                    <Send className={`${status === "sending" ? "animate-pulse" : ""}`} />
                   </button>
                 </motion.form>
               )}

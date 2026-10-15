@@ -77,7 +77,7 @@ export default function BlogPage() {
             <div className="space-y-6 max-w-3xl">
               <div className="flex items-center gap-3">
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Insights & Engineering</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Insights & Engineering</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.02] text-[#1a1a1a]">
                 DevGiz <br /> <span className="text-slate-400 italic font-light">Journal</span>

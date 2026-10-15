@@ -775,8 +775,8 @@ export default function GlobalPartners() {
       <div className="absolute bottom-8 left-8 w-6 h-6 border-b-2 border-l-2 border-slate-300/40 pointer-events-none animate-corner-pulse hidden lg:block" />
       <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-slate-300/40 pointer-events-none animate-corner-pulse hidden lg:block" />
       
-      <div className="absolute top-8 left-16 text-[7px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">SYS_LINK_FRAME // LATENCY_MODULE: ON</div>
-      <div className="absolute top-8 right-16 text-[7px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">LOCAL_LOC // 06.2442° N, 75.5750° W</div>
+      <div className="absolute top-8 left-16 text-[9.5px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">SYS_LINK_FRAME // LATENCY_MODULE: ON</div>
+      <div className="absolute top-8 right-16 text-[9.5px] font-mono text-slate-400 tracking-[0.25em] pointer-events-none hidden lg:block">LOCAL_LOC // 06.2442° N, 75.5750° W</div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -785,7 +785,7 @@ export default function GlobalPartners() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <span className="w-10 h-[2px] bg-gradient-to-r from-cyan-500 to-blue-500"></span>
-              <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-extrabold">INTEGRACIÓN MULTIPROPÓSITO</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-cyan-600 font-extrabold">INTEGRACIÓN MULTIPROPÓSITO</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-slate-950 tracking-tighter leading-[0.95]">
               Clientes que han <br className="hidden md:inline" />
@@ -862,7 +862,7 @@ export default function GlobalPartners() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-16 py-4 bg-white/70 border border-slate-200/80 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20 backdrop-blur-md shadow-sm transition-all"
                 />
-                <span aria-live="polite" className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[8px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+                <span aria-live="polite" className="absolute right-4.5 top-1/2 -translate-y-1/2 text-[9.5px] font-mono text-slate-400 tracking-wider bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
                   {filteredPartners.length} COINCIDENCIAS
                 </span>
               </div>
@@ -1008,7 +1008,7 @@ export default function GlobalPartners() {
                 <div className={`h-3 w-3 rounded-full ${ledDotTheme} animate-pulse shadow-[0_0_12px_currentColor]`} />
                 <div>
                   <div className="text-[10px] font-mono font-black text-slate-800 tracking-[0.2em] uppercase">CENTRO DE CONTROL E INTEROPERABILIDAD TÉCNICA</div>
-                  <div className="text-[8px] font-mono text-slate-450 mt-1 uppercase tracking-wider">{timeCode}</div>
+                  <div className="text-[9.5px] font-mono text-slate-450 mt-1 uppercase tracking-wider">{timeCode}</div>
                 </div>
               </div>
 
@@ -1091,7 +1091,7 @@ export default function GlobalPartners() {
                 
                 {/* Visual Interconnection Network Node Graph */}
                 <div className="bg-slate-50 border border-slate-200/60 rounded-3xl p-5 flex flex-col items-center justify-between relative overflow-hidden h-[135px]">
-                  <div className="absolute top-3 left-4 text-[8px] font-mono text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="absolute top-3 left-4 text-[9.5px] font-mono text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
                     DIAGRAMA DE ENLACE ACTIVO
                   </div>
@@ -1156,9 +1156,9 @@ export default function GlobalPartners() {
                   <div className="flex items-center justify-between border-b border-slate-900 pb-3 mb-3 relative z-10">
                     <div className="flex items-center gap-2">
                       <Terminal className="w-4 h-4 text-slate-500 animate-pulse" />
-                      <span className="text-[8px] text-slate-500 font-bold uppercase tracking-[0.1em]">SALIDA DE CONSOLA DE SINCRONIZACIÓN</span>
+                      <span className="text-[9.5px] text-slate-500 font-bold uppercase tracking-[0.1em]">SALIDA DE CONSOLA DE SINCRONIZACIÓN</span>
                     </div>
-                    <span className="text-[7px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-black tracking-widest border border-emerald-500/20">LIVE</span>
+                    <span className="text-[9.5px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-black tracking-widest border border-emerald-500/20">LIVE</span>
                   </div>
 
                   <div className="h-[135px] overflow-y-auto space-y-1.5 custom-scrollbar text-left relative z-10">
@@ -1183,15 +1183,15 @@ export default function GlobalPartners() {
                 {/* Micro metrics underneath */}
                 <div className="grid grid-cols-3 gap-3.5">
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">LATENCIA</div>
+                    <div className="text-[9.5px] font-mono text-slate-450 uppercase tracking-wider">LATENCIA</div>
                     <div className={`font-mono text-xs font-black mt-1 ${textHighlightTheme}`}>{pingLatency}</div>
                   </div>
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">VELOCIDAD</div>
+                    <div className="text-[9.5px] font-mono text-slate-450 uppercase tracking-wider">VELOCIDAD</div>
                     <div className={`font-mono text-xs font-black mt-1 ${textHighlightTheme}`}>{currentMetadata.rate}</div>
                   </div>
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
-                    <div className="text-[7px] font-mono text-slate-450 uppercase tracking-wider">CANAL</div>
+                    <div className="text-[9.5px] font-mono text-slate-450 uppercase tracking-wider">CANAL</div>
                     <div className="font-mono text-[9px] font-black text-emerald-600 mt-1.5 uppercase truncate">{currentMetadata.quality.split(" ")[0]}</div>
                   </div>
                 </div>

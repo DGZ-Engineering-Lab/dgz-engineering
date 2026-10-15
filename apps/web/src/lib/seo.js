@@ -16,6 +16,17 @@ export const FOUNDER = {
 
 export const SAME_AS = ["https://github.com/DGZ-Engineering-Lab"];
 
+// Canales de contacto reales (fuente única para navbar, footer y formularios).
+export const CONTACT = {
+  email: "Albertg2109@gmail.com",
+  whatsapp: "573053261466",
+  whatsappDisplay: "+57 305 326 1466",
+  whatsappUrl: "https://wa.me/573053261466",
+  linkedin: "https://linkedin.com/in/soyalbertgz",
+  github: "https://github.com/gaviriaz",
+  city: "Medellín, Colombia",
+};
+
 export const SITE_KEYWORDS = [
   "Catastro Multipropósito",
   "LADM-COL",

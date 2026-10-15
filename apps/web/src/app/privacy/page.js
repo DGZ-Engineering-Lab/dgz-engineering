@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <div className="space-y-12 mb-20">
           <div className="flex items-center gap-3">
             <span className="w-12 h-px bg-[#1a1a1a]"></span>
-            <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Data Privacy // 2026</span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Data Privacy // 2026</span>
           </div>
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
             Privacidad de <br /> <span className="text-slate-400 italic font-light">Datos</span>

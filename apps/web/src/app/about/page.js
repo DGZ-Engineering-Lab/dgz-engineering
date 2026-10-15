@@ -408,7 +408,7 @@ export default function AboutPage() {
             >
               <motion.div variants={fadeUp} className="flex items-center gap-3">
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">About DevGiz // Engineering Manifesto</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">About DevGiz // Engineering Manifesto</span>
               </motion.div>
               <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 Soberanía Digital <br /> <span className="text-slate-400 italic font-light">del Territorio</span>
@@ -509,7 +509,7 @@ export default function AboutPage() {
             animate={impactInView ? "visible" : "hidden"}
             variants={stagger}
           >
-            <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.4em]">Strategic Results // KPI Report</motion.div>
+            <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.28em]">Strategic Results // KPI Report</motion.div>
             <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Impacto en <span className="text-slate-400 italic font-light">Cifras</span></motion.h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
@@ -655,7 +655,7 @@ export default function AboutPage() {
               
               {/* Visualizer card */}
               <div className="bg-[#080d1a]/60 border border-slate-900 rounded-2xl p-8 flex-1 flex flex-col justify-center min-h-[360px] relative overflow-hidden">
-                <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-600 tracking-wider">INTERACTIVE GRAPHIC VIEWER // STEP_0{activeStep}</span>
+                <span className="absolute top-4 left-4 font-mono text-[9.5px] text-slate-600 tracking-wider">INTERACTIVE GRAPHIC VIEWER // STEP_0{activeStep}</span>
                 
                 {/* Step 1 Content: Topo Snapping */}
                 {activeStep === 1 && (
@@ -721,12 +721,12 @@ export default function AboutPage() {
 
                       {/* Floating Indicator */}
                       {!step1Snapped && (
-                        <div className="absolute top-3 right-3 bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[8px] px-2.5 py-1 rounded-full animate-pulse tracking-wider font-black">
+                        <div className="absolute top-3 right-3 bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-[9.5px] px-2.5 py-1 rounded-full animate-pulse tracking-wider font-black">
                           SOLAPE DETECTADO (15.4%)
                         </div>
                       )}
                       {step1Snapped && (
-                        <div className="absolute top-3 right-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[8px] px-2.5 py-1 rounded-full tracking-wider font-black">
+                        <div className="absolute top-3 right-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[9.5px] px-2.5 py-1 rounded-full tracking-wider font-black">
                           TOPOLOGÍA DEPURADA (0.00%)
                         </div>
                       )}
@@ -833,18 +833,18 @@ export default function AboutPage() {
                       {/* Metric Comparison rows */}
                       <div className="grid grid-cols-2 gap-4 font-mono text-[10px]">
                         <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900">
-                          <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Levantamiento Físico</span>
+                          <span className="text-slate-500 block uppercase text-[9.5px] tracking-wider">Levantamiento Físico</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica} m²</span>
                         </div>
                         <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900">
-                          <span className="text-slate-500 block uppercase text-[8px] tracking-wider">Folio de Registro (SNR)</span>
+                          <span className="text-slate-500 block uppercase text-[9.5px] tracking-wider">Folio de Registro (SNR)</span>
                           <span className="text-white font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica} m²</span>
                         </div>
                       </div>
 
                       {/* Tolerance Indicator bar */}
                       <div className="space-y-1.5">
-                        <div className="flex justify-between text-[8px] font-mono text-slate-500 tracking-wider">
+                        <div className="flex justify-between text-[9.5px] font-mono text-slate-500 tracking-wider">
                           <span>DIFERENCIA REAL: {((Math.abs(SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica - SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica) / SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica) * 100).toFixed(1)}%</span>
                           <span>TOLERANCIA LEY: {SIMULATOR_SCENARIOS[selectedScenarioIndex].toleranceThreshold}%</span>
                         </div>
@@ -857,7 +857,7 @@ export default function AboutPage() {
                           />
                         </div>
                         <div className="flex justify-between items-center mt-1">
-                          <span className="text-[8px] font-mono text-slate-500 tracking-widest">ESTADO LEGAL</span>
+                          <span className="text-[9.5px] font-mono text-slate-500 tracking-widest">ESTADO LEGAL</span>
                           {step3Conciliated ? (
                             <span className="text-[9px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">CONCILIACIÓN APROBADA</span>
                           ) : (
@@ -930,7 +930,7 @@ export default function AboutPage() {
                             El predio ha sido incorporado al catastro multipropósito y sincronizado con SNR. Se ha emitido la firma criptográfica para garantizar la seguridad jurídica.
                           </p>
                           <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900 inline-block">
-                            <span className="text-[8px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
+                            <span className="text-[9.5px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
                             <span className="text-emerald-400 font-mono font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}</span>
                           </div>
                         </div>
@@ -993,7 +993,7 @@ export default function AboutPage() {
 
               {/* Console log box */}
               <div className="bg-[#020409] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1 relative h-[110px] overflow-y-auto shadow-inner">
-                <div className="absolute top-3 right-3 bg-slate-900/80 text-slate-500 text-[8px] px-2 py-0.5 rounded border border-slate-800 uppercase tracking-widest font-bold">
+                <div className="absolute top-3 right-3 bg-slate-900/80 text-slate-500 text-[9.5px] px-2 py-0.5 rounded border border-slate-800 uppercase tracking-widest font-bold">
                   TELEMETRÍA EN VIVO
                 </div>
                 {simConsoleLogs.map((log, lIdx) => {
@@ -1104,7 +1104,7 @@ export default function AboutPage() {
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider truncate block">{director.role.split("&")[0]}</span>
                         <span className="text-slate-700 font-mono text-[9px]">•</span>
-                        <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest">{director.latency}</span>
+                        <span className="text-[9.5px] font-mono text-slate-400 uppercase tracking-widest">{director.latency}</span>
                       </div>
                     </div>
 
@@ -1133,8 +1133,8 @@ export default function AboutPage() {
                     backgroundSize: '16px 16px'
                   }}></div>
 
-                  <span className="absolute top-4 left-4 font-mono text-[8px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} {"//"} {activeDirector.coordinates}</span>
-                  <span className="absolute bottom-4 right-4 font-mono text-[8px] text-slate-500 tracking-wider">DEVGIZ {"//"} CATASTRO MULTIPROPÓSITO</span>
+                  <span className="absolute top-4 left-4 font-mono text-[9.5px] text-slate-500 tracking-wider">REF_ID: DGZ-00{selectedDirector + 1} {"//"} {activeDirector.coordinates}</span>
+                  <span className="absolute bottom-4 right-4 font-mono text-[9.5px] text-slate-500 tracking-wider">DEVGIZ {"//"} CATASTRO MULTIPROPÓSITO</span>
                   
                   {/* Verification Banner */}
                   {verifiedSignatures[activeDirector.name] && (
@@ -1314,7 +1314,7 @@ export default function AboutPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <span className="w-12 h-px bg-cyan-500/50"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-cyan-400 font-bold">SOVEREIGN TECH PILLARS</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-cyan-400 font-bold">SOVEREIGN TECH PILLARS</span>
               </div>
               <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none">
                 Core de Ingeniería <br /> <span className="text-slate-400 font-light italic">Soberana</span>

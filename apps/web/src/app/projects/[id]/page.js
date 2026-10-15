@@ -250,7 +250,7 @@ function CadastreViewer() {
             type="button"
             aria-pressed={isLidarActive}
             onClick={() => setIsLidarActive(!isLidarActive)}
-            className={`px-2.5 py-1 text-[8px] font-mono tracking-widest uppercase rounded border transition-all ${
+            className={`px-2.5 py-1 text-[9.5px] font-mono tracking-widest uppercase rounded border transition-all ${
               isLidarActive
                 ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
                 : "bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300"
@@ -311,7 +311,7 @@ function CadastreViewer() {
           </svg>
 
           {/* Interactive Legends */}
-          <div className="absolute bottom-2 left-2 flex flex-col gap-1 text-[8px] font-mono text-slate-400">
+          <div className="absolute bottom-2 left-2 flex flex-col gap-1 text-[9.5px] font-mono text-slate-400">
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 bg-cyan-500/25 border border-cyan-500 rounded-sm" />
               <span>Seleccionado</span>
@@ -328,8 +328,8 @@ function CadastreViewer() {
         </div>
 
         {/* Local Console logs representing active engineering work */}
-        <div className="bg-black/80 border border-slate-900 rounded-lg p-3 font-mono text-[8px] text-slate-500 space-y-1 h-20 overflow-y-auto">
-          <div className="text-[7px] text-slate-600 font-bold uppercase tracking-widest border-b border-slate-900 pb-1 mb-1 flex items-center justify-between">
+        <div className="bg-black/80 border border-slate-900 rounded-lg p-3 font-mono text-[9.5px] text-slate-500 space-y-1 h-20 overflow-y-auto">
+          <div className="text-[9.5px] text-slate-600 font-bold uppercase tracking-widest border-b border-slate-900 pb-1 mb-1 flex items-center justify-between">
             <span>Terminal // DevGiz GIS Engine</span>
             <span className="w-1 h-1 bg-cyan-400 rounded-full animate-ping"></span>
           </div>
@@ -346,7 +346,7 @@ function CadastreViewer() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-slate-500 font-bold">{selectedParcel.id}</span>
-            <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border transition-all ${
+            <span className={`text-[9.5px] font-mono font-bold px-2 py-0.5 rounded-full border transition-all ${
               selectedParcel.status.includes("CONFORME") 
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" 
                 : selectedParcel.status.includes("VERIFICACIÓN")
@@ -359,21 +359,21 @@ function CadastreViewer() {
 
           <div className="space-y-3">
             <div>
-              <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Predio (Clase LADM-COL)</div>
+              <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Predio (Clase LADM-COL)</div>
               <div className="text-sm font-bold text-white tracking-tight">{selectedParcel.name}</div>
               <div className="text-[10px] text-slate-400 font-mono italic">{selectedParcel.ladmClass}</div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
                   <User className="w-2.5 h-2.5 text-slate-500" />
                   Sujeto de Interés
                 </div>
                 <div className="text-[11px] font-bold text-slate-300 line-clamp-1">{selectedParcel.interesado}</div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest flex items-center gap-1">
                   <Activity className="w-2.5 h-2.5 text-slate-500" />
                   Derecho / RRD
                 </div>
@@ -383,11 +383,11 @@ function CadastreViewer() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Área Física (LiDAR)</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Área Física (LiDAR)</div>
                 <div className="text-xs font-bold font-mono text-cyan-400">{selectedParcel.lidarArea}</div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Varianza de Registro</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Varianza de Registro</div>
                 <div className={`text-xs font-bold font-mono transition-all ${
                   selectedParcel.variance.includes("Ajuste") || selectedParcel.variance.includes("Superposición") 
                     ? "text-rose-400 animate-pulse font-bold" 
@@ -403,7 +403,7 @@ function CadastreViewer() {
         {/* Dynamic Action Buttons illustrating the "magic" of DevGiz */}
         <div className="pt-4 border-t border-slate-900 mt-4 space-y-3">
           
-          <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">
+          <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">
             Herramientas DevGiz Engine en Vivo
           </div>
 
@@ -432,7 +432,7 @@ function CadastreViewer() {
             )}
           </div>
 
-          <div className="flex items-center justify-between text-[8px] font-mono text-slate-500 pt-1">
+          <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-500 pt-1">
             <span>Sincronizado con Nodo IGAC</span>
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -525,7 +525,7 @@ function PluginSimulator() {
             </AnimatePresence>
           </svg>
 
-          <div className="absolute top-2 right-2 px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 text-[8px] font-mono">
+          <div className="absolute top-2 right-2 px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 text-[9.5px] font-mono">
             {isRepaired ? (
               <span className="text-emerald-400 font-bold flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3 text-emerald-400" />
@@ -549,7 +549,7 @@ function PluginSimulator() {
       <div className="md:col-span-6 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
         <div className="space-y-4">
           <div className="space-y-1">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Procedimiento Topológico</span>
+            <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Procedimiento Topológico</span>
             <h5 className="text-xs font-bold text-white">Algoritmo de Snapping Vectorial LADM-COL</h5>
             <p className="text-[10px] text-slate-400 font-light leading-relaxed">
               Resuelve traslapes topológicos de linderos prediales bajo la regla de no-superposición oficial mediante geometría computacional.
@@ -718,7 +718,7 @@ function PipelineMonitor() {
       <div className="md:col-span-5 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
         <div className="space-y-6">
           <div className="space-y-1">
-            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Métricas de Rendimiento</span>
+            <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Métricas de Rendimiento</span>
             <h5 className="text-xs font-bold text-white">Consistencia Temporal & Ingesta</h5>
           </div>
 
@@ -738,13 +738,13 @@ function PipelineMonitor() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Filas Procesadas</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Filas Procesadas</div>
                 <div className="text-sm font-bold font-mono text-white">
                   {recordsCount.toLocaleString()}
                 </div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Velocidad Ingesta</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Velocidad Ingesta</div>
                 <div className="text-sm font-bold font-mono text-cyan-400">
                   {isRunning ? "124,500/s" : "0/s"}
                 </div>
@@ -753,13 +753,13 @@ function PipelineMonitor() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-slate-900 pt-3">
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Engine Footprint</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Engine Footprint</div>
                 <div className="text-[11px] font-bold font-mono text-slate-300">
                   {isRunning ? "1.42 GB RAM" : "Idle"}
                 </div>
               </div>
               <div>
-                <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Cores Activos</div>
+                <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">Cores Activos</div>
                 <div className="text-[11px] font-bold font-mono text-indigo-400 flex items-center gap-1.5">
                   <Cpu className="w-3.5 h-3.5 text-indigo-400" />
                   {isRunning ? "8/8 Threads" : "0 threads"}
@@ -960,7 +960,7 @@ LIMIT 5;`,
         }
         return (
           <div key={index} className="my-3 space-y-1.5">
-            <div className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
+            <div className="text-[9.5px] font-mono text-cyan-400 uppercase tracking-widest pl-1">Código Generado ({language})</div>
             <div className="bg-[#030712] border border-slate-800/80 rounded-lg p-3.5 font-mono text-[9px] text-emerald-400 overflow-x-auto whitespace-pre-wrap select-all">
               {code.trim()}
             </div>
@@ -985,7 +985,7 @@ LIMIT 5;`,
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               Preguntas Geoespaciales
             </h4>
-            <span className="text-[8px] font-mono text-slate-500">Geo-LLM Core v2</span>
+            <span className="text-[9.5px] font-mono text-slate-500">Geo-LLM Core v2</span>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -1050,7 +1050,7 @@ LIMIT 5;`,
             <div className="bg-[#030712] border border-slate-900 rounded-lg p-4 font-mono text-[9px] text-cyan-500/80 min-h-[160px] flex flex-col justify-end space-y-1.5 shadow-inner">
               {liveLogs.map((log, index) => (
                 <div key={index} className="flex items-center gap-1.5">
-                  <span className="text-[7px] text-slate-600">[{index * 0.4}s]</span>
+                  <span className="text-[9.5px] text-slate-600">[{index * 0.4}s]</span>
                   <span>{log}</span>
                 </div>
               ))}
@@ -1083,7 +1083,7 @@ LIMIT 5;`,
                     <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <div>
                       <div className="font-bold uppercase tracking-wide">Modo Simulación Activo</div>
-                      <div className="text-[8.5px] text-amber-400/70 leading-normal mt-0.5">
+                      <div className="text-[9.5px] text-amber-400/70 leading-normal mt-0.5">
                         GROQ_API_KEY no detectada en la variable local. Mostrando respuesta inteligente simulada.
                       </div>
                     </div>
@@ -1096,7 +1096,7 @@ LIMIT 5;`,
                         Llama 3.3 Conectado
                         <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
                       </div>
-                      <div className="text-[8.5px] text-emerald-400/70 leading-normal mt-0.5">
+                      <div className="text-[9.5px] text-emerald-400/70 leading-normal mt-0.5">
                         Inferencia espacial real ejecutada con éxito en el clúster de cómputo ultraveloz de Groq.
                       </div>
                     </div>
@@ -1104,7 +1104,7 @@ LIMIT 5;`,
                 )}
 
                 <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
+                  <div className="flex items-center gap-2 text-[9.5px] font-mono text-cyan-400">
                     <Terminal className="w-3.5 h-3.5" />
                     RESPUESTA GEO-AI EN VIVO
                   </div>
@@ -1113,7 +1113,7 @@ LIMIT 5;`,
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-900 text-[8px] font-mono text-slate-500 flex items-center justify-between">
+                <div className="pt-3 border-t border-slate-900 text-[9.5px] font-mono text-slate-500 flex items-center justify-between">
                   <span className="flex items-center gap-1">
                     <Cpu className="w-2.5 h-2.5 text-slate-600" />
                     Modelo: {liveResponse.model}
@@ -1153,7 +1153,7 @@ LIMIT 5;`,
           /* Caso D: Vista de Presets Estáticos (Con Opción de Inferencia en Vivo) */
           <div className="flex-1 flex flex-col justify-between space-y-4">
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-[8px] font-mono text-cyan-400">
+              <div className="flex items-center gap-2 text-[9.5px] font-mono text-cyan-400">
                 <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
                 DEMO PRE-RENDERIZADA
               </div>
@@ -1169,14 +1169,14 @@ LIMIT 5;`,
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-3"
               >
-                <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[8px] text-emerald-400 overflow-x-auto whitespace-pre">
+                <div className="bg-slate-900 border border-slate-800/80 rounded p-3 font-mono text-[9.5px] text-emerald-400 overflow-x-auto whitespace-pre">
                   {queries[activeQueryIndex].sql}
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 border-t border-slate-900 pt-2.5">
                   {Object.entries(queries[activeQueryIndex].metrics).map(([key, val]) => (
                     <div key={key} className="bg-slate-900/60 p-2 rounded border border-slate-900 text-center shadow-inner">
-                      <div className="text-[7px] text-slate-500 uppercase tracking-widest leading-none">{key}</div>
+                      <div className="text-[9.5px] text-slate-500 uppercase tracking-widest leading-none">{key}</div>
                       <div className="text-[10px] font-bold text-white mt-1 leading-none">{val}</div>
                     </div>
                   ))}
@@ -1197,7 +1197,7 @@ LIMIT 5;`,
               </motion.div>
             )}
 
-            <div className="pt-3 border-t border-slate-900 text-[8px] font-mono text-slate-500 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-900 text-[9.5px] font-mono text-slate-500 flex items-center justify-between">
               <span>Token Cost: ~210 Spatial Tokens</span>
               <span>Model latency: 0.12s</span>
             </div>
@@ -1315,16 +1315,12 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
-            <div className="mt-32 pt-20 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="flex items-center gap-4">
-                <Logo className="w-12 h-12 opacity-80" />
-                <div className="flex flex-col">
-                  <span className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">DevGiz Engineering</span>
-                  <span className="text-[10px] text-slate-400 font-mono">Territorial Infrastructure Lab</span>
-                </div>
-              </div>
-              <Link href="/projects" className="px-8 py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl">
-                Volver al Portfolio de Ingeniería
+            <div className="mt-20 pt-10 border-t border-slate-200/70 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+              <Link href="/projects" className="btn btn-secondary">
+                ← Volver a proyectos
+              </Link>
+              <Link href="/#contact" className="btn btn-primary">
+                Quiero un proyecto así
               </Link>
             </div>
           </div>

@@ -64,7 +64,7 @@ export default function ChallengesSection() {
             >
               <div className="relative z-10 space-y-5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-red-500/50 uppercase tracking-[0.4em]">Protocol_{c.num}</span>
+                  <span className="text-[10px] font-mono text-red-500/50 uppercase tracking-[0.28em]">Protocol_{c.num}</span>
                   <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
                 </div>
                 

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Logo from "../../components/Logo";
-import FooterSection from "../../components/FooterSection";
 import {
   DollarSign,
   Clock,
@@ -382,7 +381,7 @@ export default function BrochurePage() {
         <div className="max-w-6xl mx-auto">
 
           <div className="text-center space-y-3 mb-20">
-            <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">SOLUCIONES POR SECTOR</span>
+            <span className="text-[9px] font-mono uppercase tracking-[0.28em] text-cyan-600 font-bold">SOLUCIONES POR SECTOR</span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight">
               ¿Cómo impulsamos el crecimiento de tu negocio?
             </h2>
@@ -526,8 +525,6 @@ export default function BrochurePage() {
           </div>
         </div>
       </section>
-
-      <FooterSection />
     </div>
   );
 }

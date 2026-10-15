@@ -81,7 +81,7 @@ export default function ServicesPage() {
             >
               <div className="flex items-center gap-3">
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">
                   Catálogo de Ingeniería Espacial // 10 Soluciones Especializadas
                 </span>
               </div>
@@ -224,7 +224,7 @@ export default function ServicesPage() {
                             <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest font-bold">
                               {svc.id}
                             </span>
-                            <span className="font-mono text-[8px] text-cyan-600 uppercase tracking-widest font-bold">
+                            <span className="font-mono text-[9.5px] text-cyan-600 uppercase tracking-widest font-bold">
                               {svc.capaLabel}
                             </span>
                           </div>
@@ -246,7 +246,7 @@ export default function ServicesPage() {
                         <div className="grid grid-cols-2 gap-3">
                           {svc.metrics?.slice(0, 2).map((m, mIdx) => (
                             <div key={mIdx} className="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                              <span className="text-[8px] font-mono text-slate-400 uppercase tracking-wider block truncate">
+                              <span className="text-[9.5px] font-mono text-slate-400 uppercase tracking-wider block truncate">
                                 {m.label}
                               </span>
                               <span className="text-xs font-black text-slate-900 tabular-nums">

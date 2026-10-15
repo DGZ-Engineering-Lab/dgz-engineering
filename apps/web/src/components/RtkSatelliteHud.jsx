@@ -35,14 +35,14 @@ export default function RtkSatelliteHud() {
       
       <div className="flex items-center justify-between border-b border-slate-900 pb-3 relative z-10">
         <div className="space-y-0.5">
-          <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest block font-bold">
+          <span className="text-[9.5px] font-mono text-cyan-400 uppercase tracking-widest block font-bold">
             RTK GNSS Geodetic System
           </span>
           <h4 className="text-xs font-bold text-white uppercase tracking-wider">
             Consola de Bloqueo Satelital
           </h4>
         </div>
-        <span className={`px-2 py-0.5 rounded text-[7px] font-mono font-bold uppercase tracking-widest ${
+        <span className={`px-2 py-0.5 rounded text-[9.5px] font-mono font-bold uppercase tracking-widest ${
           isLocked 
             ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
             : "bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse"
@@ -112,7 +112,7 @@ export default function RtkSatelliteHud() {
           </svg>
 
           {/* Holographic HUD label */}
-          <span className="absolute bottom-2 left-2 text-[7px] font-mono text-slate-500 uppercase tracking-widest">
+          <span className="absolute bottom-2 left-2 text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">
             Constelación GNSS activa
           </span>
         </div>
@@ -122,13 +122,13 @@ export default function RtkSatelliteHud() {
           
           <div className="grid grid-cols-2 gap-4 border-b border-slate-900/60 pb-3">
             <div>
-              <span className="text-[8px] font-mono text-slate-500 block uppercase tracking-wider">Factor PDOP</span>
+              <span className="text-[9.5px] font-mono text-slate-500 block uppercase tracking-wider">Factor PDOP</span>
               <span className={`text-sm font-black font-mono tracking-tight ${isLocked ? "text-cyan-400" : "text-amber-400"}`}>
                 {pdop.toFixed(1)}
               </span>
             </div>
             <div>
-              <span className="text-[8px] font-mono text-slate-500 block uppercase tracking-wider">Precisión RTK</span>
+              <span className="text-[9.5px] font-mono text-slate-500 block uppercase tracking-wider">Precisión RTK</span>
               <span className={`text-sm font-black font-mono tracking-tight ${isLocked ? "text-emerald-400" : "text-amber-400"}`}>
                 {precision}
               </span>
@@ -158,7 +158,7 @@ export default function RtkSatelliteHud() {
 
           {/* Interactive Dial Slider */}
           <div className="space-y-2 pt-2">
-            <div className="flex justify-between items-center text-[8px] font-mono text-slate-500 uppercase tracking-widest">
+            <div className="flex justify-between items-center text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">
               <label htmlFor="rtk-pdop">Ajustar Señal (PDOP)</label>
               <span>1.0 (Óptimo) - 4.5 (Inestable)</span>
             </div>

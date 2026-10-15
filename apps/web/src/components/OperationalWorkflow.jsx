@@ -39,7 +39,7 @@ export default function OperationalWorkflow() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         <div className="text-center mb-12 space-y-4">
-          <div className="text-[10px] font-mono text-slate-500 tracking-[0.5em] uppercase">Pipeline Operativo //_v2.0</div>
+          <div className="text-[10px] font-mono text-slate-500 tracking-[0.32em] uppercase">Pipeline Operativo //_v2.0</div>
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter">De la Complejidad a la <span className="text-cyan-400">Eficiencia</span></h2>
         </div>
 

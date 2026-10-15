@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { CONTACT } from "../../../lib/seo";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Globe, 
@@ -1120,7 +1121,7 @@ export default function ServicePage() {
 
                   {/* Regulador de Frecuencia/Velocidad */}
                   <div className="pt-2">
-                    <label htmlFor="sim-speed" className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
+                    <label htmlFor="sim-speed" className="text-[9.5px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
                       Frecuencia de Muestreo / Velocidad: {simSpeed}x
                     </label>
                     <input id="sim-speed" aria-valuetext={`${simSpeed}x`}
@@ -1156,7 +1157,7 @@ export default function ServicePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
                     {simMetrics.map((met, idx) => (
                       <div key={idx} className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col justify-between">
-                        <span className="text-[8px] font-mono text-slate-400 uppercase font-bold">{met.label}</span>
+                        <span className="text-[9.5px] font-mono text-slate-400 uppercase font-bold">{met.label}</span>
                         <div className="flex items-baseline gap-1.5 mt-1">
                           <span className="text-xl font-black text-slate-800 font-mono">
                             {met.current.toLocaleString()}
@@ -1193,7 +1194,7 @@ export default function ServicePage() {
                 
                 {/* Pantalla Gráfica (Viewport) */}
                 <div className="h-[280px] bg-slate-50/70 border border-slate-200 rounded-[1.8rem] overflow-hidden relative shadow-inner flex items-center justify-center">
-                  <div className="absolute top-4 left-4 p-2 bg-white/90 border border-slate-200/80 rounded-lg text-[8px] font-mono text-slate-500 font-bold z-10 uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+                  <div className="absolute top-4 left-4 p-2 bg-white/90 border border-slate-200/80 rounded-lg text-[9.5px] font-mono text-slate-500 font-bold z-10 uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                     <span className={`w-1.5 h-1.5 rounded-full ${simStatus === "running" ? "bg-emerald-500 animate-pulse" : "bg-slate-400"}`}></span>
                     Viewport: {service.simulation.type.toUpperCase()}_STAGE
                   </div>
@@ -1209,7 +1210,7 @@ export default function ServicePage() {
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
                     </div>
-                    <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest font-black flex items-center gap-1.5">
+                    <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest font-black flex items-center gap-1.5">
                       <Terminal className="w-3.5 h-3.5 text-cyan-500" />
                       Live Data Logger Stream
                     </span>
@@ -1552,7 +1553,7 @@ export default function ServicePage() {
                     </div>
 
                     <div className="space-y-3.5 mb-10">
-                      <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block mb-4 font-bold text-left">Entregables y Garantías</span>
+                      <span className="text-[9.5px] font-mono text-slate-400 uppercase tracking-widest block mb-4 font-bold text-left">Entregables y Garantías</span>
                       {tier.deliverables.map((del, dIdx) => (
                         <div key={dIdx} className="flex gap-2.5 items-start text-[11px] text-slate-600 font-light leading-snug text-left">
                           <CheckCircle2 className="w-4 h-4 mt-0.5 text-cyan-600 flex-shrink-0" />
@@ -1616,7 +1617,7 @@ export default function ServicePage() {
                 <div className="space-y-4 pt-6 border-t border-slate-100">
                   <div className="flex gap-3 items-center text-xs text-slate-500 font-mono">
                     <Mail className="w-4 h-4 text-cyan-600" />
-                    <span>contacto@devgiz.com</span>
+                    <a href={`mailto:${CONTACT.email}`} className="hover:text-cyan-700">{CONTACT.email}</a>
                   </div>
                   <div className="flex gap-3 items-center text-xs text-slate-500 font-mono">
                     <Activity className="w-4 h-4 text-cyan-600" />
