@@ -1,7 +1,7 @@
 fastapi==0.143.0
 uvicorn==0.54.0
 geopandas==1.2.0
-shapely==2.1.2
+shapely==2.2.0
 fiona==1.10.1
 groq==1.7.0
 python-multipart==0.0.32
@@ -9,4 +9,4 @@ numpy<3.0.0
 pandas==3.0.6
 openpyxl==3.1.5
 supabase
-fpdf2==2.3.4
+fpdf2==2.8.9
