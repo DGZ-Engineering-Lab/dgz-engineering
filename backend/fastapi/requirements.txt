@@ -1,6 +1,6 @@
 fastapi>=0.142.2
 uvicorn[standard]>=0.54.0
-shapely>=2.1.2
+shapely>=2.2.0
 python-multipart>=0.0.32
 sqlalchemy>=2.0.0
 geoalchemy2>=0.14.0
