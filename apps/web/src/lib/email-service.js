@@ -91,8 +91,9 @@ class EmailService {
     try {
       // If no audienceId is explicitly configured, try to fetch the default one "General"
       if (!this.audienceId) {
-        console.log("[EmailService] No RESEND_AUDIENCE_ID found, attempting to fetch default audience...");
-        const audiencesRes = await this.resend.audiences.list();
+        console.log("[EmailService] No RESEND_AUDIENCE_ID found, attempting to fetch default segment...");
+        // Resend 6 replaced audiences with segments; existing audience ids are valid segment ids.
+        const audiencesRes = await this.resend.segments.list();
         if (audiencesRes.data && audiencesRes.data.data.length > 0) {
           this.audienceId = audiencesRes.data.data[0].id;
         } else {
@@ -102,10 +103,10 @@ class EmailService {
       }
 
       const response = await this.resend.contacts.create({
-        audienceId: this.audienceId,
         email: email,
         firstName: firstName,
         unsubscribed: false,
+        segments: [{ id: this.audienceId }],
       });
       
       console.log(`👥 Contact ${email} added to Resend Audience successfully.`);
