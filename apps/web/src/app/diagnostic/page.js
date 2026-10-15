@@ -410,7 +410,7 @@ export default function DiagnosticPage() {
               <div id="validator" className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow min-h-[500px] relative overflow-hidden bg-slate-950/40">
                 <div className="flex items-center justify-between border-b border-slate-900 pb-4 mb-6">
                   <div className="space-y-1">
-                    <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
+                    <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5 font-bold">
                       <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
                       Interactive GIS Canvas
                     </span>
@@ -575,7 +575,7 @@ export default function DiagnosticPage() {
                     </div>
 
                     {/* Sub-terminal with active logs */}
-                    <div className="mt-6 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[9px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
+                    <div className="mt-6 bg-[#010205] border border-slate-900 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-1.5 relative overflow-hidden min-h-[110px] flex flex-col justify-between">
                       <div className="flex items-center justify-between border-b border-slate-900 pb-2 mb-2">
                         <span className="text-[9.5px] tracking-widest uppercase font-bold text-slate-500 flex items-center gap-1.5">
                           <Terminal className="w-3 h-3 text-cyan-400" />
@@ -611,7 +611,7 @@ export default function DiagnosticPage() {
                 {/* Pathology selector glass card */}
                 <div className="p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow space-y-6 bg-slate-950/40 flex-grow">
                   <div className="space-y-1">
-                    <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest">Educational Sandbox</span>
+                    <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">Educational Sandbox</span>
                     <h3 className="text-xl font-bold text-white uppercase tracking-wider">Patologías Catastrales</h3>
                     <p className="text-xs text-slate-400 font-light">
                       Seleccione una patología común en catastros municipales desactualizados para conocer su impacto y ver el poder de resolución automatizada.
@@ -784,7 +784,7 @@ export default function DiagnosticPage() {
               <div id="rtk" className="lg:col-span-6 p-6 md:p-8 glass-card-premium rounded-[2rem] border-glow bg-slate-950/40 space-y-8 flex flex-col justify-between">
                 
                 <div className="space-y-2 border-b border-slate-900 pb-4">
-                  <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
                     <Sliders className="w-3.5 h-3.5 text-cyan-400" />
                     Territorial Finance Simulator
                   </span>
@@ -881,7 +881,7 @@ export default function DiagnosticPage() {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl pointer-events-none"></div>
                   
                   <div className="space-y-1">
-                    <span className="text-[9px] font-mono text-rose-400 uppercase tracking-widest font-bold">
+                    <span className="text-[10px] font-mono text-rose-400 uppercase tracking-widest font-bold">
                       Impacto Fiscal Estimado (Pérdida)
                     </span>
                     <h3 className="text-lg font-bold text-white uppercase tracking-wider">Fuga de Recaudo Predial</h3>
@@ -947,7 +947,7 @@ export default function DiagnosticPage() {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
                     <div className="space-y-2 border-b border-slate-900 pb-6 text-center md:text-left">
-                      <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-[0.3em] font-bold block">
+                      <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] font-bold block">
                         Elite Cadastral Diagnostics
                       </span>
                       <h3 className="text-2xl font-black text-white uppercase tracking-wider">Solicitar Pre-Auditoría Territorial</h3>
@@ -1028,7 +1028,7 @@ export default function DiagnosticPage() {
                       <div className="p-4 bg-slate-950/80 border border-slate-900 rounded-2xl flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <Lock className="w-4 h-4 text-cyan-500" />
-                          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest leading-none">
+                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest leading-none">
                             Protección de datos conforme ley Habeas Data 1581
                           </span>
                         </div>
@@ -1087,7 +1087,7 @@ export default function DiagnosticPage() {
                       <div ref={consoleBottomRef} />
                     </div>
 
-                    <div className="text-center text-[9px] font-mono text-slate-500 uppercase tracking-widest">
+                    <div className="text-center text-[10px] font-mono text-slate-500 uppercase tracking-widest">
                       DevGiz AI Espacial Engine // Orquestación en tiempo real (Polars & DuckDB)
                     </div>
                   </motion.div>
@@ -1110,7 +1110,7 @@ export default function DiagnosticPage() {
                       </div>
                       
                       <div className="space-y-1">
-                        <span className="text-[9px] font-mono text-emerald-400 uppercase tracking-[0.3em] font-bold">
+                        <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-[0.3em] font-bold">
                           PRE-DIAGNÓSTICO CONSOLIDADO
                         </span>
                         <h3 className="text-3xl font-black text-white uppercase tracking-wider">

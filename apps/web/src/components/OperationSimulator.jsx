@@ -93,7 +93,7 @@ export default function OperationSimulator() {
               ))}
               <div className="text-white animate-pulse">_</div>
             </div>
-            <div className="px-4 py-3 border-t border-slate-800 bg-[#050505] flex justify-between items-center text-[9px] font-mono text-slate-500 uppercase tracking-widest">
+            <div className="px-4 py-3 border-t border-slate-800 bg-[#050505] flex justify-between items-center text-[10px] font-mono text-slate-500 uppercase tracking-widest">
               <span>Status: Synchronized</span>
               <span className="text-cyan-400">9.4 GB/s</span>
             </div>
@@ -125,10 +125,10 @@ export default function OperationSimulator() {
               ))}
 
               <div className="absolute top-4 right-4 flex flex-col gap-2">
-                 <div className="px-3 py-1.5 bg-black/80 border border-slate-800 rounded text-[9px] font-mono text-slate-400 uppercase">
+                 <div className="px-3 py-1.5 bg-black/80 border border-slate-800 rounded text-[10px] font-mono text-slate-400 uppercase">
                     Precision: <span className="text-cyan-400">{metrics.precision}%</span>
                  </div>
-                 <div className="px-3 py-1.5 bg-black/80 border border-slate-800 rounded text-[9px] font-mono text-slate-400 uppercase">
+                 <div className="px-3 py-1.5 bg-black/80 border border-slate-800 rounded text-[10px] font-mono text-slate-400 uppercase">
                     Active_Nodes: <span className="text-white">{metrics.nodes}</span>
                  </div>
               </div>
@@ -156,7 +156,7 @@ export default function OperationSimulator() {
                   <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-all"></div>
                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">System Health</span>
                   <div className="text-4xl font-black text-emerald-400 my-2">NOMINAL</div>
-                  <div className="text-[9px] font-mono text-slate-500 uppercase">Uptime: 99.9999%</div>
+                  <div className="text-[10px] font-mono text-slate-500 uppercase">Uptime: 99.9999%</div>
                </div>
             </div>
 

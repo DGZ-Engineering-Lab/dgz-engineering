@@ -83,7 +83,7 @@ export default function RealtimeDataStream() {
             Procesamiento de <span className="text-cyan-500">Nodos en Tiempo Real</span>
           </h3>
         </div>
-        <div className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-[9px] font-mono text-cyan-500">
+        <div className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-[10px] font-mono text-cyan-500">
           OPS/SEC: 1,240
         </div>
       </div>
@@ -93,7 +93,7 @@ export default function RealtimeDataStream() {
       <div className="grid grid-cols-3 gap-4">
           {[1,2,3].map(i => (
               <div key={i} className="p-4 bg-black/40 border border-slate-800 rounded-2xl">
-                  <div className="text-[9px] font-mono text-slate-500 uppercase mb-1">Worker_0{i}</div>
+                  <div className="text-[10px] font-mono text-slate-500 uppercase mb-1">Worker_0{i}</div>
                   <div className="text-sm font-bold text-slate-300">ACTIVO</div>
               </div>
           ))}

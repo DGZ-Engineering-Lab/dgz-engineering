@@ -126,7 +126,7 @@ export default function RealityShowcase() {
                     <div className={`text-sm font-black transition-colors ${activeTab.id === aspect.id ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`}>
                       {aspect.title}
                     </div>
-                    <div className="text-[9px] font-mono text-slate-500 tracking-widest uppercase">
+                    <div className="text-[10px] font-mono text-slate-500 tracking-widest uppercase">
                       {aspect.tag}
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export default function RealityShowcase() {
                     <div className="grid grid-cols-3 gap-4">
                       {activeTab.metrics.map((m, i) => (
                         <div key={i} className="p-4 bg-black/40 border border-slate-800 rounded-2xl backdrop-blur-md">
-                          <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mb-1">{m.label}</div>
+                          <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{m.label}</div>
                           <div className="text-lg font-bold text-white transition-all duration-500">
                              {isProcessing ? '---' : m.value}
                           </div>
@@ -255,7 +255,7 @@ export default function RealityShowcase() {
               </div>
               
               {/* Terminal Output */}
-              <div className="absolute bottom-6 right-6 w-64 bg-black/90 border border-slate-800 rounded-xl p-4 font-mono text-[9px] hidden md:block">
+              <div className="absolute bottom-6 right-6 w-64 bg-black/90 border border-slate-800 rounded-xl p-4 font-mono text-[10px] hidden md:block">
                  <div className="flex items-center gap-2 mb-3 border-b border-slate-800 pb-2">
                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
                     <span className="text-slate-400">STDOUT_STREAM</span>

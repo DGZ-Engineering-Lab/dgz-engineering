@@ -123,7 +123,7 @@ export default function ProjectsPage() {
                     }`}
                   >
                     <span>{cat}</span>
-                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold tabular-nums ${
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold tabular-nums ${
                       isSelected ? "bg-white/20 text-white" : "bg-white text-slate-500"
                     }`}>
                       {count}
@@ -203,7 +203,7 @@ export default function ProjectsPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-10 right-10 p-6 bg-white/95 backdrop-blur-md shadow-xl rounded-lg text-center min-w-[140px] group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300 z-10 border border-slate-100">
-                    <div className="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">{project.stats.label}</div>
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-1">{project.stats.label}</div>
                     <div className="text-lg font-black text-[#1a1a1a] tracking-tight">{project.stats.value}</div>
                   </div>
                 </div>

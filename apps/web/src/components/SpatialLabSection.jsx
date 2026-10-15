@@ -32,7 +32,7 @@ export default function SpatialLabSection() {
 
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 space-y-6">
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[9px] sm:text-[10px] tracking-[0.28em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#050810]/80 border border-cyan-500/30 rounded-full text-cyan-400 font-mono text-[10px] sm:text-[10px] tracking-[0.28em] uppercase font-bold shadow-[0_0_30px_rgba(6,182,212,0.15)] backdrop-blur-xl">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_cyan]"></span>
             DGZ Engineering / Innovation Lab
           </div>
@@ -257,12 +257,12 @@ function ProjectCarousel() {
             
             {/* Tags and Status */}
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <span className={`px-3 py-1 bg-slate-900 border border-slate-700 rounded-full font-mono text-[9px] sm:text-[10px] ${activeProject.theme.text} tracking-[0.3em] uppercase font-bold shadow-lg`}>
+              <span className={`px-3 py-1 bg-slate-900 border border-slate-700 rounded-full font-mono text-[10px] sm:text-[10px] ${activeProject.theme.text} tracking-[0.3em] uppercase font-bold shadow-lg`}>
                 {activeProject.tag}
               </span>
               <div className="flex items-center gap-2">
                 <span className={`w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]`}></span>
-                <span className="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest">{activeProject.status}</span>
+                <span className="text-[10px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest">{activeProject.status}</span>
               </div>
             </div>
 

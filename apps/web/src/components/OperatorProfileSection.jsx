@@ -165,7 +165,7 @@ export default function OperatorProfileSection() {
                     <span className="text-sm bg-slate-800 p-1.5 rounded">{rec.icon}</span>
                     <div>
                       <div className="text-xs font-bold text-slate-200">{rec.title}</div>
-                      <div className="text-[9px] font-mono text-slate-500 uppercase">{rec.date}</div>
+                      <div className="text-[10px] font-mono text-slate-500 uppercase">{rec.date}</div>
                     </div>
                   </div>
                 ))}

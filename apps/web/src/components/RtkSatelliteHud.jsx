@@ -136,7 +136,7 @@ export default function RtkSatelliteHud() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-[9px] font-mono font-bold uppercase tracking-wider">
+            <div className="flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-wider">
               <span className="text-slate-400">Satélites en Línea</span>
               <span className="text-white">{activeSats} / 12 Activos</span>
             </div>

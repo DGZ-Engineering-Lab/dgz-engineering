@@ -156,7 +156,7 @@ export default function StandardsPage() {
                     </div>
                   </div>
 
-                  <div className="pt-2 text-[9px] font-mono text-cyan-600 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                  <div className="pt-2 text-[10px] font-mono text-cyan-600 font-bold uppercase tracking-widest flex items-center gap-1.5">
                     <span>{isSelected ? "● Inspección Activa" : "○ Clic para Inspeccionar"}</span>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export default function StandardsPage() {
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
             <div className="space-y-1">
-              <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-bold">
+              <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-bold">
                 Inspección Técnica de Cumplimiento // {activeStd.tag}
               </span>
               <h3 className="text-2xl font-black text-[#1a1a1a]">{activeStd.title}</h3>
@@ -190,15 +190,15 @@ export default function StandardsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-bold">Autoridad Emisora</span>
+              <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">Autoridad Emisora</span>
               <span className="text-slate-800 font-bold text-xs">{activeStd.authority}</span>
             </div>
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-bold">Formato de Intercambio</span>
+              <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">Formato de Intercambio</span>
               <span className="text-slate-800 font-bold text-xs">{activeStd.format}</span>
             </div>
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-bold">Tolerancia Oficial</span>
+              <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">Tolerancia Oficial</span>
               <span className="text-slate-800 font-bold text-xs">{activeStd.tolerance}</span>
             </div>
           </div>
@@ -241,11 +241,11 @@ export default function StandardsPage() {
               </p>
               <div className="pt-8 flex flex-wrap gap-6">
                 <div className="px-6 py-4 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-default group/badge">
-                  <div className="text-[9px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Schema Status</div>
+                  <div className="text-[10px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Schema Status</div>
                   <div className="text-sm font-black text-emerald-500 tracking-widest group-hover/badge:scale-105 transition-transform origin-left">STABLE // LADM-COL v3.0</div>
                 </div>
                 <div className="px-6 py-4 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-default group/badge">
-                  <div className="text-[9px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Compliance</div>
+                  <div className="text-[10px] font-mono text-slate-600 mb-2 uppercase tracking-widest">Compliance</div>
                   <div className="text-sm font-black text-white tracking-widest group-hover/badge:scale-105 transition-transform origin-left">ISO 19152 CERTIFIED</div>
                 </div>
               </div>
@@ -291,14 +291,14 @@ export default function StandardsPage() {
                   </div>
                   {/* Floating labels */}
                   <motion.div 
-                    className="absolute top-6 left-6 text-[9px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
+                    className="absolute top-6 left-6 text-[10px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     LAT: 4.6486 // LON: -74.0592
                   </motion.div>
                   <motion.div 
-                    className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
+                    className="absolute bottom-6 right-6 text-[10px] font-mono text-slate-500 bg-black/50 p-2 border border-white/5 rounded"
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
                   >

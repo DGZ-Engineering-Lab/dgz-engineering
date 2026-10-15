@@ -56,7 +56,7 @@ export default function InteractiveCarousel() {
               type="button"
               aria-pressed={activeIndex === i}
               onClick={() => scrollTo(i)}
-              className={`px-4 py-2 rounded-xl text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.15em] transition-all duration-300 ${
+              className={`px-4 py-2 rounded-xl text-[10px] sm:text-[10px] font-mono uppercase tracking-[0.15em] transition-all duration-300 ${
                 activeIndex === i
                   ? "bg-cyan-500 text-black font-black shadow-[0_0_20px_rgba(6,182,212,0.5)] transform scale-[1.02]"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"

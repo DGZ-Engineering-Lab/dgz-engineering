@@ -142,7 +142,7 @@ export default function ServicesPage() {
                     }`}
                   >
                     <span>{capa.label}</span>
-                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold tabular-nums ${
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold tabular-nums ${
                       isSelected ? "bg-white/20 text-white" : "bg-white text-slate-500"
                     }`}>
                       {count}
@@ -221,7 +221,7 @@ export default function ServicesPage() {
                             <IconComponent className="w-6 h-6" />
                           </div>
                           <div className="flex flex-col items-end">
-                            <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest font-bold">
+                            <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest font-bold">
                               {svc.id}
                             </span>
                             <span className="font-mono text-[9.5px] text-cyan-600 uppercase tracking-widest font-bold">
@@ -274,7 +274,7 @@ export default function ServicesPage() {
       {/* Interactive Bottom Banner */}
       <section className="py-14 md:py-18 bg-[#111827] text-white border-t border-slate-900">
         <div className="max-w-5xl mx-auto px-6 text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full font-mono text-[9px] text-cyan-400 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full font-mono text-[10px] text-cyan-400 uppercase tracking-widest">
             <Sparkles className="w-3 h-3 text-cyan-400" />
             Auditoría Territorial Inmediata
           </div>
