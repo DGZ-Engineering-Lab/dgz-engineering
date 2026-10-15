@@ -79,23 +79,23 @@ export default function FloatingTelemetry() {
             </div>
             
             <div className="mt-3 space-y-2 relative z-10">
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Uplink_Time</span>
                 <span className="text-white font-bold">{time}</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Local_Node</span>
                 <span className="text-white font-bold">MEDELLÍN_HQ</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Core_Load</span>
                 <span className="text-white font-bold">{load}%</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide">
                 <span>Encryption</span>
                 <span className="text-emerald-400 font-bold tracking-widest">DGZ_SECURE</span>
               </div>
-              <div className="flex justify-between gap-8 text-[9px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-850 pt-2 mt-2">
+              <div className="flex justify-between gap-8 text-[10px] font-mono text-slate-400 uppercase tracking-wide border-t border-slate-850 pt-2 mt-2">
                 <span>Active_Nodes</span>
                 <span className="text-cyan-400 font-black">{activeNodes}</span>
               </div>

@@ -80,11 +80,11 @@ export default function GestureSandboxPage() {
                  <div className="absolute inset-0 border-2 border-cyan-400 rounded-full animate-ping opacity-20"></div>
               </div>
               <div className="text-left space-y-1">
-                 <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Detection Engine</div>
+                 <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Detection Engine</div>
                  <div className="text-sm font-black uppercase text-white tracking-tight">Computer Vision [ACTIVE]</div>
                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span className="text-[9px] font-mono text-emerald-500 uppercase">Synchronized with NeuralLink</span>
+                    <span className="text-[10px] font-mono text-emerald-500 uppercase">Synchronized with NeuralLink</span>
                  </div>
               </div>
         </div>
@@ -140,9 +140,9 @@ export default function GestureSandboxPage() {
                     </div>
 
                     <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
-                       <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[9px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
-                       <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[9px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
-                       <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[9px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
+                       <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[10px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
+                       <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[10px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
+                       <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[10px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
                     </div>
                  </div>
 

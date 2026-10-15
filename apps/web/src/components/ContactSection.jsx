@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, MapPin, Mail, CheckCircle2, AlertTriangle, ShieldCheck, Check, AlertCircle, MessageCircle, Clock } from "lucide-react";
 import { CONTACT } from "../lib/seo";
@@ -17,6 +17,7 @@ export default function ContactSection() {
   
   const [status, setStatus] = useState("idle"); // idle, sending, success, error
   const [errorMessage, setErrorMessage] = useState("");
+  const successHeadingRef = useRef(null);
   const [touched, setTouched] = useState({
     name: false,
     email: false,
@@ -54,6 +55,13 @@ export default function ContactSection() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Lleva el foco al primer campo inválido para que teclado y lector de pantalla lleguen al error (WCAG 3.3.1).
+  const failValidation = (fieldId, message) => {
+    setErrorMessage(message);
+    setStatus("error");
+    document.getElementById(fieldId)?.focus();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -61,20 +69,17 @@ export default function ContactSection() {
     setTouched({ name: true, email: true, company: true, description: true });
 
     if (!validateName(formData.name)) {
-      setErrorMessage("El nombre de contacto debe tener al menos 3 caracteres.");
-      setStatus("error");
+      failValidation("contact-name", "El nombre de contacto debe tener al menos 3 caracteres.");
       return;
     }
 
     if (!validateEmail(formData.email)) {
-      setErrorMessage("Ingrese una dirección de correo institucional o corporativo válido.");
-      setStatus("error");
+      failValidation("contact-email", "Ingresa un correo válido, por ejemplo nombre@entidad.gov.co.");
       return;
     }
 
     if (!validateDescription(formData.description)) {
-      setErrorMessage("Por favor describa su desafío de forma más detallada (mínimo 30 caracteres).");
-      setStatus("error");
+      failValidation("contact-description", "Describe tu reto con al menos 30 caracteres para preparar una propuesta.");
       return;
     }
 
@@ -181,12 +186,15 @@ export default function ContactSection() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
+                  // AnimatePresence (mode="wait") monta este panel tras la salida del formulario:
+                  // el foco pasa al título de confirmación cuando ya existe, para que se anuncie.
+                  onAnimationComplete={() => successHeadingRef.current?.focus()}
                   role="status"
                   className="py-16 text-center space-y-6 flex flex-col items-center justify-center h-full"
                 >
-                  <CheckCircle2 className="w-16 h-16 text-emerald-500 stroke-[1.5]" />
+                  <CheckCircle2 aria-hidden="true" className="w-16 h-16 text-emerald-500 stroke-[1.5]" />
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-black tracking-tight text-[#1a1a1a]">¡Sesión Solicitada!</h3>
+                    <h3 ref={successHeadingRef} tabIndex={-1} className="text-2xl font-black tracking-tight text-[#1a1a1a]">Sesión solicitada</h3>
                     <p className="text-slate-600 text-sm font-light leading-relaxed max-w-sm">
                       Recibimos tu requerimiento. Te escribiremos en menos de 24 horas hábiles con una propuesta de siguiente paso.
                     </p>
@@ -197,6 +205,8 @@ export default function ContactSection() {
                       setStatus("idle");
                       setFormData({ name: "", company: "", email: "", subject: "Catastro multipropósito / LADM-COL", description: "" });
                       setTouched({ name: false, email: false, company: false, description: false });
+                      // El panel de éxito se desmonta: devolvemos el foco al primer campo del formulario nuevo.
+                      requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById("contact-name")?.focus()));
                     }} 
                     className="btn btn-secondary btn-sm"
                   >
@@ -368,7 +378,7 @@ export default function ContactSection() {
                         >
                           <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
                           <span>
-                            <strong>¡Excelente!</strong> Correo institucional detectado. Su solicitud recibirá procesamiento prioritario Nivel 1.
+                            Correo institucional detectado: tu solicitud se atiende con prioridad.
                           </span>
                         </motion.div>
                       )}

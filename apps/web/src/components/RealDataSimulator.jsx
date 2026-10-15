@@ -160,7 +160,7 @@ export default function RealDataSimulator() {
                         <circle cx="50" cy="52" r="2" fill="white" className="animate-ping" />
                      </svg>
                      <div className="absolute -top-12 -left-12 p-4 bg-black/80 border border-slate-800 rounded-xl backdrop-blur-md">
-                        <div className="text-[9px] font-mono text-slate-500 uppercase">Centroid</div>
+                        <div className="text-[10px] font-mono text-slate-500 uppercase">Centroid</div>
                         <div className="text-[10px] text-white font-bold">{sample.location}</div>
                      </div>
                   </div>

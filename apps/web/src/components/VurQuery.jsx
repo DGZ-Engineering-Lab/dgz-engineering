@@ -208,7 +208,7 @@ const VurQuery = () => {
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                    <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[99.8%]"></div>
                 </div>
-                <p className="mt-4 text-[9px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {btoa(matricula || "DEMO").substring(0, 10).toUpperCase()}</p>
+                <p className="mt-4 text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {btoa(matricula || "DEMO").substring(0, 10).toUpperCase()}</p>
               </div>
             </div>
           </div>

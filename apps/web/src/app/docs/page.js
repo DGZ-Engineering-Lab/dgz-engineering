@@ -316,7 +316,7 @@ export default function DocsPage() {
 
               {/* Quick Status Stats */}
               <div className="p-6 bg-slate-950 border border-slate-900 rounded-2xl space-y-4">
-                 <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">System Health</div>
+                 <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">System Health</div>
                  <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-400">Latencia API:</span>
                     <span className="font-mono text-cyan-400 font-bold">12ms avg</span>
@@ -371,7 +371,7 @@ export default function DocsPage() {
                                      role="tab"
                                      aria-selected={activeLang === lang}
                                      onClick={() => setActiveLang(lang)}
-                                     className={`text-[9px] font-mono uppercase tracking-widest px-3 py-1.5 rounded transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
+                                     className={`text-[10px] font-mono uppercase tracking-widest px-3 py-1.5 rounded transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
                                        activeLang === lang 
                                          ? 'bg-cyan-500/10 text-cyan-400 font-bold border border-cyan-500/20' 
                                          : 'text-slate-500 hover:text-slate-300'
@@ -462,7 +462,7 @@ export default function DocsPage() {
                     {/* Console Live Shell */}
                     <div className="flex flex-col bg-black border border-slate-900 p-6 rounded-2xl min-h-[280px]">
                        <div className="flex justify-between items-center border-b border-slate-900 pb-3 mb-4">
-                          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">DevGiz Shell Client</span>
+                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">DevGiz Shell Client</span>
                           <div className="flex gap-1.5">
                              <span className="w-2.5 h-2.5 rounded-full bg-red-500/40"></span>
                              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></span>
@@ -501,8 +501,8 @@ export default function DocsPage() {
                     {/* Result JSON Window */}
                     <div className="flex flex-col bg-[#070b11] border border-slate-900 p-6 rounded-2xl min-h-[280px]">
                        <div className="flex justify-between items-center border-b border-slate-900 pb-3 mb-4">
-                          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">HTTP Response Payload</span>
-                          <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[9px] font-bold rounded">200 OK</span>
+                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">HTTP Response Payload</span>
+                          <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] font-bold rounded">200 OK</span>
                        </div>
                        
                        <div className="flex-1 font-mono text-xs overflow-y-auto max-h-[220px]">

@@ -228,7 +228,7 @@ export default function Navbar() {
                 >
                   <span>{link.name}</span>
                   {link.isNew && (
-                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[9px] tracking-widest rounded-full font-black">
+                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[10px] tracking-widest rounded-full font-black">
                       ROI
                     </span>
                   )}
@@ -404,7 +404,7 @@ export default function Navbar() {
             )}
 
             <div className="flex flex-col gap-5 relative z-10">
-              <div aria-hidden="true" className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
+              <div aria-hidden="true" className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
                 Menú
               </div>
               
@@ -428,7 +428,7 @@ export default function Navbar() {
                         >
                           <span>{link.name}</span>
                           {link.isNew && (
-                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[9px] tracking-widest rounded-full font-black">
+                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[10px] tracking-widest rounded-full font-black">
                               ROI
                             </span>
                           )}

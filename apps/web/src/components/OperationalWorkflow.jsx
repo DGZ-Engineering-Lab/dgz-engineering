@@ -75,7 +75,7 @@ export default function OperationalWorkflow() {
                   <div className="pt-6 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
                     <div className="w-8 h-[1px] bg-slate-800"></div>
-                    <span className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">Protocolo Activo</span>
+                    <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Protocolo Activo</span>
                   </div>
                 </div>
               </div>

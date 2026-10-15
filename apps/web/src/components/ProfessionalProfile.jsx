@@ -611,7 +611,7 @@ export default function ProfessionalProfile() {
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-[10px] font-mono tabular-nums text-slate-400">{m.period}</span>
-                    <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded border ${m.badgeColor}`}>
+                    <span className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${m.badgeColor}`}>
                       {m.badge}
                     </span>
                   </div>
@@ -783,7 +783,7 @@ export default function ProfessionalProfile() {
                     className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 transition-colors flex flex-col justify-between"
                   >
                     <div>
-                      <div className="flex items-center justify-between text-[9px] font-mono text-cyan-400 mb-1">
+                      <div className="flex items-center justify-between text-[10px] font-mono text-cyan-400 mb-1">
                         <span>{cert.category}</span>
                         {cert.verifiable && <span className="text-emerald-400">✓ Verificable</span>}
                       </div>
