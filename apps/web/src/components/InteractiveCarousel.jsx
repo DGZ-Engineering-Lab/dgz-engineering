@@ -42,7 +42,7 @@ export default function InteractiveCarousel() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-[2px] bg-gradient-to-r from-cyan-500 to-transparent"></div>
-            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.4em] font-bold">Interactive_Labs // v2.0</span>
+            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.28em] font-bold">Interactive_Labs // v2.0</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter leading-none">
             Ecosistema <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">Dinámico</span>

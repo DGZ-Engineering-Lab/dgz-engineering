@@ -92,7 +92,7 @@ export default function StandardsPage() {
           <div className="lg:col-span-8 space-y-8">
             <div className="flex items-center gap-3">
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
-              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Technical Governance // Standard Hub</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Technical Governance // Standard Hub</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Protocolos de <br /> <span className="text-slate-400 italic font-light">Gobernanza Digital</span>
@@ -232,7 +232,7 @@ export default function StandardsPage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
             <div className="space-y-8">
-              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.5em]">Interactive Engine // Visual Standard</div>
+              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.32em]">Interactive Engine // Visual Standard</div>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-tight">
                 El Modelo <span className="text-slate-500 font-light italic">Universal de Tierras</span>
               </h3>
@@ -310,18 +310,10 @@ export default function StandardsPage() {
         </motion.div>
       </section>
 
-      {/* Footer Branding */}
-      <div className="max-w-7xl mx-auto px-6 mt-32 flex flex-col md:flex-row justify-between items-center border-t border-slate-100 pt-20 gap-8">
-        <div className="flex items-center gap-4">
-           <Logo className="w-12 h-12 opacity-80" />
-           <div className="flex flex-col">
-              <span className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">DevGiz Standards Board</span>
-              <span className="text-[10px] text-slate-400 font-mono">Documentación Técnica // 2026</span>
-           </div>
-        </div>
-        <Link href="/#contact" className="px-8 py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl rounded-lg group flex items-center gap-3">
-           Solicitar Certificación de Datos
-           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      <div className="max-w-7xl mx-auto px-6 mt-20 flex justify-center">
+        <Link href="/#contact" className="btn btn-primary group">
+          Solicitar certificación de datos
+          <ArrowRight className="group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
 

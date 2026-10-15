@@ -234,7 +234,7 @@ export default function TechTicker() {
                     `} />
                   </div>
                   <div className="text-left">
-                    <div className="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-widest">NIVEL DE EXPERTISE</div>
+                    <div className="text-[9.5px] font-mono font-bold text-slate-400 uppercase tracking-widest">NIVEL DE EXPERTISE</div>
                     <div className="text-[10px] font-black font-mono text-slate-800 tracking-wider">DOMINIO EXPERTO CATASTRAL</div>
                   </div>
                 </div>
@@ -257,7 +257,7 @@ export default function TechTicker() {
                         {plat.name}
                       </h4>
                       {plat.sub && (
-                        <span className="text-[8px] font-mono font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+                        <span className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
                           {plat.sub}
                         </span>
                       )}
@@ -270,9 +270,9 @@ export default function TechTicker() {
                   <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className={`w-3.5 h-3.5 ${currentArea.textColor}`} />
-                      <span className="text-[8px] font-mono font-bold uppercase tracking-widest text-slate-500">PROPIEDAD DE PROCESO</span>
+                      <span className="text-[9.5px] font-mono font-bold uppercase tracking-widest text-slate-500">PROPIEDAD DE PROCESO</span>
                     </div>
-                    <span className={`text-[8px] font-mono font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${currentArea.bgColor} ${currentArea.textColor}`}>
+                    <span className={`text-[9.5px] font-mono font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${currentArea.bgColor} ${currentArea.textColor}`}>
                       {plat.status}
                     </span>
                   </div>
@@ -313,7 +313,7 @@ export default function TechTicker() {
                 <span className="text-sm font-black text-slate-300 group-hover:text-white transition-colors tracking-tighter">
                   {name}
                 </span>
-                <span className="text-[8px] font-mono text-slate-600 uppercase tracking-widest">
+                <span className="text-[9.5px] font-mono text-slate-600 uppercase tracking-widest">
                   {techArea.title.split(" ")[0]}
                 </span>
               </div>

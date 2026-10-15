@@ -8,7 +8,7 @@ export default function FloatingTelemetry() {
   const [time, setTime] = useState("");
   const [load, setLoad] = useState(12);
   const [activeNodes, setActiveNodes] = useState(1240);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   useEffect(() => {
     // Simulamos la telemetría directamente en el cliente para mayor fluidez 
@@ -47,7 +47,7 @@ export default function FloatingTelemetry() {
             className="pointer-events-auto flex items-center gap-2 p-2 px-4 rounded-full bg-slate-950/80 hover:bg-slate-900/90 border border-cyan-500/30 hover:border-cyan-400/50 backdrop-blur-md text-cyan-400 transition-all cursor-pointer shadow-[0_8px_25px_rgba(0,0,0,0.6)] group/tele"
           >
             <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-[7px] font-mono tracking-[0.25em] font-black uppercase">TELEMETRÍA_HUD</span>
+            <span className="text-[9.5px] font-mono tracking-[0.25em] font-black uppercase">TELEMETRÍA_HUD</span>
           </motion.button>
         ) : (
           <motion.div
@@ -65,7 +65,7 @@ export default function FloatingTelemetry() {
             <div className="flex items-center justify-between gap-6 pb-2.5 border-b border-slate-800/40 relative z-10">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-                <span className="text-[8px] font-mono text-cyan-300 tracking-[0.2em] font-black">SYSTEM_LIVE</span>
+                <span className="text-[9.5px] font-mono text-cyan-300 tracking-[0.2em] font-black">SYSTEM_LIVE</span>
               </div>
               <button
                 onClick={() => setIsMinimized(true)}

@@ -58,7 +58,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05070a] flex items-center justify-center p-6 font-mono selection:bg-red-500 selection:text-white overflow-hidden relative">
+    <div data-nav-theme="dark" className="min-h-screen bg-[#05070a] flex items-center justify-center p-6 font-mono selection:bg-red-500 selection:text-white overflow-hidden relative">
       
       {/* Grid Background */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
@@ -124,7 +124,7 @@ export default function NotFound() {
         >
           <div className="flex items-center gap-4">
             <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_15px_#ef4444,0_0_40px_rgba(239,68,68,0.3)]"></div>
-            <span className="text-red-500 font-black text-xs tracking-[0.4em] uppercase">SYSTEM_CRITICAL_FAILURE</span>
+            <span className="text-red-500 font-black text-xs tracking-[0.28em] uppercase">Página no encontrada</span>
           </div>
           <h1 className="text-8xl md:text-[11rem] font-black text-white tracking-tighter leading-none relative">
             <span className="relative inline-block">
@@ -155,25 +155,25 @@ export default function NotFound() {
           <div className="space-y-2">
             <div className="text-[10px] text-red-400 font-bold uppercase tracking-widest flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-red-400 animate-ping" />
-              Error_Log: NODE_NOT_FOUND
+              Error 404 · Ruta inexistente
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
-              El nodo geoespacial solicitado no responde. La ruta ha sido corrompida o el sector territorial ya no existe en el kernel central de DevGiz.
+              La página que buscas no existe o cambió de dirección. Puedes volver al inicio, revisar nuestros servicios o escribirnos directamente.
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-red-500/10">
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Error_ID</div>
-              <div className="text-xs text-white font-bold">0xDEADBEEF_404</div>
+              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Código</div>
+              <div className="text-xs text-white font-bold">HTTP_404</div>
             </div>
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Process_State</div>
-              <div className="text-xs text-red-500 font-bold animate-pulse">PANIC_HALT</div>
+              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Estado</div>
+              <div className="text-xs text-red-400 font-bold">NOT_FOUND</div>
             </div>
             <div>
-              <div className="text-[8px] text-slate-500 uppercase mb-1 tracking-widest">Recovery</div>
-              <div className="text-xs text-emerald-400 font-bold">AVAILABLE</div>
+              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Sistema</div>
+              <div className="text-xs text-emerald-400 font-bold">OPERATIVO</div>
             </div>
           </div>
         </motion.div>
@@ -189,7 +189,7 @@ export default function NotFound() {
             href="/"
             className="w-full md:w-auto px-10 py-5 bg-white text-black font-black text-[10px] rounded-xl hover:bg-red-500 hover:text-white transition-all uppercase tracking-widest text-center shadow-[0_0_30px_rgba(255,255,255,0.08)] hover:shadow-[0_0_40px_rgba(239,68,68,0.2)] group flex items-center justify-center gap-3"
           >
-            Reiniciar Kernel (Home)
+            Ir al inicio
             <motion.span
               animate={{ x: [0, 4, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
@@ -197,22 +197,22 @@ export default function NotFound() {
               →
             </motion.span>
           </Link>
-          <button 
-            onClick={() => window.history.back()}
-            className="w-full md:w-auto px-10 py-5 bg-transparent border border-white/10 text-white font-black text-[10px] rounded-xl hover:bg-white/5 hover:border-white/20 transition-all uppercase tracking-widest cursor-pointer"
+          <Link
+            href="/services"
+            className="w-full md:w-auto px-10 py-5 bg-transparent border border-white/10 text-white font-black text-[10px] rounded-xl hover:bg-white/5 hover:border-white/20 transition-all uppercase tracking-widest text-center"
           >
-            Volver a Zona Segura
-          </button>
+            Ver servicios
+          </Link>
         </motion.div>
 
         {/* Footer Trace */}
         <motion.div 
-          className="pt-12 text-[8px] text-slate-700 uppercase tracking-[0.5em] text-center"
+          className="pt-12 text-[9.5px] text-slate-500 uppercase tracking-[0.32em] text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
         >
-          DevGiz Systems // Spatial Intelligence // Bogota_DC_V
+          DevGiz Engineering · Medellín, Colombia
         </motion.div>
       </motion.div>
     </div>

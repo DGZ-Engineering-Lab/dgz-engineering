@@ -33,12 +33,12 @@
 }
 
 html {
-  font-size: 14.5px;
+  font-size: 15px;
 }
 
 @media (min-width: 1536px) {
   html {
-    font-size: 15.5px;
+    font-size: 16px;
   }
 }
 
@@ -52,12 +52,17 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  overflow-x: clip; /* recorta halos decorativos sin romper position: sticky */
+}
+
+#main-content {
+  overflow-x: clip;
 }
 
 /* Custom Scrollbar - Minimalista Premium */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -66,7 +71,8 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(15, 23, 42, 0.1);
-  border-radius: 2px;
+  border-radius: 999px;
+  border: 2px solid var(--background);
   transition: background 0.3s;
 }
 
@@ -368,3 +374,222 @@ html {
   mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
 }
 
+
+/* ===================================================================
+   DevGiz Design System — capa de componentes compartidos (2026-10)
+   Mantiene la paleta Cyber Light (slate + cyan/azul/índigo + esmeralda)
+   y unifica radios, sombras, botones, encabezados y campos de formulario.
+   =================================================================== */
+:root {
+  --ink: #0b1220;
+  --muted: #475569;
+  --line: rgba(15, 23, 42, 0.09);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+  --shadow-lift: 0 2px 4px rgba(15, 23, 42, 0.04), 0 24px 48px -20px rgba(8, 145, 178, 0.28);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::selection {
+  background: rgba(6, 182, 212, 0.22);
+  color: inherit;
+}
+
+/* --- Contenedor estándar de sección --- */
+.container-dgz {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-dgz { padding-inline: 1.5rem; }
+}
+
+/* --- Eyebrow (etiqueta mono sobre los títulos) --- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #0e7490;
+}
+.eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(8, 145, 178, 0.1), rgba(8, 145, 178, 0.7));
+}
+.eyebrow-center::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(8, 145, 178, 0.7), rgba(8, 145, 178, 0.1));
+}
+
+.text-gradient-brand {
+  background: linear-gradient(var(--in-oklch) 100deg, #0891b2, #2563eb 55%, #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out), box-shadow 0.3s var(--ease-out), transform 0.25s var(--ease-out);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+
+.btn-primary {
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgba(2, 6, 23, 0.55);
+}
+.btn-primary:hover {
+  background: #0e7490;
+  box-shadow: 0 14px 30px -12px rgba(8, 145, 178, 0.55);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  border-color: rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  border-color: rgba(8, 145, 178, 0.45);
+  color: #0e7490;
+  background: #fff;
+}
+
+.btn-whatsapp {
+  background: #059669;
+  color: #fff;
+  box-shadow: 0 10px 24px -12px rgba(5, 150, 105, 0.6);
+}
+.btn-whatsapp:hover { background: #047857; }
+
+.btn-accent {
+  background: linear-gradient(var(--in-oklch) 100deg, #06b6d4, #2563eb);
+  color: #fff;
+  box-shadow: 0 12px 28px -12px rgba(37, 99, 235, 0.6);
+}
+.btn-accent:hover { box-shadow: 0 16px 34px -12px rgba(6, 182, 212, 0.7); }
+
+.btn-ghost-dark {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+.btn-ghost-dark:hover {
+  border-color: rgba(34, 211, 238, 0.5);
+  color: #fff;
+  background: rgba(34, 211, 238, 0.08);
+}
+
+.btn-sm { min-height: 2.5rem; padding: 0.6rem 1.1rem; font-size: 0.68rem; }
+
+/* --- Tarjetas --- */
+.card-dgz {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+  border-color: rgba(8, 145, 178, 0.3);
+}
+
+/* Unifica la sombra y radio de las tarjetas de cristal existentes */
+.glass-card-premium {
+  box-shadow: var(--shadow-soft);
+}
+
+/* --- Campos de formulario --- */
+.field-dgz {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field-dgz::placeholder { color: #94a3b8; }
+.field-dgz:hover { border-color: rgba(15, 23, 42, 0.24); }
+.field-dgz:focus {
+  outline: none;
+  border-color: #0891b2;
+  box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.14);
+}
+.field-dgz[aria-invalid="true"] {
+  border-color: #e11d48;
+  box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.08);
+}
+.label-dgz {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+/* --- Lienzo oscuro (/lab, /diagnostic) --- */
+.theme-dark {
+  --bg-glass: rgba(15, 23, 42, 0.55);
+  --border-glass: rgba(148, 163, 184, 0.14);
+  --line: rgba(148, 163, 184, 0.14);
+  color: #f8fafc;
+  background-color: #02040a;
+  background-image:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(6, 182, 212, 0.12), transparent 60%),
+    radial-gradient(40rem 30rem at 100% 60%, rgba(79, 70, 229, 0.10), transparent 60%),
+    linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+}
+.theme-dark .glass-card-premium {
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Evita que el último glifo en cursiva se recorte en textos con degradado */
+.italic.bg-clip-text,
+.italic .bg-clip-text,
+.bg-clip-text .italic,
+.text-gradient-brand.italic {
+  padding-inline-end: 0.12em;
+}

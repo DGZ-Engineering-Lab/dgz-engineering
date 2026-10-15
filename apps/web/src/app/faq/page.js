@@ -97,7 +97,7 @@ export default function FAQPage() {
           >
             <div className="flex items-center gap-3">
               <span className="w-12 h-px bg-[#1a1a1a]"></span>
-              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Expert Support // Knowledge Center</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Expert Support // Knowledge Center</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
               Consultoría de <br /> <span className="text-slate-400 italic font-light">Conocimiento</span>
@@ -232,20 +232,6 @@ export default function FAQPage() {
           </div>
         </div>
 
-        {/* Footer Link */}
-        <div className="mt-32 pt-20 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-4">
-             <Logo className="w-12 h-12 opacity-80" />
-             <div className="flex flex-col">
-                <span className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">DevGiz Knowledge Board</span>
-                <span className="text-[10px] text-slate-400 font-mono">Última actualización: Mayo 2026</span>
-             </div>
-          </div>
-          <Link href="/#contact" className="px-12 py-5 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl group flex items-center gap-3">
-             Iniciar Auditoría Técnica
-             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
       </div>
 
     </div>

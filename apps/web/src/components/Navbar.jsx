@@ -8,19 +8,29 @@ import {
   X, 
   ArrowRight, 
   ChevronDown, 
-  Globe, 
-  Shield, 
   FolderGit, 
-  FileCheck2, 
-  FlaskConical,
   BookOpen,
-  HelpCircle,
-  Activity
+  Layers,
+  MessageCircle
 } from "lucide-react";
+import { CONTACT } from "../lib/seo";
 import Logo from "./Logo";
+import useDarkSurface from "./useDarkSurface";
 
 // Complete mapping of all dynamic sub-pages and sections within DevGiz
 const DROPDOWNS_DATA = {
+  Servicios: {
+    desc: "Soluciones geoespaciales de punta a punta: desde la captura en campo hasta la decisión basada en datos.",
+    icon: Layers,
+    items: [
+      { name: "Catálogo completo", desc: "Las 10 líneas de servicio con fichas técnicas.", href: "/services" },
+      { name: "GIS & Geointeligencia", desc: "Catastro LADM-COL, WebGIS y análisis espacial.", href: "/services/gis-geointelligence" },
+      { name: "Data Analytics & BI", desc: "Tableros y analítica territorial para decidir.", href: "/services/data-analytics-bi" },
+      { name: "IA & Automatización", desc: "GeoAI y flujos que eliminan trabajo manual.", href: "/services/ia-automatizacion" },
+      { name: "Drones & Earth Data", desc: "Fotogrametría RPAS, LiDAR y GNSS RTK.", href: "/services/drones-earth-data" },
+      { name: "Desarrollo de Software", desc: "Plataformas WebGIS y APIs a la medida.", href: "/services/desarrollo-software" }
+    ]
+  },
   Proyectos: {
     desc: "Casos de éxito aplicados con impacto real en infraestructura pública y privada.",
     icon: FolderGit,
@@ -32,15 +42,16 @@ const DROPDOWNS_DATA = {
       { name: "Inteligencia GeoAI", desc: "Procesamiento de lenguaje natural y motores GIS.", href: "/projects/geo-llm" }
     ]
   },
-  Blogs: {
-    desc: "Análisis rigurosos sobre ciberseguridad geoespacial, estándar LADM-COL e infraestructura digital.",
+  Recursos: {
+    desc: "Conocimiento técnico, normativa y herramientas abiertas sobre gestión territorial en Colombia.",
     icon: BookOpen,
     items: [
-      { name: "Todos los Blogs", desc: "Ver el catálogo completo de publicaciones y análisis técnicos.", href: "/blog" },
-      { name: "Soberanía Digital", desc: "Protección de activos territoriales y ciberseguridad.", href: "/blog/1" },
-      { name: "El Estándar LADM-COL", desc: "Eje de interoperabilidad e integración de datos.", href: "/blog/2" },
-      { name: "ConstruMetrix & Precisión", desc: "La digitalización del entorno construido en 3D.", href: "/blog/3" },
-      { name: "Trazabilidad de Tierras", desc: "Auditoría digital en sistemas de gestión territorial.", href: "/blog/4" }
+      { name: "Blog técnico", desc: "Análisis sobre LADM-COL, catastro y datos.", href: "/blog" },
+      { name: "Estándares", desc: "ISO 19152, INTERLIS y normativa IGAC.", href: "/standards" },
+      { name: "Preguntas frecuentes", desc: "Respuestas claras para entidades y empresas.", href: "/faq" },
+      { name: "Documentación", desc: "Guías técnicas y referencias de la plataforma.", href: "/docs" },
+      { name: "Dossier del fundador", desc: "Trayectoria, arsenal técnico y certificaciones.", href: "/#portfolio-dossier" },
+      { name: "Lab de gestos (beta)", desc: "Navegación SIG con visión por computador.", href: "/lab/gesture-sandbox" }
     ]
   }
 };
@@ -144,38 +155,34 @@ export default function Navbar() {
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname === href || pathname?.startsWith(`${href}/`);
 
-  const isDarkPage = pathname?.startsWith("/lab") || pathname?.startsWith("/diagnostic");
+  const isDarkPage = useDarkSurface();
 
   const navLinks = [
-    { name: "Inicio", href: "/" },
-    { name: "Dossier CV", href: "/#portfolio-dossier" },
+    { name: "Servicios", href: "/services", dropdownKey: "Servicios" },
     { name: "Proyectos", href: "/projects", dropdownKey: "Proyectos" },
+    { name: "Diagnóstico", href: "/diagnostic", isNew: true },
     { name: "Nosotros", href: "/about" },
-    { name: "Estándares", href: "/standards" },
-    { name: "Diagnóstico", href: "/diagnostic" },
-    { name: "Blogs", href: "/blog", dropdownKey: "Blogs" },
-    { name: "Lab", href: "/lab/gesture-sandbox", isBeta: true },
-    { name: "FAQ", href: "/faq" }
+    { name: "Recursos", href: "/blog", dropdownKey: "Recursos" }
   ];
 
   // Dynamic Styles
   const navBackground = scrolled
     ? isDarkPage
-      ? "py-4 bg-[#02040a]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg shadow-black/20"
-      : "py-4 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm"
-    : "py-8 bg-transparent";
+      ? "py-3 bg-[#02040a]/85 backdrop-blur-xl border-b border-slate-800/80 shadow-lg shadow-black/20"
+      : "py-3 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-[0_8px_30px_-18px_rgba(15,23,42,0.25)]"
+    : "py-5 md:py-6 bg-transparent border-b border-transparent";
 
   const logoTextColor = isDarkPage ? "text-white" : "text-[#1a1a1a]";
   
   const linkTextColor = isDarkPage
-    ? "text-slate-400 hover:text-white"
-    : "text-slate-500 hover:text-[#1a1a1a]";
+    ? "text-slate-300 hover:text-white"
+    : "text-slate-600 hover:text-[#0b1220]";
 
-  const activeLineColor = isDarkPage ? "bg-cyan-400" : "bg-[#1a1a1a]";
+  const activeLineColor = isDarkPage ? "bg-cyan-400" : "bg-cyan-600";
   
   const ctaBtnStyle = isDarkPage
-    ? "bg-white text-black hover:bg-cyan-500 hover:text-black shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-    : "bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-xl";
+    ? "btn bg-white text-black hover:bg-cyan-400"
+    : "btn btn-primary";
 
   const burgerColor = isDarkPage ? "text-white" : "text-[#1a1a1a]";
 
@@ -194,12 +201,12 @@ export default function Navbar() {
             <Logo className={`w-8 h-8 transition-transform group-hover:scale-110 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
             <div className="flex flex-col leading-none">
               <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
-              <span className="text-[7px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold">Engineering</span>
+              <span className="text-[9.5px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold">Engineering</span>
             </div>
           </Link>
 
           {/* Desktop Links - Editorial Style with Mega-Submenus */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-7 xl:gap-9">
             {navLinks.map((link) => (
               <div 
                 key={link.name} 
@@ -213,15 +220,15 @@ export default function Navbar() {
                   href={link.href}
                   data-nav-focusable
                   aria-current={isActive(link.href) ? "page" : undefined}
-                  className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all py-2.5 relative group flex items-center gap-1 cursor-pointer ${linkTextColor}`}
+                  className={`text-[11.5px] font-bold tracking-[0.14em] uppercase transition-colors py-2.5 relative group flex items-center gap-1.5 cursor-pointer ${isActive(link.href) ? (isDarkPage ? "text-white" : "text-[#0b1220]") : linkTextColor}`}
                 >
                   <span>{link.name}</span>
-                  {link.isBeta && (
-                    <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[7px] tracking-widest rounded-sm font-black scale-90">
-                      BETA
+                  {link.isNew && (
+                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 font-mono text-[9px] tracking-widest rounded-full font-black">
+                      ROI
                     </span>
                   )}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full ${activeLineColor}`}></span>
+                  <span className={`absolute bottom-0.5 left-0 h-[2px] rounded-full transition-all duration-300 ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"} ${activeLineColor}`}></span>
                 </Link>
                 {link.dropdownKey && (
                   <button
@@ -240,13 +247,28 @@ export default function Navbar() {
               </div>
             ))}
 
-            <Link
-              href="/#contact"
-              data-nav-focusable
-              className={`px-8 py-3 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm ${ctaBtnStyle}`}
-            >
-              Consultoría
-            </Link>
+            <div className="flex items-center gap-2 pl-2">
+              <a
+                href={CONTACT.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-nav-focusable
+                aria-label="Escribir por WhatsApp"
+                className={`w-11 h-11 rounded-[var(--radius-sm)] flex items-center justify-center border transition-colors ${
+                  isDarkPage ? "border-slate-700 text-emerald-400 hover:bg-emerald-500/10" : "border-slate-200 bg-white/70 text-emerald-600 hover:bg-emerald-50 hover:border-emerald-300"
+                }`}
+              >
+                <MessageCircle className="w-[18px] h-[18px]" />
+              </a>
+              <Link
+                href="/#contact"
+                data-nav-focusable
+                className={`btn-sm ${ctaBtnStyle}`}
+              >
+                Agendar consultoría
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Toggle Button */}
@@ -254,7 +276,7 @@ export default function Navbar() {
             type="button"
             ref={mobileToggleRef}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 -mr-2 transition-colors rounded-full hover:bg-slate-500/10 ${burgerColor}`}
+            className={`lg:hidden p-2 -mr-2 transition-colors rounded-full hover:bg-slate-500/10 ${burgerColor}`}
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
@@ -294,7 +316,7 @@ export default function Navbar() {
                   <div>
                     <div aria-hidden="true" className="flex items-center gap-2 mb-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_6px_#22d3ee]" />
-                      <span className="text-[8px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DEVGIZ_ROUTING // HUD_INFO</span>
+                      <span className="text-[10px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DevGiz · Navegación</span>
                     </div>
                     <p className="text-lg font-black tracking-tight mb-2 uppercase">{activeDropdown}</p>
                     <p className="text-slate-500 text-xs font-light leading-relaxed">
@@ -303,14 +325,14 @@ export default function Navbar() {
                   </div>
                   
                   {/* Micro telemetry footer */}
-                  <div aria-hidden="true" className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[7px] font-mono text-slate-400">
-                    <span>SYS_LOCK: SECURE</span>
-                    <span>COINCIDENCIAS: {DROPDOWNS_DATA[activeDropdown]?.items.length} PÁGINAS</span>
+                  <div aria-hidden="true" className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[9.5px] font-mono text-slate-400">
+                    <span>{DROPDOWNS_DATA[activeDropdown]?.items.length} páginas</span>
+                    <span>DevGiz Engineering</span>
                   </div>
                 </div>
 
                 {/* Right Side: Sub-links Interactive Grid */}
-                <div className="col-span-8 grid grid-cols-2 gap-4">
+                <div className="col-span-8 grid grid-cols-2 gap-2">
                   {DROPDOWNS_DATA[activeDropdown]?.items.map((item, idx) => {
                     const DropdownIcon = DROPDOWNS_DATA[activeDropdown].icon;
                     return (
@@ -332,13 +354,13 @@ export default function Navbar() {
                         </div>
                         
                         <div className="space-y-1 text-left">
-                          <span className={`text-xs font-black tracking-tight flex items-center gap-1.5 transition-colors ${
-                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-850 group-hover/item:text-[#1a1a1a]"
+                          <span className={`text-sm font-bold tracking-tight flex items-center gap-1.5 transition-colors ${
+                            isDarkPage ? "text-slate-200 group-hover/item:text-cyan-400" : "text-slate-900 group-hover/item:text-cyan-700"
                           }`}>
                             {item.name}
                             <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-cyan-500 shrink-0" />
                           </span>
-                          <p className="text-slate-450 text-[10px] font-light leading-snug">
+                          <p className="text-slate-500 text-xs font-light leading-snug">
                             {item.desc}
                           </p>
                         </div>
@@ -365,7 +387,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className={`fixed inset-0 z-[90] md:hidden pt-28 pb-8 px-6 flex flex-col justify-between overflow-y-auto ${
+            className={`fixed inset-0 z-[90] lg:hidden pt-24 pb-8 px-6 flex flex-col justify-between overflow-y-auto ${
               isDarkPage 
                 ? "bg-[#02040a] text-white border-b border-slate-800" 
                 : "bg-white text-[#1a1a1a] border-b border-slate-200"
@@ -379,7 +401,7 @@ export default function Navbar() {
 
             <div className="flex flex-col gap-5 relative z-10">
               <div aria-hidden="true" className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-2 border-b border-slate-500/10 pb-2">
-                MENÚ DE INTEGRACIÓN DE RED
+                Menú
               </div>
               
               <div className="flex flex-col gap-3">
@@ -401,9 +423,9 @@ export default function Navbar() {
                           }`}
                         >
                           <span>{link.name}</span>
-                          {link.isBeta && (
-                            <span className="px-1.5 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[7px] tracking-widest rounded-sm font-black">
-                              BETA
+                          {link.isNew && (
+                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 font-mono text-[9px] tracking-widest rounded-full font-black">
+                              ROI
                             </span>
                           )}
                         </Link>
@@ -438,7 +460,7 @@ export default function Navbar() {
                                 key={sIdx}
                                 href={subItem.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className={`text-xs py-2 font-mono uppercase tracking-wider flex items-center gap-1.5 border-l border-slate-200/50 pl-3 ${
+                                className={`text-sm py-2 flex items-center gap-2 border-l border-slate-200/70 pl-3 ${
                                   isDarkPage ? 'text-slate-400 hover:text-cyan-400' : 'text-slate-500 hover:text-slate-900'
                                 }`}
                               >
@@ -461,19 +483,23 @@ export default function Navbar() {
               transition={{ delay: 0.3 }}
               className="space-y-4 relative z-10"
             >
+              <a
+                href={CONTACT.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-whatsapp w-full"
+              >
+                <MessageCircle aria-hidden="true" /> WhatsApp directo
+              </a>
               <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`w-full py-4.5 text-[9px] font-black tracking-[0.2em] uppercase transition-all rounded-sm flex items-center justify-center gap-3 ${
-                  isDarkPage
-                    ? 'bg-cyan-500 text-black hover:bg-cyan-400 font-black'
-                    : 'bg-[#1a1a1a] text-white hover:bg-slate-800 shadow-md'
-                }`}
+                className={`btn w-full ${isDarkPage ? 'bg-cyan-500 text-black hover:bg-cyan-400' : 'btn-primary'}`}
               >
                 <span>Solicitar Consultoría</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <div className="text-center text-[7px] font-mono text-slate-400 uppercase tracking-widest">
+              <div className="text-center text-[9.5px] font-mono text-slate-400 uppercase tracking-widest">
                 DevGiz Spatial Systems // 2026
               </div>
             </motion.div>

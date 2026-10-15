@@ -19,7 +19,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-emerald-500 tracking-tighter">IGAC</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">AUTORIDAD CATASTRAL</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">AUTORIDAD CATASTRAL</span>
             </div>
           </div>
 
@@ -31,7 +31,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-red-500 tracking-tighter">SNR</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">REGISTRO INMOBILIARIO</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">REGISTRO INMOBILIARIO</span>
             </div>
           </div>
 
@@ -43,7 +43,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-blue-500 tracking-tighter">DNP</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">PLANEACIÓN NACIONAL</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">PLANEACIÓN NACIONAL</span>
             </div>
           </div>
 
@@ -55,7 +55,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-green-500 tracking-tighter">ANT</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">AGENCIA DE TIERRAS</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">AGENCIA DE TIERRAS</span>
             </div>
           </div>
 
@@ -67,7 +67,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-orange-500 tracking-tighter">UPRA</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">PLANIFICACIÓN RURAL</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">PLANIFICACIÓN RURAL</span>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ const EntityLogos = () => {
             </div>
             <div className="flex flex-col items-center">
                 <span className="text-[12px] font-black text-indigo-500 tracking-tighter">DANE</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">INFORMACIÓN ESTADÍSTICA</span>
+                <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-[0.2em] text-center">INFORMACIÓN ESTADÍSTICA</span>
             </div>
           </div>
         </div>

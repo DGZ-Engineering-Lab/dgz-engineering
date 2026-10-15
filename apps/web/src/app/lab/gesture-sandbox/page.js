@@ -60,7 +60,7 @@ export default function GestureSandboxPage() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
            <div className="space-y-3">
-              <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.4em] flex items-center gap-2">
+              <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.28em] flex items-center gap-2">
                  ← Terminal Home
               </Link>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none">
@@ -68,7 +68,7 @@ export default function GestureSandboxPage() {
               </h1>
               <div className="flex items-center gap-4">
                  <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-[10px] tracking-widest rounded uppercase">BETA v0.9.8</span>
-                 <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.4em]">Spatial interaction kernel // active_node: {activeCoords}</p>
+                 <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.28em]">Spatial interaction kernel // active_node: {activeCoords}</p>
               </div>
            </div>
            
@@ -130,11 +130,11 @@ export default function GestureSandboxPage() {
                     {/* Corner Telemetry */}
                     <div className="absolute top-10 left-10 space-y-4">
                        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl">
-                          <div className="text-[8px] font-mono text-slate-500 uppercase mb-1">Processing Latency</div>
+                          <div className="text-[9.5px] font-mono text-slate-500 uppercase mb-1">Processing Latency</div>
                           <div className="text-lg font-black text-white">0.02<span className="text-xs text-cyan-400">ms</span></div>
                        </div>
                        <div className="bg-black/60 backdrop-blur-xl border border-white/10 p-4 rounded-xl">
-                          <div className="text-[8px] font-mono text-slate-500 uppercase mb-1">Neural Precision</div>
+                          <div className="text-[9.5px] font-mono text-slate-500 uppercase mb-1">Neural Precision</div>
                           <div className="text-lg font-black text-emerald-400">99.98<span className="text-xs text-white">%</span></div>
                        </div>
                     </div>
@@ -148,10 +148,10 @@ export default function GestureSandboxPage() {
 
                  {/* Console Stream Overlay */}
                  <div className="absolute bottom-10 left-10 w-64 h-40 bg-black/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 overflow-hidden">
-                    <div className="text-[8px] font-mono text-cyan-500 mb-4 tracking-widest font-black uppercase">Gesture_Kernel_Log</div>
+                    <div className="text-[9.5px] font-mono text-cyan-500 mb-4 tracking-widest font-black uppercase">Gesture_Kernel_Log</div>
                     <div className="flex flex-col gap-2">
                        {logs.map((log, i) => (
-                          <div key={i} className={`text-[8px] font-mono transition-all duration-500 ${i === 0 ? 'text-white' : 'text-slate-500'}`}>
+                          <div key={i} className={`text-[9.5px] font-mono transition-all duration-500 ${i === 0 ? 'text-white' : 'text-slate-500'}`}>
                              {i === 0 && <span className="text-cyan-400 mr-2">&gt;</span>}
                              {log}
                           </div>

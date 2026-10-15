@@ -5,7 +5,6 @@ import Image from "next/image";
 import Logo from "../components/Logo";
 import LiveTelemetry from "../components/LiveTelemetry";
 import ContactSection from "../components/ContactSection";
-import FooterSection from "../components/FooterSection";
 import TechTicker from "../components/TechTicker";
 import GlobalPartners from "../components/GlobalPartners";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
@@ -17,60 +16,63 @@ export default function Home() {
     <div className="min-h-screen text-[var(--foreground)] selection:bg-cyan-500/20 overflow-x-hidden relative bg-transparent">
       
       {/* Hero Section - Elite Digital Sovereignty */}
-      <section className="relative pt-28 md:pt-32 pb-16 md:pb-20 px-6 overflow-hidden">
+      <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 px-5 md:px-6 overflow-hidden">
         {/* Luces decorativas superiores */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/5 to-transparent opacity-30 rounded-full blur-[120px] pointer-events-none z-0"></div>
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/5 to-transparent opacity-20 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
-            <div className="lg:col-span-7 space-y-12 hero-enter-left">
-              <div className="flex items-center gap-4">
-                <span className="w-12 h-px bg-cyan-500/40 shadow-[0_0_8px_rgba(6,182,212,0.3)]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-cyan-600 font-semibold">
-                  Ingeniería Territorial // Portafolio de Autor 2026
-                </span>
-              </div>
-              
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-slate-950">
-                Albert Daniel <br /> 
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 font-light italic">Gaviria Zapata</span> <br />
-                <span className="text-xl md:text-2xl lg:text-3xl font-mono font-bold tracking-tight text-slate-800">DevGiz Engineering.</span>
+            <div className="lg:col-span-7 space-y-9 hero-enter-left">
+              <span className="eyebrow">Ingeniería geoespacial · Colombia</span>
+
+              <h1 className="text-[2.6rem] leading-[1.02] sm:text-5xl md:text-6xl lg:text-[4.1rem] font-black tracking-tighter text-slate-950">
+                Datos territoriales <br className="hidden sm:block" />
+                <span className="text-gradient-brand font-light italic">precisos</span> para decidir <br className="hidden sm:block" />
+                con certeza.
               </h1>
 
-              <div className="max-w-2xl">
-                <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed">
-                  Estudiante de Ingeniería en Desarrollo Territorial y Profesional SIG. Especialista en arquitectura de bases de datos espaciales, automatización geoespacial con Python y gestión integral del Catastro Multipropósito bajo el estándar oficial <span className="text-cyan-600 font-mono text-xs border border-cyan-500/20 bg-cyan-500/5 px-1.5 py-0.5 rounded font-bold">LADM-COL v3.0</span>.
-                </p>
+              <p className="max-w-2xl text-lg md:text-xl text-slate-600 font-light leading-relaxed">
+                Catastro multipropósito bajo <span className="text-cyan-700 font-mono text-[0.8em] border border-cyan-500/25 bg-cyan-500/5 px-1.5 py-0.5 rounded-md font-bold whitespace-nowrap">LADM-COL v3.0</span>, WebGIS, analítica y automatización geoespacial para municipios, constructoras y empresas que necesitan resultados verificables.
+              </p>
+
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3">
+                <a href="#contact" className="btn btn-primary">
+                  Agendar consultoría <ArrowUpRight aria-hidden="true" />
+                </a>
+                <Link href="/services" prefetch={false} className="btn btn-secondary">
+                  Ver servicios
+                </Link>
+                <a href="https://wa.me/573053261466" target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+                  WhatsApp directo
+                </a>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-                <a
-                  href="#portfolio-dossier"
-                  className="w-full sm:w-auto px-8 py-4 bg-slate-950 text-white text-[10px] font-black uppercase tracking-[0.25em] hover:bg-cyan-500 hover:text-black transition-all duration-300 shadow-xl hover:shadow-[0_8px_30px_rgba(6,182,212,0.25)] rounded-sm text-center"
-                >
-                  Ver Dossier & Trayectoria
-                </a>
-                <Link
-                  href="/projects"
-                  prefetch={false}
-                  className="w-full sm:w-auto px-8 py-4 border border-slate-300 bg-white/80 text-slate-800 hover:text-slate-950 text-[10px] font-black uppercase tracking-[0.25em] hover:bg-slate-100 hover:border-slate-400 transition-all duration-300 backdrop-blur-md rounded-sm text-center"
-                >
-                  Proyectos & Lab
-                </Link>
-                <a
-                  href="https://wa.me/573053261466"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-6 py-4 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-[0.25em] hover:bg-emerald-500 transition-all duration-300 shadow-md rounded-sm text-center flex items-center justify-center gap-2"
-                >
-                  WhatsApp Directo
-                </a>
-              </div>
+              <dl className="grid grid-cols-3 max-w-xl gap-4 pt-6 border-t border-slate-200/80">
+                <div>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Predios auditados</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-slate-950">+1.2M</dd>
+                </div>
+                <div>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Consistencia</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-emerald-600">99.9%</dd>
+                </div>
+                <div>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Precisión RTK</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-cyan-700">&lt;5 cm</dd>
+                </div>
+              </dl>
+
+              <p className="flex items-center gap-3 text-sm text-slate-500">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-[0.7rem] font-black text-cyan-300">AG</span>
+                <span>
+                  Dirigido por <a href="#portfolio-dossier" className="font-semibold text-slate-800 underline decoration-cyan-500/40 underline-offset-4 hover:text-cyan-700">Albert Daniel Gaviria Zapata</a>, profesional SIG y fundador de DevGiz.
+                </span>
+              </p>
             </div>
             {/* Core Standards HUD Card (Lateral Hero) - Ultra premium 3D Digital Twin CAD Console */}
-            <div className="hidden lg:block lg:col-span-5 pt-10 hero-enter-right">
+            <div className="hidden lg:block lg:col-span-5 hero-enter-right">
               <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-md">
                 {/* 3D ambient space back-glow */}
                 <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-cyan-500/20 via-indigo-500/10 to-orange-500/5 blur-3xl animate-pulse-soft" aria-hidden="true"></div>
@@ -725,15 +727,15 @@ export default function Home() {
                     <div className="grid grid-cols-3 gap-3 text-center">
                       <div>
                         <div className="font-mono text-[11px] md:text-sm font-bold text-white tracking-tight">1.245.310</div>
-                        <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">PREDIOS</div>
+                        <div className="mt-0.5 text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold">PREDIOS</div>
                       </div>
                       <div className="border-x border-white/10">
                         <div className="font-mono text-[11px] md:text-sm font-bold text-cyan-400 tracking-tight">5 cm/px</div>
-                        <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">RESOLUCIÓN</div>
+                        <div className="mt-0.5 text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold">RESOLUCIÓN</div>
                       </div>
                       <div>
                         <div className="font-mono text-[11px] md:text-sm font-bold text-white tracking-tight">EPSG:9377</div>
-                        <div className="mt-0.5 text-[8px] uppercase tracking-wider text-slate-400 font-semibold">CTM12</div>
+                        <div className="mt-0.5 text-[9.5px] uppercase tracking-wider text-slate-400 font-semibold">CTM12</div>
                       </div>
                     </div>
                   </div>
@@ -746,50 +748,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========================================================= */}
-      {/* DOSSIER MAESTRO DE INGENIERÍA: ALBERT DANIEL GAVIRIA ZAPATA */}
-      {/* ========================================================= */}
-      <ProfessionalProfile />
-
-      {/* Ecosistema Tecnológico de Elite */}
-      <section className="py-14 md:py-16 border-t border-slate-100 bg-transparent relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        
-        <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
-          <div className="flex flex-col items-center text-center space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-px bg-cyan-500/50"></span>
-              <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-cyan-600 font-bold">TECNOLOGÍA SIN LÍMITES</span>
-              <span className="w-8 h-px bg-cyan-500/50"></span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
-              Ecosistema de Plataformas <span className="text-slate-400 font-light italic">Multipropósito</span>
-            </h2>
-            <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
-              Herramientas líderes globales adaptadas para eliminar las tareas manuales y repetitivas, ahorrando tiempo y dinero en cada metro cuadrado de tus proyectos.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative z-10">
-          <TechTicker />
-        </div>
-      </section>
-
       {/* Strategic Vision - 3 Pillars (Glassmorphic Cards) */}
-      <section className="py-14 md:py-16 px-6 relative section-deferred bg-transparent">
+      <section className="py-16 md:py-20 px-5 md:px-6 relative section-deferred bg-transparent">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="max-w-2xl mb-10 space-y-3">
+            <span className="eyebrow">Por qué DevGiz</span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-950">Menos incertidumbre, <span className="text-slate-400 font-light italic">más decisiones.</span></h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Seguridad Legal */}
             <div 
-              className="glass-card-premium p-6 sm:p-8 rounded-2xl border-glow space-y-4 glow-cyan-hover scroll-reveal"
+              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Shield className="w-6 h-6 text-cyan-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Seguridad Legal</h3>
+              <h3 className="text-xl font-black tracking-tight text-slate-900">Seguridad Legal</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
                 Tranquilidad jurídica total. Validamos linderos y predios bajo las normativas colombianas oficiales para que compres, vendas o construyas sin sorpresas de última hora.
               </p>
@@ -797,13 +773,13 @@ export default function Home() {
 
             {/* Eficiencia Máxima */}
             <div 
-              className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
+              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Settings className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Eficiencia Máxima</h3>
+              <h3 className="text-xl font-black tracking-tight text-slate-900">Eficiencia Máxima</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
                 Automatización sin errores. Procesamos millones de datos geográficos y catastrales en segundos, eliminando papeleos y semanas de espera técnica.
               </p>
@@ -811,13 +787,13 @@ export default function Home() {
 
             {/* Simulación Futura */}
             <div 
-              className="glass-card-premium p-12 rounded-[2rem] border-glow space-y-8 glow-cyan-hover scroll-reveal"
+              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
             >
-              <div className="w-14 h-14 bg-slate-50 border border-slate-255/80 rounded-2xl flex items-center justify-center text-xl shadow-md relative group overflow-hidden">
+              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <Brain className="w-6 h-6 text-emerald-600" />
               </div>
-              <h3 className="text-2xl font-black tracking-tight text-slate-900">Simulación Futura</h3>
+              <h3 className="text-xl font-black tracking-tight text-slate-900">Simulación Futura</h3>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
                 Visión 3D del mañana. Simula riesgos de inundación, restricciones de construcción o cambios del POT antes de invertir un solo peso en el terreno.
               </p>
@@ -836,7 +812,7 @@ export default function Home() {
             <div 
               className="lg:col-span-5 space-y-8 relative z-10 scroll-reveal"
             >
-              <div className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.5em] flex items-center gap-2 font-bold">
+              <div className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.32em] flex items-center gap-2 font-bold">
                 <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping"></span>
                 Live Intelligence Stream
               </div>
@@ -851,16 +827,16 @@ export default function Home() {
                 <Link 
                   href="/standards" 
                   prefetch={false} 
-                  className="inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:text-cyan-600 transition-colors group"
+                  className="btn btn-secondary group"
                 >
-                  Ver Protocolos de Seguridad
-                  <span className="w-12 h-px bg-slate-900 group-hover:bg-cyan-600 transition-all group-hover:w-20"></span>
+                  Ver protocolos de seguridad
+                  <ChevronRight aria-hidden="true" />
                 </Link>
               </div>
             </div>
             
             <div 
-              className="lg:col-span-7 h-[540px] bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden relative group shadow-2xl hover:border-slate-350 transition-all"
+              className="lg:col-span-7 h-[420px] md:h-[540px] bg-white border border-slate-200 rounded-[var(--radius-lg)] overflow-hidden relative group shadow-2xl hover:border-slate-350 transition-all"
             >
               <SovereignMapWrapper />
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-slate-200/50 z-20 shadow-md">
@@ -888,20 +864,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ========================================================= */}
+      {/* DOSSIER MAESTRO DE INGENIERÍA: ALBERT DANIEL GAVIRIA ZAPATA */}
+      {/* ========================================================= */}
+      <ProfessionalProfile />
+
+      {/* Ecosistema Tecnológico de Elite */}
+      <section className="py-14 md:py-16 border-t border-slate-100 bg-transparent relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <span className="eyebrow eyebrow-center">Tecnología sin límites</span>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
+              Ecosistema de Plataformas <span className="text-slate-400 font-light italic">Multipropósito</span>
+            </h2>
+            <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
+              Herramientas líderes globales adaptadas para eliminar las tareas manuales y repetitivas, ahorrando tiempo y dinero en cada metro cuadrado de tus proyectos.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10">
+          <TechTicker />
+        </div>
+      </section>
+
+      {/* Global Partners - Ecosistema de Alianzas y Clientes */}
+      <GlobalPartners />
+
       {/* Featured Insights - Link to Journal */}
       <section className="py-14 md:py-16 px-6 relative section-deferred">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
             <div className="space-y-4">
-              <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Engineering Journal</div>
+              <span className="eyebrow">Blog técnico</span>
               <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950">
-                Pensamiento <span className="text-slate-400 italic font-light">Estrategico</span>
+                Pensamiento <span className="text-slate-400 italic font-light">estratégico</span>
               </h2>
             </div>
             <Link 
               href="/blog" 
               prefetch={false} 
-              className="text-[10px] font-bold uppercase tracking-widest border-b border-slate-200 pb-1.5 text-slate-500 hover:text-cyan-600 hover:border-cyan-500/40 transition-all duration-300"
+              className="btn btn-secondary btn-sm"
             >
               Ver todas las publicaciones
             </Link>
@@ -912,7 +917,7 @@ export default function Home() {
           >
             <div className="scroll-reveal">
               <Link href="/blog/1" prefetch={false} className="group space-y-6 block">
-                <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
+                <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[var(--radius-lg)] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
                     src="/assets/img/blog-ladm-col.webp" 
@@ -923,7 +928,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-bold">Caso de Exito // Valle</span>
+                  <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-bold">Caso de éxito · Valle</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     La Nueva Era del Catastro Multipropósito
                   </h3>
@@ -936,7 +941,7 @@ export default function Home() {
 
             <div className="scroll-reveal">
               <Link href="/blog/2" prefetch={false} className="group space-y-6 block">
-                <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[2rem] relative shadow-lg">
+                <div className="aspect-video bg-slate-100 border border-slate-200 overflow-hidden rounded-[var(--radius-lg)] relative shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-40 z-10"></div>
                   <Image 
                     src="/assets/img/blog-cybersecurity.webp" 
@@ -961,11 +966,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Global Partners - Ecosistema de Alianzas y Clientes */}
-      <GlobalPartners />
-
       <ContactSection />
-      <FooterSection />
     </div>
   );
 }

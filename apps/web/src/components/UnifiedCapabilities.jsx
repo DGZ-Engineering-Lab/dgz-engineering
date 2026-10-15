@@ -84,7 +84,7 @@ export default function UnifiedCapabilities() {
           <div className="space-y-6">
             <div className="flex items-center gap-4">
                <div className="w-16 h-[2px] bg-gradient-to-r from-cyan-500 to-transparent"></div>
-               <span className="text-cyan-400 font-mono text-sm tracking-[0.4em] uppercase font-bold">
+               <span className="text-cyan-400 font-mono text-sm tracking-[0.28em] uppercase font-bold">
                  Soberanía Territorial Digital
                </span>
             </div>

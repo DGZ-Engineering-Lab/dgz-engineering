@@ -80,7 +80,7 @@ export default function ProjectsPage() {
             >
               <div className="flex items-center gap-3">
                 <span className="w-12 h-px bg-[#1a1a1a]"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-500 font-bold">Portafolio de Infraestructura Territorial // 2026</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Portafolio de Infraestructura Territorial // 2026</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 Infraestructura <br /> <span className="text-slate-400 italic font-light">Territorial</span>
@@ -217,7 +217,7 @@ export default function ProjectsPage() {
       {/* Interactive Ecosystem - Premium Integration */}
       <section className="py-14 md:py-16 bg-[#fafafa] border-y border-slate-200 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-10 text-center space-y-4">
-          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.5em]">Interactive Intelligence // v3.0</div>
+          <div className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.32em]">Interactive Intelligence // v3.0</div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#1a1a1a] tracking-tighter">
             Ecosistema de <span className="text-slate-400 italic font-light">Inteligencia Espacial</span>
           </h2>

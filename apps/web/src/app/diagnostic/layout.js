@@ -7,6 +7,12 @@ export const metadata = pageMetadata({
   path: "/diagnostic",
 });
 
+// La consola de diagnóstico está diseñada sobre fondo oscuro (igual que /lab):
+// este contenedor aporta el lienzo y redefine los tokens de cristal para modo oscuro.
 export default function DiagnosticLayout({ children }) {
-  return children;
+  return (
+    <div className="theme-dark relative w-full flex-grow flex flex-col overflow-x-clip">
+      {children}
+    </div>
+  );
 }

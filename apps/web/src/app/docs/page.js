@@ -269,13 +269,13 @@ export default function DocsPage() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
            <div className="space-y-4">
-              <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.4em] flex items-center gap-2">
+              <Link href="/" className="text-slate-500 hover:text-cyan-400 transition-colors font-mono text-[10px] uppercase tracking-[0.28em] flex items-center gap-2">
                  <ArrowLeft className="w-3.5 h-3.5" /> System Kernel
               </Link>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-none">
                 Node <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 italic font-light">Documentation</span>
               </h1>
-              <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.4em]">Developer Access // API Endpoint v1.3.0-BETA</p>
+              <p className="text-slate-500 font-mono text-[10px] uppercase tracking-[0.28em]">Developer Access // API Endpoint v1.3.0-BETA</p>
            </div>
            
            <div className="flex items-center gap-4 px-6 py-3 bg-slate-900/30 border border-slate-800 rounded-2xl backdrop-blur-xl">
@@ -410,7 +410,7 @@ export default function DocsPage() {
                  <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
                  
                  <div className="space-y-4">
-                    <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.4em] flex items-center gap-2">
+                    <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.28em] flex items-center gap-2">
                        <Terminal className="w-3.5 h-3.5 animate-pulse" />
                        Interactive Sandbox Console
                     </div>
@@ -487,7 +487,7 @@ export default function DocsPage() {
                        </div>
 
                        <div className="pt-4 border-t border-slate-900 mt-4 flex justify-between items-center">
-                          <span className="text-[8px] font-mono text-slate-600">JURISDICTION: COLOMBIA</span>
+                          <span className="text-[9.5px] font-mono text-slate-600">JURISDICTION: COLOMBIA</span>
                           <button
                             onClick={runPlayground}
                             disabled={consoleLoading}
@@ -523,15 +523,6 @@ export default function DocsPage() {
            </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-40 pt-16 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-8">
-           <Logo className="w-12 h-12 opacity-30" />
-           <div className="flex gap-12 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
-              <span>Privacy Kernel</span>
-              <span>Security Protocols</span>
-              <span>&copy; 2026 DevGiz Hub</span>
-           </div>
-        </div>
       </div>
     </div>
   );
