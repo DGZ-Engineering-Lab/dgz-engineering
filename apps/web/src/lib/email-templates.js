@@ -14,7 +14,7 @@ export function getAdminNotificationTemplate({ name, email, message, company }) 
       <p><strong>Nombre:</strong> ${name}</p>
       <p><strong>Compañía:</strong> ${company || "N/A"}</p>
       <p><strong>Email:</strong> ${email}</p>
-      <div style="background-color: #f9f9f9; padding: 15px; margin-top: 20px; border-radius: 5px;">
+      <div style="background-color: #f9f9f9; padding: 15px; margin-top: 20px; border-radius: 5px; white-space: pre-line;">
         <p style="margin: 0; font-style: italic;">"${message}"</p>
       </div>
       <hr style="border: none; border-top: 1px solid #eaeaea; margin: 30px 0;" />

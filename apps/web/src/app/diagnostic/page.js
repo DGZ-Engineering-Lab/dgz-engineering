@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   MapPin, Sliders, Shield, Zap, TrendingUp, Terminal, 
   FileText, Building2, AlertTriangle, CheckCircle2, 
-  ArrowRight, Lock, RefreshCw, Layers, Check, Globe 
+  Lock, RefreshCw, Layers, Check, Globe
 } from "lucide-react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import RtkSatelliteHud from "../../components/RtkSatelliteHud";
+import AuditLeadCapture from "../../components/AuditLeadCapture";
 
 function BlueprintSkeleton() {
   return (
@@ -274,6 +274,18 @@ export default function DiagnosticPage() {
     if (!formData.name || !formData.email || !formData.municipio) return;
 
     setAuditStep(1); // Terminal step
+
+    // Deliver the pre-audit lead; the simulation runs regardless of the network result
+    fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        company: formData.municipio,
+        message: `[Lead Diagnóstico] Generó la pre-auditoría simulada\nCargo: ${formData.cargo}\nMunicipio / organización: ${formData.municipio}`
+      })
+    }).catch(() => {});
     
     // Simulate complex audit process in terminal
     const terminalScripts = [
@@ -896,24 +908,14 @@ export default function DiagnosticPage() {
                   </div>
                 </div>
 
-                {/* RTK GNSS Active Constellation HUD & Action */}
-                <div className="space-y-6">
-                  <RtkSatelliteHud />
-                  
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTab("audit");
-                      if (window.dgzSynth) {
-                        try { window.dgzSynth.playClick(); } catch (e) {}
-                      }
-                    }}
-                    className="w-full py-5 bg-white text-black hover:bg-cyan-500 hover:text-black transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
-                  >
-                    <span>Solicitar Auditoría de Municipio</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
+                {/* Paid audit offer + email capture */}
+                <AuditLeadCapture
+                  source="calculator"
+                  estimate={{ numPredios, yearsOutdated, avgTax, annualLeak: annualTaxLeakage, totalLoss: totalOutdatedLoss }}
+                />
+
+                {/* RTK GNSS Active Constellation HUD */}
+                <RtkSatelliteHud />
 
               </div>
 
@@ -1174,29 +1176,21 @@ export default function DiagnosticPage() {
                       </ul>
                     </div>
 
-                    {/* Conversion Call to Action */}
+                    {/* Conversion Call to Action: paid audit offer */}
                     <div className="space-y-4 pt-4 border-t border-slate-900">
-                      <div className="text-center text-xs text-slate-400 font-light">
-                        ¿Desea validar estos resultados y estructurar un plan de contingencia territorial soberano para su municipio?
-                      </div>
+                      <AuditLeadCapture
+                        source="report"
+                        estimate={{ numPredios, avgTax, annualLeak: numPredios * avgTax * 0.15 }}
+                        defaults={{ name: formData.name, email: formData.email, municipio: formData.municipio, cargo: formData.cargo }}
+                      />
 
-                      <div className="flex flex-col sm:flex-row gap-4 items-center">
-                        <Link
-                          href="/#contact"
-                          className="w-full sm:flex-1 py-5 bg-white text-black hover:bg-cyan-500 hover:text-black text-center text-[10px] font-black uppercase tracking-[0.25em] rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-md cursor-pointer"
-                        >
-                          <Zap className="w-4 h-4" />
-                          <span>Agendar Diagnóstico Técnico</span>
-                        </Link>
-                        
-                        <button
-                          type="button"
-                          onClick={() => setAuditStep(0)}
-                          className="w-full sm:w-auto px-6 py-5 border border-slate-800 text-slate-400 hover:text-white text-center text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
-                        >
-                          Reiniciar Simulador
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => { setAuditTerminalLogs([]); setAuditStep(0); }}
+                        className="w-full px-6 py-4 border border-slate-800 text-slate-400 hover:text-white text-center text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
+                      >
+                        Reiniciar Simulador
+                      </button>
                     </div>
 
                   </motion.div>
