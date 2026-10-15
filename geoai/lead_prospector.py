@@ -3,81 +3,18 @@ import json
 import csv
 import os
 
-# High-Fidelity Pre-compiled B2B Prospect Database for Colombian Real Estate & Construction Sectors
-COLOMBIAN_LEAD_MARKET = [
-    {
-        "company": "Constructora Amarilo S.A.S.",
-        "contact_name": "Ing. Carlos Alberto Henao",
-        "position": "Director de Planeación y Urbanismo",
-        "email": "carlos.henao@amarilo.com.co",
-        "phone": "+57 311 489 2210",
-        "city": "Bogotá D.C.",
-        "tier": "Mega"
-    },
-    {
-        "company": "Constructora Conconcreto S.A.",
-        "contact_name": "Dra. Beatriz Restrepo Velez",
-        "position": "Gerente de Proyectos de Infraestructura",
-        "email": "beatriz.restrepo@conconcreto.co",
-        "phone": "+57 315 789 4433",
-        "city": "Medellín",
-        "tier": "Mega"
-    },
-    {
-        "company": "Constructora Marval S.A.",
-        "contact_name": "Ing. Mauricio Andrés Galvis",
-        "position": "Director General de Tierras y Linderos",
-        "email": "m.galvis@marval.com.co",
-        "phone": "+57 320 890 1234",
-        "city": "Bucaramanga",
-        "tier": "Mega"
-    },
-    {
-        "company": "Arquitectura y Concreto S.A.S.",
-        "contact_name": "Dra. María Fernanda Ortíz",
-        "position": "Jefe Jurídica de Adquisición de Lotes",
-        "email": "maria.ortiz@ayc.com.co",
-        "phone": "+57 300 555 1290",
-        "city": "Medellín",
-        "tier": "Macro"
-    },
-    {
-        "company": "Inmobiliaria Alberto Álvarez S.A.S.",
-        "contact_name": "Don Alberto Álvarez",
-        "position": "Gerente General",
-        "email": "alberto@albertoalvarez.com",
-        "phone": "+57 312 400 9988",
-        "city": "Medellín",
-        "tier": "Macro"
-    },
-    {
-        "company": "Inmobiliaria Padra y Cía",
-        "contact_name": "Dra. Liliana Padra",
-        "position": "Directora de Ventas de Predios Campestres",
-        "email": "l.padra@padrainmobiliaria.com",
-        "phone": "+57 317 333 4455",
-        "city": "Chía (Cundinamarca)",
-        "tier": "Pyme"
-    },
-    {
-        "company": "Topógrafos & Ingenieros Asociados del Oriente",
-        "contact_name": "Ing. Hernán Darío Gómez",
-        "position": "Socio Fundador",
-        "email": "hernan.gomez@topo-oriente.com",
-        "phone": "+57 310 999 8877",
-        "city": "Rionegro (Antioquia)",
-        "tier": "Pyme"
-    },
-    {
-        "company": "Alcaldía Municipal de Envigado - Secretaría de Hacienda",
-        "contact_name": "Dr. Juan Camilo Tobón",
-        "position": "Subdirector de Catastro y Predial",
-        "email": "juan.tobon@envigado.gov.co",
-        "phone": "+57 301 222 3344",
-        "city": "Envigado",
-        "tier": "Gobierno"
-    }
-]
+# Prospect records contain personal contact data, so they live outside the repo.
+# Put them in a gitignored JSON file (a list of objects with company, contact_name,
+# position, email, phone, city, tier) and point LEADS_SOURCE_PATH at it.
+LEADS_SOURCE_PATH = os.environ.get("LEADS_SOURCE_PATH", "scratch/leads_source.json")
+
+
+def load_lead_market(path=LEADS_SOURCE_PATH):
+    if not os.path.exists(path):
+        print(f"[-] Lead source not found at: {path}. Create it (it is gitignored) or set LEADS_SOURCE_PATH.")
+        return []
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
 
 def search_colombian_market(query_city=None, query_tier=None):
     """
@@ -92,7 +29,7 @@ def search_colombian_market(query_city=None, query_tier=None):
         print(f"[*] Filtering by Business Tier: {query_tier}")
         
     filtered_leads = []
-    for lead in COLOMBIAN_LEAD_MARKET:
+    for lead in load_lead_market():
         match = True
         if query_city and query_city.lower() not in lead["city"].lower():
             match = False

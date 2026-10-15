@@ -15,8 +15,8 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, "../.env.local") });
 
-// Import Resend SDK or fallback to native fetch API for zero external dependency errors!
-const RESEND_API_KEY = process.env.RESEND_API_KEY || "re_eMebpExi_AoRa5VtvgegXuVmKPWcMTKBR";
+// The Resend key must come from the environment (apps/web/.env.local); never hardcode it.
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 // Read compiled leads from scratch directory
 const LEADS_FILE_PATH = path.join(__dirname, "../../../scratch/colombian_leads.json");
@@ -137,6 +137,10 @@ async function runOutreachCampaign() {
     console.log(`[i] RUNNING IN DRY-RUN MODE. No real emails will be dispatched. To send live, run: node apps/web/scripts/send_outreach.js --live`);
     console.log(`================================================================================`);
   } else {
+    if (!RESEND_API_KEY) {
+      console.error(`[-] RESEND_API_KEY is not set. Add it to apps/web/.env.local or export it before using --live.`);
+      process.exit(1);
+    }
     console.log(`[⚠️] LIVE MODE ENABLED! SENDING REAL EMAILS TO THE OUTBOX...`);
     console.log(`================================================================================`);
   }

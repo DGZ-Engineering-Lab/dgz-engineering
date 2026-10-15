@@ -55,3 +55,6 @@ coverage/
 .pytest_cache/
 .ruff_cache/
 .next/
+
+# Prospect lists (personal contact data) and outreach output
+scratch/
