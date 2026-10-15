@@ -102,8 +102,12 @@ export default function Navbar() {
     if (!isMobileMenuOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // El menú cubre toda la pantalla: el contenido detrás no debe recibir foco
+    const behind = [document.getElementById("main-content"), document.querySelector("body > footer, footer")].filter(Boolean);
+    behind.forEach((el) => el.setAttribute("inert", ""));
     return () => {
       document.body.style.overflow = previous;
+      behind.forEach((el) => el.removeAttribute("inert"));
     };
   }, [isMobileMenuOpen]);
 
@@ -201,7 +205,7 @@ export default function Navbar() {
             <Logo className={`w-8 h-8 transition-transform group-hover:scale-110 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
             <div className="flex flex-col leading-none">
               <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
-              <span className="text-[9.5px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold">Engineering</span>
+              <span className="text-[9.5px] font-mono uppercase tracking-[0.3em] text-slate-500 font-bold">Engineering</span>
             </div>
           </Link>
 
@@ -224,7 +228,7 @@ export default function Navbar() {
                 >
                   <span>{link.name}</span>
                   {link.isNew && (
-                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 font-mono text-[9px] tracking-widest rounded-full font-black">
+                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[9px] tracking-widest rounded-full font-black">
                       ROI
                     </span>
                   )}
@@ -237,9 +241,9 @@ export default function Navbar() {
                     ref={(el) => { dropdownTriggerRefs.current[link.dropdownKey] = el; }}
                     onClick={() => toggleDropdownFromKeyboard(link.dropdownKey)}
                     aria-expanded={activeDropdown === link.dropdownKey}
-                    aria-controls="nav-mega-dropdown"
+                    aria-controls={activeDropdown === link.dropdownKey ? "nav-mega-dropdown" : undefined}
                     aria-label={`Submenú de ${link.name}`}
-                    className="ml-1 p-1 rounded-sm cursor-pointer"
+                    className="ml-0.5 p-2 -m-1 rounded-md cursor-pointer"
                   >
                     <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
                   </button>
@@ -424,7 +428,7 @@ export default function Navbar() {
                         >
                           <span>{link.name}</span>
                           {link.isNew && (
-                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 font-mono text-[9px] tracking-widest rounded-full font-black">
+                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[9px] tracking-widest rounded-full font-black">
                               ROI
                             </span>
                           )}

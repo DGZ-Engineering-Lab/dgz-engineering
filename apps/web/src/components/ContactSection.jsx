@@ -196,6 +196,7 @@ export default function ContactSection() {
                     onClick={() => {
                       setStatus("idle");
                       setFormData({ name: "", company: "", email: "", subject: "Catastro multipropósito / LADM-COL", description: "" });
+                      setTouched({ name: false, email: false, company: false, description: false });
                     }} 
                     className="btn btn-secondary btn-sm"
                   >
@@ -225,7 +226,7 @@ export default function ContactSection() {
                         <label htmlFor="contact-name" className="label-dgz !mb-0">Nombre Completo <span aria-hidden="true">*</span></label>
                         {touched.name && (
                           <span id="contact-name-status" className={`text-[9.5px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
-                            {validateName(formData.name) ? "[ VÁLIDO ]" : "[ CORTO ]"}
+                            {validateName(formData.name) ? "[ VÁLIDO ]" : "Mínimo 3 caracteres"}
                           </span>
                         )}
                       </div>
@@ -265,7 +266,7 @@ export default function ContactSection() {
                       <div className="flex items-center justify-between pl-1">
                         <label htmlFor="contact-company" className="label-dgz !mb-0">Organización</label>
                         {touched.company && formData.company.trim() && (
-                          <span className="text-[9.5px] font-mono uppercase tracking-widest text-emerald-500">
+                          <span className="text-[9.5px] font-mono uppercase tracking-widest text-emerald-700">
                             [ INGRESADO ]
                           </span>
                         )}
@@ -300,7 +301,7 @@ export default function ContactSection() {
                               : "text-amber-700"
                         }`}>
                           {!validateEmail(formData.email) 
-                            ? "[ INVÁLIDO ]" 
+                            ? "Revisa el formato: nombre@dominio.com" 
                             : isInstitutionalEmail(formData.email)
                               ? "[ PRIORIDAD ALTA ]"
                               : "[ PERSONAL ]"}
@@ -407,7 +408,7 @@ export default function ContactSection() {
                         id="contact-description"
                         name="description"
                         aria-invalid={touched.description && !validateDescription(formData.description)}
-                        aria-describedby="contact-description-count"
+                        aria-describedby={touched.description && !validateDescription(formData.description) ? "contact-description-count contact-description-error" : "contact-description-count"}
                         value={formData.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -432,6 +433,11 @@ export default function ContactSection() {
                         </div>
                       )}
                     </div>
+                    {touched.description && !validateDescription(formData.description) && (
+                      <p id="contact-description-error" className="text-xs text-red-700">
+                        Describe tu reto con al menos 30 caracteres para poder preparar una propuesta.
+                      </p>
+                    )}
                   </div>
 
                   <button 

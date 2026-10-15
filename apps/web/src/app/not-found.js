@@ -10,6 +10,7 @@ export default function NotFound() {
 
   // Generate glitch effect on the 404 text
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?";
     const interval = setInterval(() => {
       const shouldGlitch = Math.random() > 0.7;
@@ -127,7 +128,8 @@ export default function NotFound() {
             <span className="text-red-500 font-black text-xs tracking-[0.28em] uppercase">Página no encontrada</span>
           </div>
           <h1 className="text-8xl md:text-[11rem] font-black text-white tracking-tighter leading-none relative">
-            <span className="relative inline-block">
+            <span className="sr-only">Error 404</span>
+            <span aria-hidden="true" className="relative inline-block">
               {glitchText.split("").map((char, i) => (
                 <span 
                   key={i} 
@@ -164,15 +166,15 @@ export default function NotFound() {
 
           <div className="grid grid-cols-3 gap-4 pt-4 border-t border-red-500/10">
             <div>
-              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Código</div>
+              <div className="text-[9.5px] text-slate-400 uppercase mb-1 tracking-widest">Código</div>
               <div className="text-xs text-white font-bold">HTTP_404</div>
             </div>
             <div>
-              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Estado</div>
+              <div className="text-[9.5px] text-slate-400 uppercase mb-1 tracking-widest">Estado</div>
               <div className="text-xs text-red-400 font-bold">NOT_FOUND</div>
             </div>
             <div>
-              <div className="text-[9.5px] text-slate-500 uppercase mb-1 tracking-widest">Sistema</div>
+              <div className="text-[9.5px] text-slate-400 uppercase mb-1 tracking-widest">Sistema</div>
               <div className="text-xs text-emerald-400 font-bold">OPERATIVO</div>
             </div>
           </div>
@@ -207,7 +209,7 @@ export default function NotFound() {
 
         {/* Footer Trace */}
         <motion.div 
-          className="pt-12 text-[9.5px] text-slate-500 uppercase tracking-[0.32em] text-center"
+          className="pt-12 text-[9.5px] text-slate-400 uppercase tracking-[0.32em] text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
