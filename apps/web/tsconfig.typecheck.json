@@ -10,7 +10,7 @@
     "jsx": "preserve",
     "skipLibCheck": true,
     "strict": false,
-    "types": ["next"]
+    "types": ["next", "node"]
   },
   "include": ["src/lib/**/*.js", "src/data/**/*.js", "src/app/api/**/*.js"],
   "exclude": ["**/__tests__/**"]

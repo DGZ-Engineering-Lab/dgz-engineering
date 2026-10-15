@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
 
 import Background from "../components/Background";
 import Navbar from "../components/Navbar";
-import FloatingTelemetry from "../components/FloatingTelemetry";
 import FooterSection from "../components/FooterSection";
 import SystemStatusHeader from "../components/SystemStatusHeader";
 import AudioInitializer from "../components/AudioInitializer";
@@ -90,7 +89,6 @@ export default function RootLayout({ children }) {
             <Background />
             <SystemStatusHeader />
             <Navbar />
-            <FloatingTelemetry />
             <main id="main-content" tabIndex={-1} className="relative z-10 flex flex-col min-h-screen">
               {children}
             </main>
