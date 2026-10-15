@@ -208,7 +208,7 @@ export default function SovereignMapWrapper() {
             <button
               onClick={handleActivate}
               disabled={isLoading}
-              className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[9px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
+              className={`mt-4 pointer-events-auto px-8 py-3.5 text-slate-950 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 rounded-sm cursor-pointer disabled:opacity-50 relative min-w-[200px] ${
                 mapEngine === "sovereign"
                   ? "bg-amber-500 hover:bg-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.5)]"
                   : "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.2)] hover:shadow-[0_0_40px_rgba(6,182,212,0.5)]"

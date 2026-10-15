@@ -41,7 +41,7 @@ export const SERVICES_DATA = {
     marketplace: [
       {
         name: "Piloto WebGIS Municipal",
-        // Precio de referencia: Daniel confirma el valor final antes de publicar.
+        // Precio confirmado por Daniel el 2026-10-15.
         price: "COP 18.000.000",
         priceNote: "Precio fijo + IVA",
         // Anticipo por link de pago Wompi (sin backend). Si la variable no está

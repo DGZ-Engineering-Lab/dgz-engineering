@@ -169,7 +169,7 @@ export default function FAQPage() {
                     />
                     <button 
                       type="submit" 
-                      className="bg-[#1a1a1a] text-white text-[9px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
+                      className="bg-[#1a1a1a] text-white text-[10px] font-bold py-3 uppercase tracking-widest hover:bg-slate-800 transition-all rounded-lg cursor-pointer flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                     >
                       <Mail className="w-3 h-3" />
                       Suscribirse

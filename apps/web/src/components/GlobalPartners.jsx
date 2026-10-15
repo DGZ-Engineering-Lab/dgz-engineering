@@ -522,7 +522,7 @@ function PartnerCard({ partner, activePartner, onSelect }) {
       </div>
 
       <div className="flex flex-col items-center text-center mt-1 z-10">
-        <span className={`text-[9px] font-mono font-bold tracking-tight transition-colors duration-300 ${isActive ? theme.text : 'text-slate-700 opacity-80 group-hover:opacity-100 group-hover:text-slate-900 font-semibold'}`}>
+        <span className={`text-[10px] font-mono font-bold tracking-tight transition-colors duration-300 ${isActive ? theme.text : 'text-slate-700 opacity-80 group-hover:opacity-100 group-hover:text-slate-900 font-semibold'}`}>
           {partner.name}
         </span>
       </div>
@@ -803,14 +803,14 @@ export default function GlobalPartners() {
             <div className="flex bg-slate-200/50 p-1 rounded-xl border border-slate-300/30">
               <button 
                 onClick={() => setViewMode("marquee")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "marquee" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "marquee" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 <RefreshCw className="w-3.5 h-3.5 animate-spin-slow text-cyan-500" />
                 Flujo Continuo
               </button>
               <button 
                 onClick={() => setViewMode("grid")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "grid" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 ${viewMode === "grid" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 <Grid className="w-3.5 h-3.5 text-blue-500" />
                 Buscador de Red
@@ -821,19 +821,19 @@ export default function GlobalPartners() {
             <div className="flex bg-slate-200/50 p-1 rounded-xl border border-slate-300/30">
               <button 
                 onClick={() => setFilter("all")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "all" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "all" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Todos ({ALL_PARTNERS.length})
               </button>
               <button 
                 onClick={() => setFilter("institution")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "institution" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "institution" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Gobierno
               </button>
               <button 
                 onClick={() => setFilter("client")}
-                className={`px-4 py-2.5 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "client" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
+                className={`px-4 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg transition-all duration-300 ${filter === "client" ? "bg-white text-slate-950 shadow-[0_3px_10px_rgba(0,0,0,0.06)] border border-slate-200" : "text-slate-500 hover:text-slate-900"}`}
               >
                 Sector Privado
               </button>
@@ -881,7 +881,7 @@ export default function GlobalPartners() {
               Haz clic sobre el logotipo de cualquier entidad para sincronizar la telemetría del <strong className="text-slate-900 font-semibold">Centro de Control Técnico e Interoperabilidad</strong> en tiempo real con su protocolo.
             </span>
           </div>
-          <span className="font-mono text-[9px] text-cyan-500 bg-cyan-500/10 px-3.5 py-1.5 rounded-lg self-start sm:self-auto font-black tracking-[0.15em] uppercase border border-cyan-500/20 shrink-0">
+          <span className="font-mono text-[10px] text-cyan-500 bg-cyan-500/10 px-3.5 py-1.5 rounded-lg self-start sm:self-auto font-black tracking-[0.15em] uppercase border border-cyan-500/20 shrink-0">
             SISTEMA HOLOGRÁFICO CONECTADO
           </span>
         </div>
@@ -1013,7 +1013,7 @@ export default function GlobalPartners() {
               </div>
 
               {/* Protocol Badge tag */}
-              <div className={`px-4.5 py-2 rounded-xl border text-[9px] font-mono font-black uppercase tracking-[0.15em] ${badgeTextTheme} shadow-sm`}>
+              <div className={`px-4.5 py-2 rounded-xl border text-[10px] font-mono font-black uppercase tracking-[0.15em] ${badgeTextTheme} shadow-sm`}>
                 {currentMetadata.protocol}
               </div>
             </div>
@@ -1040,7 +1040,7 @@ export default function GlobalPartners() {
                   <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-slate-350 pointer-events-none" />
                   <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-slate-350 pointer-events-none" />
                   
-                  <div className={`flex items-center gap-2 font-mono text-[9px] font-black uppercase tracking-widest ${textHighlightTheme}`}>
+                  <div className={`flex items-center gap-2 font-mono text-[10px] font-black uppercase tracking-widest ${textHighlightTheme}`}>
                     <Activity className="w-4 h-4 text-cyan-500 animate-pulse" />
                     Impacto Técnico de Operación
                   </div>
@@ -1054,7 +1054,7 @@ export default function GlobalPartners() {
                   <button 
                     onClick={handlePingTest}
                     disabled={pingState === "pinging"}
-                    className={`px-7 py-4 rounded-2xl text-[9px] font-mono font-black uppercase tracking-[0.15em] transition-all duration-350 flex items-center gap-2.5 shadow-md hover:shadow-lg
+                    className={`px-7 py-4 rounded-2xl text-[10px] font-mono font-black uppercase tracking-[0.15em] transition-all duration-350 flex items-center gap-2.5 shadow-md hover:shadow-lg
                       ${pingState === "pinging"
                         ? "bg-slate-100 text-slate-405 border border-slate-250 cursor-not-allowed"
                         : "bg-slate-950 text-white hover:bg-slate-850 border border-slate-950 hover:scale-[1.02] active:scale-[0.98]"
@@ -1079,7 +1079,7 @@ export default function GlobalPartners() {
                       e.preventDefault();
                       alert(`Esquema LADM-COL v3.0 para ${activePartnerName} descargado virtualmente.`);
                     }}
-                    className="px-7 py-4 bg-white border border-slate-205 rounded-2xl text-[9px] font-mono font-black text-slate-700 hover:text-slate-950 hover:bg-slate-50 hover:border-slate-300 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm"
+                    className="px-7 py-4 bg-white border border-slate-205 rounded-2xl text-[10px] font-mono font-black text-slate-700 hover:text-slate-950 hover:bg-slate-50 hover:border-slate-300 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm"
                   >
                     Descargar Esquema XML
                   </a>
@@ -1150,7 +1150,7 @@ export default function GlobalPartners() {
                 </div>
 
                 {/* Developer CLI Console Logs */}
-                <div className="bg-slate-950 rounded-3xl border border-slate-900 p-5 font-mono text-[9px] leading-relaxed text-cyan-400/90 shadow-2xl relative overflow-hidden">
+                <div className="bg-slate-950 rounded-3xl border border-slate-900 p-5 font-mono text-[10px] leading-relaxed text-cyan-400/90 shadow-2xl relative overflow-hidden">
                   <div className="absolute -top-10 -right-10 w-24 h-24 bg-cyan-500/5 blur-xl pointer-events-none rounded-full" />
                   
                   <div className="flex items-center justify-between border-b border-slate-900 pb-3 mb-3 relative z-10">
@@ -1192,7 +1192,7 @@ export default function GlobalPartners() {
                   </div>
                   <div className="bg-slate-50 border border-slate-200/50 rounded-2xl p-3.5 text-center">
                     <div className="text-[9.5px] font-mono text-slate-450 uppercase tracking-wider">CANAL</div>
-                    <div className="font-mono text-[9px] font-black text-emerald-600 mt-1.5 uppercase truncate">{currentMetadata.quality.split(" ")[0]}</div>
+                    <div className="font-mono text-[10px] font-black text-emerald-600 mt-1.5 uppercase truncate">{currentMetadata.quality.split(" ")[0]}</div>
                   </div>
                 </div>
 

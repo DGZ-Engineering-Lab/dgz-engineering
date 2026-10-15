@@ -135,7 +135,7 @@ const CybersecurityLab = () => {
       <div className="px-6 py-4 bg-gradient-to-r from-[#0a0a0f] to-[#111118] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full ${isRunning ? 'bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]' : status === "COMPLETED" ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.4)]' : 'bg-slate-600'}`}></div>
-          <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">SOC // Security Operations Center — Auditoría Territorial</span>
+          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">SOC // Security Operations Center — Auditoría Territorial</span>
         </div>
         <div className="flex items-center gap-4">
           {isRunning && <span className="text-[9.5px] font-mono text-red-400 animate-pulse uppercase tracking-wider">🔴 LIVE AUDIT</span>}
@@ -199,7 +199,7 @@ const CybersecurityLab = () => {
                   "bg-slate-700"
                 }`}></span>
               </div>
-              <div className="text-[9px] text-slate-300 font-medium">{node.label}</div>
+              <div className="text-[10px] text-slate-300 font-medium">{node.label}</div>
               <div className="mt-2 h-0.5 bg-slate-800 rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all duration-700 ${
                   node.status === "secure" ? "bg-emerald-500" : node.status === "scanning" ? "bg-amber-500" : "bg-slate-700"
@@ -408,7 +408,7 @@ const InteroperabilityLab = () => {
                 {step >= i ? s.icon : i + 1}
               </motion.div>
               <div className="text-center">
-                <span className={`text-[9px] font-bold uppercase tracking-widest block transition-colors duration-300 ${
+                <span className={`text-[10px] font-bold uppercase tracking-widest block transition-colors duration-300 ${
                   step === i ? 'text-[#1a1a1a]' : 'text-slate-400 group-hover:text-slate-600'
                 }`}>{s.label}</span>
                 {step === i && (
@@ -622,7 +622,7 @@ const GeoAILab = () => {
             <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
           </div>
-          <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">Geo-AI // Change Detection Engine</span>
+          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Geo-AI // Change Detection Engine</span>
         </div>
         {status === "RUNNING" && <span className="text-[9.5px] font-mono text-orange-400 animate-pulse uppercase tracking-wider">\ud83e\udde0 INFERENCIA ACTIVA</span>}
         {status === "COMPLETED" && <span className="text-[9.5px] font-mono text-emerald-400 uppercase tracking-wider font-bold">\u2713 6 DETECCIONES</span>}
@@ -727,7 +727,7 @@ const GeoAILab = () => {
                 <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-red-500/70"></div><div className="w-2 h-2 rounded-full bg-amber-500/70"></div><div className="w-2 h-2 rounded-full bg-emerald-500/70"></div></div>
                 <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">inference_engine.py</span>
               </div>
-              <div ref={consoleRef} className="p-3 font-mono text-[9px] space-y-0.5 h-[140px] overflow-y-auto scrollbar-thin">
+              <div ref={consoleRef} className="p-3 font-mono text-[10px] space-y-0.5 h-[140px] overflow-y-auto scrollbar-thin">
                 {status === "IDLE" && logs.length === 0 && <div className="text-slate-600 italic">Modelo en espera. Pulse ejecutar para iniciar la detecci\u00f3n.</div>}
                 {logs.filter(Boolean).map((log, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} className={
@@ -898,7 +898,7 @@ const LidarLab = () => {
                 <div className="text-right">
                   <div className="text-[9.5px] font-mono text-rose-500 uppercase tracking-widest font-bold">⚠ Catastro Desactualizado</div>
                   <div className="text-2xl font-black text-rose-600">{MUNICIPIO.anosDesactualizado} años</div>
-                  <div className="text-[9px] text-slate-400">Última actualización: {MUNICIPIO.ultimaActualizacion}</div>
+                  <div className="text-[10px] text-slate-400">Última actualización: {MUNICIPIO.ultimaActualizacion}</div>
                 </div>
               </div>
 
@@ -912,7 +912,7 @@ const LidarLab = () => {
                   <div key={i} className="p-4 bg-white border border-slate-100 rounded-xl space-y-1">
                     <div className="text-[9.5px] font-mono text-slate-400 uppercase tracking-widest">{m.label}</div>
                     <div className="text-lg font-black text-[#1a1a1a]">{m.value}</div>
-                    <div className="text-[9px] text-slate-400">{m.sub}</div>
+                    <div className="text-[10px] text-slate-400">{m.sub}</div>
                   </div>
                 ))}
               </div>
@@ -1025,17 +1025,17 @@ const LidarLab = () => {
                         <div className="p-3 bg-slate-50 rounded-lg">
                           <div className="text-[9.5px] font-mono text-slate-400 uppercase">Mejoras Ocultas</div>
                           <div className="text-xl font-black" style={{ color: selectedBarrio.color }}>{selectedBarrio.mejoras}</div>
-                          <div className="text-[9px] text-slate-400">edificaciones sin registro</div>
+                          <div className="text-[10px] text-slate-400">edificaciones sin registro</div>
                         </div>
                         <div className="p-3 bg-slate-50 rounded-lg">
                           <div className="text-[9.5px] font-mono text-slate-400 uppercase">Traslapes</div>
                           <div className="text-xl font-black text-[#1a1a1a]">{selectedBarrio.traslapes}</div>
-                          <div className="text-[9px] text-slate-400">conflictos geométricos</div>
+                          <div className="text-[10px] text-slate-400">conflictos geométricos</div>
                         </div>
                         <div className="p-3 bg-slate-50 rounded-lg">
                           <div className="text-[9.5px] font-mono text-slate-400 uppercase">Fuga Tributaria</div>
                           <div className="text-xl font-black text-amber-600">{formatCOP(selectedBarrio.fugaAnual)}</div>
-                          <div className="text-[9px] text-slate-400">recaudo perdido/año</div>
+                          <div className="text-[10px] text-slate-400">recaudo perdido/año</div>
                         </div>
                       </div>
                     </div>
@@ -1061,7 +1061,7 @@ const LidarLab = () => {
                   <div className="text-center">
                     <div className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest mb-1">Recaudo Recuperable</div>
                     <div className="text-2xl md:text-3xl font-black text-emerald-400">{formatCOP(totalFugaAnual * 0.85)}</div>
-                    <div className="text-[9px] text-slate-500">85% con actualización DevGiz</div>
+                    <div className="text-[10px] text-slate-500">85% con actualización DevGiz</div>
                   </div>
                 </div>
               </div>
@@ -1274,7 +1274,7 @@ export default function BlogPostPage() {
                 <div className="space-y-10">
                   {post.sidebar.metrics.map(stat => (
                     <div key={stat.label} className="space-y-1">
-                      <div className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
+                      <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{stat.label}</div>
                       <div className="text-2xl font-black text-[#1a1a1a] tracking-tight">{stat.value}</div>
                     </div>
                   ))}

@@ -9,6 +9,7 @@ import TechTicker from "../components/TechTicker";
 import GlobalPartners from "../components/GlobalPartners";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
 import ServicesSection from "../components/ServicesSection";
+import OffersSection from "../components/OffersSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
 
 export default function Home() {
@@ -49,18 +50,23 @@ export default function Home() {
                 </a>
               </div>
 
+              <p className="-mt-4 text-sm text-slate-500">
+                Primera sesión sin costo · Respuesta en menos de 24 horas hábiles ·{" "}
+                <a href="#ofertas" className="font-semibold text-slate-800 underline decoration-cyan-500/40 underline-offset-4 hover:text-cyan-700">Ver precios</a>
+              </p>
+
               <dl className="grid grid-cols-3 max-w-xl gap-4 pt-6 border-t border-slate-200/80">
                 <div>
                   <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Predios auditados</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-slate-950">+1.2M</dd>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-slate-950 tabular-nums">+1.2M</dd>
                 </div>
                 <div>
                   <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Consistencia</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-emerald-600">99.9%</dd>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-emerald-700 tabular-nums">99.9%</dd>
                 </div>
                 <div>
                   <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Precisión RTK</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-cyan-700">&lt;5 cm</dd>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-cyan-700 tabular-nums">&lt;5 cm</dd>
                 </div>
               </dl>
 
@@ -87,7 +93,7 @@ export default function Home() {
                   <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between border-b border-white/10 bg-gradient-to-b from-slate-950 via-slate-950/90 to-transparent px-5 py-3.5">
                     <div className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.95)] animate-pulse"></span>
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-cyan-300 font-bold">SOVEREIGN GRAPH CORE v3.1</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300 font-bold">SOVEREIGN GRAPH CORE v3.1</span>
                     </div>
                     <div className="flex items-center gap-1.5 rounded-full bg-cyan-500/10 px-2.5 py-0.5 ring-1 ring-cyan-500/20">
                       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layers text-cyan-400 animate-pulse">
@@ -95,12 +101,12 @@ export default function Home() {
                         <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path>
                         <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path>
                       </svg>
-                      <span className="text-[9px] font-black text-cyan-200 uppercase tracking-widest">4K DWIN</span>
+                      <span className="text-[10px] font-black text-cyan-200 uppercase tracking-widest">4K DWIN</span>
                     </div>
                   </div>
 
                   {/* Real-time Dynamic Status Tag */}
-                  <div className="pointer-events-none absolute left-1/2 top-14 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-500/20 bg-slate-900/90 px-4 py-1.5 text-[9px] font-black text-cyan-400 shadow-xl backdrop-blur-md">
+                  <div className="pointer-events-none absolute left-1/2 top-14 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cyan-500/20 bg-slate-900/90 px-4 py-1.5 text-[10px] font-black text-cyan-400 shadow-xl backdrop-blur-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-activity text-orange-400 animate-pulse">
                       <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
                     </svg>
@@ -748,59 +754,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Strategic Vision - 3 Pillars (Glassmorphic Cards) */}
-      <section className="py-16 md:py-20 px-5 md:px-6 relative section-deferred bg-transparent">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="max-w-2xl mb-10 space-y-3">
+      {/* Por qué DevGiz: bento asimétrico (un argumento principal + dos de apoyo) */}
+      <section aria-labelledby="why-title" className="py-16 md:py-24 relative section-deferred">
+        <div className="container-dgz">
+          <div className="max-w-2xl mb-10 md:mb-12 space-y-3">
             <span className="eyebrow">Por qué DevGiz</span>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-950">Menos incertidumbre, <span className="text-slate-400 font-light italic">más decisiones.</span></h2>
+            <h2 id="why-title" className="text-3xl md:text-5xl font-black tracking-tighter leading-[1.04] text-slate-950">Menos incertidumbre, <span className="text-slate-500 font-light italic">más decisiones.</span></h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Seguridad Legal */}
-            <div 
-              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
-            >
-              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Shield className="w-6 h-6 text-cyan-600" />
-              </div>
-              <h3 className="text-xl font-black tracking-tight text-slate-900">Seguridad Legal</h3>
-              <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Tranquilidad jurídica total. Validamos linderos y predios bajo las normativas colombianas oficiales para que compres, vendas o construyas sin sorpresas de última hora.
-              </p>
-            </div>
 
-            {/* Eficiencia Máxima */}
-            <div 
-              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
-            >
-              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Settings className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-black tracking-tight text-slate-900">Eficiencia Máxima</h3>
-              <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Automatización sin errores. Procesamos millones de datos geográficos y catastrales en segundos, eliminando papeleos y semanas de espera técnica.
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-5 md:gap-6">
+            <article className="md:col-span-4 md:row-span-2 card-dgz card-hover p-7 sm:p-10 relative overflow-hidden flex flex-col">
+              <div aria-hidden="true" className="pointer-events-none absolute -bottom-10 -right-10 h-64 w-64 opacity-[0.5] [background-image:linear-gradient(rgba(8,145,178,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(8,145,178,0.14)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(circle,black_30%,transparent_70%)]" />
+              <span className="w-12 h-12 rounded-[var(--radius-sm)] bg-cyan-50 text-cyan-700 ring-1 ring-cyan-600/15 flex items-center justify-center">
+                <Shield className="w-6 h-6" aria-hidden="true" />
+              </span>
+              <h3 className="mt-8 md:mt-auto md:pt-10 text-2xl md:text-3xl font-black tracking-tight text-slate-950 max-w-md">Datos que resisten una revisión del IGAC</h3>
+              <p className="mt-4 max-w-xl text-slate-600 font-light leading-relaxed">
+                Estructuramos y validamos la información bajo LADM-COL v3.0 e INTERLIS, con controles topológicos en cada entrega. Así compras, vendes, construyes o actualizas catastro sin sorpresas de última hora.
               </p>
-            </div>
+              <ul className="mt-8 flex flex-wrap gap-2 relative">
+                {["LADM-COL v3.0", "INTERLIS / XTF", "ISO 19152", "Res. 1040 de 2023"].map((tag) => (
+                  <li key={tag} className="rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[0.7rem] font-semibold text-slate-700">{tag}</li>
+                ))}
+              </ul>
+            </article>
 
-            {/* Simulación Futura */}
-            <div 
-              className="card-dgz card-hover p-7 sm:p-9 space-y-5 scroll-reveal"
-            >
-              <div className="w-12 h-12 bg-white border border-slate-200 rounded-[var(--radius-sm)] flex items-center justify-center shadow-sm relative group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Brain className="w-6 h-6 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-black tracking-tight text-slate-900">Simulación Futura</h3>
-              <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Visión 3D del mañana. Simula riesgos de inundación, restricciones de construcción o cambios del POT antes de invertir un solo peso en el terreno.
+            <article className="md:col-span-2 card-dgz card-hover p-7 sm:p-8">
+              <span className="w-11 h-11 rounded-[var(--radius-sm)] bg-blue-50 text-blue-700 ring-1 ring-blue-600/15 flex items-center justify-center">
+                <Settings className="w-5 h-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-6 text-xl font-black tracking-tight text-slate-950">Procesos automatizados</h3>
+              <p className="mt-3 text-sm text-slate-600 font-light leading-relaxed">
+                Scripts en Python y PostGIS que procesan miles de predios con el mismo criterio, sin depender de tareas manuales.
               </p>
-            </div>
+            </article>
+
+            <article className="md:col-span-2 card-dgz card-hover p-7 sm:p-8">
+              <span className="w-11 h-11 rounded-[var(--radius-sm)] bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/15 flex items-center justify-center">
+                <Brain className="w-5 h-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-6 text-xl font-black tracking-tight text-slate-950">Escenarios antes de invertir</h3>
+              <p className="mt-3 text-sm text-slate-600 font-light leading-relaxed">
+                Modelos 3D y análisis de inundación, restricciones o cambios del POT antes de comprometer un peso en el terreno.
+              </p>
+            </article>
           </div>
         </div>
       </section>
+
+      <OffersSection />
 
       <ServicesSection />
 
@@ -812,16 +814,13 @@ export default function Home() {
             <div 
               className="lg:col-span-5 space-y-8 relative z-10 scroll-reveal"
             >
-              <div className="text-[9px] font-mono text-cyan-600 uppercase tracking-[0.32em] flex items-center gap-2 font-bold">
-                <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping"></span>
-                Live Intelligence Stream
-              </div>
+              <span className="eyebrow">Plataforma de monitoreo</span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-tight text-slate-950">
-                Control Total del <br /> 
-                <span className="text-slate-400 font-light italic">Activo Espacial.</span>
+                Tus predios y redes, <br />
+                <span className="text-slate-500 font-light italic">en un solo mapa.</span>
               </h2>
               <p className="text-slate-600 text-lg font-light leading-relaxed">
-                Nuestra plataforma unificada te permite vigilar, auditar y actualizar tus lotes, terrenos o red vial en tiempo real, desde cualquier computador o celular con absoluta seguridad.
+                Vigila, audita y actualiza lotes, terrenos o red vial desde cualquier computador o celular, con acceso controlado por usuario.
               </p>
               <div className="pt-4">
                 <Link 
@@ -842,8 +841,8 @@ export default function Home() {
               <div className="absolute top-6 left-6 p-4 glass-card-premium rounded-xl border border-slate-200/50 z-20 shadow-md">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]"></div>
-                  <span className="text-[9px] font-mono text-slate-900 uppercase tracking-widest font-black">
-                    Tactical View: Operational
+                  <span className="text-[0.68rem] font-mono text-slate-900 uppercase tracking-widest font-bold">
+                    Vista operativa en línea
                   </span>
                 </div>
               </div>
@@ -852,10 +851,10 @@ export default function Home() {
                 <Link
                   href="/projects"
                   prefetch={false}
-                  className="flex items-center gap-2 px-5 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] group/btn"
+                  className="btn btn-primary btn-sm group/btn"
                 >
-                  <ArrowUpRight className="w-4 h-4 text-cyan-400 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                  <span>MÁXIMA RESOLUCIÓN</span>
+                  <span>Ver proyectos</span>
+                  <ArrowUpRight aria-hidden="true" className="text-cyan-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -928,7 +927,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-bold">Caso de éxito · Valle</span>
+                  <span className="text-[0.68rem] font-mono text-cyan-700 uppercase tracking-widest font-bold">Caso de éxito · Valle</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     La Nueva Era del Catastro Multipropósito
                   </h3>
@@ -952,7 +951,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[9px] font-mono text-emerald-600 uppercase tracking-widest font-bold">Ciberseguridad // Zero-Trust</span>
+                  <span className="text-[0.68rem] font-mono text-emerald-700 uppercase tracking-widest font-bold">Ciberseguridad · Zero Trust</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     Ciberseguridad Geográfica Nacional
                   </h3>

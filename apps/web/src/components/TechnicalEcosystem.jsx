@@ -91,7 +91,7 @@ export default function TechnicalEcosystem() {
              <div className="hidden lg:flex p-8 rounded-3xl border border-dashed border-slate-800 items-center justify-center text-center group overflow-hidden relative">
                 <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="space-y-2 relative z-10">
-                  <div className="text-[9px] font-mono text-slate-600 uppercase tracking-widest">Scalable Nodes</div>
+                  <div className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Scalable Nodes</div>
                   <div className="text-xs font-bold text-slate-500 uppercase">Ready for Expansion</div>
                 </div>
              </div>

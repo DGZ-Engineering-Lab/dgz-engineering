@@ -416,10 +416,10 @@ export default function ServicesSection() {
           <div className="p-6 md:p-8 border-b border-slate-200/80 bg-slate-50/40">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div>
-                <span className="text-[9px] font-mono text-cyan-600 uppercase tracking-widest block mb-1">OPERATIONAL PIPELINE</span>
+                <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-widest block mb-1">OPERATIONAL PIPELINE</span>
                 <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight">Flujo de Valor Territorial</h3>
               </div>
-              <div className="px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-[9px] font-mono text-cyan-600 uppercase tracking-widest font-black">
+              <div className="px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-[10px] font-mono text-cyan-600 uppercase tracking-widest font-black">
                 End-To-End Pipeline
               </div>
             </div>
@@ -460,7 +460,7 @@ export default function ServicesSection() {
                       }`}>
                         {step.title}
                       </div>
-                      <div className="text-[9px] text-slate-400 truncate hidden sm:block">
+                      <div className="text-[10px] text-slate-400 truncate hidden sm:block">
                         {step.desc}
                       </div>
                     </div>
@@ -478,7 +478,7 @@ export default function ServicesSection() {
               
               {/* Segmented Control de Capas */}
               <div>
-                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block mb-3">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-3">
                   Capa Operacional
                 </span>
                 <div className="flex bg-slate-100 p-1 rounded-xl relative">
@@ -508,7 +508,7 @@ export default function ServicesSection() {
 
               {/* Lista Vertical de Servicios de la Capa Activa */}
               <div className="flex-1 flex flex-col gap-3">
-                <span className="text-[9px] font-mono text-slate-400 uppercase tracking-widest block">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">
                   Servicios en la Capa
                 </span>
                 
@@ -628,7 +628,7 @@ export default function ServicesSection() {
 
                       <Link 
                         href={`/services/${activeService.slug}`}
-                        className="w-full py-3 bg-slate-900 hover:bg-slate-950 border border-slate-800 rounded-xl text-[9px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all flex items-center justify-center gap-2 group shadow-md"
+                        className="w-full py-3 bg-slate-900 hover:bg-slate-950 border border-slate-800 rounded-xl text-[10px] font-mono text-white uppercase tracking-[0.2em] font-black transition-all flex items-center justify-center gap-2 group shadow-md"
                       >
                         <span>Explorar Solución</span>
                         <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -645,7 +645,7 @@ export default function ServicesSection() {
                       <div className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                        <span className="font-mono text-[9px] uppercase tracking-wider text-slate-300 font-bold">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-slate-300 font-bold">
                           Simulador Real // Activo
                         </span>
                       </div>
@@ -794,7 +794,7 @@ function DronesEarthDataSimulator() {
 
         {/* Consola de logs */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
-          <div className="text-slate-500 font-bold mb-1.5 uppercase text-[9px]">Log Drones:</div>
+          <div className="text-slate-500 font-bold mb-1.5 uppercase text-[10px]">Log Drones:</div>
           <div className="space-y-0.5 min-h-[48px]">
             {logs.map((log, i) => (
               <div key={i} className="text-cyan-400/80 truncate">{log}</div>
@@ -854,7 +854,7 @@ function DevOpsCloudSimulator() {
             </div>
             <div className="space-y-1.5">
               {pods.slice(0, 2).map((pod, i) => (
-                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                <div key={i} className="flex justify-between items-center text-[10px] bg-black/40 p-1.5 rounded border border-slate-900">
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span className="text-slate-300 font-bold">{pod.name}</span>
@@ -874,7 +874,7 @@ function DevOpsCloudSimulator() {
             </div>
             <div className="space-y-1.5">
               {pods.slice(2, 4).map((pod, i) => (
-                <div key={i} className="flex justify-between items-center text-[9px] bg-black/40 p-1.5 rounded border border-slate-900">
+                <div key={i} className="flex justify-between items-center text-[10px] bg-black/40 p-1.5 rounded border border-slate-900">
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span className="text-slate-300 font-bold">{pod.name}</span>
@@ -954,7 +954,7 @@ function SoftwareDevSimulator() {
             <span>Query Console (API Sandbox)</span>
             <span className="text-cyan-400">HTTPS POST</span>
           </div>
-          <div className="bg-black/60 border border-slate-900 p-2 rounded text-slate-300 text-[9px] leading-relaxed">
+          <div className="bg-black/60 border border-slate-900 p-2 rounded text-slate-300 text-[10px] leading-relaxed">
             <div><span className="text-rose-400">endpoint</span>: <span className="text-emerald-400">&quot;https://api.dgz.co/v1/spatial/validate&quot;</span></div>
             <div><span className="text-rose-400">headers</span>: &#123; Authorization: <span className="text-yellow-400">&quot;Bearer dgz_live_key_92c3...&quot;</span> &#125;</div>
             <div><span className="text-rose-400">body</span>: &#123; id: <span className="text-indigo-400">&quot;PARCEL-BOG-CHAPINERO&quot;</span>, format: <span className="text-indigo-400">&quot;LADM-COL-XTF&quot;</span> &#125;</div>
@@ -962,7 +962,7 @@ function SoftwareDevSimulator() {
           <button 
             onClick={executeQuery}
             disabled={status === "loading"}
-            className="w-full py-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-black font-bold uppercase text-[9px] tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10 disabled:opacity-50"
+            className="w-full py-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-black font-bold uppercase text-[10px] tracking-wider rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/10 disabled:opacity-50"
           >
             <Play className="w-2.5 h-2.5 fill-black" />
             {status === "loading" ? "Procesando..." : "Ejecutar Consulta API"}
@@ -978,7 +978,7 @@ function SoftwareDevSimulator() {
             {status === "success" && <span className="text-emerald-400">HTTP 200 OK</span>}
           </div>
           
-          <div className="flex-1 overflow-auto scrollbar-hide text-[9px] leading-relaxed">
+          <div className="flex-1 overflow-auto scrollbar-hide text-[10px] leading-relaxed">
             {status === "success" && payload ? (
               <pre className="text-emerald-400/90 whitespace-pre">
                 {JSON.stringify(payload, null, 2)}
@@ -1349,7 +1349,7 @@ function SmartArchitectureSimulator() {
         {/* Telemetría del gemelo digital */}
         <div className="mt-3 bg-black/60 border border-slate-900 p-2.5 rounded-lg">
           <div className="text-slate-500 font-bold mb-1 uppercase text-[9.5px]">Propiedades del Modelo:</div>
-          <div className="grid grid-cols-2 gap-2 text-[9px] text-slate-350">
+          <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-350">
             <div>• Nivel de Detalle: <span className="text-blue-400 font-bold">LOD 400</span></div>
             <div>• Formato: <span className="text-blue-400 font-bold">IFC 4.3</span></div>
             <div>• Interoperabilidad: <span className="text-blue-400 font-bold">GIS + BIM</span></div>
@@ -1479,7 +1479,7 @@ function PrecisionAgricultureSimulator() {
                   }`}
                 >
                   <span className="text-[9.5px] font-bold">S{cell.id}</span>
-                  <span className="text-[9px] font-black self-end font-mono">{(cell.ndvi).toFixed(2)}</span>
+                  <span className="text-[10px] font-black self-end font-mono">{(cell.ndvi).toFixed(2)}</span>
                 </div>
               );
             })}
@@ -1492,7 +1492,7 @@ function PrecisionAgricultureSimulator() {
             <div className="flex justify-between items-center">
               <div>
                 <div className="text-white font-bold">Parcela S{ndviGrid[selectedCell].id} Seleccionada</div>
-                <div className="text-[9px] text-slate-500">Estado: {ndviGrid[selectedCell].status} (NDVI: {ndviGrid[selectedCell].ndvi})</div>
+                <div className="text-[10px] text-slate-500">Estado: {ndviGrid[selectedCell].status} (NDVI: {ndviGrid[selectedCell].ndvi})</div>
               </div>
               <button 
                 onClick={handleIrrigate}
@@ -1503,7 +1503,7 @@ function PrecisionAgricultureSimulator() {
               </button>
             </div>
           ) : (
-            <div className="text-slate-500 text-center py-1.5 italic text-[9px]">
+            <div className="text-slate-500 text-center py-1.5 italic text-[10px]">
               Selecciona una parcela seca o crítica en el mapa para aplicarle riego.
             </div>
           )}
