@@ -163,7 +163,7 @@ export default function CareersPage() {
               <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Talent Acquisition // Join the Elite</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
-              Ingeniería de <br /> <span className="text-slate-400 italic font-light">Misión Crítica</span>
+              Ingeniería de <br /> <span className="text-slate-500 italic font-light">Misión Crítica</span>
             </h1>
           </div>
           <div className="lg:col-span-4 border-l border-slate-200 pl-8 pb-2">
@@ -200,7 +200,7 @@ export default function CareersPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div className="space-y-2">
             <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Active Search</div>
-            <h2 className="text-4xl font-black tracking-tighter">Posiciones <span className="text-slate-400 italic font-light">Abiertas</span></h2>
+            <h2 className="text-4xl font-black tracking-tighter">Posiciones <span className="text-slate-500 italic font-light">Abiertas</span></h2>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {teams.map((t) => (

@@ -411,7 +411,7 @@ export default function AboutPage() {
                 <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">About DevGiz // Engineering Manifesto</span>
               </motion.div>
               <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
-                Soberanía Digital <br /> <span className="text-slate-400 italic font-light">del Territorio</span>
+                Soberanía Digital <br /> <span className="text-slate-500 italic font-light">del Territorio</span>
               </motion.h1>
             </motion.div>
             <motion.div 
@@ -439,7 +439,7 @@ export default function AboutPage() {
               variants={stagger}
             >
               <motion.h2 variants={fadeUp} className="text-4xl font-black tracking-tighter">
-                Nuestros <span className="text-slate-400 italic font-light">Principios</span>
+                Nuestros <span className="text-slate-500 italic font-light">Principios</span>
               </motion.h2>
               <div className="space-y-8">
                 {[
@@ -510,7 +510,7 @@ export default function AboutPage() {
             variants={stagger}
           >
             <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.28em]">Strategic Results // KPI Report</motion.div>
-            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Impacto en <span className="text-slate-400 italic font-light">Cifras</span></motion.h2>
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Impacto en <span className="text-slate-500 italic font-light">Cifras</span></motion.h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
             {ACHIEVEMENTS.map((item, i) => (
@@ -1040,7 +1040,7 @@ export default function AboutPage() {
                 <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold block">Management & Engineering Board</span>
               </div>
               <h2 className="text-4xl font-black tracking-tighter text-white">
-                Liderazgo <span className="text-slate-400 italic font-light">Estratégico</span>
+                Liderazgo <span className="text-slate-500 italic font-light">Estratégico</span>
               </h2>
             </div>
             <p className="text-slate-400 font-light leading-relaxed max-w-md text-sm">

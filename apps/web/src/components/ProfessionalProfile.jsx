@@ -625,7 +625,7 @@ export default function ProfessionalProfile() {
             </div>
 
             {/* Mission Expanded Detail Card */}
-            <div className="lg:col-span-7 bg-[#0a0f1a] border border-slate-800 rounded-2xl p-8 relative shadow-2xl">
+            <div id="mission-detail-view" role="tabpanel" aria-labelledby={`mission-btn-${selectedMission}`} className="lg:col-span-7 bg-[#0a0f1a] border border-slate-800 rounded-2xl p-8 relative shadow-2xl">
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
                 <div>
                   <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 mb-1">

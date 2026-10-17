@@ -87,7 +87,7 @@ export default function ServicesPage() {
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 Servicios & <br />
-                <span className="text-slate-400 italic font-light">Capacidades Técnicas</span>
+                <span className="text-slate-500 italic font-light">Capacidades Técnicas</span>
               </h1>
               <p className="text-slate-600 text-lg font-light leading-relaxed max-w-2xl">
                 Portafolio integral de ingeniería geoespacial, orquestación de datos catastrales bajo estándar LADM-COL (ISO 19152) y analítica territorial de precisión.

@@ -29,7 +29,7 @@ export default function PrivacyPage() {
             <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Data Privacy // 2026</span>
           </div>
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-[#1a1a1a]">
-            Privacidad de <br /> <span className="text-slate-400 italic font-light">Datos</span>
+            Privacidad de <br /> <span className="text-slate-500 italic font-light">Datos</span>
           </h1>
         </div>
 
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-4 border-t border-slate-100 pt-12">
-            <p className="text-sm font-mono text-slate-400 italic">
+            <p className="text-sm font-mono text-slate-500 italic">
               Este documento refleja nuestro compromiso con la transparencia institucional. <br />
               Última actualización: Mayo 15, 2026.
             </p>

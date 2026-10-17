@@ -1330,6 +1330,8 @@ export default function ServicePage() {
             {activeTab === "strategy" ? (
               <motion.div
                 key="strategy-tab"
+                id="panel-strategy"
+                role="tabpanel"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
@@ -1396,6 +1398,8 @@ export default function ServicePage() {
             ) : (
               <motion.div
                 key="technical-tab"
+                id="panel-technical"
+                role="tabpanel"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}

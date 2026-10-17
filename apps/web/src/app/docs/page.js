@@ -423,7 +423,7 @@ export default function DocsPage() {
                  </div>
 
                  {/* Console Actions Selector */}
-                 <div className="flex flex-wrap gap-3">
+                 <div role="tablist" aria-label="Endpoints de prueba" className="flex flex-wrap gap-3">
                     <button 
                       type="button" role="tab" aria-selected={playgroundType === "auth"} onClick={() => { setPlaygroundType("auth"); setConsoleLogs([]); setConsoleResult(null); }}
                       className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all border cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
