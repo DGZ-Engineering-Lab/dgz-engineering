@@ -95,7 +95,7 @@ export default function StandardsPage() {
               <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Technical Governance // Standard Hub</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
-              Protocolos de <br /> <span className="text-slate-400 italic font-light">Gobernanza Digital</span>
+              Protocolos de <br /> <span className="text-slate-500 italic font-light">Gobernanza Digital</span>
             </h1>
           </div>
           <div className="lg:col-span-4 border-l border-slate-200 pl-8 pb-2">

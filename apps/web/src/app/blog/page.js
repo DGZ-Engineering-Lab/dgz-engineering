@@ -80,7 +80,7 @@ export default function BlogPage() {
                 <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Insights & Engineering</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.02] text-[#1a1a1a]">
-                DevGiz <br /> <span className="text-slate-400 italic font-light">Journal</span>
+                DevGiz <br /> <span className="text-slate-500 italic font-light">Journal</span>
               </h1>
             </div>
             <p className="max-w-sm text-slate-500 text-sm font-light leading-relaxed border-l border-slate-200 pl-6 py-2">
@@ -93,7 +93,7 @@ export default function BlogPage() {
       {/* Categories Bar - Minimalist */}
       <section className="sticky top-20 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex overflow-x-auto gap-8 no-scrollbar scroll-smooth">
+          <div role="tablist" aria-label="Categorías del blog" className="flex overflow-x-auto gap-8 no-scrollbar scroll-smooth">
             {CATEGORIES.map((cat) => (
               <button 
                 key={cat}

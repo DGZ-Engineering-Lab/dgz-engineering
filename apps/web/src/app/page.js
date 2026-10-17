@@ -5,12 +5,12 @@ import Image from "next/image";
 import Logo from "../components/Logo";
 import LiveTelemetry from "../components/LiveTelemetry";
 import ContactSection from "../components/ContactSection";
-import TechTicker from "../components/TechTicker";
 import GlobalPartners from "../components/GlobalPartners";
 import { Shield, Settings, Brain, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
 import ServicesSection from "../components/ServicesSection";
 import OffersSection from "../components/OffersSection";
 import ProfessionalProfile from "../components/ProfessionalProfile";
+import { CONTACT } from "../lib/seo";
 
 export default function Home() {
   return (
@@ -45,7 +45,7 @@ export default function Home() {
                 <Link href="/services" prefetch={false} className="btn btn-secondary">
                   Ver servicios
                 </Link>
-                <a href="https://wa.me/573053261466" target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+                <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
                   WhatsApp directo
                 </a>
               </div>
@@ -863,34 +863,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Prueba social antes del perfil: quién ha trabajado con nosotros */}
+      <GlobalPartners />
+
       {/* ========================================================= */}
       {/* DOSSIER MAESTRO DE INGENIERÍA: ALBERT DANIEL GAVIRIA ZAPATA */}
       {/* ========================================================= */}
       <ProfessionalProfile />
-
-      {/* Ecosistema Tecnológico de Elite */}
-      <section className="py-14 md:py-16 border-t border-slate-100 bg-transparent relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        
-        <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
-          <div className="flex flex-col items-center text-center space-y-3">
-            <span className="eyebrow eyebrow-center">Tecnología sin límites</span>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none">
-              Ecosistema de Plataformas <span className="text-slate-400 font-light italic">Multipropósito</span>
-            </h2>
-            <p className="text-slate-500 text-sm font-light leading-relaxed max-w-2xl">
-              Herramientas líderes globales adaptadas para eliminar las tareas manuales y repetitivas, ahorrando tiempo y dinero en cada metro cuadrado de tus proyectos.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative z-10">
-          <TechTicker />
-        </div>
-      </section>
-
-      {/* Global Partners - Ecosistema de Alianzas y Clientes */}
-      <GlobalPartners />
 
       {/* Featured Insights - Link to Journal */}
       <section className="py-14 md:py-16 px-6 relative section-deferred">
@@ -899,7 +878,7 @@ export default function Home() {
             <div className="space-y-4">
               <span className="eyebrow">Blog técnico</span>
               <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950">
-                Pensamiento <span className="text-slate-400 italic font-light">estratégico</span>
+                Pensamiento <span className="text-slate-500 italic font-light">estratégico</span>
               </h2>
             </div>
             <Link 

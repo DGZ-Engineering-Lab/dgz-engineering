@@ -599,3 +599,22 @@ html {
 .text-gradient-brand.italic {
   padding-inline-end: 0.12em;
 }
+
+/* --- Contraste de micro-etiquetas (WCAG 1.4.3) ---
+   Las etiquetas mono de 9.5–11px en slate-400/cyan-600 no llegan a 4.5:1 sobre
+   fondos claros. Se oscurecen un tono en superficies claras y se aclaran en
+   superficies oscuras, sin tocar cada componente. */
+:is(.text-\[9\.5px\], .text-\[10px\], .text-\[11px\]).text-slate-400 {
+  color: var(--color-slate-500);
+}
+:is(.text-\[9\.5px\], .text-\[10px\], .text-\[11px\]):is(.text-cyan-600, .text-cyan-500) {
+  color: var(--color-cyan-700);
+}
+:is(.theme-dark, [data-nav-theme="dark"], [class*="bg-slate-950"], [class*="bg-slate-900"], [class*="bg-[#0"], [class*="bg-black"])
+  :is(.text-\[9\.5px\], .text-\[10px\], .text-\[11px\]):is(.text-slate-400, .text-slate-500) {
+  color: var(--color-slate-400);
+}
+:is(.theme-dark, [data-nav-theme="dark"], [class*="bg-slate-950"], [class*="bg-slate-900"], [class*="bg-[#0"], [class*="bg-black"])
+  :is(.text-\[9\.5px\], .text-\[10px\], .text-\[11px\]):is(.text-cyan-600, .text-cyan-500) {
+  color: var(--color-cyan-400);
+}

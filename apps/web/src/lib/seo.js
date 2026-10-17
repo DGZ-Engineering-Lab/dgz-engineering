@@ -5,9 +5,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://devgiz.ver
 export const SITE_NAME = "DevGiz";
 export const SITE_LOCALE = "es_CO";
 export const SITE_LANG = "es-CO";
-export const SITE_TAGLINE = "Ingeniería Geoespacial, Catastro Multipropósito y DevOps";
+export const SITE_TAGLINE = "Catastro LADM-COL, WebGIS y Analítica Geoespacial";
 export const SITE_DESCRIPTION =
-  "DevGiz diseña sistemas geoespaciales de alta precisión en Colombia: Catastro Multipropósito LADM-COL e INTERLIS, automatización GIS con PostGIS y QGIS, GeoAI y pipelines DevOps para entidades públicas y empresas.";
+  "Catastro multipropósito LADM-COL, WebGIS y automatización geoespacial para municipios, constructoras y empresas en Colombia. Primera sesión sin costo.";
 
 export const FOUNDER = {
   name: "Albert Daniel Gaviria Zapata",
@@ -21,7 +21,8 @@ export const CONTACT = {
   email: "Albertg2109@gmail.com",
   whatsapp: "573053261466",
   whatsappDisplay: "+57 305 326 1466",
-  whatsappUrl: "https://wa.me/573053261466",
+  // Mensaje precargado: el cliente no tiene que pensar cómo empezar la conversación.
+  whatsappUrl: "https://wa.me/573053261466?text=" + encodeURIComponent("Hola DevGiz, vi su sitio web y quiero información sobre un proyecto."),
   linkedin: "https://linkedin.com/in/soyalbertgz",
   github: "https://github.com/gaviriaz",
   city: "Medellín, Colombia",

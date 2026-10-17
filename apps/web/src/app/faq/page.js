@@ -100,7 +100,7 @@ export default function FAQPage() {
               <span className="text-[10px] font-mono uppercase tracking-[0.28em] text-slate-500 font-bold">Expert Support // Knowledge Center</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
-              Consultoría de <br /> <span className="text-slate-400 italic font-light">Conocimiento</span>
+              Consultoría de <br /> <span className="text-slate-500 italic font-light">Conocimiento</span>
             </h1>
           </motion.div>
           <motion.div 
