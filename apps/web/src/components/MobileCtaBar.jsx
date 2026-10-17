@@ -34,7 +34,12 @@ export default function MobileCtaBar() {
       }`}
     >
       <div className="grid grid-cols-2 gap-2.5">
-        <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm">
+        <a
+          href={CONTACT.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-whatsapp btn-sm"
+        >
           <MessageCircle aria-hidden="true" /> WhatsApp
         </a>
         <Link href="/#ofertas" prefetch={false} className="btn btn-primary btn-sm">
