@@ -1,9 +1,16 @@
 import { NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
-import { cacheWrap } from "../../../lib/upstash";
+import { cacheWrap, checkRateLimit } from "../../../lib/upstash";
+import { getClientIp } from "../../../lib/security";
 
-export async function GET() {
+export async function GET(req) {
   try {
+    // Lectura pública: límite holgado por IP, fail-open si Redis no responde
+    const { success } = await checkRateLimit(getClientIp(req), { name: "read", tokens: 30, window: "1 m" });
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests. Please slow down." }, { status: 429 });
+    }
+
     const data = await cacheWrap("cache:telemetry_stats", 5, async () => {
       let activeNodes = 1240;
       let dataProcessed = "8.2TB";

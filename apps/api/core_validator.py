@@ -118,7 +118,8 @@ class GeoQAValidator:
         # 1. Cargar Excel/CSV con Polars
         try:
             if excel_path.endswith('.xlsx'):
-                df_registral = pl.read_excel(excel_path)
+                # Motor explícito: openpyxl está en requirements (el default de polars 0.20 es xlsx2csv)
+                df_registral = pl.read_excel(excel_path, engine="openpyxl")
             else:
                 df_registral = pl.read_csv(excel_path, ignore_errors=True)
         except Exception as e:

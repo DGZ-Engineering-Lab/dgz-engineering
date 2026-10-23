@@ -1,6 +1,13 @@
 "use client";
 
+import { useId } from "react";
+
 export default function Logo({ className = "w-10 h-10", animated = true }) {
+  // IDs únicos por instancia: navbar y footer renderizan el logo a la vez.
+  // useId incluye caracteres (":", "«") que no son seguros dentro de url(#...).
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const gradientId = `logo-gradient-${uid}`;
+  const glowId = `logo-glow-${uid}`;
   return (
     <div className={`relative group ${className}`}>
       <svg
@@ -13,12 +20,12 @@ export default function Logo({ className = "w-10 h-10", animated = true }) {
       >
         {/* Definitions for gradients and filters */}
         <defs>
-          <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#38BDF8" />
             <stop offset="100%" stopColor="#8B5CF6" />
           </linearGradient>
           
-          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
@@ -41,7 +48,7 @@ export default function Logo({ className = "w-10 h-10", animated = true }) {
         {/* The "D" Outer Geometry (Vector Tile/Path aesthetic) */}
         <path
           d="M50 12 L82 30 V70 L50 88 C50 88 22 72 22 50 C22 28 50 12 50 12Z"
-          stroke="url(#logo-gradient)"
+          stroke={`url(#${gradientId})`}
           strokeWidth="6"
           strokeLinecap="round"
           className={animated ? "animate-[dash_3s_ease-in-out_infinite]" : ""}
@@ -64,7 +71,7 @@ export default function Logo({ className = "w-10 h-10", animated = true }) {
           cy="50"
           r="4"
           fill="#38BDF8"
-          filter="url(#glow)"
+          filter={`url(#${glowId})`}
           className={animated ? "animate-pulse" : ""}
         />
 

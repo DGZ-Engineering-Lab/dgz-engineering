@@ -1,0 +1,5 @@
+Contact: https://github.com/DGZ-Engineering-Lab/dgz-engineering/security/advisories/new
+Expires: 2027-10-23T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://devgiz.vercel.app/.well-known/security.txt
+Policy: https://github.com/DGZ-Engineering-Lab/dgz-engineering/blob/main/SECURITY.md

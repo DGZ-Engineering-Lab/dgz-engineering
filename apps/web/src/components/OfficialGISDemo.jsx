@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { escapeHtml } from "../lib/security";
 
 export default function OfficialGISDemo() {
   const mapRef = useRef(null);
@@ -63,25 +64,32 @@ export default function OfficialGISDemo() {
                         body: JSON.stringify(feature)
                       });
                       const analysis = await analysisResponse.json();
+
+                      // Datos de una API externa: se escapan antes de interpolarlos en HTML
+                      const score = Number(analysis?.spatial_score);
+                      const safeScore = Number.isFinite(score) ? score : "—";
+                      const recommendations = Array.isArray(analysis?.recommendations)
+                        ? analysis.recommendations
+                        : [];
                       
                       const popupContent = `
                         <div class="p-2 font-mono text-[10px] space-y-2">
                           <div class="flex justify-between border-b border-white/10 pb-1">
                             <span class="text-blue-400">ID_PREDIO:</span>
-                            <span class="text-white">${analysis.parcel_id}</span>
+                            <span class="text-white">${escapeHtml(analysis?.parcel_id)}</span>
                           </div>
                           <div class="flex justify-between">
                             <span class="text-cyan-400">SPATIAL_SCORE:</span>
-                            <span class="font-bold ${analysis.spatial_score > 70 ? 'text-emerald-400' : 'text-yellow-400'}">${analysis.spatial_score}/100</span>
+                            <span class="font-bold ${score > 70 ? 'text-emerald-400' : 'text-yellow-400'}">${escapeHtml(safeScore)}/100</span>
                           </div>
                           <div class="flex justify-between">
                             <span class="text-red-400">RIESGO_AMBIENTAL:</span>
-                            <span class="font-bold">${analysis.risk_level}</span>
+                            <span class="font-bold">${escapeHtml(analysis?.risk_level)}</span>
                           </div>
                           <div class="mt-2 pt-2 border-t border-white/10">
                             <div class="text-blue-300 uppercase mb-1">Recomendaciones:</div>
                             <ul class="list-disc pl-3 text-slate-300">
-                              ${analysis.recommendations.map(r => `<li>${r}</li>`).join('')}
+                              ${recommendations.map(r => `<li>${escapeHtml(r)}</li>`).join('')}
                             </ul>
                           </div>
                         </div>

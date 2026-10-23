@@ -1,22 +1,49 @@
 import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
-import { checkRateLimit } from "../../../lib/upstash";
+import { checkRateLimit, dailyBudget } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
-import { boundedString, getClientIp, isValidEmail } from "../../../lib/security";
+import {
+  assertSameOrigin,
+  boundedString,
+  getClientIp,
+  isJsonRequest,
+  isValidEmail,
+} from "../../../lib/security";
 
 
 export const runtime = 'nodejs';
 
+const MESSAGES_KEY = "devgiz_messages";
+const MAX_STORED_MESSAGES = 1000; // tope de la lista en Redis
+const MAX_MEMORY_MESSAGES = 200; // tope del buffer en memoria
+
 export async function POST(req) {
   try {
+    // CSRF: solo formularios del propio sitio y cuerpo JSON (fuerza preflight CORS).
+    if (!assertSameOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
+    }
+    if (!isJsonRequest(req)) {
+      return NextResponse.json({ error: "Content-Type must be application/json" }, { status: 415 });
+    }
+
     const ip = getClientIp(req);
-    const { success, limit, remaining, reset } = await checkRateLimit(`rate_limit:contact:${ip}`);
+    const { success, limit, remaining, reset, reason } = await checkRateLimit(ip, {
+      name: "contact",
+      tokens: 3,
+      window: "1 h",
+      failClosed: true,
+    });
 
     if (!success) {
       return NextResponse.json(
-        { error: "Too many contact submissions. Please wait before retrying." },
+        {
+          error: reason === "unavailable"
+            ? "Contact service temporarily unavailable. Please try again later."
+            : "Too many contact submissions. Please wait before retrying.",
+        },
         { 
-          status: 429,
+          status: reason === "unavailable" ? 503 : 429,
           headers: {
             "X-RateLimit-Limit": limit.toString(),
             "X-RateLimit-Remaining": remaining.toString(),
@@ -45,6 +72,15 @@ export async function POST(req) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
 
+    // Presupuesto diario global: protege la cuota de Resend y de Redis.
+    const budget = await dailyBudget("contact", 40);
+    if (!budget.allowed) {
+      return NextResponse.json(
+        { error: "Daily contact capacity reached. Please try again tomorrow." },
+        { status: 429 }
+      );
+    }
+
     const contactId = `contact:${Date.now()}:${crypto.randomUUID().slice(0, 8)}`;
     const payload = {
       id: contactId,
@@ -57,7 +93,8 @@ export async function POST(req) {
 
     // Store in KV
     try {
-      await kv.lpush("devgiz_messages", JSON.stringify(payload));
+      await kv.lpush(MESSAGES_KEY, JSON.stringify(payload));
+      await kv.ltrim(MESSAGES_KEY, 0, MAX_STORED_MESSAGES - 1);
     } catch (e) {
       console.warn("KV not connected, simulating storage");
     }
@@ -68,19 +105,23 @@ export async function POST(req) {
       globalThis._dgz_messages = globalMessages;
     }
     globalMessages.unshift(payload);
+    if (globalMessages.length > MAX_MEMORY_MESSAGES) {
+      globalMessages.length = MAX_MEMORY_MESSAGES;
+    }
 
     // Dispatch Email using the new Enterprise EmailService (Phase 3)
     let emailSent = false;
     try {
-      // 1. Add contact to Resend Audience
-      await emailService.addContactToAudience({ firstName: name, email });
+      // 1. Audiencia de Resend solo con consentimiento explícito (casilla en el formulario).
+      await emailService.addContactToAudience({ firstName: name, email, consent: body?.consent === true });
 
       // 2. Send Admin Notification & Attempt User Confirmation
-      const adminRes = await emailService.sendAdminNotification(payload);
-      const userRes = await emailService.sendUserConfirmation(payload);
+      // Uniones de retorno heterogéneas (Resend | skipped): se tratan como any para checkJs.
+      const adminRes = /** @type {any} */ (await emailService.sendAdminNotification(payload));
+      const userRes = /** @type {any} */ (await emailService.sendUserConfirmation(payload));
 
-      // If neither failed or returned simulated true, we consider it sent
-      if (!adminRes.error && !userRes.error) {
+      // Enviado (o simulado) si la notificación al admin salió y ninguna falló
+      if (!adminRes.error && !("skipped" in adminRes) && !userRes.error) {
         emailSent = true;
       }
     } catch (err) {

@@ -1,11 +1,22 @@
 import os
+import re
+import asyncio
 import httpx
 import logging
 from typing import Dict, Any
+from urllib.parse import quote
 
 # Environment variables for security
 VUR_USER = os.getenv("VUR_USER", "")
 VUR_PASS = os.getenv("VUR_PASS", "")
+
+# Formatos permitidos para los segmentos que se interpolan en URLs del VUR
+_CIRCULO_RE = re.compile(r"^[0-9A-Za-z]{1,5}$")
+_MATRICULA_RE = re.compile(r"^[0-9]{1,15}$")
+
+
+class InvalidFolioError(ValueError):
+    """Matrícula o círculo con formato inválido (mensaje seguro de exponer)."""
 
 # Complete mapping of Colombian ORIP Circle Codes to VUR internal database IDs and names.
 # This was extracted in real time from the active VUR portal webresource endpoints.
@@ -219,8 +230,11 @@ class VURService:
         self.base_url = "https://www.vur.gov.co"
         self.query_indices_url = "https://www.vur.gov.co/portal/PantallasVUR/webresources/consultaIndices"
         self.login_url = "https://www.vur.gov.co/siteminderagent/forms_es-ES/loginsnr.fcc"
-        self.client = httpx.AsyncClient(follow_redirects=True, timeout=30.0)
+        # Timeout explícito: 10 s para conectar, 20 s para leer/escribir
+        self.client = httpx.AsyncClient(follow_redirects=True, timeout=httpx.Timeout(20.0, connect=10.0))
         self.cookies: Dict[str, str] = {}
+        # Evita logins concurrentes que se pisen la sesión SiteMinder
+        self._login_lock = asyncio.Lock()
 
     async def login(self) -> bool:
         """
@@ -270,6 +284,11 @@ class VURService:
             circulo = parts[0].strip()
             matricula = parts[1].strip()
 
+        # Validación estricta antes de interpolar en rutas del VUR
+        if not _CIRCULO_RE.match(circulo or "") or not _MATRICULA_RE.match(matricula or ""):
+            raise InvalidFolioError("Formato de matrícula inválido. Use dígitos o CIRCULO-DIGITOS (ej. 50N-30123).")
+        folio_segment = quote(f"{circulo}-{matricula}", safe="-")
+
         # 2. Resolve ORIP Office database parameters
         office_info = ORIP_OFFICES.get(circulo, {"id": 1, "nombre": "ORIP - BOGOTA NORTE - ( 50N )"})
         circulo_id = office_info["id"]
@@ -280,11 +299,13 @@ class VURService:
             return self._generate_simulated_data(matricula, circulo)
 
         try:
-            # Login if no cookies present
+            # Login if no cookies present (bajo lock y con doble verificación)
             if not self.cookies or "SMSESSION" not in self.cookies:
-                logged_in = await self.login()
-                if not logged_in:
-                    return self._generate_simulated_data(matricula, circulo)
+                async with self._login_lock:
+                    if not self.cookies or "SMSESSION" not in self.cookies:
+                        logged_in = await self.login()
+                        if not logged_in:
+                            return self._generate_simulated_data(matricula, circulo)
 
             # 4. Search using query indices POST endpoint
             search_payload = {
@@ -338,7 +359,7 @@ class VURService:
                 details = {}
                 basic_method = "a"
                 for path_type in ["a", "tierras"]:
-                    basic_url = f"https://www.vur.gov.co/portal/PantallasVUR/webresources/consultaIndices/datosBasicos/{path_type}/{circulo}-{matricula}"
+                    basic_url = f"https://www.vur.gov.co/portal/PantallasVUR/webresources/consultaIndices/datosBasicos/{path_type}/{folio_segment}"
                     try:
                         detail_response = await self.client.get(basic_url, cookies=self.cookies, headers=headers)
                         if detail_response.status_code == 200:
@@ -356,7 +377,7 @@ class VURService:
                 legal_details = {}
                 legal_paths = [basic_method] + [p for p in ["a", "tierras"] if p != basic_method]
                 for path_type in legal_paths:
-                    legal_url = f"https://www.vur.gov.co/portal/PantallasVUR/webresources/consultaIndices/estadoJuridico/{path_type}/{circulo}-{matricula}"
+                    legal_url = f"https://www.vur.gov.co/portal/PantallasVUR/webresources/consultaIndices/estadoJuridico/{path_type}/{folio_segment}"
                     try:
                         legal_response = await self.client.get(legal_url, cookies=self.cookies, headers=headers)
                         if legal_response.status_code == 200:
@@ -431,6 +452,7 @@ class VURService:
         if status == "INVALID":
             return {
                 "source": "DGZ_SIMULATED_RESERVE",
+                "simulated": True,
                 "status": "INVALID",
                 "matricula": matricula,
                 "circulo": circulo,
@@ -466,6 +488,7 @@ class VURService:
 
         return {
             "source": "DGZ_SIMULATED_RESERVE",
+            "simulated": True,
             "status": "VALID",
             "matricula": matricula,
             "circulo": circulo,

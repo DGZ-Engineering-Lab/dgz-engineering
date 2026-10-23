@@ -1,11 +1,17 @@
 import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
+import { getClientIp } from "../../../../lib/security";
+import { isProductionEnv } from "../../../../lib/upstash";
 
 export const runtime = 'nodejs';
 
 // ─── SECURITY CONSTANTS ────────────────────────────────────────────────────────
-const MAX_ATTEMPTS       = 5;
+const MAX_ATTEMPTS       = 5;       // intentos de login por IP en la ventana de bloqueo
 const LOCKOUT_SECONDS    = 15 * 60; // 15 minutes
+const GLOBAL_MAX_ATTEMPTS = 50;     // intentos de login totales por hora (todas las IP)
+const GLOBAL_WINDOW_SECONDS = 60 * 60;
+const MIN_PASSCODE_LENGTH = 16;     // recomendado; 12-15 se acepta con aviso
+const LEGACY_MIN_PASSCODE_LENGTH = 12;
 const DELAY_ON_FAIL_MS   = 2500;    // Artificial delay on failed auth
 const SESSION_TTL        = 60 * 60; // 1 hour session tokens
 const AUDIT_LOG_MAX      = 200;     // Keep last 200 audit entries
@@ -64,10 +70,11 @@ if (!globalThis._dgz_rate_limits) globalThis._dgz_rate_limits = globalRateLimits
 const globalAuditLog = globalThis._dgz_audit_log || [];
 if (!globalThis._dgz_audit_log) globalThis._dgz_audit_log = globalAuditLog;
 
+// Los datos de demostración solo se cargan fuera de producción.
 const globalMessages = globalThis._dgz_messages || [];
 if (!globalThis._dgz_messages) {
   globalThis._dgz_messages = globalMessages;
-  globalMessages.push(...HIGH_FIDELITY_MOCKS);
+  if (!isProductionEnv()) globalMessages.push(...HIGH_FIDELITY_MOCKS);
 }
 
 // ─── CRYPTOGRAPHIC UTILITIES ───────────────────────────────────────────────────
@@ -97,34 +104,25 @@ function generateSessionToken() {
 
 // ─── REQUEST HELPERS ───────────────────────────────────────────────────────────
 
-function getClientIP(req) {
-  // Vercel sets x-forwarded-for with the real client IP first
-  const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
-  // Edge runtime: req.ip may exist
-  if (req.ip) return req.ip;
-  return "unknown";
-}
-
-function getClientFingerprint(req) {
-  const ip = getClientIP(req);
-  const ua = req.headers.get("user-agent") || "no-ua";
-  // Simple hash-like combination for fingerprinting
-  let hash = 0;
-  const str = `${ip}::${ua}`;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
-  }
-  return `${ip}__${Math.abs(hash).toString(36)}`;
-}
+// El rate limit se basa solo en la IP (el User-Agent lo controla el atacante).
+const ipKey = (ip) => `rl:admin:ip:${ip}`;
+const GLOBAL_KEY = "rl:admin:global";
 
 // ─── SECURITY: AUTHENTICATION ──────────────────────────────────────────────────
 
 // The admin passcode must come from the environment. There is deliberately no
-// default: if ADMIN_PASSCODE is unset (or too short) the admin API stays locked.
+// default: if ADMIN_PASSCODE is unset (or < 12 chars) the admin API stays locked.
+// Mínimo recomendado: 16. Un passcode existente de 12-15 sigue funcionando pero
+// se avisa en los logs para rotarlo (no se bloquea para no dejar fuera al admin).
+let warnedShortPasscode = false;
 function getAdminPasscode() {
   const passcode = process.env.ADMIN_PASSCODE;
-  return typeof passcode === "string" && passcode.length >= 12 ? passcode : null;
+  if (typeof passcode !== "string" || passcode.length < LEGACY_MIN_PASSCODE_LENGTH) return null;
+  if (passcode.length < MIN_PASSCODE_LENGTH && !warnedShortPasscode) {
+    warnedShortPasscode = true;
+    console.warn(`⚠️ ADMIN_PASSCODE has ${passcode.length} chars; rotate it to at least ${MIN_PASSCODE_LENGTH}.`);
+  }
+  return passcode;
 }
 
 // Session-token based auth: check if Bearer token matches a valid session in KV or memory
@@ -156,75 +154,90 @@ async function authenticateSession(req) {
 
 // ─── SECURITY: RATE LIMITING ───────────────────────────────────────────────────
 
-async function checkRateLimit(req) {
-  const fingerprint = getClientFingerprint(req);
-  const rateLimitKey = `rl:admin:${fingerprint}`;
-
-  let attempts = 0;
-  let usingKV = false;
-
+// INCR atómico + EXPIRE en el primer incremento. Si KV no está disponible se usa
+// un contador en memoria (por instancia) con la misma semántica.
+async function incrementCounter(key, ttlSeconds) {
   try {
-    const kvAttempts = await kv.get(rateLimitKey);
-    if (kvAttempts !== null && kvAttempts !== undefined) {
-      attempts = Number(kvAttempts);
-      usingKV = true;
+    const count = Number(await kv.incr(key));
+    if (count === 1) {
+      await kv.expire(key, ttlSeconds);
     }
+    return count;
   } catch (e) { /* KV unavailable */ }
 
-  if (!usingKV) {
-    const localRl = globalRateLimits.get(rateLimitKey);
-    if (localRl) {
-      if (new Date(localRl.expiresAt) > new Date()) {
-        attempts = localRl.attempts;
-      } else {
-        globalRateLimits.delete(rateLimitKey);
-      }
-    }
-  }
+  const now = Date.now();
+  const local = globalRateLimits.get(key);
+  const active = local && local.expiresAt > now ? local : { attempts: 0, expiresAt: now + ttlSeconds * 1000 };
+  active.attempts += 1;
+  globalRateLimits.set(key, active);
+  return active.attempts;
+}
 
-  const remaining = Math.max(0, MAX_ATTEMPTS - attempts);
+async function readCounter(key) {
+  try {
+    const value = await kv.get(key);
+    if (value !== null && value !== undefined) return Number(value);
+    return 0;
+  } catch (e) { /* KV unavailable */ }
 
+  const local = globalRateLimits.get(key);
+  if (local && local.expiresAt > Date.now()) return local.attempts;
+  globalRateLimits.delete(key);
+  return 0;
+}
+
+// Segundos restantes de bloqueo; repara claves sin TTL (p. ej. si falló el EXPIRE).
+async function getRetryAfter(key, ttlSeconds) {
+  try {
+    const ttl = await kv.ttl(key);
+    if (ttl > 0) return ttl;
+    if (ttl === -1) await kv.expire(key, ttlSeconds);
+    return ttlSeconds;
+  } catch (e) { /* KV unavailable */ }
+
+  const local = globalRateLimits.get(key);
+  if (local) return Math.max(1, Math.ceil((local.expiresAt - Date.now()) / 1000));
+  return ttlSeconds;
+}
+
+// Comprobación de solo lectura para GET/DELETE: bloqueada si la IP agotó sus intentos.
+async function checkLockout(ip) {
+  const key = ipKey(ip);
+  const attempts = await readCounter(key);
   if (attempts >= MAX_ATTEMPTS) {
-    let retryAfter = LOCKOUT_SECONDS;
-    if (usingKV) {
-      try {
-        const ttl = await kv.ttl(rateLimitKey);
-        if (ttl > 0) retryAfter = ttl;
-      } catch (e) {}
-    } else {
-      const localRl = globalRateLimits.get(rateLimitKey);
-      if (localRl) {
-        retryAfter = Math.max(1, Math.ceil((new Date(localRl.expiresAt).getTime() - Date.now()) / 1000));
-      }
-    }
-    return { blocked: true, remaining: 0, retryAfter, rateLimitKey, fingerprint };
+    return { blocked: true, retryAfter: await getRetryAfter(key, LOCKOUT_SECONDS) };
   }
-  return { blocked: false, remaining, rateLimitKey, fingerprint };
+  return { blocked: false };
 }
 
-async function recordFailedAttempt(rateLimitKey, fingerprint) {
-  try {
-    const current = (await kv.get(rateLimitKey)) || 0;
-    await kv.set(rateLimitKey, current + 1, { ex: LOCKOUT_SECONDS });
-  } catch (e) { /* KV unavailable */ }
+// Registra un intento de login ANTES de comparar el passcode (sin carreras get/set).
+async function registerLoginAttempt(ip) {
+  const key = ipKey(ip);
+  const attempts = await incrementCounter(key, LOCKOUT_SECONDS);
+  const globalAttempts = await incrementCounter(GLOBAL_KEY, GLOBAL_WINDOW_SECONDS);
 
-  const currentLocal = globalRateLimits.get(rateLimitKey);
-  const localAttempts = currentLocal && new Date(currentLocal.expiresAt) > new Date() ? currentLocal.attempts : 0;
-  globalRateLimits.set(rateLimitKey, {
-    attempts: localAttempts + 1,
-    expiresAt: new Date(Date.now() + LOCKOUT_SECONDS * 1000).toISOString()
-  });
-
-  // Audit log
-  await writeAuditLog("AUTH_FAIL", { fingerprint });
-
-  // Artificial delay — slows automated tools
-  await new Promise(r => setTimeout(r, DELAY_ON_FAIL_MS));
+  if (attempts > MAX_ATTEMPTS) {
+    return { blocked: true, retryAfter: await getRetryAfter(key, LOCKOUT_SECONDS), attempts };
+  }
+  if (globalAttempts > GLOBAL_MAX_ATTEMPTS) {
+    return { blocked: true, retryAfter: await getRetryAfter(GLOBAL_KEY, GLOBAL_WINDOW_SECONDS), attempts };
+  }
+  return { blocked: false, attempts };
 }
 
-async function clearRateLimit(rateLimitKey) {
-  try { await kv.del(rateLimitKey); } catch (e) { /* noop */ }
-  globalRateLimits.delete(rateLimitKey);
+async function clearIpCounter(ip) {
+  const key = ipKey(ip);
+  try { await kv.del(key); } catch (e) { /* noop */ }
+  globalRateLimits.delete(key);
+}
+
+function lockoutResponse(retryAfter) {
+  const resp = NextResponse.json(
+    { error: `Security lockout. Too many attempts. Try again in ${Math.ceil(retryAfter / 60)} minutes.`, locked: true },
+    { status: 429 }
+  );
+  resp.headers.set("Retry-After", String(retryAfter));
+  return withSecurityHeaders(resp);
 }
 
 // ─── SECURITY: AUDIT LOGGING ───────────────────────────────────────────────────
@@ -262,16 +275,11 @@ function withSecurityHeaders(response) {
 // ─── ROUTE: POST /api/admin/messages  (Login → returns session token) ──────────
 
 export async function POST(req) {
-  const { blocked, remaining, retryAfter, rateLimitKey, fingerprint } = await checkRateLimit(req);
+  const ip = getClientIp(req);
 
-  if (blocked) {
-    const resp = NextResponse.json(
-      { error: `Security lockout. Too many failed attempts. Try again in ${Math.ceil(retryAfter / 60)} minutes.`, locked: true },
-      { status: 429 }
-    );
-    resp.headers.set("Retry-After", String(retryAfter));
-    return withSecurityHeaders(resp);
-  }
+  // Bloqueo previo (barato) antes de leer el cuerpo
+  const lock = await checkLockout(ip);
+  if (lock.blocked) return lockoutResponse(lock.retryAfter);
 
   let body;
   try {
@@ -287,28 +295,36 @@ export async function POST(req) {
 
   const requiredPasscode = getAdminPasscode();
   if (!requiredPasscode) {
-    console.error("ADMIN_PASSCODE is not configured (min 12 chars). Admin login is disabled.");
+    console.error("ADMIN_PASSCODE is not configured (min 12 chars, 16 recommended). Admin login is disabled.");
     return withSecurityHeaders(
       NextResponse.json({ error: "Admin access is not configured." }, { status: 503 })
     );
   }
+  // El intento se cuenta ANTES de comparar (INCR atómico por IP + contador global)
+  const attempt = await registerLoginAttempt(ip);
+  if (attempt.blocked) {
+    await writeAuditLog("AUTH_LOCKED", { ip });
+    return lockoutResponse(attempt.retryAfter);
+  }
+
   if (!secureCompare(passcode.trim(), requiredPasscode)) {
-    await recordFailedAttempt(rateLimitKey, fingerprint);
+    await writeAuditLog("AUTH_FAIL", { ip });
+    // Retardo artificial: frena herramientas automatizadas
+    await new Promise(r => setTimeout(r, DELAY_ON_FAIL_MS));
     const resp = NextResponse.json(
-      { error: "Access denied. Invalid passcode.", remaining: remaining - 1 },
+      { error: "Access denied. Invalid passcode.", remaining: Math.max(0, MAX_ATTEMPTS - attempt.attempts) },
       { status: 401 }
     );
     return withSecurityHeaders(resp);
   }
 
-  // ✓ Auth success — issue a session token
-  await clearRateLimit(rateLimitKey);
+  // ✓ Auth success — solo ahora se borra el contador de la IP (el global caduca solo)
+  await clearIpCounter(ip);
 
   const sessionToken = generateSessionToken();
   const sessionData = {
-    fingerprint,
     createdAt: new Date().toISOString(),
-    ip: getClientIP(req)
+    ip
   };
 
   try {
@@ -323,7 +339,7 @@ export async function POST(req) {
     expiresAt: new Date(Date.now() + SESSION_TTL * 1000).toISOString()
   });
 
-  await writeAuditLog("LOGIN_SUCCESS", { fingerprint });
+  await writeAuditLog("LOGIN_SUCCESS", { ip });
 
   const resp = NextResponse.json({
     success: true,
@@ -336,15 +352,8 @@ export async function POST(req) {
 // ─── ROUTE: GET /api/admin/messages  (Fetch messages) ──────────────────────────
 
 export async function GET(req) {
-  const { blocked, retryAfter, rateLimitKey, fingerprint } = await checkRateLimit(req);
-  if (blocked) {
-    const resp = NextResponse.json(
-      { error: `Security lockout. Try again in ${Math.ceil(retryAfter / 60)} minutes.`, locked: true },
-      { status: 429 }
-    );
-    resp.headers.set("Retry-After", String(retryAfter));
-    return withSecurityHeaders(resp);
-  }
+  const lock = await checkLockout(getClientIp(req));
+  if (lock.blocked) return lockoutResponse(lock.retryAfter);
 
   const auth = await authenticateSession(req);
   if (!auth.valid) {
@@ -364,7 +373,9 @@ export async function GET(req) {
       }
     });
 
-    if (messages.length > 0) {
+    // En producción KV es la fuente de verdad (también si está vacía); fuera de
+    // producción se conservan los mocks cuando KV no tiene mensajes.
+    if (messages.length > 0 || isProductionEnv()) {
       // Sync local memory store to match KV
       globalMessages.length = 0;
       globalMessages.push(...messages);
@@ -381,18 +392,27 @@ export async function GET(req) {
   return withSecurityHeaders(resp);
 }
 
-// ─── ROUTE: DELETE /api/admin/messages  (Delete messages) ──────────────────────
+// ─── ROUTE: DELETE /api/admin/messages  (Delete messages / logout) ─────────────
+// ?id=<id> borra un mensaje, ?id=all los borra todos, ?logout=1 cierra la sesión.
 
 export async function DELETE(req) {
-  const { blocked, retryAfter, rateLimitKey, fingerprint } = await checkRateLimit(req);
-  if (blocked) {
-    const resp = NextResponse.json(
-      { error: `Security lockout. Try again in ${Math.ceil(retryAfter / 60)} minutes.`, locked: true },
-      { status: 429 }
-    );
-    resp.headers.set("Retry-After", String(retryAfter));
-    return withSecurityHeaders(resp);
+  const ip = getClientIp(req);
+  const { searchParams } = new URL(req.url);
+
+  // Logout: se permite aun en bloqueo; invalida el token en KV y en memoria
+  if (searchParams.get("logout") === "1") {
+    const auth = await authenticateSession(req);
+    if (auth.valid) {
+      try { await kv.del(`session:${auth.sessionToken}`); } catch (e) { /* KV unavailable */ }
+      globalSessions.delete(auth.sessionToken);
+      await writeAuditLog("LOGOUT", { ip });
+    }
+    // Respuesta idéntica exista o no la sesión (no revela validez del token)
+    return withSecurityHeaders(NextResponse.json({ success: true, loggedOut: true }));
   }
+
+  const lock = await checkLockout(ip);
+  if (lock.blocked) return lockoutResponse(lock.retryAfter);
 
   const auth = await authenticateSession(req);
   if (!auth.valid) {
@@ -403,7 +423,6 @@ export async function DELETE(req) {
   }
 
   try {
-    const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
     if (!id) {
@@ -419,7 +438,7 @@ export async function DELETE(req) {
         console.warn("KV bypass deletion for reset");
       }
       globalMessages.length = 0;
-      await writeAuditLog("WIPE_ALL", { fingerprint });
+      await writeAuditLog("WIPE_ALL", { ip });
       return withSecurityHeaders(
         NextResponse.json({ success: true, message: "All records deleted.", storage: "Cleared" })
       );
@@ -455,7 +474,7 @@ export async function DELETE(req) {
       }
     }
 
-    await writeAuditLog("DELETE_RECORD", { fingerprint, recordId: id });
+    await writeAuditLog("DELETE_RECORD", { ip, recordId: id });
 
     return withSecurityHeaders(
       NextResponse.json({ success: true, message: `Record ${id} deleted.`, deletedFromKV })

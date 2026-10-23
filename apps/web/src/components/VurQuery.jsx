@@ -11,15 +11,16 @@ const VurQuery = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!matricula) return;
+    const query = matricula.trim();
+    if (!query) return;
 
     setLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      // Attempt real-time API call to the backend
-      const response = await fetch(`${process.env.NEXT_PUBLIC_GEOAPI_URL || 'https://devgiz-api.onrender.com'}/api/vur/query?matricula=${matricula}`);
+      // Attempt real-time API call to the backend (matrícula codificada para evitar inyección de parámetros)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_GEOAPI_URL || 'https://devgiz-api.onrender.com'}/api/vur/query?matricula=${encodeURIComponent(query)}`);
       
       if (response.ok) {
         const apiData = await response.json();
@@ -39,7 +40,8 @@ const VurQuery = () => {
         // Fallback to high-fidelity mock if API is down during demo
         const mockData = {
           source: "SUPERINTENDENCIA DE NOTARIADO Y REGISTRO (MOCK)",
-          matricula: matricula,
+          matricula: query,
+          isMock: true,
           status: "ACTIVO",
           owner: "GARCIA MARQUEZ GABRIEL",
           cedula: "1.020.XXX.XXX",
@@ -81,7 +83,7 @@ const VurQuery = () => {
         <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
           <div className="flex-1 space-y-4">
             <h4 className="text-2xl font-bold text-white flex items-center gap-3">
-              <span className="p-2 bg-red-500/20 text-red-500 rounded-lg text-xl">🔍</span>
+              <span aria-hidden="true" className="p-2 bg-red-500/20 text-red-500 rounded-lg text-xl">🔍</span>
               Consulta Registral VUR/SNR
             </h4>
             <p className="text-slate-400 text-sm leading-relaxed">
@@ -90,17 +92,25 @@ const VurQuery = () => {
           </div>
 
           <form onSubmit={handleSearch} className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+            <label htmlFor="vur-matricula" className="sr-only">Número de matrícula inmobiliaria</label>
             <input
+              id="vur-matricula"
+              name="matricula"
               type="text"
-              aria-label="Número de matrícula inmobiliaria"
+              autoComplete="off"
+              autoCapitalize="characters"
+              spellCheck={false}
+              maxLength={30}
+              required
               value={matricula}
               onChange={(e) => setMatricula(e.target.value)}
               placeholder="N° Matrícula (Ej: 050N-12345)"
-              className="px-6 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all min-w-[280px]"
+              className="px-6 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-400/60 transition-all w-full sm:min-w-[280px]"
             />
             <button
               type="submit"
               disabled={loading}
+              aria-busy={loading}
               className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold rounded-2xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
@@ -119,34 +129,38 @@ const VurQuery = () => {
       {/* Result Area */}
       <div className="mt-8 min-h-[300px] flex items-center justify-center relative">
         {!result && !loading && !error && (
-          <div className="text-center space-y-4 opacity-40">
-            <div className="text-6xl grayscale">📄</div>
+          <div className="text-center space-y-4">
+            <div aria-hidden="true" className="text-6xl grayscale opacity-40">📄</div>
             <p className="text-slate-400 font-mono text-xs uppercase tracking-widest">Esperando parámetro de búsqueda...</p>
           </div>
         )}
 
         {loading && (
-          <div className="flex flex-col items-center gap-6">
+          <div role="status" className="flex flex-col items-center gap-6">
             <div className="relative w-24 h-24">
                 <div className="absolute inset-0 border-4 border-red-500/20 rounded-full"></div>
                 <div className="absolute inset-0 border-4 border-t-red-500 rounded-full animate-spin"></div>
             </div>
             <div className="space-y-2 text-center">
                 <p className="text-red-500 font-bold tracking-widest text-xs animate-pulse uppercase">Conectando con Servidores SNR...</p>
-                <p className="text-slate-500 text-[10px] font-mono italic">AUTENTICANDO: CLAUDIAC.GOMEZ</p>
             </div>
           </div>
         )}
 
         {error && (
-          <div className="p-8 bg-red-500/10 border border-red-500/50 rounded-3xl text-red-500 text-center max-w-md">
+          <div role="alert" className="p-8 bg-red-500/10 border border-red-500/50 rounded-3xl text-red-300 text-center max-w-md">
             <p className="font-bold mb-2">Error de Sincronización</p>
             <p className="text-sm opacity-80">{error}</p>
           </div>
         )}
 
         {result && (
-          <div className="vur-result-card w-full opacity-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+          <div role="region" aria-label="Resultado de la consulta registral" className="vur-result-card w-full opacity-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+            {result.isMock && (
+              <p role="note" className="md:col-span-2 lg:col-span-3 px-4 py-2 rounded-xl border border-amber-500/40 bg-amber-500/10 text-amber-200 text-xs">
+                Datos de demostración: el servicio de consulta no respondió y se muestra un registro simulado, no información real de la SNR.
+              </p>
+            )}
             {/* Main Info Card */}
             <div className="lg:col-span-2 p-8 bg-[#0a0f18] border border-slate-800 rounded-3xl space-y-6 shadow-xl hover:border-red-500/30 transition-colors group">
               <div className="flex justify-between items-start">
@@ -208,7 +222,7 @@ const VurQuery = () => {
                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                    <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[99.8%]"></div>
                 </div>
-                <p className="mt-4 text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {btoa(matricula || "DEMO").substring(0, 10).toUpperCase()}</p>
+                <p className="mt-4 text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {encodeURIComponent(matricula || "DEMO").replace(/%/g, "").substring(0, 10).toUpperCase()}</p>
               </div>
             </div>
           </div>

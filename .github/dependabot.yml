@@ -42,6 +42,17 @@ updates:
         patterns: ["*"]
 
   - package-ecosystem: "pip"
+    directory: "/apps/api"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 1
+    labels:
+      - "dependencies"
+    groups:
+      api:
+        patterns: ["*"]
+
+  - package-ecosystem: "pip"
     directory: "/backend/qa_engine"
     schedule:
       interval: "monthly"

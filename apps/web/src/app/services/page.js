@@ -117,7 +117,7 @@ export default function ServicesPage() {
           <div className="mt-12 pt-8 border-t border-slate-200/60 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
             {/* Category tabs */}
             <div 
-              role="tablist" 
+              role="group"
               aria-label="Filtro por capas estratégicas"
               className="flex flex-wrap items-center gap-2"
             >
@@ -131,11 +131,9 @@ export default function ServicesPage() {
                   <button
                     key={capa.id}
                     type="button"
-                    role="tab"
-                    id={`capa-tab-${capa.id}`}
-                    aria-selected={isSelected}
+                    aria-pressed={isSelected}
                     onClick={() => setSelectedCapa(capa.id)}
-                    className={`px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none flex items-center gap-2 ${
+                    className={`px-4 py-2 min-h-9 rounded-full font-mono text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none flex items-center gap-2 ${
                       isSelected 
                         ? "bg-[#1a1a1a] text-white shadow-md"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-black"
@@ -154,21 +152,21 @@ export default function ServicesPage() {
 
             {/* Live Search input */}
             <div className="relative min-w-[260px] md:w-80">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar servicio, norma o tecnología..."
                 aria-label="Buscar en el catálogo de servicios"
-                className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-full text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all font-mono"
+                className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-full text-xs text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all font-mono"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
                   aria-label="Limpiar búsqueda"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-mono"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center text-slate-600 hover:text-slate-900 text-xs font-mono rounded-full focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                 >
                   ✕
                 </button>

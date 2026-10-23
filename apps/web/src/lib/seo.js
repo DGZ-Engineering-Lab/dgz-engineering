@@ -14,7 +14,8 @@ export const FOUNDER = {
   jobTitle: "Ingeniero Geoespacial y Arquitecto de Sistemas GIS",
 };
 
-export const SAME_AS = ["https://github.com/DGZ-Engineering-Lab"];
+// Perfiles verificables de la marca y del fundador (refuerzan la entidad y E-E-A-T).
+export const SAME_AS = ["https://github.com/DGZ-Engineering-Lab", "https://github.com/gaviriaz", "https://www.linkedin.com/in/soyalbertgz"];
 
 // Canales de contacto reales (fuente única para navbar, footer y formularios).
 export const CONTACT = {
@@ -23,7 +24,7 @@ export const CONTACT = {
   whatsappDisplay: "+57 305 326 1466",
   // Mensaje precargado: el cliente no tiene que pensar cómo empezar la conversación.
   whatsappUrl: "https://wa.me/573053261466?text=" + encodeURIComponent("Hola DevGiz, vi su sitio web y quiero información sobre un proyecto."),
-  linkedin: "https://linkedin.com/in/soyalbertgz",
+  linkedin: "https://www.linkedin.com/in/soyalbertgz",
   github: "https://github.com/gaviriaz",
   city: "Medellín, Colombia",
 };
@@ -153,6 +154,10 @@ export const PROJECTS_SEO = {
   },
 };
 
+// Fecha de la última revisión de contenido. Actualizarla solo cuando cambie el
+// contenido: un lastmod que cambia en cada build hace que Google lo ignore.
+export const CONTENT_UPDATED = "2026-10-23";
+
 // Rutas estáticas públicas para sitemap.xml y llms.txt.
 export const STATIC_ROUTES = [
   { path: "/", title: "Inicio", priority: 1.0, changeFrequency: "weekly" },
@@ -200,6 +205,16 @@ export function siteJsonLd() {
           addressCountry: "CO",
         },
         areaServed: { "@type": "Country", name: "Colombia" },
+        email: CONTACT.email,
+        telephone: `+${CONTACT.whatsapp}`,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: CONTACT.email,
+          telephone: `+${CONTACT.whatsapp}`,
+          areaServed: "CO",
+          availableLanguage: ["es", "en"],
+        },
         knowsAbout: [
           "Catastro Multipropósito",
           "LADM-COL (ISO 19152)",
@@ -219,6 +234,8 @@ export function siteJsonLd() {
         "@id": PERSON_ID,
         name: FOUNDER.name,
         jobTitle: FOUNDER.jobTitle,
+        url: absoluteUrl("/about"),
+        sameAs: [CONTACT.linkedin, CONTACT.github],
         worksFor: { "@id": ORG_ID },
         address: { "@type": "PostalAddress", addressLocality: "Medellín", addressCountry: "CO" },
         knowsAbout: ["GIS", "LADM-COL", "PostGIS", "Python", "Catastro Multipropósito", "Ingeniería de datos geoespaciales"],
@@ -263,7 +280,7 @@ export function articleJsonLd({ id, title, description, datePublished, image, ca
     image: absoluteUrl(image),
     articleSection: category,
     inLanguage: SITE_LANG,
-    author: { "@id": PERSON_ID, "@type": "Person", name: FOUNDER.name },
+    author: { "@id": PERSON_ID, "@type": "Person", name: FOUNDER.name, url: absoluteUrl("/about") },
     publisher: { "@id": ORG_ID },
     isPartOf: { "@id": WEBSITE_ID },
   };

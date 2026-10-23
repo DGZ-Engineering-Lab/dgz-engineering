@@ -1,8 +1,8 @@
 import { SERVICES_DATA } from "../data/servicesData";
-import { SITE_URL, STATIC_ROUTES, BLOG_POSTS_SEO, PROJECTS_SEO } from "../lib/seo";
+import { SITE_URL, STATIC_ROUTES, BLOG_POSTS_SEO, PROJECTS_SEO, CONTENT_UPDATED } from "../lib/seo";
 
 export default function sitemap() {
-  const now = new Date();
+  const now = new Date(CONTENT_UPDATED);
 
   const staticEntries = STATIC_ROUTES.map(({ path, priority, changeFrequency }) => ({
     url: `${SITE_URL}${path === "/" ? "" : path}`,

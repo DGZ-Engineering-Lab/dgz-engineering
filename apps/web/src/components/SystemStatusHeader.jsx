@@ -11,16 +11,25 @@ export default function SystemStatusHeader() {
   useEffect(() => {
     // In a real Vercel environment, this would call an API that reads from Edge Config
     // For now, we simulate the highly-efficient edge fetch
+    const ctrl = new AbortController();
     const checkEdgeStatus = async () => {
       try {
-        const res = await fetch("/api/config");
+        const res = await fetch("/api/config", { signal: ctrl.signal });
         const config = await res.json();
         if (config.systemStatus) setStatus(config.systemStatus);
       } catch (e) {
         // Fallback to nominal
       }
     };
-    checkEdgeStatus();
+    // Se difiere al reposo del navegador para no competir con LCP/hidratación
+    let idle;
+    if ("requestIdleCallback" in window) idle = window.requestIdleCallback(checkEdgeStatus, { timeout: 3000 });
+    else idle = setTimeout(checkEdgeStatus, 1500);
+    return () => {
+      ctrl.abort();
+      if ("cancelIdleCallback" in window) window.cancelIdleCallback(idle);
+      else clearTimeout(idle);
+    };
   }, []);
 
   if (status.maintenance) {

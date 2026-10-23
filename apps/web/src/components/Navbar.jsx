@@ -84,6 +84,25 @@ export default function Navbar() {
   useEffect(() => {
     if (!activeDropdown && !isMobileMenuOpen) return;
     const handleKeyDown = (e) => {
+      // Focus trap del menú móvil: el ciclo Tab queda entre el botón de cierre y los enlaces del menú
+      if (e.key === "Tab" && isMobileMenuOpen) {
+        const menu = document.getElementById("mobile-menu");
+        const items = [
+          mobileToggleRef.current,
+          ...(menu ? menu.querySelectorAll("a[href], button:not([disabled])") : []),
+        ].filter(Boolean);
+        if (items.length < 2) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+        return;
+      }
       if (e.key !== "Escape") return;
       if (activeDropdown) {
         dropdownTriggerRefs.current[activeDropdown]?.focus();
@@ -103,9 +122,18 @@ export default function Navbar() {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     // El menú cubre toda la pantalla: el contenido detrás no debe recibir foco
-    const behind = [document.getElementById("main-content"), document.querySelector("body > footer, footer")].filter(Boolean);
+    const behind = [
+      document.getElementById("main-content"),
+      document.querySelector("body > footer, footer"),
+      document.querySelector("[data-mobile-cta]"),
+    ].filter(Boolean);
     behind.forEach((el) => el.setAttribute("inert", ""));
+    // Lleva el foco al primer enlace del menú al abrirlo (queda dentro del diálogo de navegación)
+    const focusId = requestAnimationFrame(() => {
+      document.querySelector("#mobile-menu a[href]")?.focus();
+    });
     return () => {
+      cancelAnimationFrame(focusId);
       document.body.style.overflow = previous;
       behind.forEach((el) => el.removeAttribute("inert"));
     };
@@ -205,7 +233,7 @@ export default function Navbar() {
             <Logo className={`w-8 h-8 transition-transform group-hover:scale-110 ${isDarkPage ? 'text-cyan-400' : 'text-[#1a1a1a]'}`} />
             <div className="flex flex-col leading-none">
               <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${logoTextColor}`}>DevGiz</span>
-              <span className="text-[9.5px] font-mono uppercase tracking-[0.3em] text-slate-500 font-bold">Engineering</span>
+              <span className={`text-[9.5px] font-mono uppercase tracking-[0.3em] font-bold ${isDarkPage ? "text-slate-400" : "text-slate-600"}`}>Engineering</span>
             </div>
           </Link>
 
@@ -228,11 +256,11 @@ export default function Navbar() {
                 >
                   <span>{link.name}</span>
                   {link.isNew && (
-                    <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[10px] tracking-widest rounded-full font-black">
+                    <span className={`px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 font-mono text-[10px] tracking-widest rounded-full font-black ${isDarkPage ? "text-emerald-300" : "text-emerald-800"}`}>
                       ROI
                     </span>
                   )}
-                  <span className={`absolute bottom-0.5 left-0 h-[2px] rounded-full transition-all duration-300 ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"} ${activeLineColor}`}></span>
+                  <span aria-hidden="true" className={`absolute bottom-0.5 left-0 h-[2px] rounded-full transition-all duration-300 ${isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"} ${activeLineColor}`}></span>
                 </Link>
                 {link.dropdownKey && (
                   <button
@@ -243,9 +271,9 @@ export default function Navbar() {
                     aria-expanded={activeDropdown === link.dropdownKey}
                     aria-controls={activeDropdown === link.dropdownKey ? "nav-mega-dropdown" : undefined}
                     aria-label={`Submenú de ${link.name}`}
-                    className="ml-0.5 p-2 -m-1 rounded-md cursor-pointer"
+                    className="ml-0.5 p-2 -m-1 rounded-md cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500"
                   >
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
+                    <ChevronDown aria-hidden="true" className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === link.dropdownKey ? 'rotate-180 text-cyan-500' : 'text-slate-400'}`} />
                   </button>
                 )}
               </div>
@@ -262,7 +290,7 @@ export default function Navbar() {
                   isDarkPage ? "border-slate-700 text-emerald-400 hover:bg-emerald-500/10" : "border-slate-200 bg-white/70 text-emerald-600 hover:bg-emerald-50 hover:border-emerald-300"
                 }`}
               >
-                <MessageCircle className="w-[18px] h-[18px]" />
+                <MessageCircle aria-hidden="true" className="w-[18px] h-[18px]" />
               </a>
               <Link
                 href="/#contact"
@@ -280,12 +308,12 @@ export default function Navbar() {
             type="button"
             ref={mobileToggleRef}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 -mr-2 transition-colors rounded-full hover:bg-slate-500/10 ${burgerColor}`}
+            className={`lg:hidden inline-flex h-11 w-11 -mr-2 items-center justify-center transition-colors rounded-full hover:bg-slate-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${burgerColor}`}
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X aria-hidden="true" className="w-6 h-6" /> : <Menu aria-hidden="true" className="w-6 h-6" />}
           </button>
         </div>
 
@@ -323,7 +351,7 @@ export default function Navbar() {
                       <span className="text-[10px] font-mono tracking-[0.25em] text-cyan-600 font-black uppercase">DevGiz · Navegación</span>
                     </div>
                     <p className="text-lg font-black tracking-tight mb-2 uppercase">{activeDropdown}</p>
-                    <p className="text-slate-500 text-xs font-light leading-relaxed">
+                    <p className={`text-xs leading-relaxed ${isDarkPage ? "text-slate-400" : "text-slate-600"}`}>
                       {DROPDOWNS_DATA[activeDropdown]?.desc}
                     </p>
                   </div>
@@ -364,7 +392,7 @@ export default function Navbar() {
                             {item.name}
                             <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-cyan-500 shrink-0" />
                           </span>
-                          <p className="text-slate-500 text-xs font-light leading-snug">
+                          <p className={`text-xs leading-snug ${isDarkPage ? "text-slate-400" : "text-slate-600"}`}>
                             {item.desc}
                           </p>
                         </div>
@@ -428,7 +456,7 @@ export default function Navbar() {
                         >
                           <span>{link.name}</span>
                           {link.isNew && (
-                            <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 font-mono text-[10px] tracking-widest rounded-full font-black">
+                            <span className={`px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 font-mono text-[10px] tracking-widest rounded-full font-black ${isDarkPage ? "text-emerald-300" : "text-emerald-800"}`}>
                               ROI
                             </span>
                           )}
@@ -441,9 +469,9 @@ export default function Navbar() {
                             aria-expanded={isExpanded}
                             aria-controls={`mobile-submenu-${link.dropdownKey}`}
                             aria-label={`${isExpanded ? "Ocultar" : "Mostrar"} subpáginas de ${link.name}`}
-                            className={`p-2 rounded-lg ${isDarkPage ? 'bg-slate-900/50' : 'bg-slate-100'} transition-all`}
+                            className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${isDarkPage ? 'bg-slate-900/50' : 'bg-slate-100'} transition-all`}
                           >
-                            <ChevronDown className={`w-4 h-4 transition-transform duration-350 ${isExpanded ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
+                            <ChevronDown aria-hidden="true" className={`w-4 h-4 transition-transform duration-350 ${isExpanded ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
                           </button>
                         )}
                       </div>
@@ -500,10 +528,10 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`btn w-full ${isDarkPage ? 'bg-cyan-500 text-black hover:bg-cyan-400' : 'btn-primary'}`}
               >
-                <span>Solicitar Consultoría</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Solicitar consultoría</span>
+                <ArrowRight aria-hidden="true" className="w-4 h-4" />
               </Link>
-              <div className="text-center text-[9.5px] font-mono text-slate-400 uppercase tracking-widest">
+              <div className={`text-center text-[10px] font-mono uppercase tracking-widest ${isDarkPage ? "text-slate-400" : "text-slate-600"}`}>
                 DevGiz Spatial Systems // 2026
               </div>
             </motion.div>

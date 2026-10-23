@@ -1,7 +1,7 @@
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../../lib/upstash";
-import { getClientIp } from "../../../../lib/security";
+import { assertSameOrigin, getClientIp, matchesFileSignature } from "../../../../lib/security";
 
 export const runtime = "nodejs";
 
@@ -25,9 +25,22 @@ function sanitizeFilename(name) {
 
 export async function POST(req) {
   try {
-    const { success } = await checkRateLimit(`rate_limit:upload:${getClientIp(req)}`);
+    // CSRF: solo el propio sitio (multipart, así que no se exige JSON)
+    if (!assertSameOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
+    }
+
+    // 5 subidas por IP y día; fail-closed porque el almacenamiento es público y finito
+    const { success, reason } = await checkRateLimit(getClientIp(req), {
+      name: "upload",
+      tokens: 5,
+      window: "1 d",
+      failClosed: true,
+    });
     if (!success) {
-      return NextResponse.json({ error: "Too many uploads. Please wait before retrying." }, { status: 429 });
+      return reason === "unavailable"
+        ? NextResponse.json({ error: "Upload service temporarily unavailable." }, { status: 503 })
+        : NextResponse.json({ error: "Too many uploads. Please wait before retrying." }, { status: 429 });
     }
 
     const declaredLength = Number(req.headers.get("content-length") || 0);
@@ -40,6 +53,9 @@ export async function POST(req) {
 
     if (!file || typeof file === "string") {
       return NextResponse.json({ error: "No file provided in form payload" }, { status: 400 });
+    }
+    if (file.size === 0) {
+      return NextResponse.json({ error: "Empty file" }, { status: 400 });
     }
     if (file.size > MAX_UPLOAD_BYTES) {
       return NextResponse.json({ error: "File too large (max 4 MB)" }, { status: 413 });
@@ -54,7 +70,16 @@ export async function POST(req) {
         { status: 415 }
       );
     }
-    
+
+    // El contenido real debe coincidir con la extensión declarada (magic bytes)
+    const head = new Uint8Array(await file.slice(0, 1024).arrayBuffer());
+    if (!matchesFileSignature(extension, head)) {
+      return NextResponse.json(
+        { error: "File content does not match its extension" },
+        { status: 415 }
+      );
+    }
+
     // Parse file content if it is GeoJSON or JSON
     let geojson = null;
     if (extension === "geojson" || extension === "json") {

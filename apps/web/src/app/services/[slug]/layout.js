@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
 import { SERVICES_DATA } from "../../../data/servicesData";
 import { pageMetadata, serviceJsonLd, breadcrumbJsonLd } from "../../../lib/seo";
@@ -10,13 +11,17 @@ function serviceTitle(service) {
   return full.length <= 60 ? full : `${name} | Servicios Geoespaciales`;
 }
 
+// Solo existen las rutas generadas: cualquier otro valor responde 404 real
+// (antes devolvía 200 con un aviso en pantalla, un "soft 404" para Google).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return Object.keys(SERVICES_DATA).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const service = SERVICES_DATA[slug];
+  const service = Object.hasOwn(SERVICES_DATA, slug) ? SERVICES_DATA[slug] : undefined;
   if (!service) return { title: "Servicio no encontrado", robots: { index: false, follow: true } };
 
   return pageMetadata({
@@ -28,28 +33,26 @@ export async function generateMetadata({ params }) {
 
 export default async function ServiceLayout({ children, params }) {
   const { slug } = await params;
-  const service = SERVICES_DATA[slug];
+  const service = Object.hasOwn(SERVICES_DATA, slug) ? SERVICES_DATA[slug] : undefined;
+  if (!service) notFound();
 
   return (
     <>
-      {service && (
-        <>
-          <JsonLd
-            data={serviceJsonLd({
-              slug,
-              title: displayName(service.title),
-              description: service.concept,
-              category: service.tagline,
-            })}
-          />
-          <JsonLd
-            data={breadcrumbJsonLd([
-              { name: "Inicio", path: "/" },
-              { name: displayName(service.title), path: `/services/${slug}` },
-            ])}
-          />
-        </>
-      )}
+      <JsonLd
+        data={serviceJsonLd({
+          slug,
+          title: displayName(service.title),
+          description: service.concept,
+          category: service.tagline,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Inicio", path: "/" },
+          { name: "Servicios", path: "/services" },
+          { name: displayName(service.title), path: `/services/${slug}` },
+        ])}
+      />
       {children}
     </>
   );

@@ -70,3 +70,8 @@
     pointer-events: none;
     z-index: 1;
 }
+
+/* Móvil: capa de 200% animada sin aporte visual; se deja estática para ahorrar GPU/batería */
+@media (max-width: 767px) {
+    .enterprise-bg::before { animation: none; }
+}
