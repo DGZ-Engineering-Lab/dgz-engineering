@@ -399,7 +399,10 @@ export async function DELETE(req) {
   const ip = getClientIp(req);
   const { searchParams } = new URL(req.url);
 
-  // Logout: se permite aun en bloqueo; invalida el token en KV y en memoria
+  const lock = await checkLockout(ip);
+  if (lock.blocked) return lockoutResponse(lock.retryAfter);
+
+  // Logout: invalida el token en KV y en memoria (tras el control de bloqueo)
   if (searchParams.get("logout") === "1") {
     const auth = await authenticateSession(req);
     if (auth.valid) {
@@ -410,9 +413,6 @@ export async function DELETE(req) {
     // Respuesta idéntica exista o no la sesión (no revela validez del token)
     return withSecurityHeaders(NextResponse.json({ success: true, loggedOut: true }));
   }
-
-  const lock = await checkLockout(ip);
-  if (lock.blocked) return lockoutResponse(lock.retryAfter);
 
   const auth = await authenticateSession(req);
   if (!auth.valid) {

@@ -106,6 +106,10 @@ describe("maskEmail", () => {
     expect(maskEmail(undefined)).toBe("***");
     expect(maskEmail("unknown")).toBe("***");
   });
+
+  it("strips line breaks so log entries cannot be forged", () => {
+    expect(maskEmail("a@evil.com\n[ADMIN] fake entry")).toBe("a***@evil.com[ADMIN] fake entry");
+  });
 });
 
 describe("assertSameOrigin", () => {

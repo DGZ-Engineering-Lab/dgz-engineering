@@ -54,7 +54,8 @@ export function getClientIp(req) {
 export function maskEmail(value) {
   if (typeof value !== "string" || !value.includes("@")) return "***";
   const at = value.lastIndexOf("@");
-  return `${value.slice(0, 1)}***${value.slice(at)}`;
+  // Sin saltos de línea ni caracteres de control: evita falsificar entradas de log.
+  return `${value.slice(0, 1)}***${value.slice(at)}`.replace(/[\r\n\t\u0000-\u001f\u007f]/g, "");
 }
 
 // ─── Protección CSRF básica para POST desde el navegador ──────────────────────
