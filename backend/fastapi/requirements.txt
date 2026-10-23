@@ -1,8 +1,8 @@
-fastapi>=0.143.0
+fastapi>=0.156.0
 uvicorn[standard]>=0.54.0
 shapely>=2.2.0
 python-multipart>=0.0.32
-sqlalchemy>=2.1.4
+sqlalchemy>=2.1.5
 geoalchemy2>=0.20.0
 psycopg2-binary>=2.9.13
 python-dotenv>=1.2.4
