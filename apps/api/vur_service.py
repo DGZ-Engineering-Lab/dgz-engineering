@@ -11,7 +11,6 @@ VUR_USER = os.getenv("VUR_USER", "")
 VUR_PASS = os.getenv("VUR_PASS", "")
 
 # Formatos permitidos para los segmentos que se interpolan en URLs del VUR
-_CIRCULO_RE = re.compile(r"^[0-9A-Za-z]{1,5}$")
 _MATRICULA_RE = re.compile(r"^[0-9]{1,15}$")
 
 
@@ -284,13 +283,21 @@ class VURService:
             circulo = parts[0].strip()
             matricula = parts[1].strip()
 
-        # Validación estricta antes de interpolar en rutas del VUR
-        if not _CIRCULO_RE.match(circulo or "") or not _MATRICULA_RE.match(matricula or ""):
+        # Validación estricta antes de interpolar en rutas del VUR: el círculo debe
+        # ser una ORIP conocida y la matrícula solo dígitos (fullmatch: sin "\n" final).
+        circulo = (circulo or "").upper()
+        if circulo not in ORIP_OFFICES and circulo.lstrip("0") in ORIP_OFFICES:
+            circulo = circulo.lstrip("0")  # "050N" (formato con cero) → "50N"
+        if circulo not in ORIP_OFFICES or not _MATRICULA_RE.fullmatch(matricula or ""):
             raise InvalidFolioError("Formato de matrícula inválido. Use dígitos o CIRCULO-DIGITOS (ej. 50N-30123).")
+        # Se reconstruyen desde valores confiables (clave de la tabla y entero) para
+        # que ningún texto del usuario llegue a la URL.
+        circulo = next(k for k in ORIP_OFFICES if k == circulo)
+        matricula = f"{int(matricula):0{len(matricula)}d}"
         folio_segment = quote(f"{circulo}-{matricula}", safe="-")
 
         # 2. Resolve ORIP Office database parameters
-        office_info = ORIP_OFFICES.get(circulo, {"id": 1, "nombre": "ORIP - BOGOTA NORTE - ( 50N )"})
+        office_info = ORIP_OFFICES[circulo]
         circulo_id = office_info["id"]
         circulo_nombre = office_info["nombre"]
 
@@ -341,7 +348,7 @@ class VURService:
                 
                 # If no records exist in official SNR database
                 if not isinstance(results, list) or len(results) == 0:
-                    logging.info(f"VUR_QUERY_NO_RESULTS: Matrícula {circulo}-{matricula} not found.")
+                    logging.info("VUR_QUERY_NO_RESULTS: folio %s not found.", folio_segment)
                     return {
                         "source": "SNR_VUR_OFFICIAL",
                         "status": "INVALID",
