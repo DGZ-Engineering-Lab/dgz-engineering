@@ -79,8 +79,15 @@ describe("upstash helpers without credentials", () => {
     expect(result.limit).toBe(3);
   });
 
+  it("fails open in production unless RATE_LIMIT_FAIL_CLOSED=1", async () => {
+    vi.stubEnv("VERCEL_ENV", "production");
+    const result = await mod.checkRateLimit("1.1.1.1", { name: "contact", tokens: 3, window: "1 h", failClosed: true });
+    expect(result.success).toBe(true);
+  });
+
   it("fails closed in production only when requested", async () => {
     vi.stubEnv("VERCEL_ENV", "production");
+    vi.stubEnv("RATE_LIMIT_FAIL_CLOSED", "1");
     const closed = await mod.checkRateLimit("1.1.1.1", { name: "ai", tokens: 5, window: "1 m", failClosed: true });
     expect(closed.success).toBe(false);
     expect(closed.reason).toBe("unavailable");
@@ -151,6 +158,7 @@ describe("upstash helpers with Redis configured", () => {
   });
 
   it("fails closed or open on Redis errors depending on the option", async () => {
+    vi.stubEnv("RATE_LIMIT_FAIL_CLOSED", "1");
     mocks.limit.mockRejectedValue(new Error("redis down"));
     const closed = await mod.checkRateLimit("1.1.1.1", { name: "upload", tokens: 5, window: "1 d", failClosed: true });
     expect(closed.success).toBe(false);
