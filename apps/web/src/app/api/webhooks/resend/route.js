@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Webhook } from 'svix';
+import { maskEmail } from '../../../../lib/security';
 
 const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
 
@@ -32,6 +33,9 @@ export async function POST(req) {
     // Process the verified event
     const { type, data } = event;
     console.log(`[Resend Webhook] Received Event: ${type}`, data?.email_id || "");
+    // Destinatario defensivo y enmascarado: los logs no deben guardar emails completos
+    const to = data?.to?.[0] ?? "unknown";
+    const maskedTo = to === "unknown" ? to : maskEmail(to);
 
     switch (type) {
       case 'email.sent':
@@ -41,10 +45,10 @@ export async function POST(req) {
         // Update your database to mark email as delivered
         break;
       case 'email.bounced':
-        console.warn(`[Resend Webhook] Email to ${data.to[0]} bounced!`);
+        console.warn(`[Resend Webhook] Email to ${maskedTo} bounced!`);
         break;
       case 'email.complained':
-        console.warn(`[Resend Webhook] User ${data.to[0]} marked email as SPAM!`);
+        console.warn(`[Resend Webhook] User ${maskedTo} marked email as SPAM!`);
         // Good practice: remove from Audience or mark as unsubscribed
         break;
       default:

@@ -1,9 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { CONTACT } from "../lib/seo";
 
 export default function NotFoundView() {
+  // Respeta prefers-reduced-motion: sin partículas, líneas en bucle ni parallax
+  const reduceMotion = useReducedMotion();
   const [glitchText, setGlitchText] = useState("404");
   const [particles, setParticles] = useState([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -70,7 +73,7 @@ export default function NotFoundView() {
       </div>
 
       {/* Floating Particles */}
-      {particles.map(p => (
+      {!reduceMotion && particles.map(p => (
         <motion.div
           key={p.id}
           className="absolute rounded-full bg-red-500/30"
@@ -99,20 +102,26 @@ export default function NotFoundView() {
       }} />
 
       {/* Glitch lines */}
-      <motion.div
-        className="absolute left-0 w-full h-[2px] bg-red-500/20"
-        animate={{ top: ["15%", "85%", "15%"] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        className="absolute left-0 w-full h-[1px] bg-cyan-500/10"
-        animate={{ top: ["80%", "20%", "80%"] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-      />
+      {!reduceMotion && (
+        <>
+          <motion.div
+            aria-hidden="true"
+            className="absolute left-0 w-full h-[2px] bg-red-500/20"
+            animate={{ top: ["15%", "85%", "15%"] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.div
+            aria-hidden="true"
+            className="absolute left-0 w-full h-[1px] bg-cyan-500/10"
+            animate={{ top: ["80%", "20%", "80%"] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          />
+        </>
+      )}
 
-      <motion.div 
+      <motion.div
         className="max-w-2xl w-full space-y-12 relative z-10"
-        style={{
+        style={reduceMotion ? undefined : {
           transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
         }}
       >
@@ -176,6 +185,7 @@ export default function NotFoundView() {
             <div>
               <div className="text-[9.5px] text-slate-400 uppercase mb-1 tracking-widest">Sistema</div>
               <div className="text-xs text-emerald-400 font-bold">OPERATIVO</div>
+              {/* Indicador decorativo del tema "terminal"; no representa estado real del sistema */}
             </div>
           </div>
         </motion.div>
@@ -193,7 +203,8 @@ export default function NotFoundView() {
           >
             Ir al inicio
             <motion.span
-              animate={{ x: [0, 4, 0] }}
+              aria-hidden="true"
+              animate={reduceMotion ? undefined : { x: [0, 4, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             >
               →
@@ -201,10 +212,18 @@ export default function NotFoundView() {
           </Link>
           <Link
             href="/services"
-            className="w-full md:w-auto px-10 py-5 bg-transparent border border-white/10 text-white font-black text-[10px] rounded-xl hover:bg-white/5 hover:border-white/20 transition-all uppercase tracking-widest text-center"
+            className="w-full md:w-auto px-10 py-5 bg-transparent border border-white/30 text-white font-black text-[10px] rounded-xl hover:bg-white/5 hover:border-white/20 transition-all uppercase tracking-widest text-center"
           >
             Ver servicios
           </Link>
+          <a
+            href={CONTACT.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto px-6 py-5 text-emerald-300 font-black text-[10px] uppercase tracking-widest text-center underline underline-offset-4 hover:text-emerald-200"
+          >
+            Escribir por WhatsApp
+          </a>
         </motion.div>
 
         {/* Footer Trace */}

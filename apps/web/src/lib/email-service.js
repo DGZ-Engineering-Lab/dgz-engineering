@@ -1,6 +1,14 @@
+import { createHash } from "node:crypto";
 import { Resend } from "resend";
 import { getAdminNotificationTemplate, getUserConfirmationTemplate } from "./email-templates.js";
-import { singleLine } from "./security.js";
+import { maskEmail, singleLine } from "./security.js";
+import { redis } from "./upstash.js";
+
+// Texto fijo: la confirmación nunca refleja el mensaje libre del visitante
+// (evita usar el formulario como relé de spam/phishing hacia terceros).
+const CONFIRMATION_MESSAGE =
+  "Tu solicitud quedó registrada. Por seguridad no reproducimos aquí el contenido de tu mensaje.";
+const CONFIRMATION_COOLDOWN_SECONDS = 24 * 60 * 60;
 
 class EmailService {
   constructor() {
@@ -9,7 +17,8 @@ class EmailService {
     
     // On Free Tier, fromEmail MUST be onboarding@resend.dev
     this.fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-    this.adminEmail = process.env.RESEND_ADMIN_EMAIL || "albertg2109@gmail.com";
+    // Sin valor por defecto: si falta RESEND_ADMIN_EMAIL no se envía la notificación.
+    this.adminEmail = process.env.RESEND_ADMIN_EMAIL || null;
     
     this.resend = this.resendApiKey ? new Resend(this.resendApiKey) : null;
 
@@ -23,8 +32,12 @@ class EmailService {
    */
   async sendAdminNotification({ name, email, message, company }) {
     if (!this.resend) {
-      console.log(`[EmailService] Simulated Admin Notification: New contact from ${name}`);
+      console.log("[EmailService] Simulated Admin Notification: new contact received");
       return { simulated: true };
+    }
+    if (!this.adminEmail) {
+      console.warn("⚠️ RESEND_ADMIN_EMAIL is not configured. Skipping admin notification.");
+      return { skipped: true, reason: "missing_admin_email" };
     }
 
     try {
@@ -47,9 +60,9 @@ class EmailService {
   /**
    * Sends a premium confirmation email to the user.
    */
-  async sendUserConfirmation({ name, email, message, company }) {
+  async sendUserConfirmation({ name, email }) {
     if (!this.resend) {
-      console.log(`[EmailService] Simulated User Confirmation to ${email}`);
+      console.log(`[EmailService] Simulated User Confirmation to ${maskEmail(email)}`);
       return { simulated: true };
     }
 
@@ -57,17 +70,40 @@ class EmailService {
     // you can ONLY send emails to the verified account email.
     // If we attempt to send to the user's email, Resend will reject it.
     if (this.fromEmail === "onboarding@resend.dev" && email !== this.adminEmail) {
-      console.warn(`⚠️ [EmailService] Skipping User Confirmation to ${email} because Free Tier only allows sending to the verified admin email (${this.adminEmail}).`);
+      console.warn(`⚠️ [EmailService] Skipping User Confirmation to ${maskEmail(email)}: Free Tier only allows sending to the verified admin email.`);
       return { simulated: true, reason: "free_tier_restriction" };
     }
 
+    // Máximo 1 confirmación por destinatario cada 24 h (SET NX EX sobre un hash del email).
+    if (redis) {
+      try {
+        const digest = createHash("sha256").update(String(email).toLowerCase()).digest("hex");
+        const fresh = await redis.set(`email:confirm:${digest}`, "1", {
+          nx: true,
+          ex: CONFIRMATION_COOLDOWN_SECONDS,
+        });
+        if (fresh === null) {
+          return { skipped: true, reason: "cooldown" };
+        }
+      } catch (error) {
+        console.warn("⚠️ Confirmation cooldown check failed, skipping confirmation:", error.message);
+        return { skipped: true, reason: "cooldown_unavailable" };
+      }
+    }
+
     try {
-      const emailHtml = getUserConfirmationTemplate({ name, message, company });
+      // Solo se refleja el nombre (acotado); empresa y mensaje no se reenvían al destinatario.
+      const safeName = singleLine(name).slice(0, 60);
+      const emailHtml = getUserConfirmationTemplate({
+        name: safeName,
+        message: CONFIRMATION_MESSAGE,
+        company: undefined,
+      });
 
       const response = await this.resend.emails.send({
         from: this.fromEmail,
         to: [email],
-        subject: `¡Gracias por contactar a DevGiz, ${singleLine(name)}!`,
+        subject: `¡Gracias por contactar a DevGiz, ${safeName}!`,
         html: emailHtml
       });
 
@@ -80,11 +116,15 @@ class EmailService {
   }
 
   /**
-   * Adds a user to the Resend Audience for future Broadcasts
+   * Adds a user to the Resend Audience for future Broadcasts.
+   * Solo con consentimiento explícito (`consent === true`, casilla en el formulario).
    */
-  async addContactToAudience({ firstName, email }) {
+  async addContactToAudience({ firstName, email, consent = false }) {
+    if (consent !== true) {
+      return { skipped: true, reason: "no_consent" };
+    }
     if (!this.resend) {
-      console.log(`[EmailService] Simulated Adding Contact to Audience: ${email}`);
+      console.log(`[EmailService] Simulated Adding Contact to Audience: ${maskEmail(email)}`);
       return { simulated: true };
     }
 
@@ -109,7 +149,7 @@ class EmailService {
         segments: [{ id: this.audienceId }],
       });
       
-      console.log(`👥 Contact ${email} added to Resend Audience successfully.`);
+      console.log(`👥 Contact ${maskEmail(email)} added to Resend Audience successfully.`);
       return response;
     } catch (error) {
       console.error("⚠️ Failed to add contact to Audience:", error.message);

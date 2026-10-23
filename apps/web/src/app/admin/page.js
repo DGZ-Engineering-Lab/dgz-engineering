@@ -150,6 +150,15 @@ export default function AdminPage() {
 
   // ─── LOGOUT ─────────────────────────────────────────────────────────────────
   const handleLogout = useCallback((reason) => {
+    // Revoca la sesión también en el servidor (best effort: el token caduca solo en 1 h).
+    const token = sessionStorage.getItem("dgz_session_token");
+    if (token) {
+      fetch("/api/admin/messages?logout=1", {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` },
+        keepalive: true,
+      }).catch(() => {});
+    }
     setPasscode("");
     setIsAuthorized(false);
     setSessionToken(null);
@@ -264,7 +273,7 @@ export default function AdminPage() {
   const handleDeleteMessage = async (id) => {
     if (!confirm("Permanently delete this record?")) return;
     try {
-      const res = await fetch(`/api/admin/messages?id=${id}`, {
+      const res = await fetch(`/api/admin/messages?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${sessionToken}` }
       });
@@ -309,14 +318,20 @@ export default function AdminPage() {
   const handleExportCSV = () => {
     if (filteredMessages.length === 0) return;
     const headers = ["ID", "Fecha", "Remitente", "Email", "Compania", "Sector", "Mensaje"];
+    // Texto de visitantes: se neutralizan fórmulas (=, +, -, @) para que Excel
+    // no las ejecute al abrir el archivo (inyección CSV).
+    const cell = (v) => {
+      const s = String(v ?? "");
+      return `"${(/^[=+\-@\t\r]/.test(s) ? `'${s}` : s).replace(/"/g, '""')}"`;
+    };
     const rows = filteredMessages.map(msg => [
-      msg.id || "",
+      cell(msg.id),
       msg.timestamp ? new Date(msg.timestamp).toISOString() : "",
-      `"${(msg.name || "").replace(/"/g, '""')}"`,
-      `"${(msg.email || "").replace(/"/g, '""')}"`,
-      `"${(msg.company || "").replace(/"/g, '""')}"`,
-      getSector(msg),
-      `"${(msg.message || "").replace(/"/g, '""')}"`
+      cell(msg.name),
+      cell(msg.email),
+      cell(msg.company),
+      cell(getSector(msg)),
+      cell(msg.message)
     ]);
     const csv = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
     const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csv], { type: "text/csv;charset=utf-8;" });
@@ -415,7 +430,7 @@ export default function AdminPage() {
 
       {/* Toast */}
       {toast.show && (
-        <div className={`fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-[60] px-4 py-3 rounded-2xl border flex items-center gap-3 shadow-2xl backdrop-blur-xl ${
+        <div role={toast.type === "error" ? "alert" : "status"} className={`fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-[60] px-4 py-3 rounded-2xl border flex items-center gap-3 shadow-2xl backdrop-blur-xl ${
           toast.type === "success" ? "bg-emerald-950/90 border-emerald-500/30 text-emerald-300"
           : toast.type === "error" ? "bg-red-950/90 border-red-500/30 text-red-300"
           : "bg-slate-900/90 border-slate-700 text-slate-300"
@@ -451,7 +466,7 @@ export default function AdminPage() {
 
                 {/* Lockout Banner */}
                 {isLocked && (
-                  <div className="p-4 bg-red-500/5 border border-red-500/20 rounded-2xl text-center space-y-2">
+                  <div role="alert" className="p-4 bg-red-500/5 border border-red-500/20 rounded-2xl text-center space-y-2">
                     <div className="flex items-center justify-center gap-2 text-red-400">
                       <ShieldAlert className="w-5 h-5" />
                       <span className="text-sm font-bold">Security Lockout Active</span>
@@ -471,6 +486,8 @@ export default function AdminPage() {
                     onChange={(e) => { setPasscode(e.target.value); setAuthError(""); }}
                     placeholder={isLocked ? "Locked" : "Enter passcode"}
                     aria-label="Admin passcode"
+                    aria-invalid={!!authError && !isLocked}
+                    aria-describedby={authError && !isLocked ? "admin-auth-error" : undefined}
                     disabled={isLocked}
                     maxLength={24}
                     autoComplete="off"
@@ -482,8 +499,7 @@ export default function AdminPage() {
                       onClick={() => setShowPasscode(!showPasscode)}
                       aria-label={showPasscode ? "Hide passcode" : "Show passcode"}
                       aria-pressed={showPasscode}
-                      className="p-2 text-slate-500 hover:text-slate-300 transition-colors"
-                      tabIndex={-1}
+                      className="p-2 text-slate-400 hover:text-slate-200 transition-colors rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
                     >
                       {showPasscode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -493,8 +509,8 @@ export default function AdminPage() {
 
                 {/* Error */}
                 {authError && !isLocked && (
-                  <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3">
-                    <ShieldAlert className="w-4 h-4 text-red-400 shrink-0" />
+                  <div id="admin-auth-error" role="alert" className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3">
+                    <ShieldAlert aria-hidden="true" className="w-4 h-4 text-red-400 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-red-400">{authError}</p>
                       {attemptsRemaining < MAX_ATTEMPTS && attemptsRemaining > 0 && (
@@ -533,7 +549,7 @@ export default function AdminPage() {
 
               {/* Security Footer */}
               <div className="px-6 sm:px-8 py-4 border-t border-slate-800/40 bg-slate-950/30">
-                <div className="flex items-center justify-center gap-4 text-[10px] text-slate-600 font-medium">
+                <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-400 font-medium">
                   <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Encrypted</span>
                   <span className="w-1 h-1 rounded-full bg-slate-700" />
                   <span className="flex items-center gap-1"><Fingerprint className="w-3 h-3" /> Fingerprinted</span>
@@ -545,7 +561,7 @@ export default function AdminPage() {
 
             {/* Attempts Indicator */}
             {!isLocked && (
-              <div className="flex justify-center gap-1.5">
+              <div role="img" aria-label={`${attemptsRemaining} de ${MAX_ATTEMPTS} intentos restantes`} className="flex justify-center gap-1.5">
                 {Array.from({ length: MAX_ATTEMPTS }).map((_, i) => (
                   <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i < attemptsRemaining ? "bg-emerald-500/40" : "bg-red-500/60"}`} />
                 ))}
@@ -661,13 +677,14 @@ export default function AdminPage() {
           <div className="hidden md:block bg-slate-900/40 border border-slate-800 rounded-[2rem] overflow-hidden shadow-xl backdrop-blur-md">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
+                <caption className="sr-only">Mensajes de contacto recibidos</caption>
                 <thead>
                   <tr className="bg-slate-900/60 border-b border-slate-800 text-slate-400 font-semibold text-xs">
-                    <th className="px-6 py-4">Contact</th>
-                    <th className="px-6 py-4">Organization</th>
-                    <th className="px-6 py-4 w-1/3">Inquiry</th>
-                    <th className="px-6 py-4 text-right">Date</th>
-                    <th className="px-6 py-4 text-center">Actions</th>
+                    <th scope="col" className="px-6 py-4">Contact</th>
+                    <th scope="col" className="px-6 py-4">Organization</th>
+                    <th scope="col" className="px-6 py-4 w-1/3">Inquiry</th>
+                    <th scope="col" className="px-6 py-4 text-right">Date</th>
+                    <th scope="col" className="px-6 py-4 text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/50">
@@ -768,7 +785,7 @@ export default function AdminPage() {
               );
             })}
             {filteredMessages.length > 0 && (
-              <div className="text-center text-xs text-slate-600 pt-2">{filteredMessages.length} of {totalCount} records</div>
+              <div className="text-center text-xs text-slate-400 pt-2">{filteredMessages.length} of {totalCount} records</div>
             )}
           </div>
 
@@ -835,7 +852,7 @@ export default function AdminPage() {
           {messages.length > 0 && (
             <div className="flex justify-end">
               <button onClick={handleDeleteAll}
-                className="text-xs text-slate-600 hover:text-red-400 underline decoration-slate-700 hover:decoration-red-500/50 cursor-pointer transition-colors">
+                className="inline-flex min-h-8 items-center text-xs text-slate-400 hover:text-red-400 underline decoration-slate-600 hover:decoration-red-500/50 cursor-pointer transition-colors">
                 Clear entire database
               </button>
             </div>
@@ -857,7 +874,7 @@ export default function AdminPage() {
                       <p className="text-[10px] sm:text-xs text-slate-500">Llama-3.3-70b</p>
                     </div>
                   </div>
-                  <button type="button" aria-label="Close" autoFocus onClick={() => setIsModalOpen(false)} disabled={isGeneratingAI}
+                  <button type="button" aria-label="Close" title="Close (Esc)" autoFocus onClick={() => setIsModalOpen(false)} disabled={isGeneratingAI}
                     className="p-2 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-xl cursor-pointer disabled:opacity-50 transition-all">
                     <X className="w-5 h-5" />
                   </button>

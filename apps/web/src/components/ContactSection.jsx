@@ -110,7 +110,7 @@ export default function ContactSection() {
         })
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
       if (response.ok) {
         setStatus("success");
@@ -122,12 +122,17 @@ export default function ContactSection() {
           });
         }
       } else {
-        throw new Error(result.error || "Ocurrió un error al enviar el formulario.");
+        // Los errores del API vienen en inglés: se muestran mensajes en español al usuario
+        throw new Error(
+          response.status === 429
+            ? "Demasiados envíos seguidos. Intenta de nuevo en un minuto."
+            : "No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp."
+        );
       }
     } catch (err) {
       console.error("Submission failed:", err);
       withSentry((Sentry) => Sentry.captureException(err));
-      setErrorMessage(err.message || "Fallo de red al enviar al servidor.");
+      setErrorMessage(err instanceof TypeError ? "Fallo de red al enviar al servidor. Revisa tu conexión." : err.message);
       setStatus("error");
     }
   };
@@ -225,7 +230,7 @@ export default function ContactSection() {
                 >
                   {status === "error" && (
                     <div role="alert" className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-[var(--radius-sm)] flex items-center gap-3">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                      <AlertTriangle aria-hidden="true" className="w-4 h-4 flex-shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
                   )}
@@ -235,7 +240,7 @@ export default function ContactSection() {
                       <div className="flex items-center justify-between pl-1">
                         <label htmlFor="contact-name" className="label-dgz !mb-0">Nombre Completo <span aria-hidden="true">*</span></label>
                         {touched.name && (
-                          <span id="contact-name-status" className={`text-[9.5px] font-mono uppercase tracking-widest ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
+                          <span id="contact-name-status" className={`text-[11px] font-mono uppercase tracking-wider ${validateName(formData.name) ? "text-emerald-700" : "text-red-600"}`}>
                             {validateName(formData.name) ? "[ VÁLIDO ]" : "Mínimo 3 caracteres"}
                           </span>
                         )}
@@ -246,6 +251,7 @@ export default function ContactSection() {
                           id="contact-name"
                           name="name"
                           autoComplete="name"
+                          maxLength={120}
                           aria-invalid={touched.name && !validateName(formData.name)}
                           aria-describedby={touched.name ? "contact-name-status" : undefined}
                           value={formData.name}
@@ -276,7 +282,7 @@ export default function ContactSection() {
                       <div className="flex items-center justify-between pl-1">
                         <label htmlFor="contact-company" className="label-dgz !mb-0">Organización</label>
                         {touched.company && formData.company.trim() && (
-                          <span className="text-[9.5px] font-mono uppercase tracking-widest text-emerald-700">
+                          <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700">
                             [ INGRESADO ]
                           </span>
                         )}
@@ -303,7 +309,7 @@ export default function ContactSection() {
                     <div className="flex items-center justify-between pl-1">
                       <label htmlFor="contact-email" className="label-dgz !mb-0">Correo electrónico <span aria-hidden="true">*</span></label>
                       {touched.email && (
-                        <span id="contact-email-status" className={`text-[9.5px] font-mono uppercase tracking-widest ${
+                        <span id="contact-email-status" className={`text-[11px] font-mono uppercase tracking-wider ${
                           !validateEmail(formData.email)
                             ? "text-red-600"
                             : isInstitutionalEmail(formData.email)
@@ -324,6 +330,8 @@ export default function ContactSection() {
                         id="contact-email"
                         name="email"
                         autoComplete="email"
+                        inputMode="email"
+                        maxLength={254}
                         aria-invalid={touched.email && !validateEmail(formData.email)}
                         aria-describedby={touched.email ? "contact-email-status" : undefined}
                         value={formData.email}
@@ -407,7 +415,7 @@ export default function ContactSection() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between pl-1">
                       <label htmlFor="contact-description" className="label-dgz !mb-0">Descripción del Desafío <span aria-hidden="true">*</span></label>
-                      <span id="contact-description-count" className={`text-[9.5px] font-mono uppercase tracking-widest ${
+                      <span id="contact-description-count" className={`text-[11px] font-mono uppercase tracking-wider ${
                         formData.description.length >= 30 ? "text-emerald-700" : "text-slate-500"
                       }`}>
                         {formData.description.length} / 30 mín.
@@ -453,10 +461,11 @@ export default function ContactSection() {
                   <button 
                     type="submit"
                     disabled={status === "sending"}
+                    aria-busy={status === "sending"}
                     className="btn btn-primary w-full !min-h-[3.5rem] disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                   >
-                    {status === "sending" ? "Enviando…" : "Agendar sesión técnica"} 
-                    <Send className={`${status === "sending" ? "animate-pulse" : ""}`} />
+                    {status === "sending" ? "Enviando…" : "Agendar sesión técnica"}
+                    <Send aria-hidden="true" className={`${status === "sending" ? "animate-pulse" : ""}`} />
                   </button>
                 </motion.form>
               )}

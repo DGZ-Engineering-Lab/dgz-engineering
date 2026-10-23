@@ -82,3 +82,26 @@ jobs:
 
       - name: Pytest
         run: pytest -q backend/qa_engine projects/qgis-plugin/tests
+
+  api:
+    name: API (install · smoke tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: apps/api/requirements.txt
+
+      # Instala exactamente lo que despliega Render y prueba la app real.
+      - name: Install API dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r apps/api/requirements.txt pytest
+
+      - name: Smoke tests
+        working-directory: apps/api
+        run: pytest -q tests

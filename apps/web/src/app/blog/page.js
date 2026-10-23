@@ -59,6 +59,33 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
+  const [subscribeStatus, setSubscribeStatus] = useState("idle"); // idle | sending | error
+
+  // Envío real por el pipeline de leads (antes solo se simulaba la confirmación y el correo se perdía)
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email || subscribeStatus === "sending") return;
+    setSubscribeStatus("sending");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Suscripción boletín",
+          email,
+          company: "N/A",
+          message: "[Suscripción al boletín DevGiz Journal desde /blog]",
+          // Suscribirse es el consentimiento explícito para la lista de correo.
+          consent: true,
+        }),
+      });
+      if (!response.ok) throw new Error("subscribe_failed");
+      setSubscribed(true);
+      setSubscribeStatus("idle");
+    } catch {
+      setSubscribeStatus("error");
+    }
+  };
 
   const filteredPosts = selectedCategory === "Todos"
     ? BLOG_POSTS
@@ -93,20 +120,20 @@ export default function BlogPage() {
       {/* Categories Bar - Minimalist */}
       <section className="sticky top-20 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div role="tablist" aria-label="Categorías del blog" className="flex overflow-x-auto gap-8 no-scrollbar scroll-smooth">
+          {/* Filtro por categoría: botones con aria-pressed (sin paneles, por lo que no aplica role="tablist") */}
+          <div role="group" aria-label="Filtrar por categoría" className="flex overflow-x-auto gap-6 no-scrollbar scroll-smooth">
             {CATEGORIES.map((cat) => (
-              <button 
+              <button
                 key={cat}
                 type="button"
-                role="tab"
-                aria-selected={selectedCategory === cat}
+                aria-pressed={selectedCategory === cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative py-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded ${
-                  selectedCategory === cat ? 'text-[#1a1a1a]' : 'text-slate-400 hover:text-[#1a1a1a]'
+                className={`whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative min-h-11 px-1 cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none rounded ${
+                  selectedCategory === cat ? 'text-[#1a1a1a]' : 'text-slate-600 hover:text-[#1a1a1a]'
                 }`}
               >
                 {cat}
-                {selectedCategory === cat && <motion.div layoutId="activeCat" className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1a1a1a]" />}
+                {selectedCategory === cat && <motion.div aria-hidden="true" layoutId="activeCat" className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1a1a1a]" />}
               </button>
             ))}
           </div>
@@ -117,6 +144,13 @@ export default function BlogPage() {
       <section className="px-6 py-20 bg-white">
         <div className="max-w-7xl mx-auto">
           
+          {/* Estado vacío: categoría sin artículos */}
+          {filteredPosts.length === 0 && (
+            <p role="status" className="py-16 text-center text-slate-600">
+              Aún no hay artículos en esta categoría. Prueba con «Todos».
+            </p>
+          )}
+
           {/* Featured Entry */}
           {featuredPost && (
             <Link href={`/blog/${featuredPost.id}`} className="group block mb-12">
@@ -133,7 +167,7 @@ export default function BlogPage() {
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
                 </div>
                 <div className="lg:col-span-4 space-y-8">
-                  <div className="flex items-center gap-4 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+                  <div className="flex items-center gap-4 text-[11px] font-mono text-slate-600 uppercase tracking-widest">
                     <span>{featuredPost.category}</span>
                     <span>/</span>
                     <span>{featuredPost.date}</span>
@@ -167,7 +201,7 @@ export default function BlogPage() {
                   />
                 </div>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+                  <div className="flex items-center gap-3 text-[11px] font-mono text-slate-600 uppercase tracking-widest">
                     <span>{post.category}</span>
                     <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                     <span>{post.readTime}</span>
@@ -178,7 +212,7 @@ export default function BlogPage() {
                   <p className="text-slate-500 text-sm font-light leading-relaxed line-clamp-3">
                     {post.excerpt}
                   </p>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 pt-4 group-hover:text-[#1a1a1a] transition-colors">
+                  <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600 pt-4 group-hover:text-[#1a1a1a] transition-colors">
                     Leer más
                   </div>
                 </div>
@@ -198,25 +232,34 @@ export default function BlogPage() {
             Análisis trimestrales exclusivos para líderes gubernamentales y técnicos.
           </p>
           {subscribed ? (
-            <div className="py-4 text-emerald-400 font-mono text-sm">✓ Suscripción Confirmada — Bienvenido a DevGiz Journal</div>
+            <div role="status" className="py-4 text-emerald-300 font-mono text-sm">Solicitud recibida. Te escribiremos pronto con el DevGiz Journal.</div>
           ) : (
-            <form onSubmit={(e) => { e.preventDefault(); if (email) setSubscribed(true); }} className="flex flex-col sm:flex-row gap-0 border-b border-slate-700 pb-2">
-              <input 
-                type="email" 
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-0 border-b border-slate-500 pb-2">
+              <input
+                type="email"
                 required
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 aria-label="Correo institucional para el boletín"
+                aria-invalid={subscribeStatus === "error"}
+                aria-describedby={subscribeStatus === "error" ? "blog-newsletter-error" : undefined}
                 autoComplete="email"
+                inputMode="email"
                 placeholder="Correo institucional"
-                className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-700 focus-visible:ring-1 focus-visible:ring-cyan-400 rounded"
+                className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded"
               />
-              <button type="submit" className="px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
-                Suscribirse
+              <button type="submit" disabled={subscribeStatus === "sending"} className="px-8 py-4 min-h-11 text-[11px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all cursor-pointer disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
+                {subscribeStatus === "sending" ? "Enviando…" : "Suscribirse"}
               </button>
             </form>
           )}
-          <p className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+          {subscribeStatus === "error" && !subscribed && (
+            <p id="blog-newsletter-error" role="alert" className="text-sm text-red-300">
+              No pudimos registrar tu correo. Intenta de nuevo en unos minutos.
+            </p>
+          )}
+          <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
             Privacidad garantizada // Repositorio DevGiz
           </p>
         </div>

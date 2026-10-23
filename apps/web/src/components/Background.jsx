@@ -7,6 +7,8 @@ export default function Background() {
   const gridRef = useRef(null);
 
   useEffect(() => {
+    // En táctiles o con movimiento reducido el brillo del cursor no aporta nada
+    if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
     let lastTime = 0;
     const handleMouseMove = (e) => {
       const now = performance.now();

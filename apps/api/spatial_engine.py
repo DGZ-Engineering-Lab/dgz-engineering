@@ -129,8 +129,17 @@ def perform_context_analysis(feature: GeoJSONFeature) -> AnalysisResult:
         try:
             # Convertir ruta a formato posix compatible con DuckDB para soportar comodines
             query_path = (ANALYTICS_DB_PATH / "**" / "*.parquet").as_posix()
-            query = f"SELECT * FROM '{query_path}' WHERE codigo = '{codigo}'"
-            df_analytics = duckdb.query(query).to_df()
+            # codigo viene del cliente → parámetro. La ruta es constante del servidor; se inserta
+            # escapada porque duckdb 0.10 no garantiza parámetros dentro de table functions.
+            safe_path = query_path.replace("'", "''")
+            con = duckdb.connect()  # conexión propia (thread-safe en threadpool)
+            try:
+                df_analytics = con.execute(
+                    f"SELECT * FROM read_parquet('{safe_path}') WHERE codigo = ?",
+                    [str(codigo)],
+                ).df()
+            finally:
+                con.close()
             
             if not df_analytics.empty:
                 ldf = pl.from_pandas(df_analytics)

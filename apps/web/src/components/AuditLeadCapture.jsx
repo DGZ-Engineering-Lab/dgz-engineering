@@ -38,6 +38,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
           name: form.name,
           email: form.email,
           company: form.municipio,
+          consent: form.consent === true,
           message: buildAuditLeadMessage({
             source,
             municipio: form.municipio,
@@ -70,7 +71,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
     return (
       <div role="status" className="p-6 md:p-8 bg-white border border-slate-200 shadow-xl rounded-[2rem] space-y-4 text-center">
         <div className="w-14 h-14 mx-auto rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
-          <CheckCircle2 className="w-7 h-7" />
+          <CheckCircle2 aria-hidden="true" className="w-7 h-7" />
         </div>
         <h3 ref={successHeadingRef} tabIndex={-1} className="text-xl font-black text-slate-900 uppercase tracking-wider focus:outline-none">Solicitud recibida</h3>
         <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
@@ -96,7 +97,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <span className="text-3xl font-black text-slate-900 tracking-tight">{AUDIT_OFFER.price}</span>
           <span className="text-[10px] font-mono text-cyan-700 uppercase tracking-widest flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5" />
+            <Clock aria-hidden="true" className="w-3.5 h-3.5" />
             {AUDIT_OFFER.delivery}
           </span>
         </div>
@@ -106,7 +107,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
       <ul className="space-y-2 text-sm text-slate-700">
         {AUDIT_OFFER.deliverables.map((item) => (
           <li key={item} className="flex items-start gap-2">
-            <Check className="w-3.5 h-3.5 text-cyan-600 flex-shrink-0 mt-0.5" />
+            <Check aria-hidden="true" className="w-3.5 h-3.5 text-cyan-600 flex-shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}
@@ -136,6 +137,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
               required
               maxLength={254}
               autoComplete="email"
+              inputMode="email"
               placeholder="Ej. catastro@municipio.gov.co"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -177,23 +179,24 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
         <button
           type="submit"
           disabled={status === "sending"}
-          className="w-full py-4 bg-slate-900 text-white hover:bg-cyan-600 disabled:opacity-60 disabled:cursor-wait transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
+          aria-busy={status === "sending"}
+          className="w-full min-h-12 py-4 bg-slate-900 text-white hover:bg-cyan-600 disabled:opacity-60 disabled:cursor-wait transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
         >
           {status === "sending" ? (
             <>
-              <RefreshCw className="w-4 h-4 animate-spin" />
+              <RefreshCw aria-hidden="true" className="w-4 h-4 animate-spin motion-reduce:animate-none" />
               <span>Enviando…</span>
             </>
           ) : (
             <>
               <span>Quiero la auditoría</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight aria-hidden="true" className="w-4 h-4" />
             </>
           )}
         </button>
 
         <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest flex items-center justify-center gap-2 text-center">
-          <Lock className="w-3 h-3 text-cyan-600 flex-shrink-0" />
+          <Lock aria-hidden="true" className="w-3 h-3 text-cyan-600 flex-shrink-0" />
           Sin compromiso: primero recibe la propuesta, luego decide
         </p>
       </form>

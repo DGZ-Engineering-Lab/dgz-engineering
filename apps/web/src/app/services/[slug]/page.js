@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
 import { CONTACT } from "../../../lib/seo";
 import { motion, AnimatePresence } from "framer-motion";
@@ -208,7 +208,8 @@ export default function ServicePage() {
   const router = useRouter();
   const slug = params?.slug;
 
-  const service = SERVICES_DATA[slug];
+  // Object.hasOwn evita slugs como "constructor" que resolverían a un valor heredado
+  const service = slug && Object.hasOwn(SERVICES_DATA, slug) ? SERVICES_DATA[slug] : undefined;
 
   const [activeTab, setActiveTab] = useState("strategy"); // "strategy" | "technical"
   const [formData, setFormData] = useState(() => ({
@@ -223,7 +224,8 @@ export default function ServicePage() {
   }));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  
+  const [submitError, setSubmitError] = useState("");
+
   // Terminal simple properties
   const [terminalLog, setTerminalLog] = useState(() => (
     service
@@ -327,49 +329,8 @@ export default function ServicePage() {
     return () => clearInterval(simInterval.current);
   }, [simStatus, simSpeed, service]);
 
-  if (!service) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6 py-32 relative overflow-hidden">
-        {/* Glow de fondo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none"></div>
-        
-        <div className="text-center max-w-xl relative z-10">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex p-5 rounded-2xl bg-red-50 text-rose-600 border border-red-200 mb-8"
-          >
-            <AlertTriangle className="w-12 h-12" />
-          </motion.div>
-          
-          <h1 className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight mb-4 uppercase">
-            Servicio No Identificado
-          </h1>
-          <p className="text-slate-600 text-sm font-light leading-relaxed mb-8">
-            Lo sentimos, el servicio comercial o técnico que estás intentando consultar no existe en nuestra arquitectura actual. Por favor verifica el identificador o navega entre nuestras soluciones disponibles.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/"
-              className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-mono text-white uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Volver a la Home</span>
-            </Link>
-            <Link
-              href="/#services"
-              className="px-6 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 rounded-xl text-xs font-mono text-white uppercase tracking-widest font-black transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10"
-            >
-              <span>Explorar Servicios</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Slug inexistente: delega en la página 404 global (status 404 en vez de una página vacía con 200)
+  if (!service) notFound();
 
   const theme = COLOR_THEMES[service.theme] || COLOR_THEMES.cyan;
   const IconComponent = ICON_MAP[service.iconName] || Globe;
@@ -381,13 +342,38 @@ export default function ServicePage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setIsSubmitting(true);
-    
-    // Simular envío de leads premium con micro-animación de carga
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setSubmitError("");
+
+    // Envío real al mismo endpoint que el formulario de contacto (antes solo se simulaba y el lead se perdía)
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.org,
+          message: `[Servicio: ${service.title}] [Plan: ${formData.scope}]${formData.phone ? ` [Tel: ${formData.phone}]` : ""} ${formData.msg}`,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(
+          response.status === 429
+            ? "Demasiados envíos seguidos. Intenta de nuevo en un minuto."
+            : result.error === "Invalid email address"
+              ? "Revisa el correo electrónico."
+              : "No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp."
+        );
+      }
       setSubmitSuccess(true);
-    }, 1800);
+    } catch (err) {
+      setSubmitError(err.message || "Fallo de red al enviar la solicitud.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const runTerminalCommand = (cmd) => {
@@ -1649,7 +1635,7 @@ export default function ServicePage() {
                       
                       <h3 className="text-xl font-black text-slate-900 uppercase tracking-wider">¡Solicitud Registrada Exitosamente!</h3>
                       <p className="text-slate-500 text-xs font-light leading-relaxed max-w-md mx-auto">
-                        Hemos catalogado tu ticket en el nodo de soporte para “{service.title}”. Un ingeniero de soluciones se pondrá en contacto contigo para verificar viabilidad y requerimientos técnicos en las próximas horas.
+                        Recibimos tu solicitud para “{service.title}”. Un ingeniero de soluciones te escribirá en menos de 24 horas hábiles para verificar viabilidad y requerimientos técnicos.
                       </p>
                       
                       <button
@@ -1668,7 +1654,7 @@ export default function ServicePage() {
                     >
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                          <label htmlFor="quote-name" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Tu Nombre *</label>
+                          <label htmlFor="quote-name" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Tu Nombre *</label>
                           <input id="quote-name" autoComplete="name"
                             type="text"
                             name="name"
@@ -1676,11 +1662,11 @@ export default function ServicePage() {
                             value={formData.name}
                             onChange={handleInputChange}
                             placeholder="Ej. Ing. Carlos Mendoza"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all duration-300"
+                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300"
                           />
                         </div>
                         <div>
-                          <label htmlFor="quote-email" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Email Institucional *</label>
+                          <label htmlFor="quote-email" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Email Institucional *</label>
                           <input id="quote-email" autoComplete="email"
                             type="email"
                             name="email"
@@ -1688,14 +1674,14 @@ export default function ServicePage() {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="carlos.mendoza@organizacion.com"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all duration-300"
+                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                          <label htmlFor="quote-org" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Organización / Alcaldía *</label>
+                          <label htmlFor="quote-org" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Organización / Alcaldía *</label>
                           <input id="quote-org" autoComplete="organization"
                             type="text"
                             name="org"
@@ -1703,24 +1689,24 @@ export default function ServicePage() {
                             value={formData.org}
                             onChange={handleInputChange}
                             placeholder="Ej. Alcaldía de Envigado"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all duration-300"
+                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300"
                           />
                         </div>
                         <div>
-                          <label htmlFor="quote-phone" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Teléfono de Contacto</label>
+                          <label htmlFor="quote-phone" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Teléfono de Contacto</label>
                           <input id="quote-phone" autoComplete="tel"
                             type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
                             placeholder="+57 300 000 0000"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all duration-300"
+                            className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label htmlFor="quote-scope" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Plan / Alcance Seleccionado</label>
+                        <label htmlFor="quote-scope" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Plan / Alcance Seleccionado</label>
                         <div className="relative">
                           <select id="quote-scope"
                             name="scope"
@@ -1741,16 +1727,23 @@ export default function ServicePage() {
                       </div>
 
                       <div>
-                        <label htmlFor="quote-msg" className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">Especificaciones del Requerimiento *</label>
+                        <label htmlFor="quote-msg" className="text-[10px] font-mono text-slate-600 uppercase tracking-widest block mb-2 font-bold">Especificaciones del Requerimiento *</label>
                         <textarea id="quote-msg"
                           name="msg"
                           rows={4}
                           required
                           value={formData.msg}
                           onChange={handleInputChange}
-                          className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-all duration-300 resize-none leading-relaxed"
+                          className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300 resize-none leading-relaxed"
                         />
                       </div>
+
+                      {submitError && (
+                        <p role="alert" className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl">
+                          <AlertTriangle aria-hidden="true" className="w-4 h-4 shrink-0 mt-px" />
+                          <span>{submitError}</span>
+                        </p>
+                      )}
 
                       <button
                         type="submit"

@@ -2,9 +2,12 @@ services:
   - type: web
     name: devgiz-api
     env: python
+    plan: free
     rootDir: apps/api
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    # --proxy-headers: uvicorn toma la IP real del cliente desde el proxy de Render (rate limiting)
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'"
+    healthCheckPath: /healthz
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -13,5 +16,19 @@ services:
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_KEY
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: VUR_USER
+        sync: false
+      - key: VUR_PASS
+        sync: false
+      - key: MAPBOX_TOKEN
+        sync: false
+      - key: CORS_ALLOW_ORIGINS
         sync: false
     autoDeploy: true

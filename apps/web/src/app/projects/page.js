@@ -101,7 +101,7 @@ export default function ProjectsPage() {
           {/* Interactive Category Filter Pills */}
           <div className="mt-12 pt-8 border-t border-slate-200/60">
             <div 
-              role="tablist" 
+              role="group"
               aria-label="Filtro de categorías de proyectos"
               className="flex flex-wrap items-center gap-2"
             >
@@ -112,11 +112,9 @@ export default function ProjectsPage() {
                   <button
                     key={cat}
                     type="button"
-                    role="tab"
-                    id={`cat-tab-${cat}`}
-                    aria-selected={isSelected}
+                    aria-pressed={isSelected}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none flex items-center gap-2 ${
+                    className={`px-4 py-2 min-h-9 rounded-full font-mono text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-cyan-500 focus:outline-none flex items-center gap-2 ${
                       isSelected 
                         ? "bg-[#1a1a1a] text-white shadow-md"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-black"

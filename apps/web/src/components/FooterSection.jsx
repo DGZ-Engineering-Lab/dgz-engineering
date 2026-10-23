@@ -117,7 +117,7 @@ export default function FooterSection() {
                 >
                   DevGiz
                 </span>
-                <span className="text-[9.5px] font-mono uppercase tracking-[0.3em] text-slate-500 font-bold">
+                <span className={`text-[9.5px] font-mono uppercase tracking-[0.3em] font-bold ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                   Engineering Lab
                 </span>
               </span>
@@ -130,7 +130,7 @@ export default function FooterSection() {
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="inline-flex items-center gap-3 hover:text-cyan-600 transition-colors"
+                  className="inline-flex min-h-8 items-center gap-3 break-all hover:text-cyan-600 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-cyan-600" aria-hidden="true" /> {CONTACT.email}
                 </a>
@@ -161,12 +161,12 @@ export default function FooterSection() {
               <h3 className={`mb-5 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.24em] ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                 {col.title}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-1">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className={`text-sm transition-colors ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-700 hover:text-cyan-700"}`}
+                      className={`inline-flex min-h-8 items-center text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-700 hover:text-cyan-700"}`}
                     >
                       {link.name}
                     </Link>
@@ -183,30 +183,30 @@ export default function FooterSection() {
           <p className={`font-mono text-[0.68rem] uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-600"}`}>
             © {currentYear} DevGiz Engineering Lab · Hecho en Colombia
           </p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className={`text-xs ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link href="/privacy" className={`inline-flex min-h-11 items-center text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
               Privacidad
             </Link>
-            <Link href="/terms" className={`text-xs ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
+            <Link href="/terms" className={`inline-flex min-h-11 items-center text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
               Términos
             </Link>
             <a
               href={CONTACT.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className={isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}
+              aria-label="LinkedIn (se abre en una pestaña nueva)"
+              className={`inline-flex h-11 w-11 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink aria-hidden="true" className="w-4 h-4" />
             </a>
             <a
               href={CONTACT.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub"
-              className={isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}
+              aria-label="GitHub (se abre en una pestaña nueva)"
+              className={`inline-flex h-11 w-11 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}
             >
-              <Code2 className="w-4 h-4" />
+              <Code2 aria-hidden="true" className="w-4 h-4" />
             </a>
           </div>
         </div>

@@ -4,8 +4,9 @@
  * Same timing as the previous framer-motion version.
  */
 @keyframes hero-enter-left {
-  from { opacity: 0; transform: translateX(-50px); }
-  to { opacity: 1; transform: none; }
+  /* Sin opacity: el texto del LCP es visible desde el primer frame */
+  from { transform: translateX(-24px); }
+  to { transform: none; }
 }
 
 @keyframes hero-enter-right {
@@ -14,7 +15,7 @@
 }
 
 .hero-enter-left {
-  animation: hero-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: hero-enter-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-enter-right {

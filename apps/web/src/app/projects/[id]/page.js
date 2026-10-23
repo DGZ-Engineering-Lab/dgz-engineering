@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Logo from "../../../components/Logo";
 import { 
   Database, Play, Pause, RefreshCw, Send, Sparkles, CheckCircle2, 
@@ -1232,27 +1232,29 @@ function ProjectLabComponent({ labType }) {
 export default function ProjectDetailPage() {
   const params = useParams();
   const id = params.id;
-  const project = PROJECTS_DATA[id];
+  // Object.hasOwn evita que ids como "constructor" resuelvan a un valor heredado
+  const project = Object.hasOwn(PROJECTS_DATA, id) ? PROJECTS_DATA[id] : undefined;
 
-  if (!project) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-[#1a1a1a]">
-        <div className="text-center space-y-6">
-          <h1 className="text-4xl font-black text-slate-200">404 // Proyecto No Encontrado</h1>
-          <Link href="/projects" className="text-slate-400 hover:underline">Volver al Portfolio</Link>
-        </div>
-      </div>
-    );
-  }
+  // ID inexistente: delega en la página 404 global (status 404 en vez de una página vacía con 200)
+  if (!project) notFound();
 
   return (
     <div className="flex flex-col w-full bg-white text-[#1a1a1a] min-h-screen pt-24 md:pt-28 pb-14">
       <article className="max-w-7xl mx-auto px-6">
+        <nav aria-label="Ruta de navegación" className="mb-8">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-mono text-slate-600">
+            <li><Link href="/" className="inline-flex min-h-6 items-center underline-offset-4 hover:underline hover:text-[#1a1a1a]">Inicio</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/projects" className="inline-flex min-h-6 items-center underline-offset-4 hover:underline hover:text-[#1a1a1a]">Proyectos</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-[#1a1a1a] font-bold">{project.title}</li>
+          </ol>
+        </nav>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
+
           <div className="lg:col-span-8">
             <div className="space-y-4 mb-10 border-b border-slate-100 pb-8">
-              <div className="flex items-center gap-4 text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em]">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-mono text-slate-600 uppercase tracking-[0.2em]">
                 <span className="text-[#1a1a1a] font-bold">{project.category}</span>
                 <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
                 <span>Engineering Case Study</span>
@@ -1304,7 +1306,7 @@ export default function ProjectDetailPage() {
               <div className="p-6 md:p-8 bg-[#fafafa] border border-slate-100 rounded-xl space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
-                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Immersion Lab // Interactive Viewer</div>
+                    <div className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Immersion Lab // Interactive Viewer</div>
                     <div className="text-sm font-bold text-[#1a1a1a]">Módulo de Visualización e Interacción Premium</div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-cyan-400 text-xs font-mono animate-pulse">
@@ -1328,9 +1330,9 @@ export default function ProjectDetailPage() {
           <div className="lg:col-span-4">
             <div className="sticky top-32 space-y-12">
               <div className="p-10 bg-[#fafafa] border border-slate-100 rounded-sm">
-                <h3 className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-10 border-b border-slate-200 pb-4">
+                <h2 className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] mb-10 border-b border-slate-200 pb-4">
                   Especificaciones Técnicas
-                </h3>
+                </h2>
                 <div className="space-y-10">
                   {project.impact.map(stat => (
                     <div key={stat.label} className="space-y-1">
@@ -1342,9 +1344,9 @@ export default function ProjectDetailPage() {
               </div>
 
               <div className="p-10 bg-[#1a1a1a] text-white space-y-8 rounded-sm shadow-2xl">
-                <h4 className="text-2xl font-black tracking-tight leading-tight">¿Requiere una solución a medida?</h4>
-                <p className="text-slate-400 text-sm font-light">Diseñamos arquitecturas de datos espaciales adaptadas a la normativa vigente.</p>
-                <Link href="/#contact" className="block text-center py-4 bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-200 transition-all">Consultoría Técnica</Link>
+                <h2 className="text-2xl font-black tracking-tight leading-tight">¿Requiere una solución a medida?</h2>
+                <p className="text-slate-300 text-sm font-light">Diseñamos arquitecturas de datos espaciales adaptadas a la normativa vigente.</p>
+                <Link href="/#contact" className="block text-center py-4 min-h-11 bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-200 transition-all">Consultoría Técnica</Link>
               </div>
             </div>
           </div>

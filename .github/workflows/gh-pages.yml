@@ -9,11 +9,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Mínimo privilegio: solo el job de despliegue recibe permisos de escritura en Pages.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -49,6 +47,10 @@ jobs:
 
   # Deployment Job
   deploy:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -60,12 +62,39 @@ jobs:
         uses: actions/checkout@v7
       - name: Setup Pages
         uses: actions/configure-pages@v6
-      - name: Assemble static site
-        # Publish only the static site. Uploading the whole repository would expose
-        # .env.example, backend source, scratch data and other files that aren't part of the site.
+      - name: Assemble redirect site
+        # The production site is the Next.js app on Vercel. GitHub Pages only serves
+        # redirect stubs (meta refresh + canonical) so the legacy URLs consolidate there
+        # instead of competing in search results as duplicate content.
+        env:
+          TARGET: https://devgiz.vercel.app
         run: |
           mkdir _site
-          cp -r index.html 404.html favicon.ico robots.txt sitemap.xml assets projects lab _site/
+          stub() {
+            mkdir -p "_site/$(dirname "$1")"
+            cat > "_site/$1" <<EOF
+          <!DOCTYPE html>
+          <html lang="es-CO"><head><meta charset="utf-8">
+          <title>DevGiz se ha mudado</title>
+          <link rel="canonical" href="$TARGET$2">
+          <meta http-equiv="refresh" content="0; url=$TARGET$2">
+          </head><body><p>Esta página se movió a <a href="$TARGET$2">$TARGET$2</a>.</p></body></html>
+          EOF
+          }
+          stub index.html /
+          stub 404.html /
+          stub lab/gesture_sandbox.html /lab/gesture-sandbox
+          stub lab/map.html /projects
+          stub lab/validator.html /projects/qgis-plugin
+          stub lab/geoai.html /projects/geo-llm
+          stub lab/colombia_biomatrix.html /projects
+          stub projects/index.html /projects
+          stub projects/qgis-plugin/index.html /projects/qgis-plugin
+          stub projects/automation-systems/index.html /projects/automation-systems
+          stub projects/geo-llm/index.html /projects/geo-llm
+          stub projects/gis-dashboard/index.html /projects
+          stub projects/research/index.html /blog
+          printf 'User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n' "$TARGET" > _site/robots.txt
           touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

@@ -97,6 +97,7 @@ export default function CareersPage() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState("");
   const [consoleLogs, setConsoleLogs] = useState([]);
 
   const teams = ["ALL", ...Array.from(new Set(POSITIONS.map(p => p.team)))];
@@ -117,37 +118,41 @@ export default function CareersPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const submitApplication = (e, jobTitle) => {
+  // Envío real al pipeline de leads (antes solo se simulaba y la postulación se perdía)
+  const submitApplication = async (e, jobTitle) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
+    if (!formData.name || !formData.email || formLoading) return;
 
     setFormLoading(true);
-    setConsoleLogs([]);
+    setFormError("");
+    setConsoleLogs([`Enviando postulación para: ${jobTitle}...`]);
 
-    const logs = [
-      `📡  [Gateway] Ingestando datos de postulación para: ${jobTitle}...`,
-      "🔒  [Crypto] Generando hash de integridad del candidato...",
-      "🔬  [Parser] Extrayendo metadatos de perfil profesional...",
-      "💾  [Registry] Escribiendo credenciales en nodo de talentos cifrado...",
-      "✨  [LADM-COL Agent] Registro completado de forma segura."
-    ];
-
-    let logIndex = 0;
-    const interval = setInterval(() => {
-      if (logIndex < logs.length) {
-        setConsoleLogs(prev => [...prev, logs[logIndex]]);
-        logIndex++;
-      } else {
-        clearInterval(interval);
-        setFormLoading(false);
-        setFormSubmitted(true);
-      }
-    }, 600);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: "N/A",
+          message: `[Postulación: ${jobTitle}]${formData.portfolio ? ` [Portafolio: ${formData.portfolio}]` : ""} ${formData.pitch || "(sin descripción)"}`,
+        }),
+      });
+      if (!response.ok) throw new Error("apply_failed");
+      setConsoleLogs((prev) => [...prev, "Postulación recibida."]);
+      setFormSubmitted(true);
+    } catch {
+      setConsoleLogs([]);
+      setFormError("No pudimos enviar tu postulación. Intenta de nuevo o escríbenos por WhatsApp.");
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   const resetForm = () => {
     setFormData({ name: "", email: "", portfolio: "", pitch: "" });
     setFormSubmitted(false);
+    setFormError("");
     setConsoleLogs([]);
   };
 
@@ -314,7 +319,7 @@ export default function CareersPage() {
                             {!formSubmitted ? (
                                <form onSubmit={(e) => submitApplication(e, job.title)} className="space-y-4">
                                   <div className="space-y-1.5">
-                                     <label htmlFor={`apply-${job.id}-name`} className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Nombre Completo</label>
+                                     <label htmlFor={`apply-${job.id}-name`} className="text-[11px] font-mono text-slate-600 uppercase tracking-widest font-bold">Nombre Completo</label>
                                      <input id={`apply-${job.id}-name`} autoComplete="name" 
                                        required
                                        type="text" 
@@ -326,7 +331,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label htmlFor={`apply-${job.id}-email`} className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
+                                     <label htmlFor={`apply-${job.id}-email`} className="text-[11px] font-mono text-slate-600 uppercase tracking-widest font-bold">Email Institucional / Personal</label>
                                      <input id={`apply-${job.id}-email`} autoComplete="email" 
                                        required
                                        type="email" 
@@ -338,7 +343,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label htmlFor={`apply-${job.id}-portfolio`} className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
+                                     <label htmlFor={`apply-${job.id}-portfolio`} className="text-[11px] font-mono text-slate-600 uppercase tracking-widest font-bold">GitHub / LinkedIn / Portfolio URL</label>
                                      <input id={`apply-${job.id}-portfolio`} autoComplete="url" 
                                        type="url" 
                                        name="portfolio"
@@ -349,7 +354,7 @@ export default function CareersPage() {
                                      />
                                   </div>
                                   <div className="space-y-1.5">
-                                     <label htmlFor={`apply-${job.id}-pitch`} className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
+                                     <label htmlFor={`apply-${job.id}-pitch`} className="text-[11px] font-mono text-slate-600 uppercase tracking-widest font-bold">¿Por qué es el nodo idóneo?</label>
                                      <textarea id={`apply-${job.id}-pitch`} 
                                        name="pitch"
                                        value={formData.pitch}
@@ -372,10 +377,15 @@ export default function CareersPage() {
                                      </div>
                                   )}
 
+                                  {formError && (
+                                     <p role="alert" className="text-xs text-red-700">{formError}</p>
+                                  )}
+
                                   <button
                                     type="submit"
                                     disabled={formLoading}
-                                    className="w-full bg-[#1a1a1a] hover:bg-slate-800 text-white text-[10px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
+                                    aria-busy={formLoading}
+                                    className="w-full min-h-11 bg-[#1a1a1a] hover:bg-slate-800 text-white text-[11px] font-bold py-3.5 uppercase tracking-widest transition-all rounded-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:outline-none"
                                   >
                                      <Send className="w-3 h-3" /> Registrar Postulación
                                   </button>
@@ -391,20 +401,17 @@ export default function CareersPage() {
                                      <CheckCircle2 className="w-8 h-8" />
                                   </div>
                                   <div className="space-y-2">
-                                     <h5 className="font-black text-sm uppercase tracking-wide">¡Registro Exitoso!</h5>
-                                     <p className="text-xs text-slate-500 font-light leading-relaxed">
-                                        Sus credenciales han sido cifradas y almacenadas en nuestro nodo de recursos humanos.
+                                     <h5 className="font-black text-sm uppercase tracking-wide">¡Postulación recibida!</h5>
+                                     <p className="text-xs text-slate-600 font-light leading-relaxed">
+                                        Revisaremos tu perfil y te escribiremos al correo indicado si avanzas en el proceso.
                                      </p>
-                                  </div>
-                                  <div className="p-4 bg-white border border-slate-200 rounded-lg font-mono text-[10px] text-slate-500">
-                                     CANDIDATE_HASH: 0x8a7f92023d8c1c4f
                                   </div>
                                   <button
                                     type="button"
                                     onClick={resetForm}
-                                    className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none p-1 rounded"
+                                    className="inline-flex min-h-11 items-center text-[11px] font-black uppercase tracking-widest text-[#1a1a1a] hover:text-slate-600 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none px-2 rounded"
                                   >
-                                     Postular a otro nodo
+                                     Postular a otro puesto
                                   </button>
                                </motion.div>
                             )}

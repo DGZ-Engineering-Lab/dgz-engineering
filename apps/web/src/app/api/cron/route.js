@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { kv } from "@vercel/kv";
 
+const MESSAGES_KEY = "devgiz_messages";
+const RETENTION_DAYS = 30;
+
 // Constant-time comparison so the secret can't be guessed byte-by-byte via timing.
 function timingSafeEqual(a, b) {
   const enc = new TextEncoder();
@@ -21,7 +24,7 @@ function timingSafeEqual(a, b) {
  *  1. Hacer ping al backend de GeoAPI (Render) para evitar que el servicio
  *     gratuito se duerma y garantizar disponibilidad diurna.
  *  2. Registrar un heartbeat en Vercel KV con la fecha/hora de la última ejecución.
- *  3. Limpiar mensajes de contacto procesados con más de 30 días de antigüedad.
+ *  3. Eliminar de `devgiz_messages` los contactos con más de 30 días (retención).
  */
 export async function GET(req) {
   // ─── 1. Validación de Seguridad ───────────────────────────────────────────
@@ -70,21 +73,30 @@ export async function GET(req) {
   }
 
   // ─── 4. Limpieza de Mensajes Antiguos (>30 días) ──────────────────────────
+  // Los mensajes viven en la lista `devgiz_messages` (LPUSH desde /api/contact,
+  // acotada a 1000 con LTRIM), así que basta un LRANGE: sin KEYS ni SCAN.
   try {
-    const allKeys = await kv.keys("contact:*");
-    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const thirtyDaysAgo = Date.now() - RETENTION_DAYS * 24 * 60 * 60 * 1000;
+    const stored = await kv.lrange(MESSAGES_KEY, 0, -1);
     let deleted = 0;
 
-    for (const key of allKeys) {
-      const msg = /** @type {{ createdAt?: string } | null} */ (await kv.hgetall(key));
-      if (msg?.createdAt && new Date(msg.createdAt).getTime() < thirtyDaysAgo) {
-        await kv.del(key);
-        deleted++;
+    for (const raw of stored) {
+      let parsed;
+      try {
+        parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+      } catch {
+        continue; // entrada corrupta: se conserva para revisión manual
+      }
+      const ts = Date.parse(parsed?.timestamp ?? "");
+      if (Number.isFinite(ts) && ts < thirtyDaysAgo) {
+        // LREM necesita el valor exacto almacenado (cadena JSON, como en /api/admin/messages)
+        const value = typeof raw === "string" ? raw : JSON.stringify(raw);
+        deleted += Number(await kv.lrem(MESSAGES_KEY, 0, value)) || 0;
       }
     }
     results.cleanup = {
       messagesDeleted: deleted,
-      message: `${deleted} mensajes de contacto archivados.`,
+      message: `${deleted} mensajes de contacto con más de ${RETENTION_DAYS} días eliminados.`,
     };
   } catch (err) {
     results.cleanup = {

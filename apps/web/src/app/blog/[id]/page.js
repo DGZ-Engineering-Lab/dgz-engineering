@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Logo from "../../../components/Logo";
 
 // --- INTERACTIVE COMPONENTS (IMMERSION LABS) ---
@@ -1200,27 +1200,29 @@ const BLOG_DATA = {
 export default function BlogPostPage() {
   const params = useParams();
   const id = params.id;
-  const post = BLOG_DATA[id];
+  // Object.hasOwn evita que ids como "constructor" o "__proto__" resuelvan a un valor heredado
+  const post = Object.hasOwn(BLOG_DATA, id) ? BLOG_DATA[id] : undefined;
 
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-[#1a1a1a]">
-        <div className="text-center space-y-6">
-          <h1 className="text-4xl font-black">404 // Artículo No Encontrado</h1>
-          <Link href="/blog" className="text-slate-500 hover:underline">Volver al Journal</Link>
-        </div>
-      </div>
-    );
-  }
+  // ID inexistente: delega en la página 404 global (status 404 en vez de una página vacía con 200)
+  if (!post) notFound();
 
   return (
     <div className="flex flex-col w-full bg-white text-[#1a1a1a] min-h-screen pt-24 md:pt-28 pb-14">
       <article className="max-w-7xl mx-auto px-6">
+        <nav aria-label="Ruta de navegación" className="mb-8">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-mono text-slate-600">
+            <li><Link href="/" className="inline-flex min-h-6 items-center underline-offset-4 hover:underline hover:text-[#1a1a1a]">Inicio</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/blog" className="inline-flex min-h-6 items-center underline-offset-4 hover:underline hover:text-[#1a1a1a]">Blog</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-[#1a1a1a] font-bold">{post.category}</li>
+          </ol>
+        </nav>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
+
           <div className="lg:col-span-8">
             <div className="space-y-4 mb-10 border-b border-slate-100 pb-8">
-              <div className="flex items-center gap-4 text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em]">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-mono text-slate-600 uppercase tracking-[0.2em]">
                 <span className="text-[#1a1a1a] font-bold">{post.category}</span>
                 <span>/</span>
                 <span>{post.date}</span>
@@ -1256,10 +1258,10 @@ export default function BlogPostPage() {
                 <Logo className="w-12 h-12 opacity-80" />
                 <div className="flex flex-col">
                   <span className="text-xs font-black uppercase tracking-widest text-[#1a1a1a]">DevGiz Engineering</span>
-                  <span className="text-[10px] text-slate-400 font-mono">Knowledge Repository</span>
+                  <span className="text-[10px] text-slate-600 font-mono">Knowledge Repository</span>
                 </div>
               </div>
-              <Link href="/projects" className="px-8 py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl">
+              <Link href="/projects" className="inline-flex min-h-11 items-center justify-center px-8 py-4 bg-[#1a1a1a] text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600">
                 Ver Proyectos Relacionados
               </Link>
             </div>
@@ -1268,9 +1270,9 @@ export default function BlogPostPage() {
           <div className="lg:col-span-4">
             <div className="sticky top-32 space-y-12">
               <div className="p-10 bg-[#fafafa] border border-slate-100 rounded-sm">
-                <h3 className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.3em] mb-10 border-b border-slate-200 pb-4">
+                <h2 className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] mb-10 border-b border-slate-200 pb-4">
                   Data & Compliance
-                </h3>
+                </h2>
                 <div className="space-y-10">
                   {post.sidebar.metrics.map(stat => (
                     <div key={stat.label} className="space-y-1">
@@ -1282,10 +1284,10 @@ export default function BlogPostPage() {
               </div>
 
               <div className="p-10 bg-[#1a1a1a] text-white space-y-8 rounded-sm">
-                <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Estrategia Terrritorial</div>
-                <h4 className="text-2xl font-black tracking-tight leading-tight">Implemente el estándar nacional en su municipio.</h4>
-                <p className="text-slate-400 text-sm font-light">Especialistas en modelos extendidos LADM-COL.</p>
-                <Link href="/#contact" className="block text-center py-4 bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-200 transition-all">Contactar Consultoría</Link>
+                <div className="text-[10px] font-mono text-slate-300 uppercase tracking-widest">Estrategia Territorial</div>
+                <h2 className="text-2xl font-black tracking-tight leading-tight">Implemente el estándar nacional en su municipio.</h2>
+                <p className="text-slate-300 text-sm font-light">Especialistas en modelos extendidos LADM-COL.</p>
+                <Link href="/#contact" className="block text-center py-4 min-h-11 bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-200 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Contactar Consultoría</Link>
               </div>
             </div>
           </div>

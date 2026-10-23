@@ -27,6 +27,7 @@ export default function MobileCtaBar() {
 
   return (
     <div
+      data-mobile-cta
       aria-hidden={!visible}
       inert={!visible}
       className={`md:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-lg shadow-[0_-12px_30px_-18px_rgba(15,23,42,0.35)] transition-transform duration-300 ${
