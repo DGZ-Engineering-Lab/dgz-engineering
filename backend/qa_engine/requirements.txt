@@ -12,8 +12,8 @@ supabase
 fpdf2==2.8.9
 
 # Mínimos de dependencias transitivas con vulnerabilidades corregidas (OSV-Scanner)
-starlette>=1.3.1
-anyio>=4.14.2
+starlette>=1.9.0
+anyio>=4.15.1
 certifi>=2026.10.19
-idna>=3.15
-pillow>=12.3.0
+idna>=3.20
+pillow>=13.0.0
