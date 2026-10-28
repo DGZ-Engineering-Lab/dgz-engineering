@@ -32,6 +32,13 @@ describe("finalidadFromSource", () => {
 });
 
 describe("sanitizeSource", () => {
+  it("is linear on long runs of dashes (no ReDoS) and trims edge dashes", () => {
+    const start = Date.now();
+    expect(sanitizeSource("-".repeat(200000) + "x")).toBe("unknown");
+    expect(sanitizeSource("--newsletter-blog--")).toBe("newsletter-blog");
+    expect(Date.now() - start).toBeLessThan(100);
+  });
+
   it("keeps only [a-z0-9_-] and caps the length at 40", () => {
     expect(sanitizeSource("Audit-Report")).toBe("audit-report");
     expect(sanitizeSource("<script>alert(1)</script>")).toBe("script-alert-1-script");
