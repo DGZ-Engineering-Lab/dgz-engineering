@@ -30,7 +30,7 @@ class EmailService {
   /**
    * Sends an internal notification to the DevGiz Admin team.
    */
-  async sendAdminNotification({ name, email, message, company }) {
+  async sendAdminNotification({ name, email, message, company, consent }) {
     if (!this.resend) {
       console.log("[EmailService] Simulated Admin Notification: new contact received");
       return { simulated: true };
@@ -45,7 +45,7 @@ class EmailService {
         from: this.fromEmail,
         to: [this.adminEmail],
         subject: `[DevGiz Contact] Nuevo contacto: ${singleLine(name)}`,
-        html: getAdminNotificationTemplate({ name, email, message, company })
+        html: getAdminNotificationTemplate({ name, email, message, company, consent })
       });
       
       console.log("✉️ Transactional contact email dispatched to admin via Resend.");

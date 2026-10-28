@@ -2,15 +2,17 @@
  * Paid entry offer shown at the end of the /diagnostic calculator.
  * Edit price, delivery time or deliverables here; the UI and the lead email read from this object.
  */
+import { PRICE_NOTES } from "./servicesData";
+
 export const AUDIT_OFFER = {
   name: "Auditoría Catastral Express",
   price: "$2.500.000 COP",
-  priceNote: "Precio fijo para municipios de hasta 50.000 predios. IVA no incluido.",
+  priceNote: `Precio de referencia para municipios de hasta 50.000 predios. ${PRICE_NOTES.currency} ${PRICE_NOTES.validity}`,
   delivery: "Entrega en 10 días hábiles",
   deliverables: [
     "Revisión topológica de la base catastral (traslapes, huecos y linderos)",
     "Cruce de mejoras no incorporadas con imágenes satelitales abiertas",
-    "Estimación de la fuga de recaudo predial con sus datos reales",
+    "Estimación de la posible fuga de recaudo predial a partir de sus datos",
     "Informe ejecutivo en PDF y reunión de 45 minutos para presentar hallazgos",
   ],
 };

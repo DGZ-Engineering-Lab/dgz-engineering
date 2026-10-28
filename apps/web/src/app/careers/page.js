@@ -5,6 +5,8 @@ import { Code, Map, Shield, Zap, ArrowRight, ChevronDown, ChevronUp, Send, Termi
 import Link from "next/link";
 import Logo from "../../components/Logo";
 import { CONTACT } from "../../lib/seo";
+import { POLICY_VERSION } from "../../lib/legal";
+import ConsentCheckbox from "../../components/ConsentCheckbox";
 
 const POSITIONS = [
   {
@@ -98,6 +100,9 @@ export default function CareersPage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState("");
+  // Autorización Ley 1581 para el proceso de selección (nunca premarcada)
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState([]);
 
   const teams = ["ALL", ...Array.from(new Set(POSITIONS.map(p => p.team)))];
@@ -119,9 +124,14 @@ export default function CareersPage() {
   };
 
   // Envío real al pipeline de leads (antes solo se simulaba y la postulación se perdía)
-  const submitApplication = async (e, jobTitle) => {
+  const submitApplication = async (e, jobTitle, consentId) => {
     e.preventDefault();
     if (!formData.name || !formData.email || formLoading) return;
+    if (!privacyConsent) {
+      setConsentInvalid(true);
+      document.getElementById(consentId)?.focus();
+      return;
+    }
 
     setFormLoading(true);
     setFormError("");
@@ -136,6 +146,9 @@ export default function CareersPage() {
           email: formData.email,
           company: "N/A",
           message: `[Postulación: ${jobTitle}]${formData.portfolio ? ` [Portafolio: ${formData.portfolio}]` : ""} ${formData.pitch || "(sin descripción)"}`,
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: "careers",
         }),
       });
       if (!response.ok) throw new Error("apply_failed");
@@ -154,6 +167,8 @@ export default function CareersPage() {
     setFormSubmitted(false);
     setFormError("");
     setConsoleLogs([]);
+    setPrivacyConsent(false);
+    setConsentInvalid(false);
   };
 
   return (
@@ -317,7 +332,7 @@ export default function CareersPage() {
                             </h4>
                             
                             {!formSubmitted ? (
-                               <form onSubmit={(e) => submitApplication(e, job.title)} className="space-y-4">
+                               <form onSubmit={(e) => submitApplication(e, job.title, `apply-${job.id}-consent`)} className="space-y-4">
                                   <div className="space-y-1.5">
                                      <label htmlFor={`apply-${job.id}-name`} className="text-[11px] font-mono text-slate-600 uppercase tracking-widest font-bold">Nombre Completo</label>
                                      <input id={`apply-${job.id}-name`} autoComplete="name" 
@@ -364,6 +379,17 @@ export default function CareersPage() {
                                        className="w-full bg-white border border-slate-200/80 p-3 text-[11px] font-mono focus:outline-none focus:border-slate-500 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 resize-none" 
                                      />
                                   </div>
+
+                                  <ConsentCheckbox
+                                    id={`apply-${job.id}-consent`}
+                                    finalidad="seleccion"
+                                    checked={privacyConsent}
+                                    onChange={(value) => {
+                                      setPrivacyConsent(value);
+                                      if (value) setConsentInvalid(false);
+                                    }}
+                                    invalid={consentInvalid}
+                                  />
 
                                   {/* Cyber-processing console during submit */}
                                   {consoleLogs.length > 0 && (

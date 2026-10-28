@@ -43,7 +43,7 @@ export const FAQS = [
     questions: [
       {
         q: "¿Qué regula la Resolución 1149 de 2021 del IGAC y cómo la cumple DevGiz?",
-        a: "La Resolución 1149 de 2021 del IGAC establece el marco técnico y operativo para los procesos de formación, actualización, conservación y difusión catastral en el territorio nacional. Regula detalladamente la entrada de trámites y los estándares de calidad de la información. DevGiz integra en sus pipelines de validación un motor de auditoría automatizado que examina cada mutación predial en caliente, garantizando que cumpla con los requisitos documentales, jurídicos y de bases de datos exigidos por la norma antes de su radicación ante el IGAC o el gestor catastral habilitado."
+        a: "La Resolución 1149 de 2021 del IGAC establece el marco técnico y operativo para los procesos de formación, actualización, conservación y difusión catastral en el territorio nacional. Regula detalladamente la entrada de trámites y los estándares de calidad de la información. DevGiz integra en sus pipelines de validación un motor de auditoría automatizado que revisa cada mutación predial para verificar que cumpla con los requisitos documentales, jurídicos y de bases de datos exigidos por la norma antes de su radicación ante el IGAC o el gestor catastral habilitado."
       },
       {
         q: "¿Cuáles son las especificaciones de exactitud posicional de la Resolución 1040 de 2020?",
@@ -58,8 +58,8 @@ export const FAQS = [
         a: "Es la resolución que define los lineamientos técnicos para el flujo e intercambio de información entre los Gestores Catastrales y las Oficinas de Registro de Instrumentos Públicos (ORIP/SNR). El objetivo es sincronizar la realidad física y jurídica del territorio. Nuestras soluciones automatizan esta sincronización, cruzando la información alfanumérica del folio de matrícula inmobiliaria con la base catastral geoespacial del predio (NPN) e identificando discrepancias de área, titulares o linderos automáticamente."
       },
       {
-        q: "¿Cómo garantiza DevGiz la proyección cartográfica oficial MAGNA-SIRGAS Origen Único (CTM12)?",
-        a: "De acuerdo con la Resolución 509 de 2020 del IGAC, toda la cartografía y datos geoespaciales en Colombia deben estar referidos al marco geocéntrico nacional de referencia MAGNA-SIRGAS bajo la proyección de origen único nacional CTM12 (Coordenadas Transversas de Mercator con origen central en el meridiano 73°W). DevGiz incorpora un motor de reproyección al vuelo basado en GDAL y PROJ que convierte automáticamente datos históricos capturados en los antiguos orígenes locales (Bogotá, Oeste, Este, etc.) a CTM12, asegurando que todos los entregables cumplan con la norma geográfica nacional."
+        q: "¿Cómo maneja DevGiz la proyección cartográfica oficial MAGNA-SIRGAS Origen Único (CTM12)?",
+        a: "De acuerdo con la Resolución 509 de 2020 del IGAC, toda la cartografía y datos geoespaciales en Colombia deben estar referidos al marco geocéntrico nacional de referencia MAGNA-SIRGAS bajo la proyección de origen único nacional CTM12 (Coordenadas Transversas de Mercator con origen central en el meridiano 73°W). DevGiz incorpora un motor de reproyección al vuelo basado en GDAL y PROJ que convierte automáticamente datos históricos capturados en los antiguos orígenes locales (Bogotá, Oeste, Este, etc.) a CTM12, para que los entregables queden referidos al sistema exigido por la norma geográfica nacional."
       },
       {
         q: "¿Qué son los lineamientos de metadatos de la ICDE y cómo los automatiza DevGiz?",
@@ -67,7 +67,7 @@ export const FAQS = [
       },
       {
         q: "¿Cómo gestiona LADM-COL el catastro multipropósito según los CONPES 3958 y 4007?",
-        a: "El CONPES 3958 de 2019 establece la estrategia para la implementación del catastro multipropósito y el CONPES 4007 de 2020 asegura los recursos y continuidad de la política. Definen la adopción obligatoria del estándar LADM-COL (Land Administration Domain Model - Perfil Colombia). En DevGiz, toda nuestra arquitectura de datos está diseñada con base en el núcleo conceptual de LADM-COL, garantizando que los objetos geográficos y alfanuméricos (predios, derechos, restricciones, interesados) se organicen y relacionen exactamente como lo requiere el marco de política pública nacional."
+        a: "El CONPES 3958 de 2019 establece la estrategia para la implementación del catastro multipropósito y el CONPES 4007 de 2020 asegura los recursos y continuidad de la política. Definen la adopción obligatoria del estándar LADM-COL (Land Administration Domain Model - Perfil Colombia). En DevGiz, toda nuestra arquitectura de datos está diseñada con base en el núcleo conceptual de LADM-COL, buscando que los objetos geográficos y alfanuméricos (predios, derechos, restricciones, interesados) se organicen y relacionen exactamente como lo requiere el marco de política pública nacional."
       },
       {
         q: "¿Cómo se clasifican y procesan las mutaciones catastrales (1a a 5a clase) en el sistema?",
@@ -93,7 +93,7 @@ export const FAQS = [
       },
       {
         q: "¿Qué precisión tienen sus levantamientos LiDAR?",
-        a: "Nuestros pipelines de procesamiento LiDAR garantizan una precisión submétrica y de grado milimétrico para infraestructura crítica, cumpliendo con los estándares más exigentes de ingeniería civil y catastro. Los datos LiDAR son procesados mediante clasificación automática de puntos, generación de MDE/MDS y cálculo de áreas con tolerancias definidas por la normativa vigente."
+        a: "La precisión de un levantamiento LiDAR depende del sensor, la altura y el plan de vuelo, los puntos de control en tierra y las condiciones de campo; se define y documenta en cada proyecto según la tolerancia exigida por la norma o por el cliente. Los datos LiDAR son procesados mediante clasificación automática de puntos, generación de MDE/MDS y cálculo de áreas con tolerancias definidas por la normativa vigente."
       },
       {
         q: "¿Cómo funciona su pipeline ETL territorial?",
@@ -105,11 +105,11 @@ export const FAQS = [
       },
       {
         q: "¿Qué formatos de datos geoespaciales procesan?",
-        a: "Procesamos más de 30 formatos geoespaciales incluyendo: GeoJSON, Shapefile, GML, KML/KMZ, GeoPackage, GeoTIFF, LAS/LAZ (LiDAR), XTF (INTERLIS), CSV con coordenadas, WKT/WKB, FileGDB, MapInfo TAB, y formatos CAD (DXF/DWG). Nuestros pipelines utilizan GDAL/OGR como capa de abstracción para garantizar conversiones sin pérdida de información geométrica ni atributos."
+        a: "Procesamos más de 30 formatos geoespaciales incluyendo: GeoJSON, Shapefile, GML, KML/KMZ, GeoPackage, GeoTIFF, LAS/LAZ (LiDAR), XTF (INTERLIS), CSV con coordenadas, WKT/WKB, FileGDB, MapInfo TAB, y formatos CAD (DXF/DWG). Nuestros pipelines utilizan GDAL/OGR como capa de abstracción para minimizar la pérdida de información geométrica y de atributos en las conversiones."
       },
       {
         q: "¿Cómo manejan la validación topológica a gran escala?",
-        a: "Implementamos validación topológica en dos niveles: (1) Validación geométrica individual mediante Shapely para detectar auto-intersecciones, vértices duplicados y geometrías inválidas, y (2) Validación relacional mediante consultas PostGIS para detectar traslapes entre predios, huecos en la cobertura y inconsistencias de linderos. El motor puede procesar más de 500,000 geometrías por hora con resultados detallados por predio."
+        a: "Implementamos validación topológica en dos niveles: (1) Validación geométrica individual mediante Shapely para detectar auto-intersecciones, vértices duplicados y geometrías inválidas, y (2) Validación relacional mediante consultas PostGIS para detectar traslapes entre predios, huecos en la cobertura y inconsistencias de linderos. El rendimiento depende del volumen y la complejidad de las geometrías; los resultados se entregan detallados por predio."
       },
       {
         q: "¿Qué es PostGIS y por qué lo prefieren sobre otras soluciones?",
@@ -123,7 +123,7 @@ export const FAQS = [
     questions: [
       {
         q: "¿Qué es Geo-LLM y cómo funciona?",
-        a: "Geo-LLM es nuestro motor de inteligencia artificial que permite interactuar con bases de datos geográficas mediante lenguaje natural. El sistema interpreta preguntas complejas como '¿Cuáles predios se traslapan con la ronda de río?' y las traduce automáticamente a consultas Spatial SQL precisas sobre PostGIS. Utiliza un modelo híbrido que combina comprensión semántica con validación de esquemas geoespaciales."
+        a: "Geo-LLM es nuestro motor de inteligencia artificial que permite interactuar con bases de datos geográficas mediante lenguaje natural. El sistema interpreta preguntas complejas como '¿Cuáles predios se traslapan con la ronda de río?' y propone consultas Spatial SQL sobre PostGIS, que un profesional debe revisar antes de usarlas en decisiones. Utiliza un modelo híbrido que combina comprensión semántica con validación de esquemas geoespaciales."
       },
       {
         q: "¿Qué capacidades de análisis predictivo ofrecen?",
@@ -143,7 +143,7 @@ export const FAQS = [
       },
       {
         q: "¿Cómo se protege la privacidad de los datos al usar IA?",
-        a: "Aplicamos un enfoque de privacy-by-design: los datos catastrales sensibles nunca salen de la infraestructura del cliente. Los modelos de IA operan localmente o sobre datos anonimizados. Las consultas Geo-LLM se procesan como traducciones SQL sin transmitir los datos subyacentes. Cumplimos con la Ley 1581 de 2012 (Habeas Data) y las directrices de protección de datos del IGAC."
+        a: "Aplicamos un enfoque de privacy-by-design y de minimización de datos. Importante: el asistente de IA de este sitio (Geo-LLM) envía el texto que usted escribe a un proveedor de modelos de lenguaje, Groq, Inc., que procesa la información en servidores ubicados en Estados Unidos; esto implica una transferencia internacional de datos, por lo que no debe escribir datos personales en el asistente. En los proyectos con datos catastrales sensibles se acuerda por escrito dónde se procesan (infraestructura del cliente, nube contratada o modelos locales) y se aplica la Ley 1581 de 2012 (Habeas Data)."
       }
     ]
   },
@@ -161,7 +161,7 @@ export const FAQS = [
       },
       {
         q: "¿Realizan auditorías de seguridad periódicas?",
-        a: "Sí. Realizamos auditorías trimestrales que incluyen: escaneo de vulnerabilidades en infraestructura, pruebas de penetración en aplicaciones web, revisión de políticas de acceso, verificación de cumplimiento normativo, y evaluación de la postura de seguridad general. Los resultados se documentan y las remediaciones se implementan dentro de SLAs definidos."
+        a: "La periodicidad y el alcance de las revisiones de seguridad se acuerdan en cada contrato. Pueden incluir escaneo de vulnerabilidades, revisión de políticas de acceso y de configuración, y verificación de buenas prácticas. Cuando el proyecto requiere pruebas de penetración formales, se contratan con un tercero especializado."
       },
       {
         q: "¿Cómo manejan la continuidad del negocio y recuperación ante desastres?",
@@ -169,7 +169,7 @@ export const FAQS = [
       },
       {
         q: "¿Qué certificaciones de seguridad poseen?",
-        a: "Nuestra infraestructura se despliega sobre proveedores certificados SOC 2 Type II e ISO 27001. A nivel de aplicación, seguimos las prácticas de OWASP Top 10, implementamos Content Security Policy (CSP), y realizamos análisis estático de código (SAST) en cada despliegue. Estamos en proceso de certificación ISO 27001 propia para 2027."
+        a: "DevGiz no cuenta con certificaciones de seguridad propias (por ejemplo, ISO/IEC 27001 o SOC 2). Usamos proveedores de nube que publican sus propias certificaciones; esas certificaciones son del proveedor, no de DevGiz. A nivel de aplicación aplicamos buenas prácticas inspiradas en ISO/IEC 27001 (sin certificación) y en OWASP Top 10, Content Security Policy (CSP) y análisis estático de código durante el desarrollo."
       },
       {
         q: "¿Cómo protegen las APIs de acceso público?",
@@ -187,7 +187,7 @@ export const FAQS = [
       },
       {
         q: "¿Cuál es su SLA de disponibilidad?",
-        a: "Garantizamos un SLA de 99.95% de disponibilidad para aplicaciones de producción, con monitoreo 24/7 mediante alertas automatizadas. Para servicios de procesamiento batch (ETL, validaciones masivas), el SLA es de 99.9%. En caso de incidentes, nuestro tiempo de respuesta es inferior a 15 minutos para severidad crítica y 1 hora para severidad alta."
+        a: "No publicamos un SLA general. La disponibilidad objetivo, los tiempos de respuesta ante incidentes y las condiciones aplicables se pactan por escrito en cada contrato y dependen también del SLA del proveedor de nube. Las aplicaciones en producción cuentan con monitoreo y alertas automatizadas."
       },
       {
         q: "¿Cómo gestionan los despliegues y las actualizaciones?",
@@ -203,7 +203,7 @@ export const FAQS = [
       },
       {
         q: "¿Cómo escalan el procesamiento para volúmenes masivos de datos?",
-        a: "Para proyectos que requieren procesar millones de registros, implementamos: particionamiento de datos por municipio/departamento, procesamiento paralelo con pools de workers configurables, lazy evaluation con Polars para optimizar memoria, caching inteligente de resultados intermedios, y distribución de carga mediante colas de mensajes. Un pipeline típico puede procesar 500k+ registros por día en un solo nodo."
+        a: "Para proyectos que requieren procesar millones de registros, implementamos: particionamiento de datos por municipio/departamento, procesamiento paralelo con pools de workers configurables, lazy evaluation con Polars para optimizar memoria, caching inteligente de resultados intermedios, y distribución de carga mediante colas de mensajes. El rendimiento real se mide y documenta en cada proyecto."
       }
     ]
   },
@@ -213,7 +213,7 @@ export const FAQS = [
     questions: [
       {
         q: "¿Cómo beneficia DevGiz a un Gestor Catastral?",
-        a: "Reducimos la carga operativa mediante la automatización de procesos de validación, garantizamos la calidad del dato antes de la radicación oficial y optimizamos los tiempos de actualización del inventario predial. Un gestor catastral que implementa nuestras herramientas reduce en promedio un 70% el tiempo de preparación de entregas XTF."
+        a: "Reducimos la carga operativa mediante la automatización de procesos de validación, revisamos la calidad del dato antes de la entrega oficial y buscamos optimizar los tiempos de actualización del inventario predial. La reducción de tiempos depende de cada caso y se estima en la propuesta."
       },
       {
         q: "¿Ofrecen soluciones para el sector privado?",
@@ -225,11 +225,11 @@ export const FAQS = [
       },
       {
         q: "¿Qué modelo de contratación manejan?",
-        a: "Ofrecemos tres modalidades: (1) Proyecto llave en mano con alcance, tiempo y costo definidos, (2) Staff augmentation para equipos que necesitan capacidades geoespaciales especializadas, y (3) Suscripción mensual para acceso continuo a nuestra plataforma de validación y procesamiento. Para entidades públicas, operamos bajo los marcos de contratación de Colombia Compra Eficiente."
+        a: "Ofrecemos tres modalidades: (1) Proyecto llave en mano con alcance, tiempo y costo definidos, (2) Staff augmentation para equipos que necesitan capacidades geoespaciales especializadas, y (3) Suscripción mensual para acceso continuo a nuestra plataforma de validación y procesamiento. Para entidades públicas, participamos conforme a las reglas de contratación pública aplicables (SECOP / Colombia Compra Eficiente)."
       },
       {
         q: "¿Trabajan con entidades internacionales?",
-        a: "Sí. Hemos colaborado con proyectos de administración de tierras en varios países de América Latina. Nuestra experiencia con LADM (ISO 19152) es transferible a cualquier jurisdicción que adopte este estándar. También trabajamos con organismos multilaterales como el BID y el Banco Mundial en proyectos de fortalecimiento institucional catastral."
+        a: "La experiencia del fundador se concentra en proyectos en Colombia. La metodología basada en LADM (ISO 19152) es transferible a otras jurisdicciones que adopten este estándar, por lo que evaluamos caso por caso proyectos de entidades u organizaciones de otros países."
       },
       {
         q: "¿Ofrecen diagnósticos técnicos gratuitos?",
@@ -247,7 +247,7 @@ export const FAQS = [
       },
       {
         q: "¿Qué es la correspondencia registro-catastro y por qué es importante?",
-        a: "La correspondencia registro-catastro es la verificación de que la información del predio en la base catastral (IGAC) coincida con la información registrada en la Oficina de Registro de Instrumentos Públicos (ORIP/SNR). Las discrepancias generan inseguridad jurídica. Nuestros sistemas realizan reconciliación automática comparando folios de matrícula inmobiliaria con identificadores prediales."
+        a: "La correspondencia registro-catastro es la verificación de que la información del predio en la base catastral (IGAC) coincida con la información registrada en la Oficina de Registro de Instrumentos Públicos (ORIP/SNR). Las discrepancias generan inseguridad jurídica. Nuestras herramientas apoyan la reconciliación comparando folios de matrícula inmobiliaria con identificadores prediales, con revisión profesional de los resultados."
       },
       {
         q: "¿Cómo se manejan los predios informales en el sistema?",
@@ -263,7 +263,7 @@ export const FAQS = [
       },
       {
         q: "¿Cuáles son las consecuencias de no cumplir con los estándares catastrales?",
-        a: "El incumplimiento puede resultar en: rechazo de entregas por parte del IGAC, imposibilidad de radicación de trámites ciudadanos, pérdida de la habilitación como gestor catastral, y riesgo de responsabilidad fiscal. A nivel técnico, los archivos XTF que no pasen la validación INTERLIS son rechazados automáticamente por el sistema nacional. DevGiz garantiza la conformidad desde la primera entrega."
+        a: "El incumplimiento puede resultar en: rechazo de entregas por parte del IGAC, imposibilidad de radicación de trámites ciudadanos, pérdida de la habilitación como gestor catastral, y riesgo de responsabilidad fiscal. A nivel técnico, los archivos XTF que no pasen la validación INTERLIS son rechazados automáticamente por el sistema nacional. DevGiz revisa la conformidad técnica antes de cada entrega; la aprobación final corresponde a la autoridad competente."
       }
     ]
   },
@@ -303,27 +303,27 @@ export const FAQS = [
     questions: [
       {
         q: "¿Ofrecen programas de capacitación?",
-        a: "Sí. Ofrecemos programas de capacitación escalonados: (1) Taller introductorio de LADM-COL y validación XTF (8 horas), (2) Curso avanzado de procesamiento geoespacial con Python/QGIS (24 horas), (3) Certificación en uso del LADM-COL QGIS Plugin (16 horas), y (4) Workshop de Geo-LLM para analistas territoriales (8 horas). Todos los programas incluyen material técnico, ejercicios prácticos con datos reales y certificado de asistencia."
+        a: "Sí. Ofrecemos programas de capacitación escalonados: (1) Taller introductorio de LADM-COL y validación XTF (8 horas), (2) Curso avanzado de procesamiento geoespacial con Python/QGIS (24 horas), (3) Taller de uso del LADM-COL QGIS Plugin (16 horas), y (4) Workshop de Geo-LLM para analistas territoriales (8 horas). Todos los programas incluyen material técnico, ejercicios prácticos con datos de ejemplo y constancia de asistencia (no es una certificación oficial). La intensidad final se acuerda en la propuesta."
       },
       {
         q: "¿Qué tipo de soporte técnico ofrecen?",
-        a: "Ofrecemos tres niveles de soporte: (1) Soporte estándar (horario laboral, respuesta en 4 horas, correo y chat), (2) Soporte prioritario (horario extendido, respuesta en 1 hora, acceso a ingenieros senior), y (3) Soporte dedicado (24/7, respuesta en 15 minutos, ingeniero asignado, sesiones de revisión semanales). Todos los niveles incluyen acceso a nuestra base de conocimientos y documentación técnica actualizada."
+        a: "El soporte se define por escrito en cada contrato: horario de atención, canales (correo, chat o WhatsApp) y tiempos de respuesta según el alcance del proyecto. Por defecto la atención es en horario laboral en Colombia."
       },
       {
         q: "¿Tienen documentación técnica disponible?",
-        a: "Sí. Mantenemos una biblioteca técnica completa que incluye: guías de inicio rápido para cada herramienta, documentación de API con ejemplos interactivos, tutoriales paso a paso para flujos de trabajo comunes, arquitectura de referencia para despliegues, y un glosario técnico de más de 200 términos catastrales y geoespaciales. Todo está disponible en español e inglés."
+        a: "Sí. Publicamos documentación de referencia de la API en la sección de documentación del sitio y entregamos con cada proyecto la documentación técnica correspondiente (guías de uso y arquitectura), en español."
       },
       {
         q: "¿Pueden capacitar a nuestro equipo en LADM-COL desde cero?",
-        a: "Absolutamente. Nuestro programa 'LADM-COL Fundamentals' está diseñado para equipos sin experiencia previa en el estándar. Cubre desde los conceptos básicos de administración de tierras hasta la implementación práctica con nuestras herramientas. El programa incluye 40 horas de formación distribuidas en 5 semanas, con evaluaciones parciales y un proyecto final con datos reales del municipio del participante."
+        a: "Sí. Podemos diseñar una formación para equipos sin experiencia previa en el estándar, desde los conceptos básicos de administración de tierras hasta la implementación práctica con nuestras herramientas. La duración, la intensidad y los datos de práctica se acuerdan en la propuesta."
       },
       {
         q: "¿Ofrecen acompañamiento durante las primeras entregas al IGAC?",
-        a: "Sí. Nuestro servicio de acompañamiento incluye: revisión técnica previa de cada archivo XTF, validación contra los esquemas oficiales vigentes, corrección de inconsistencias detectadas, simulación de radicación en ambiente de pruebas, y soporte en tiempo real durante el proceso de radicación oficial. Garantizamos la aprobación en la primera entrega."
+        a: "Sí. Nuestro servicio de acompañamiento incluye: revisión técnica previa de cada archivo XTF, validación contra los esquemas oficiales vigentes, corrección de inconsistencias detectadas, simulación de radicación en ambiente de pruebas, y acompañamiento durante el proceso de radicación. La aprobación de la entrega depende de la revisión de la autoridad competente, por lo que no se garantiza un resultado."
       },
       {
         q: "¿Cómo se mantienen actualizados con los cambios normativos?",
-        a: "Mantenemos un equipo dedicado al monitoreo normativo que: participa en las mesas técnicas del IGAC, analiza cada nueva resolución y circular técnica, actualiza nuestros esquemas de validación dentro de las 48 horas posteriores a cualquier cambio oficial, y notifica a todos nuestros clientes sobre los impactos y acciones requeridas. Nuestros clientes nunca son sorprendidos por cambios normativos."
+        a: "Hacemos seguimiento a las resoluciones y circulares técnicas que publican el IGAC y la SNR, actualizamos nuestros esquemas de validación cuando cambian los modelos oficiales y comunicamos a los clientes con proyectos activos los impactos relevantes."
       }
     ]
   }

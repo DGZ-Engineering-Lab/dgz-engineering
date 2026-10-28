@@ -3,6 +3,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { LEGAL_PATHS, POLICY_VERSION, RESPONSABLE } from "../../lib/legal";
+import ConsentCheckbox from "../../components/ConsentCheckbox";
 
 const CATEGORIES = [
   "Todos", "Ciberseguridad", "Interoperabilidad", "Casos de Éxito", "Ingeniería", "Gobernanza"
@@ -60,11 +62,19 @@ export default function BlogPage() {
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
   const [subscribeStatus, setSubscribeStatus] = useState("idle"); // idle | sending | error
+  // Autorización Ley 1581 para el boletín (nunca premarcada)
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
 
   // Envío real por el pipeline de leads (antes solo se simulaba la confirmación y el correo se perdía)
   const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email || subscribeStatus === "sending") return;
+    if (!newsletterConsent) {
+      setConsentInvalid(true);
+      document.getElementById("blog-newsletter-consent")?.focus();
+      return;
+    }
     setSubscribeStatus("sending");
     try {
       const response = await fetch("/api/contact", {
@@ -75,8 +85,11 @@ export default function BlogPage() {
           email,
           company: "N/A",
           message: "[Suscripción al boletín DevGiz Journal desde /blog]",
-          // Suscribirse es el consentimiento explícito para la lista de correo.
-          consent: true,
+          // Solo con la casilla marcada se da de alta en la lista de correo.
+          consent: newsletterConsent === true,
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: "newsletter-blog",
         }),
       });
       if (!response.ok) throw new Error("subscribe_failed");
@@ -234,24 +247,37 @@ export default function BlogPage() {
           {subscribed ? (
             <div role="status" className="py-4 text-emerald-300 font-mono text-sm">Solicitud recibida. Te escribiremos pronto con el DevGiz Journal.</div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-0 border-b border-slate-500 pb-2">
-              <input
-                type="email"
-                required
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                aria-label="Correo institucional para el boletín"
-                aria-invalid={subscribeStatus === "error"}
-                aria-describedby={subscribeStatus === "error" ? "blog-newsletter-error" : undefined}
-                autoComplete="email"
-                inputMode="email"
-                placeholder="Correo institucional"
-                className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded"
+            <form onSubmit={handleSubscribe} className="space-y-4 text-left">
+              <div className="flex flex-col sm:flex-row gap-0 border-b border-slate-500 pb-2">
+                <input
+                  type="email"
+                  required
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  aria-label="Correo institucional para el boletín"
+                  aria-invalid={subscribeStatus === "error"}
+                  aria-describedby={subscribeStatus === "error" ? "blog-newsletter-error" : undefined}
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder="Correo institucional"
+                  className="flex-1 bg-transparent px-2 py-4 text-white font-light text-lg focus:outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded"
+                />
+                <button type="submit" disabled={subscribeStatus === "sending"} className="px-8 py-4 min-h-11 text-[11px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all cursor-pointer disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
+                  {subscribeStatus === "sending" ? "Enviando…" : "Suscribirse"}
+                </button>
+              </div>
+              <ConsentCheckbox
+                id="blog-newsletter-consent"
+                finalidad="boletin"
+                variant="dark"
+                checked={newsletterConsent}
+                onChange={(value) => {
+                  setNewsletterConsent(value);
+                  if (value) setConsentInvalid(false);
+                }}
+                invalid={consentInvalid}
               />
-              <button type="submit" disabled={subscribeStatus === "sending"} className="px-8 py-4 min-h-11 text-[11px] font-bold uppercase tracking-[0.3em] hover:text-slate-300 transition-all cursor-pointer disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none">
-                {subscribeStatus === "sending" ? "Enviando…" : "Suscribirse"}
-              </button>
             </form>
           )}
           {subscribeStatus === "error" && !subscribed && (
@@ -259,9 +285,18 @@ export default function BlogPage() {
               No pudimos registrar tu correo. Intenta de nuevo en unos minutos.
             </p>
           )}
-          <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
-            Privacidad garantizada // Repositorio DevGiz
-          </p>
+          <div className="space-y-1 text-[11px] text-slate-400 leading-snug break-words">
+            <p>
+              Sus datos se tratan conforme a nuestra{" "}
+              <a href={LEGAL_PATHS.privacy} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                Política de Tratamiento de Datos
+              </a>.
+            </p>
+            <p>
+              Puede darse de baja en cualquier momento escribiendo a{" "}
+              <a href={`mailto:${RESPONSABLE.email}`} className="underline underline-offset-2 hover:text-white">{RESPONSABLE.email}</a>.
+            </p>
+          </div>
         </div>
       </section>
     </div>

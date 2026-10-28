@@ -26,10 +26,10 @@ import {
 } from "lucide-react";
 
 // ============================================================================
-// DATOS OFICIALES Y VERIFICABLES DE ALBERT DANIEL GAVIRIA ZAPATA (CV)
+// DATOS DEL CV DE ALBERT DANIEL GAVIRIA ZAPATA (declarados por el titular)
 // ============================================================================
 
-const MISSIONS = [
+export const MISSIONS = [
   {
     period: "09/2025 – 12/2025",
     role: "Analista Geográfico",
@@ -137,10 +137,10 @@ const MISSIONS = [
     badgeColor: "border-emerald-500/40 text-emerald-400 bg-emerald-500/10",
     highlights: [
       "Estándares LADM-COL: Implementación del modelo LADM-COL e interoperabilidad para gestión catastral eficiente.",
-      "Digitalización Masiva: Dirección de procesos de digitalización masiva y QA asegurando cero inconsistencias gráficas.",
+      "Digitalización Masiva: Dirección de procesos de digitalización masiva y control de calidad (QA) orientado a reducir inconsistencias gráficas.",
       "Optimización SIG: Gestión de infraestructura de datos espaciales y automatización de procedimientos."
     ],
-    tags: ["LADM-COL v3.0", "Cero Inconsistencias", "Automatización SIG", "IDE"]
+    tags: ["LADM-COL v3.0", "Control de Calidad", "Automatización SIG", "IDE"]
   },
   {
     period: "09/2022 – 12/2022",
@@ -164,7 +164,7 @@ const MISSIONS = [
     badge: "Infraestructura Vial",
     badgeColor: "border-amber-500/40 text-amber-400 bg-amber-500/10",
     highlights: [
-      "Fotogrametría de Precisión: Pilotaje de drones para generación de insumos gráficos de precisión milimétrica.",
+      "Fotogrametría: Pilotaje de drones para generación de insumos gráficos de alta resolución.",
       "Planos Técnicos: Elaboración de planos técnicos y delineamiento para adquisición predial vial.",
       "Trazabilidad de Expedientes: Gestión documental y técnica para soporte jurídico continuo."
     ],
@@ -215,8 +215,8 @@ const SKILLS_CATEGORIES = [
     category: "Drones (RPAS) & Telemetría GNSS",
     icon: Radio,
     items: [
-      { name: "Operación de Drones / RPAS", level: "Piloto Certificado", status: "Avanzado", bar: 95 },
-      { name: "Receptores GNSS / GPS RTK (<0.05m)", level: "Submétrica", status: "Experto", bar: 95 },
+      { name: "Operación de Drones / RPAS", level: "Experiencia en campo", status: "Avanzado", bar: 95 },
+      { name: "Receptores GNSS / GPS RTK", level: "Operación", status: "Experto", bar: 95 },
       { name: "Fotogrametría Digital (Pix4D, Agisoft)", level: "Alta Resolución", status: "Avanzado", bar: 90 },
       { name: "QField & ODK Collect (Campo Móvil)", level: "100%", status: "Experto", bar: 95 }
     ]
@@ -474,24 +474,24 @@ export default function ProfessionalProfile() {
         {/* ==================================================================== */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
           <div className="p-5 rounded-2xl bg-[#090e17] border border-slate-800/80 relative overflow-hidden group hover:border-cyan-500/40 transition-colors">
-            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Predios Auditados</div>
-            <div className="text-3xl font-black text-white font-mono mt-1">+1.2M</div>
-            <div className="text-xs text-slate-400 mt-1">Bases armonizadas bajo LADM-COL</div>
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Experiencia Laboral</div>
+            <div className="text-3xl font-black text-white font-mono mt-1">2021+</div>
+            <div className="text-xs text-slate-400 mt-1">Catastro, gestión predial y SIG</div>
           </div>
           <div className="p-5 rounded-2xl bg-[#090e17] border border-slate-800/80 relative overflow-hidden group hover:border-emerald-500/40 transition-colors">
-            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Consistencia Topológica</div>
-            <div className="text-3xl font-black text-emerald-400 font-mono mt-1">99.9%</div>
-            <div className="text-xs text-slate-400 mt-1">Cero solapes ni microvacíos</div>
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Organizaciones</div>
+            <div className="text-3xl font-black text-emerald-400 font-mono mt-1">8</div>
+            <div className="text-xs text-slate-400 mt-1">Empleadores y proyectos del CV</div>
           </div>
           <div className="p-5 rounded-2xl bg-[#090e17] border border-slate-800/80 relative overflow-hidden group hover:border-blue-500/40 transition-colors">
-            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Precisión Telemetría RTK</div>
-            <div className="text-3xl font-black text-cyan-400 font-mono mt-1">&lt; 0.05m</div>
-            <div className="text-xs text-slate-400 mt-1">Levantamientos GNSS / Drones</div>
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Estándar Aplicado</div>
+            <div className="text-3xl font-black text-cyan-400 font-mono mt-1">LADM-COL</div>
+            <div className="text-xs text-slate-400 mt-1">Metodología alineada con ISO 19152</div>
           </div>
           <div className="p-5 rounded-2xl bg-[#090e17] border border-slate-800/80 relative overflow-hidden group hover:border-amber-500/40 transition-colors">
-            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Resolución Gráfica</div>
-            <div className="text-3xl font-black text-amber-400 font-mono mt-1">5 cm/px</div>
-            <div className="text-xs text-slate-400 mt-1">Ortofotogrametría aérea RPAS</div>
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Formación Complementaria</div>
+            <div className="text-3xl font-black text-amber-400 font-mono mt-1">14</div>
+            <div className="text-xs text-slate-400 mt-1">Cursos y diplomados (SENA, ICDE, Coursera)</div>
           </div>
         </div>
 
@@ -590,7 +590,7 @@ export default function ProfessionalProfile() {
             {/* Mission Selector List */}
             <div
               role="tablist"
-              aria-label="Misiones oficiales de ingeniería"
+              aria-label="Experiencia laboral"
               aria-orientation="vertical"
               className="lg:col-span-5 space-y-3 max-h-[720px] overflow-y-auto pr-2 custom-scrollbar"
             >
@@ -715,7 +715,7 @@ export default function ProfessionalProfile() {
 
                   <div className="pt-6 mt-6 border-t border-slate-800/60 flex items-center justify-between text-[10px] font-mono text-slate-500">
                     <span>CAPACIDAD DE DESPLIEGUE</span>
-                    <span className="text-emerald-400">VALIDADA</span>
+                    <span className="text-emerald-400">AUTOEVALUACIÓN</span>
                   </div>
                 </div>
               );
@@ -826,7 +826,7 @@ export default function ProfessionalProfile() {
                     ></div>
                   </div>
                   <div className="text-[10px] font-mono text-slate-500 text-right">
-                    Nivel CEFR Certificado
+                    Nivel MCER autodeclarado
                   </div>
                 </div>
               </div>

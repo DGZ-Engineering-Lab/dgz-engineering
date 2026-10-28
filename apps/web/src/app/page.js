@@ -64,16 +64,16 @@ export default function Home() {
 
               <dl className="grid grid-cols-3 max-w-xl gap-4 pt-6 border-t border-slate-200/80">
                 <div>
-                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Predios auditados</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-slate-950 tabular-nums">+1.2M</dd>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Experiencia SIG</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-slate-950 tabular-nums">2021+</dd>
                 </div>
                 <div>
-                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Consistencia</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-emerald-700 tabular-nums">99.9%</dd>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Metodología</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-emerald-700 tabular-nums">LADM-COL</dd>
                 </div>
                 <div>
-                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Precisión RTK</dt>
-                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-cyan-700 tabular-nums">&lt;5 cm</dd>
+                  <dt className="text-[0.68rem] font-mono uppercase tracking-[0.16em] text-slate-500">Matrícula profesional</dt>
+                  <dd className="mt-1 text-2xl md:text-3xl font-black tracking-tight text-cyan-700 tabular-nums">COPNIA</dd>
                 </div>
               </dl>
 
@@ -164,9 +164,9 @@ export default function Home() {
               <span className="w-12 h-12 rounded-[var(--radius-sm)] bg-cyan-50 text-cyan-700 ring-1 ring-cyan-600/15 flex items-center justify-center">
                 <Shield className="w-6 h-6" aria-hidden="true" />
               </span>
-              <h3 className="mt-8 md:mt-auto md:pt-10 text-2xl md:text-3xl font-black tracking-tight text-slate-950 max-w-md">Datos que resisten una revisión del IGAC</h3>
+              <h3 className="mt-8 md:mt-auto md:pt-10 text-2xl md:text-3xl font-black tracking-tight text-slate-950 max-w-md">Datos preparados para revisión técnica</h3>
               <p className="mt-4 max-w-xl text-slate-600 font-light leading-relaxed">
-                Estructuramos y validamos la información bajo LADM-COL v3.0 e INTERLIS, con controles topológicos en cada entrega. Así compras, vendes, construyes o actualizas catastro sin sorpresas de última hora.
+                Estructuramos y validamos la información con una metodología alineada con LADM-COL v3.0 (ISO 19152) e INTERLIS, con controles topológicos en cada entrega, para reducir hallazgos de última hora al comprar, vender, construir o actualizar catastro.
               </p>
               <ul className="mt-8 flex flex-wrap gap-2 relative">
                 {["LADM-COL v3.0", "INTERLIS / XTF", "ISO 19152", "Res. 1040 de 2023"].map((tag) => (
@@ -259,7 +259,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Prueba social antes del perfil: quién ha trabajado con nosotros */}
+      {/* Experiencia profesional del fundador (texto, sin logos de terceros) */}
       <GlobalPartners />
 
       {/* ========================================================= */}
@@ -302,12 +302,12 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2 pl-4">
-                  <span className="text-[0.68rem] font-mono text-cyan-700 uppercase tracking-widest font-bold">Caso de éxito · Valle</span>
+                  <span className="text-[0.68rem] font-mono text-cyan-700 uppercase tracking-widest font-bold">Caso ilustrativo · Datos ficticios</span>
                   <h3 className="text-2xl font-black tracking-tight text-slate-950 group-hover:text-cyan-600 transition-colors">
                     La Nueva Era del Catastro Multipropósito
                   </h3>
                   <p className="text-slate-600 font-light text-sm leading-relaxed line-clamp-2">
-                    Análisis profundo sobre la implementación del estándar LADM-COL en el Valle del Cauca y su impacto en la soberanía tributaria.
+                    Demostración técnica con datos ficticios sobre cómo aplicar el estándar LADM-COL en un catastro multipropósito departamental.
                   </p>
                 </div>
               </Link>

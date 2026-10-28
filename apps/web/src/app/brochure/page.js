@@ -33,9 +33,9 @@ export default function BrochurePage() {
 
   // Calculator Math
   const totalLoss = projects * delayDays * dailyCost;
-  const devgizLoss = projects * 1.5 * dailyCost; // 1.5 days with DevGiz
-  const totalSavings = totalLoss - devgizLoss;
-  const percentageSaved = 95;
+  // Supuesto ilustrativo (no garantizado): 1,5 días de demora por proyecto con apoyo de DevGiz.
+  const devgizLoss = projects * 1.5 * dailyCost;
+  const totalSavings = Math.max(0, totalLoss - devgizLoss);
 
   // Format currency helper (COP)
   const formatCOP = (num) => {
@@ -89,7 +89,7 @@ export default function BrochurePage() {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
-            Hacemos simple lo que antes tardaba semanas. Validamos linderos, descartamos afectaciones ambientales y automatizamos tus estudios catastrales en 5 minutos, ahorrándote millones de pesos en nóminas y maquinaria quieta.
+            Hacemos más simple lo que antes tardaba semanas. Revisamos linderos, identificamos posibles afectaciones ambientales y automatizamos partes de tus estudios catastrales para reducir tiempos muertos de personal y maquinaria.
           </p>
 
           <div className="flex justify-center gap-4">
@@ -97,7 +97,7 @@ export default function BrochurePage() {
               href="#calculator"
               className="px-8 py-4.5 bg-slate-950 text-white hover:bg-cyan-500 hover:text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-sm shadow-xl"
             >
-              Calcular Mi Ahorro
+              Estimar Mi Ahorro
             </a>
             <Link
               href="/"
@@ -243,13 +243,13 @@ export default function BrochurePage() {
                 <div className="space-y-1">
                   <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 flex items-center gap-1.5">
                     <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
-                    Con DevGiz Spatial OS:
+                    Ahorro potencial estimado (ilustrativo):
                   </div>
                   <div className="text-4xl md:text-5xl font-black text-cyan-400 tracking-tight font-mono tabular-nums">
                     {formatCOP(totalSavings)}
                   </div>
                   <div className="text-[10px] text-slate-400">
-                    Ahorro neto garantizado de hasta un <span className="font-bold text-white">{percentageSaved}%</span> en tiempos de debida diligencia.
+                    Simulación ilustrativa, no garantizada: supone 1,5 días de demora por proyecto. El resultado real depende de cada caso y se estima en una propuesta formal.
                   </div>
                 </div>
               </div>
@@ -262,10 +262,10 @@ export default function BrochurePage() {
                   className="w-full py-4.5 bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-widest transition-all duration-300 rounded-xl flex items-center justify-center gap-2.5 shadow-[0_4px_25px_rgba(6,182,212,0.3)] hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:outline-none"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Reclamar Mi Ahorro vía WhatsApp</span>
+                  <span>Solicitar estimación vía WhatsApp</span>
                 </a>
                 <p className="text-[10px] text-slate-400 text-center leading-relaxed">
-                  Te enviaremos una propuesta formal y personalizada de forma inmediata en PDF basada en tu estimación actual.
+                  Te enviaremos una propuesta formal y personalizada en PDF; el valor final se confirma en cotización formal escrita.
                 </p>
               </div>
 
@@ -302,7 +302,7 @@ export default function BrochurePage() {
               <div className="space-y-3">
                 <h3 className="text-xl font-bold tracking-tight text-white">1. Automatización de Procesos & DevOps</h3>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
-                  Eliminamos tareas repetitivas. Diseñamos pipelines automáticos, crons desatendidos y flujos CI/CD para automatizar backups, validaciones de código y sincronización de bases de datos territoriales de forma 100% autónoma.
+                  Eliminamos tareas repetitivas. Diseñamos pipelines automáticos, crons desatendidos y flujos CI/CD para automatizar backups, validaciones de código y sincronización de bases de datos territoriales con mínima intervención manual.
                 </p>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default function BrochurePage() {
               <div className="space-y-3">
                 <h3 className="text-xl font-bold tracking-tight text-white">2. Procesamiento de Imágenes Satelitales</h3>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
-                  Análisis avanzado de sensores remotos. Procesamos ortofotografía, generamos índices de vegetación (NDVI) y optimizamos nubes de puntos LiDAR para modelar curvas de nivel y perfiles de elevación 3D con precisión de centímetros.
+                  Análisis avanzado de sensores remotos. Procesamos ortofotografía, generamos índices de vegetación (NDVI) y optimizamos nubes de puntos LiDAR para modelar curvas de nivel y perfiles de elevación 3D (la precisión depende del equipo, el vuelo y los puntos de control).
                 </p>
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function BrochurePage() {
               <div className="space-y-3">
                 <h3 className="text-xl font-bold tracking-tight text-white">4. Bases de Datos & Cruces Masivos</h3>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
-                  Arquitectura Big Data. Desarrollamos bases de datos relacionales geográficas en PostGIS, Neon DB, DuckDB y Polars para cruzar millones de registros prediales en milisegundos sin latencia y con indexación espacial.
+                  Arquitectura Big Data. Desarrollamos bases de datos relacionales geográficas en PostGIS, Neon DB, DuckDB y Polars para cruzar grandes volúmenes de registros prediales con indexación espacial.
                 </p>
               </div>
             </div>
@@ -367,7 +367,7 @@ export default function BrochurePage() {
               <div className="space-y-3">
                 <h3 className="text-xl font-bold tracking-tight text-white">6. Inteligencia Geoespacial & GeoAI</h3>
                 <p className="text-slate-400 text-xs font-light leading-relaxed">
-                  Inteligencia artificial con sentido de lugar. Creamos modelos predictivos de valoración catastral y agentes de IA (LLMs) especializados en leer escrituras y estructurar resúmenes legales de forma autónoma.
+                  Inteligencia artificial con sentido de lugar. Creamos modelos predictivos de valoración catastral y agentes de IA (LLMs) que apoyan la lectura de escrituras y la estructuración de resúmenes, siempre con revisión profesional.
                 </p>
               </div>
             </div>
@@ -405,7 +405,7 @@ export default function BrochurePage() {
                 <ul className="space-y-3 pt-2">
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span><strong>Automatización CAD-to-GIS:</strong> Cero reprocesos manuales de planos.</span>
+                    <span><strong>Automatización CAD-to-GIS:</strong> Menos reprocesos manuales de planos.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
@@ -413,7 +413,7 @@ export default function BrochurePage() {
                   </li>
                   <li className="flex items-start gap-2.5 text-xs text-slate-700">
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span><strong>Reportes Express en PDF:</strong> Estudios de linderos listos en 5 minutos.</span>
+                    <span><strong>Reportes Express en PDF:</strong> Reportes de linderos generados de forma automatizada.</span>
                   </li>
                 </ul>
               </div>
@@ -486,6 +486,9 @@ export default function BrochurePage() {
             </div>
 
           </div>
+          <p className="mt-8 text-xs text-slate-500 text-center max-w-3xl mx-auto leading-relaxed">
+            Valores en pesos colombianos (COP), IVA no incluido (se liquida cuando aplique). Precios de referencia vigentes a octubre de 2026; el valor final se confirma en cotización formal escrita.
+          </p>
         </div>
       </section>
 
@@ -500,7 +503,7 @@ export default function BrochurePage() {
             Comienza a ahorrar tiempo y dinero hoy mismo.
           </h2>
           <p className="text-slate-400 text-lg font-light max-w-xl mx-auto leading-relaxed">
-            Nuestros especialistas en ingeniería territorial están listos para analizar tu primer predio de forma 100% gratuita.
+            Podemos revisar contigo tu primer predio sin costo, con un alcance inicial que se acuerda en la primera sesión.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
             <a
@@ -520,7 +523,7 @@ export default function BrochurePage() {
           </div>
           <div className="text-[10px] text-slate-500 flex justify-center items-center gap-4 font-mono">
             <span>✓ CERO COMPROMISO</span>
-            <span>✓ ANÁLISIS DE PREDIO GRATIS</span>
+            <span>✓ PRIMERA REVISIÓN SIN COSTO</span>
             <span>✓ PROPUESTA EN COP</span>
           </div>
         </div>

@@ -1,20 +1,20 @@
-import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "../../../../lib/upstash";
 import { assertSameOrigin, getClientIp, matchesFileSignature } from "../../../../lib/security";
 
 export const runtime = "nodejs";
 
-// Uploads are public and unauthenticated, so only accept small geospatial files.
+// Minimización de datos (Ley 1581): el archivo se analiza en memoria y se descarta al
+// responder. No se persiste en Vercel Blob ni en ningún otro almacenamiento, porque puede
+// contener datos personales de terceros y el panel solo usa el GeoJSON parseado
+// (SpatialIntelligenceDashboard no usa `url`). Si en el futuro se necesita una URL, usar
+// put(..., { access: "private" o "public", addRandomSuffix: true }) y borrar los archivos
+// desde /api/cron con una retención corta.
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // stays under Vercel's 4.5 MB body limit
+// Solo los formatos que el panel procesa; el resto se rechaza en lugar de recibirse sin uso.
 const ALLOWED_TYPES = {
   geojson: "application/geo+json",
   json: "application/json",
-  zip: "application/zip",
-  kml: "application/vnd.google-earth.kml+xml",
-  gpkg: "application/geopackage+sqlite3",
-  csv: "text/csv",
-  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 };
 
 function sanitizeFilename(name) {
@@ -30,7 +30,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
     }
 
-    // 5 subidas por IP y día; fail-closed porque el almacenamiento es público y finito
+    // 5 subidas por IP y día; fail-closed para limitar abuso del endpoint sin autenticación
     const { success, reason } = await checkRateLimit(getClientIp(req), {
       name: "upload",
       tokens: 5,
@@ -63,8 +63,7 @@ export async function POST(req) {
 
     const filename = sanitizeFilename(file.name);
     const extension = filename.includes(".") ? filename.split(".").pop().toLowerCase() : "";
-    const contentType = ALLOWED_TYPES[extension];
-    if (!contentType) {
+    if (!ALLOWED_TYPES[extension]) {
       return NextResponse.json(
         { error: `Unsupported file type. Allowed: ${Object.keys(ALLOWED_TYPES).join(", ")}` },
         { status: 415 }
@@ -80,51 +79,25 @@ export async function POST(req) {
       );
     }
 
-    // Parse file content if it is GeoJSON or JSON
+    // Se parsea en memoria; el contenido no se registra en logs ni se almacena
     let geojson = null;
-    if (extension === "geojson" || extension === "json") {
-      try {
-        const text = await file.text();
-        geojson = JSON.parse(text);
-      } catch (err) {
-        console.warn("⚠️ Failed to parse GeoJSON file in flight:", err.message);
-      }
-    }
-
-    // Determine Vercel Blob token status and upload
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
-    let url = "";
-
-    if (blobToken) {
-      try {
-        const blob = await put(`uploads/${filename}`, file, {
-          access: "public",
-          token: blobToken,
-          contentType,
-          addRandomSuffix: true
-        });
-        url = blob.url;
-        console.log(`🚀 File uploaded to Vercel Blob: ${url}`);
-      } catch (uploadErr) {
-        console.warn("⚠️ Failed to upload to real Vercel Blob, falling back to local simulation:", uploadErr.message);
-        url = `https://devgiz-simulated-blob.vercel-storage.com/${Date.now()}-${filename}`;
-      }
-    } else {
-      console.warn("⚠️ BLOB_READ_WRITE_TOKEN is missing. Simulating Vercel Blob storage perimetrally.");
-      url = `https://devgiz-simulated-blob.vercel-storage.com/${Date.now()}-${filename}`;
+    try {
+      geojson = JSON.parse(await file.text());
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON/GeoJSON file" }, { status: 422 });
     }
 
     return NextResponse.json({
       success: true,
-      url,
+      url: null,
       filename,
       size: file.size,
       geojson,
-      storage: blobToken ? "Vercel Blob Edge" : "Local Sovereign Buffer (Simulation)"
+      storage: "memoria temporal (no se almacena)",
     });
 
   } catch (error) {
-    console.error("❌ Vercel Blob upload endpoint error:", error);
+    console.error("❌ Upload endpoint error:", error?.message);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }

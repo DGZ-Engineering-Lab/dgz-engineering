@@ -1,7 +1,10 @@
 // Fuente única de verdad para SEO: URL canónica, metadatos por defecto,
 // helpers de Metadata API y constructores de datos estructurados (JSON-LD).
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://devgiz.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://devgiz.vercel.app").replace(
+  /\/$/,
+  ""
+);
 export const SITE_NAME = "DevGiz";
 export const SITE_LOCALE = "es_CO";
 export const SITE_LANG = "es-CO";
@@ -15,7 +18,11 @@ export const FOUNDER = {
 };
 
 // Perfiles verificables de la marca y del fundador (refuerzan la entidad y E-E-A-T).
-export const SAME_AS = ["https://github.com/DGZ-Engineering-Lab", "https://github.com/gaviriaz", "https://www.linkedin.com/in/soyalbertgz"];
+export const SAME_AS = [
+  "https://github.com/DGZ-Engineering-Lab",
+  "https://github.com/gaviriaz",
+  "https://www.linkedin.com/in/soyalbertgz",
+];
 
 // Canales de contacto reales (fuente única para navbar, footer y formularios).
 export const CONTACT = {
@@ -23,7 +30,9 @@ export const CONTACT = {
   whatsapp: "573053261466",
   whatsappDisplay: "+57 305 326 1466",
   // Mensaje precargado: el cliente no tiene que pensar cómo empezar la conversación.
-  whatsappUrl: "https://wa.me/573053261466?text=" + encodeURIComponent("Hola DevGiz, vi su sitio web y quiero información sobre un proyecto."),
+  whatsappUrl:
+    "https://wa.me/573053261466?text=" +
+    encodeURIComponent("Hola DevGiz, vi su sitio web y quiero información sobre un proyecto."),
   linkedin: "https://www.linkedin.com/in/soyalbertgz",
   github: "https://github.com/gaviriaz",
   city: "Medellín, Colombia",
@@ -56,7 +65,17 @@ export const absoluteUrl = (path = "/") => `${SITE_URL}${path.startsWith("/") ? 
  * Metadatos de una ruta con canonical, Open Graph y Twitter coherentes.
  * El título final es "<title> | DevGiz".
  */
-export function pageMetadata({ title, description, path, image, type = "website", keywords, noIndex = false, publishedTime, authors }) {
+export function pageMetadata({
+  title,
+  description,
+  path,
+  image,
+  type = "website",
+  keywords,
+  noIndex = false,
+  publishedTime,
+  authors,
+}) {
   // Sin imagen propia se usa la imagen social generada en app/opengraph-image.js:
   // al definir openGraph en una ruta, Next deja de heredar la del layout raíz.
   const images = image
@@ -97,30 +116,34 @@ export function pageMetadata({ title, description, path, image, type = "website"
 // ---------------------------------------------------------------------------
 
 export const BLOG_POSTS_SEO = {
-  "1": {
+  1: {
     title: "Soberanía Digital y la Protección de Activos Territoriales",
-    description: "Ransomware, ICDE y la nueva era de la seguridad jurídica en Colombia: cómo proteger la información catastral como activo crítico.",
+    description:
+      "Ransomware, ICDE y la nueva era de la seguridad jurídica en Colombia: cómo proteger la información catastral como activo crítico.",
     category: "Ciberseguridad",
     datePublished: "2026-05-12",
     image: "/assets/img/blog-cybersecurity.png",
   },
-  "2": {
+  2: {
     title: "El Estándar LADM-COL como Eje de Interoperabilidad",
-    description: "Cómo el Valle del Cauca y Villavicencio están transformando el Catastro Multipropósito con LADM-COL (ISO 19152) e INTERLIS.",
+    description:
+      "Cómo el Valle del Cauca y Villavicencio están transformando el Catastro Multipropósito con LADM-COL (ISO 19152) e INTERLIS.",
     category: "Interoperabilidad",
     datePublished: "2026-05-10",
     image: "/assets/img/blog-ladm-col.png",
   },
-  "3": {
+  3: {
     title: "ConstruMetrix: La Precisión LiDAR en la Ciudad Inteligente",
-    description: "Del gemelo digital a la toma de decisiones basada en realidades físicas: LiDAR y digitalización del entorno construido.",
+    description:
+      "Del gemelo digital a la toma de decisiones basada en realidades físicas: LiDAR y digitalización del entorno construido.",
     category: "Ingeniería",
     datePublished: "2026-05-05",
     image: "/assets/img/geoai_after.png",
   },
-  "4": {
+  4: {
     title: "Inteligencia Artificial Territorial: De la Detección al Saneamiento",
-    description: "Cómo los modelos de visión computacional están revolucionando la gestión predial y el saneamiento catastral en Colombia.",
+    description:
+      "Cómo los modelos de visión computacional están revolucionando la gestión predial y el saneamiento catastral en Colombia.",
     category: "Inteligencia Artificial",
     datePublished: "2026-05-01",
     image: "/assets/img/topo-bg.png",
@@ -130,25 +153,29 @@ export const BLOG_POSTS_SEO = {
 export const PROJECTS_SEO = {
   "catastro-valle": {
     title: "Catastro Multipropósito Valle del Cauca",
-    description: "Soberanía fiscal y seguridad jurídica predial mediante la implementación nativa del estándar LADM-COL e INTERLIS en el Valle del Cauca.",
+    description:
+      "Soberanía fiscal y seguridad jurídica predial mediante la implementación nativa del estándar LADM-COL e INTERLIS en el Valle del Cauca.",
     category: "Infraestructura Territorial",
     image: "/assets/img/blog-ladm-col.png",
   },
   "qgis-plugin": {
     title: "Validador LADM-COL QGIS Plugin",
-    description: "Plugin de QGIS para control de calidad topológico y validación instantánea de bases de datos territoriales bajo el estándar LADM-COL.",
+    description:
+      "Plugin de QGIS para control de calidad topológico y validación instantánea de bases de datos territoriales bajo el estándar LADM-COL.",
     category: "Software de Ingeniería",
     image: "/assets/img/geoai_before.png",
   },
   "automation-systems": {
     title: "Territorial ETL & Data Pipelines",
-    description: "Pipelines ETL geoespaciales para migrar, transformar y validar GML, GeoJSON, KML e INTERLIS (XTF) a escala para gestores catastrales.",
+    description:
+      "Pipelines ETL geoespaciales para migrar, transformar y validar GML, GeoJSON, KML e INTERLIS (XTF) a escala para gestores catastrales.",
     category: "Infraestructura de Datos",
     image: "/assets/img/topo-bg.png",
   },
   "geo-llm": {
     title: "Inteligencia GeoAI & Geo-LLM",
-    description: "IA generativa aplicada al territorio: consultas en lenguaje natural en español traducidas a Spatial SQL sobre bases catastrales PostGIS.",
+    description:
+      "IA generativa aplicada al territorio: consultas en lenguaje natural en español traducidas a Spatial SQL sobre bases catastrales PostGIS.",
     category: "Inteligencia Artificial",
     image: "/assets/img/blog-cybersecurity.png",
   },
@@ -162,16 +189,42 @@ export const CONTENT_UPDATED = "2026-10-23";
 export const STATIC_ROUTES = [
   { path: "/", title: "Inicio", priority: 1.0, changeFrequency: "weekly" },
   { path: "/about", title: "Sobre DevGiz", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/projects", title: "Proyectos y casos de éxito", priority: 0.9, changeFrequency: "monthly" },
+  {
+    path: "/projects",
+    title: "Proyectos y casos de éxito",
+    priority: 0.9,
+    changeFrequency: "monthly",
+  },
   { path: "/blog", title: "Blog técnico", priority: 0.8, changeFrequency: "weekly" },
   { path: "/faq", title: "Preguntas frecuentes", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/standards", title: "Estándares y normativa", priority: 0.7, changeFrequency: "monthly" },
+  {
+    path: "/standards",
+    title: "Estándares y normativa",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
   { path: "/docs", title: "Documentación de la API", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/diagnostic", title: "Diagnóstico territorial", priority: 0.6, changeFrequency: "monthly" },
+  {
+    path: "/diagnostic",
+    title: "Diagnóstico territorial",
+    priority: 0.6,
+    changeFrequency: "monthly",
+  },
   { path: "/brochure", title: "Brochure de servicios", priority: 0.6, changeFrequency: "monthly" },
   { path: "/careers", title: "Trabaja con nosotros", priority: 0.5, changeFrequency: "monthly" },
-  { path: "/lab/gesture-sandbox", title: "Laboratorio de gestos GIS", priority: 0.4, changeFrequency: "yearly" },
-  { path: "/privacy", title: "Política de privacidad", priority: 0.2, changeFrequency: "yearly" },
+  {
+    path: "/lab/gesture-sandbox",
+    title: "Laboratorio de gestos GIS",
+    priority: 0.4,
+    changeFrequency: "yearly",
+  },
+  {
+    path: "/privacy",
+    title: "Política de tratamiento de datos personales",
+    priority: 0.2,
+    changeFrequency: "yearly",
+  },
+  { path: "/cookies", title: "Política de cookies", priority: 0.2, changeFrequency: "yearly" },
   { path: "/terms", title: "Términos y condiciones", priority: 0.2, changeFrequency: "yearly" },
 ];
 
@@ -238,7 +291,14 @@ export function siteJsonLd() {
         sameAs: [CONTACT.linkedin, CONTACT.github],
         worksFor: { "@id": ORG_ID },
         address: { "@type": "PostalAddress", addressLocality: "Medellín", addressCountry: "CO" },
-        knowsAbout: ["GIS", "LADM-COL", "PostGIS", "Python", "Catastro Multipropósito", "Ingeniería de datos geoespaciales"],
+        knowsAbout: [
+          "GIS",
+          "LADM-COL",
+          "PostGIS",
+          "Python",
+          "Catastro Multipropósito",
+          "Ingeniería de datos geoespaciales",
+        ],
       },
       {
         "@type": "WebSite",

@@ -17,6 +17,47 @@ _MATRICULA_RE = re.compile(r"^[0-9]{1,15}$")
 class InvalidFolioError(ValueError):
     """Matrícula o círculo con formato inválido (mensaje seguro de exponer)."""
 
+
+# ---------------------------------------------------------------------------
+# Protección de datos personales de terceros (Ley 1581 de 2012)
+# ---------------------------------------------------------------------------
+# El nombre y el documento de identidad del titular inscrito en un folio de
+# matrícula son datos personales de un tercero que no ha autorizado a DevGiz su
+# tratamiento ni su divulgación. Por eso la API NUNCA los expone: se enmascaran
+# a "RESERVADO" en TODAS las respuestas (reales y simuladas), incluido el
+# registro crudo (raw_data) que se reenvía al cliente. Quien necesite el dato
+# debe consultarlo directamente en la SNR con su propia legitimación.
+OWNER_MASK = "RESERVADO"
+# Claves (en minúsculas, sin tildes) que identifican al titular o a su documento.
+_OWNER_KEY_HINTS = (
+    "propietario", "titular", "owner", "interesado", "nombre", "apellido",
+    "documento", "cedula", "identificacion", "nit", "nrodoc", "numdoc",
+    "persona", "adquiriente", "adquirente", "otorgante", "de_quien", "a_quien",
+    # Textos libres de anotaciones: pueden contener nombres de personas
+    "comentario", "salvedad", "observacion",
+)
+
+
+def _normalize_key(key: str) -> str:
+    table = str.maketrans("áéíóúÁÉÍÓÚ", "aeiouAEIOU")
+    return str(key).translate(table).lower()
+
+
+def _mask_titular_data(data: Any) -> Any:
+    """Devuelve una copia de `data` con nombres/documentos del titular enmascarados."""
+    if isinstance(data, dict):
+        masked: Dict[str, Any] = {}
+        for key, value in data.items():
+            nk = _normalize_key(key)
+            if any(hint in nk for hint in _OWNER_KEY_HINTS) and not isinstance(value, (dict, list)):
+                masked[key] = OWNER_MASK
+            else:
+                masked[key] = _mask_titular_data(value)
+        return masked
+    if isinstance(data, list):
+        return [_mask_titular_data(item) for item in data]
+    return data
+
 # Complete mapping of Colombian ORIP Circle Codes to VUR internal database IDs and names.
 # This was extracted in real time from the active VUR portal webresource endpoints.
 ORIP_OFFICES = {
@@ -349,15 +390,15 @@ class VURService:
                 # If no records exist in official SNR database
                 if not isinstance(results, list) or len(results) == 0:
                     logging.info("VUR_QUERY_NO_RESULTS: folio %s not found.", folio_segment)
-                    return {
+                    return _mask_titular_data({
                         "source": "SNR_VUR_OFFICIAL",
                         "status": "INVALID",
                         "matricula": matricula,
                         "circulo": circulo,
                         "area_snr_m2": 0.0,
-                        "owner_name": "DESCONOCIDO",
+                        "owner_name": OWNER_MASK,
                         "message": "No se encontraron datos oficiales para el folio suministrado."
-                    }
+                    })
 
                 first_search_record = results[0]
 
@@ -398,7 +439,9 @@ class VURService:
 
                 # Merge indices search list properties with deep physical/legal details
                 registered_area = float(details.get("area", first_search_record.get("area", 120.0)))
-                owner_name = details.get("propietario", first_search_record.get("propietario", "JUAN PEREZ GONZALEZ")).strip()
+                # El nombre del titular NO se extrae ni se expone (Ley 1581 de 2012):
+                # ver _mask_titular_data y OWNER_MASK.
+                owner_name = OWNER_MASK
                 legal_status = legal_details.get("estadoJuridico", details.get("estadoJuridico", first_search_record.get("estadoJuridico", "NONE")))
                 salvedades = details.get("salvedades", "")
                 
@@ -409,7 +452,9 @@ class VURService:
                     
                 arbol_anotaciones = legal_details.get("arbolAnotaciones", [])
 
-                return {
+                # Enmascarado obligatorio de nombre/documento del titular en toda la
+                # respuesta, incluido raw_data (protección de datos de terceros).
+                return _mask_titular_data({
                     "source": "SNR_VUR_OFFICIAL",
                     "status": "VALID",
                     "matricula": matricula,
@@ -425,7 +470,7 @@ class VURService:
                         "details_record": details,
                         "legal_record": legal_details
                     }
-                }
+                })
             
             logging.error(f"VUR_QUERY_FAILED: VUR query responded with status {search_response.status_code}")
             return self._generate_simulated_data(matricula, circulo)
@@ -436,8 +481,10 @@ class VURService:
 
     def _generate_simulated_data(self, matricula: str, circulo: str) -> Dict[str, Any]:
         """
-        Generates mathematically robust, high-fidelity procedural simulated data
-        to guarantee flawless local tests and sandbox QGIS depurations.
+        Genera datos SIMULADOS (ficticios) y deterministas para pruebas locales y
+        el modo demostración. No corresponden a ningún folio ni persona real.
+        El titular siempre se devuelve enmascarado como "RESERVADO" (Ley 1581 de
+        2012: no se exponen nombres ni documentos de titulares, ni siquiera de ejemplo).
         """
         # Procedural deterministic generation based on matrícula number
         try:
@@ -445,11 +492,10 @@ class VURService:
         except Exception:
             val_hash = 120
 
-        # Realistic Colombian Names
-        names = ["CARLOS ALBERTO GOMEZ", "MARIA HELENA RODRIGUEZ", "JOSE VICENTE SILVA", "CLAUDIA CAROLINA GOMEZ", "LUIS EDUARDO CASTRO"]
-        owner_name = names[val_hash % len(names)]
-        
-        # Realistic Areas
+        # Titular enmascarado: no se generan nombres de apariencia real.
+        owner_name = OWNER_MASK
+
+        # Áreas de ejemplo
         areas = [85.5, 120.0, 150.25, 240.0, 450.1]
         area = areas[val_hash % len(areas)]
         
@@ -464,8 +510,8 @@ class VURService:
                 "matricula": matricula,
                 "circulo": circulo,
                 "area_snr_m2": 0.0,
-                "owner_name": "DESCONOCIDO",
-                "message": "Folio de matrícula inmobiliaria inexistente en la oficina de registro."
+                "owner_name": OWNER_MASK,
+                "message": "Demostración con datos ficticios: folio inexistente en el escenario simulado."
             }
 
         # Simulating legal annotations/embargos deterministically
@@ -474,12 +520,11 @@ class VURService:
         
         if has_embargo:
             medidas = [
-                "EMBARGO EJECUTIVO EN MENOR CUANTÍA DECRETADO POR EL JUZGADO 15 CIVIL (ANOTACIÓN 4 DE FECHA 15/10/2024)",
-                "DEMANDA ORDINARIA DE PERTENENCIA NOTIFICADA EN ANOTACIÓN 5 (FECHA 22/03/2025)"
+                "EMBARGO EJECUTIVO DE EJEMPLO DECRETADO POR JUZGADO DE EJEMPLO (ANOTACIÓN 4, DATO FICTICIO)",
+                "DEMANDA DE PERTENENCIA DE EJEMPLO (ANOTACIÓN 5, DATO FICTICIO)"
             ]
             incumbrances = "AFECTADO - EMBARGO VIGENTE"
-            salvedades = "Folio con medidas cautelares activas de embargo ejecutivo por proceso de cobro judicial."
-            owner_name = "MARIA DANIELA BUSTOS" # Match Scenario B or test cases
+            salvedades = "Escenario ficticio: folio con medidas cautelares de ejemplo."
             area = 120.0
         else:
             medidas = []
@@ -488,10 +533,10 @@ class VURService:
 
         arbol = [
             {"anotacion": 1, "tipo": "COMPRAVENTA", "comentario": "Adquisición inicial de dominio"},
-            {"anotacion": 2, "tipo": "HIPOTECA", "comentario": "Hipotecado a favor de Banco Davivienda (CADASTRADA COMO CANCELADA)"}
+            {"anotacion": 2, "tipo": "HIPOTECA", "comentario": "Hipoteca a favor de entidad financiera de ejemplo (cancelada, dato ficticio)"}
         ]
         if has_embargo:
-            arbol.append({"anotacion": 3, "tipo": "EMBARGO", "comentario": "Embargo preventivo por juzgado"})
+            arbol.append({"anotacion": 3, "tipo": "EMBARGO", "comentario": "Embargo de ejemplo (dato ficticio)"})
 
         return {
             "source": "DGZ_SIMULATED_RESERVE",
@@ -500,13 +545,13 @@ class VURService:
             "matricula": matricula,
             "circulo": circulo,
             "area_snr_m2": area,
-            "owner_name": f"{owner_name} (SIMULADO)",
+            "owner_name": owner_name,
             "legal_incumbrances": incumbrances,
             "salvedades": salvedades,
             "medidasCautelares": medidas,
             "arbolAnotaciones": arbol,
             "physical_description_match": "100%",
-            "message": "Filtros correctos. Folio resuelto bajo simulación de contingencia."
+            "message": "Demostración con datos ficticios: no es información de la SNR."
         }
 
 vur_service = VURService()

@@ -22,9 +22,9 @@ const CybersecurityLab = () => {
       icon: "🛡️",
       logs: [
         "[INIT] Iniciando protocolo de blindaje territorial...",
-        "[AUTH] Verificando firma criptográfica ICDE v2.1...",
-        "[AUTH] Certificado X.509 validado (CA: MinTIC Colombia)",
-        "[NET] Estableciendo canal seguro TLS 1.3 con nodo catastral..."
+        "[AUTH] Verificando firma criptográfica de ejemplo...",
+        "[AUTH] Certificado X.509 de prueba validado (CA de demostración)",
+        "[NET] Estableciendo canal TLS 1.3 con nodo de demostración..."
       ]
     },
     { 
@@ -32,11 +32,11 @@ const CybersecurityLab = () => {
       icon: "🔍",
       logs: [
         "[SCAN] Escaneando integridad de 6 nodos principales...",
-        "[SCAN] Nodo IGAC-BOG ✓ (latencia: 12ms)",
-        "[SCAN] Nodo SNR-CALI ✓ (latencia: 28ms)",
-        "[SCAN] Nodo VUR-MDE ✓ (latencia: 15ms)",
-        "[WARN] Nodo ORIP-BGA: timeout (reintentando con failover)...",
-        "[SCAN] Nodo ORIP-BGA ✓ (failover exitoso, latencia: 89ms)"
+        "[SCAN] Nodo DEMO-01 ✓ (latencia: 12ms)",
+        "[SCAN] Nodo DEMO-02 ✓ (latencia: 28ms)",
+        "[SCAN] Nodo DEMO-03 ✓ (latencia: 15ms)",
+        "[WARN] Nodo DEMO-04: timeout (reintentando con failover)...",
+        "[SCAN] Nodo DEMO-04 ✓ (failover exitoso, latencia: 89ms)"
       ]
     },
     { 
@@ -48,8 +48,8 @@ const CybersecurityLab = () => {
         "[OK] Hashing SHA-3 activo en registros de mutación.",
         "[FORENSIC] Analizando integridad de logs transaccionales...",
         "[OK] Trazabilidad forense activa. 0 alteraciones detectadas.",
-        "[OK] Cumplimiento ISO 27001 / ICDE: 100%",
-        "[SUCCESS] ═══ AUDITORÍA COMPLETA: El sistema catastral es 100% resiliente. ═══"
+        "[OK] Controles inspirados en ISO/IEC 27001 revisados (sin certificación).",
+        "[SUCCESS] ═══ DEMOSTRACIÓN COMPLETA (datos ficticios) ═══"
       ]
     }
   ];
@@ -72,12 +72,12 @@ const CybersecurityLab = () => {
   };
 
   const nodeStatuses = [
-    { id: "N-01", label: "IGAC-BOG", integrity: nodesScanned >= 1 ? 100 : 0, status: nodesScanned >= 1 ? "secure" : nodesScanned === 0 && isAuditing ? "scanning" : "idle" },
-    { id: "N-02", label: "SNR-CALI", integrity: nodesScanned >= 2 ? 100 : 0, status: nodesScanned >= 2 ? "secure" : nodesScanned === 1 && isAuditing ? "scanning" : "idle" },
-    { id: "N-03", label: "VUR-MDE", integrity: nodesScanned >= 3 ? 100 : 0, status: nodesScanned >= 3 ? "secure" : nodesScanned === 2 && isAuditing ? "scanning" : "idle" },
+    { id: "N-01", label: "DEMO-01", integrity: nodesScanned >= 1 ? 100 : 0, status: nodesScanned >= 1 ? "secure" : nodesScanned === 0 && isAuditing ? "scanning" : "idle" },
+    { id: "N-02", label: "DEMO-02", integrity: nodesScanned >= 2 ? 100 : 0, status: nodesScanned >= 2 ? "secure" : nodesScanned === 1 && isAuditing ? "scanning" : "idle" },
+    { id: "N-03", label: "DEMO-03", integrity: nodesScanned >= 3 ? 100 : 0, status: nodesScanned >= 3 ? "secure" : nodesScanned === 2 && isAuditing ? "scanning" : "idle" },
     { id: "N-04", label: "ORIP-BGA", integrity: nodesScanned >= 4 ? 98 : 0, status: nodesScanned >= 4 ? "secure" : nodesScanned === 3 && isAuditing ? "scanning" : "idle" },
-    { id: "N-05", label: "IGAC-MDE", integrity: nodesScanned >= 4 ? 100 : 0, status: nodesScanned >= 4 ? "secure" : nodesScanned === 4 && isAuditing ? "scanning" : "idle" },
-    { id: "N-06", label: "SNR-BAQ", integrity: nodesScanned >= 4 ? 100 : 0, status: nodesScanned >= 4 ? "secure" : nodesScanned === 5 && isAuditing ? "scanning" : "idle" }
+    { id: "N-05", label: "DEMO-05", integrity: nodesScanned >= 4 ? 100 : 0, status: nodesScanned >= 4 ? "secure" : nodesScanned === 4 && isAuditing ? "scanning" : "idle" },
+    { id: "N-06", label: "DEMO-06", integrity: nodesScanned >= 4 ? 100 : 0, status: nodesScanned >= 4 ? "secure" : nodesScanned === 5 && isAuditing ? "scanning" : "idle" }
   ];
 
   const getLogColor = (log) => {
@@ -269,7 +269,7 @@ const InteroperabilityLab = () => {
       color: "from-slate-500 to-slate-600",
       glowColor: "rgba(100,116,139,0.3)",
       terminalLogs: [
-        "[INGEST] Leyendo archivo: Municipio_Valle_2026.xlsx",
+        "[INGEST] Leyendo archivo: Municipio_Ejemplo_Ficticio.xlsx",
         "[INGEST] 14,892 filas detectadas en 23 columnas",
         "[WARN] 342 registros con coordenadas vacías",
         "[WARN] Sistema de referencia no declarado (asumiendo CTM12)",
@@ -293,14 +293,14 @@ const InteroperabilityLab = () => {
     {
       label: "Esquema XTF",
       icon: "✅",
-      desc: "Generación del archivo INTERLIS validado (.xtf) listo para entrega al IGAC con firma de integridad SHA-256.",
+      desc: "Generación del archivo INTERLIS (.xtf) validado contra el modelo, preparado para el proceso de entrega que defina el gestor catastral, con firma de integridad SHA-256.",
       color: "from-emerald-500 to-teal-500",
       glowColor: "rgba(16,185,129,0.3)",
       terminalLogs: [
         "[XTF] Compilando esquema INTERLIS v2.3",
         "[XTF] Validando geometrías contra tolerancia 0.001m",
         "[XTF] Aplicando firma de integridad SHA-256",
-        "[XTF] Archivo generado: Valle_Cauca_Catastro_2026.xtf (48.2 MB)",
+        "[XTF] Archivo generado: Catastro_Ejemplo_Ficticio.xtf (48.2 MB)",
         "[SUCCESS] ✓ Validación completa. 0 errores, 0 advertencias."
       ]
     }
@@ -772,12 +772,12 @@ const LidarLab = () => {
   const [selectedBarrio, setSelectedBarrio] = useState(null);
   const consoleRef = useRef(null);
 
-  // ═══ DATOS REALES: Cartago, Valle del Cauca ═══
-  // Fuentes: DANE Censo 2018, IGAC 2023, SNR, Secretaría de Hacienda Municipal
+  // ═══ DATOS FICTICIOS (demostración) ═══
+  // Municipio, barrios y cifras inventados: no corresponden a ningún municipio real.
   const MUNICIPIO = {
-    nombre: "Cartago",
-    departamento: "Valle del Cauca",
-    codigoDANE: "76147",
+    nombre: "Municipio de Ejemplo",
+    departamento: "Departamento de Ejemplo",
+    codigoDANE: "00000",
     poblacion: 136054,
     areaTotal_km2: 279,
     areaUrbana_km2: 14.8,
@@ -789,19 +789,19 @@ const LidarLab = () => {
     estratoPredominante: "2-3",
     recaudoPredial2024: 28400000000, // $28.4 mil millones COP
     tarifaPromedio: 555000, // COP/año por predio
-    orip: "ORIP Cartago (76C)",
-    circuloRegistral: "76C",
-    coordenadas: { lat: 4.7461, lng: -75.9117 },
+    orip: "ORIP de Ejemplo (000)",
+    circuloRegistral: "000",
+    coordenadas: { lat: 0.0, lng: 0.0 },
   };
 
-  // Datos reales de barrios con patologías detectadas
+  // Barrios ficticios (demostración)
   const BARRIOS = [
-    { id: "B1", nombre: "La Isabela", predios: 3420, mejoras: 287, traslapes: 34, fugaAnual: 892000000, estrato: 3, area_ha: 48.2, color: "#ef4444" },
-    { id: "B2", nombre: "El Japón", predios: 2180, mejoras: 412, traslapes: 18, fugaAnual: 1340000000, estrato: 2, area_ha: 31.5, color: "#f59e0b" },
-    { id: "B3", nombre: "San Jerónimo", predios: 4670, mejoras: 156, traslapes: 67, fugaAnual: 578000000, estrato: 4, area_ha: 62.1, color: "#06b6d4" },
-    { id: "B4", nombre: "La Platanera", predios: 1890, mejoras: 523, traslapes: 8, fugaAnual: 1780000000, estrato: 1, area_ha: 27.8, color: "#8b5cf6" },
-    { id: "B5", nombre: "El Prado", predios: 5240, mejoras: 89, traslapes: 12, fugaAnual: 234000000, estrato: 5, area_ha: 71.3, color: "#10b981" },
-    { id: "B6", nombre: "Zaragoza", predios: 3150, mejoras: 341, traslapes: 45, fugaAnual: 1120000000, estrato: 2, area_ha: 44.6, color: "#ec4899" },
+    { id: "B1", nombre: "Barrio Ejemplo 1", predios: 3420, mejoras: 287, traslapes: 34, fugaAnual: 892000000, estrato: 3, area_ha: 48.2, color: "#ef4444" },
+    { id: "B2", nombre: "Barrio Ejemplo 2", predios: 2180, mejoras: 412, traslapes: 18, fugaAnual: 1340000000, estrato: 2, area_ha: 31.5, color: "#f59e0b" },
+    { id: "B3", nombre: "Barrio Ejemplo 3", predios: 4670, mejoras: 156, traslapes: 67, fugaAnual: 578000000, estrato: 4, area_ha: 62.1, color: "#06b6d4" },
+    { id: "B4", nombre: "Barrio Ejemplo 4", predios: 1890, mejoras: 523, traslapes: 8, fugaAnual: 1780000000, estrato: 1, area_ha: 27.8, color: "#8b5cf6" },
+    { id: "B5", nombre: "Barrio Ejemplo 5", predios: 5240, mejoras: 89, traslapes: 12, fugaAnual: 234000000, estrato: 5, area_ha: 71.3, color: "#10b981" },
+    { id: "B6", nombre: "Barrio Ejemplo 6", predios: 3150, mejoras: 341, traslapes: 45, fugaAnual: 1120000000, estrato: 2, area_ha: 44.6, color: "#ec4899" },
   ];
 
   const totalMejorasOcultas = BARRIOS.reduce((a, b) => a + b.mejoras, 0);
@@ -842,7 +842,7 @@ const LidarLab = () => {
     setScanProgress(0);
 
     const scanLogs = [
-      `[INIT] Conectando con ORIP ${MUNICIPIO.orip}...`,
+      `[INIT] Cargando datos ficticios de ${MUNICIPIO.orip}...`,
       `[DB] Consultando base catastral DANE ${MUNICIPIO.codigoDANE}: ${MUNICIPIO.nombre}`,
       `[GEO] Coordenadas: ${MUNICIPIO.coordenadas.lat}°N, ${MUNICIPIO.coordenadas.lng}°W`,
       `[SCAN] Analizando ${MUNICIPIO.prediosUrbanos.toLocaleString('es-CO')} predios urbanos...`,
@@ -850,9 +850,9 @@ const LidarLab = () => {
       `[WARN] Última actualización catastral: ${MUNICIPIO.ultimaActualizacion} (${MUNICIPIO.anosDesactualizado} años de retraso)`,
       `[WARN] Supera límite legal de 5 años (Ley 1955 de 2019, Art. 79)`,
       `[AI] Ejecutando detección de mejoras ocultas con U-Net v4...`,
-      `[AI] Barrio La Platanera: 523 edificaciones no registradas detectadas`,
-      `[AI] Barrio El Japón: 412 mejoras informales identificadas`,
-      `[CROSS] Cruzando con VUR/SNR - Círculo Registral ${MUNICIPIO.circuloRegistral}...`,
+      `[AI] Barrio Ejemplo 4: 523 edificaciones no registradas detectadas (ficticio)`,
+      `[AI] Barrio Ejemplo 2: 412 mejoras informales identificadas (ficticio)`,
+      `[CROSS] Cruzando con registro ficticio - Círculo ${MUNICIPIO.circuloRegistral}...`,
       `[ALERT] ${totalTraslapes} traslapes geométricos encontrados en 6 sectores`,
       `[CALC] Fuga tributaria estimada: ${formatCOP(totalFugaAnual)}/año`,
       `[OK] Tasa de informalidad constructiva: ${porcentajeInformalidad}%`,
@@ -880,9 +880,9 @@ const LidarLab = () => {
       <div className="px-6 py-4 bg-gradient-to-r from-[#0a0a0f] to-[#1a1a2e] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full ${phase === 1 ? 'bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.6)]' : phase === 2 ? 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 'bg-slate-500'}`} />
-          <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em] font-bold">Caso Real // Diagnóstico Municipal</span>
+          <span className="text-[10px] font-mono text-slate-300 uppercase tracking-[0.2em] font-bold">Demostración con datos ficticios // Diagnóstico Municipal</span>
         </div>
-        <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">DANE {MUNICIPIO.codigoDANE} {"//"} IGAC 2023</span>
+        <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest">DATOS FICTICIOS</span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -904,7 +904,7 @@ const LidarLab = () => {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { label: "Población", value: MUNICIPIO.poblacion.toLocaleString('es-CO'), sub: "Censo DANE 2018" },
+                  { label: "Población", value: MUNICIPIO.poblacion.toLocaleString('es-CO'), sub: "Dato ficticio" },
                   { label: "Predios Totales", value: MUNICIPIO.totalPredios.toLocaleString('es-CO'), sub: `${MUNICIPIO.prediosUrbanos.toLocaleString('es-CO')} urbanos` },
                   { label: "Área Urbana", value: `${MUNICIPIO.areaUrbana_km2} km²`, sub: `de ${MUNICIPIO.areaTotal_km2} km² total` },
                   { label: "Recaudo 2024", value: formatCOP(MUNICIPIO.recaudoPredial2024), sub: "Impuesto predial" },
@@ -1085,35 +1085,35 @@ const BLOG_DATA = {
     subtitle: "Ransomware, ICDE y la nueva era de la seguridad jurídica en Colombia.",
     category: "Ciberseguridad",
     date: "12 Mayo, 2026",
-    author: "Dirección de Ciberseguridad",
+    author: "Albert Daniel Gaviria Zapata",
     readTime: "12 min",
     image: "/assets/img/blog-cybersecurity.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
-          Los recientes ataques cibernéticos a bases de datos municipales en Colombia han subrayado una verdad incómoda: la información territorial es hoy un activo crítico de seguridad nacional. En DevGiz, no solo gestionamos datos; protegemos la soberanía jurídica de los ciudadanos.
+          Los recientes ataques cibernéticos a bases de datos municipales en Colombia han subrayado una verdad incómoda: la información territorial es hoy un activo crítico de seguridad nacional. En DevGiz trabajamos para que la gestión de esos datos incorpore buenas prácticas de seguridad desde el diseño.
         </p>
         
         <h2 class="text-3xl font-black text-[#1a1a1a] pt-8">La Meta: Resiliencia ante Ransomware</h2>
-        <p>A diferencia de los sistemas tradicionales, nuestra arquitectura de <strong>Nodos Descentralizados</strong> garantiza que, incluso bajo ataque, la integridad del catastro permanezca inalterable. Seguimos los lineamientos de la ICDE (Infraestructura Colombiana de Datos Espaciales) para asegurar que el intercambio de datos sea un proceso blindado.</p>
+        <p>Proponemos arquitecturas de <strong>nodos descentralizados</strong>, con copias de respaldo y cifrado, para reducir el impacto de un ataque sobre la integridad del catastro. Tomamos como referencia los lineamientos de la ICDE (Infraestructura Colombiana de Datos Espaciales) y buenas prácticas inspiradas en ISO/IEC 27001 (sin certificación). La demostración interactiva usa datos ficticios.</p>
       </section>
     `,
     lab: <CybersecurityLab />,
     sidebar: {
       metrics: [
         { label: "Encriptación", value: "AES-256-GCM" },
-        { label: "Standard", value: "ISO 27001 / ICDE" },
-        { label: "Uptime", value: "99.999%" }
+        { label: "Referencia", value: "ISO/IEC 27001 (sin certificación)" },
+        { label: "Demostración", value: "Datos ficticios" }
       ],
       relatedProject: "Seguridad Territorial"
     }
   },
   "2": {
     title: "El Estándar LADM-COL como Eje de Interoperabilidad",
-    subtitle: "Cómo el Valle del Cauca y Villavicencio están transformando el Catastro Multipropósito.",
+    subtitle: "Por qué el estándar LADM-COL es la base del Catastro Multipropósito en Colombia.",
     category: "Interoperabilidad",
     date: "10 Mayo, 2026",
-    author: "Ingeniería Territorial",
+    author: "Albert Daniel Gaviria Zapata",
     readTime: "8 min",
     image: "/assets/img/blog-ladm-col.webp",
     content: `
@@ -1123,7 +1123,7 @@ const BLOG_DATA = {
         </p>
 
         <h2 class="text-3xl font-black text-[#1a1a1a]">INTERLIS: El Formato de Intercambio .XTF</h2>
-        <p>En DevGiz, hemos perfeccionado el pipeline de validación de archivos XTF. Esto permite que municipios como los del Valle del Cauca descentralicen su catastro con la confianza de que cada registro cumple con la norma nacional sin fricciones técnicas.</p>
+        <p>En DevGiz desarrollamos un pipeline de validación de archivos XTF con una metodología alineada con LADM-COL, para que los municipios que asumen la gestión catastral puedan revisar sus registros frente al modelo nacional antes de entregarlos. La demostración interactiva usa datos ficticios.</p>
       </section>
     `,
     lab: <InteroperabilityLab />,
@@ -1141,24 +1141,24 @@ const BLOG_DATA = {
     subtitle: "Del gemelo digital a la toma de decisiones basada en realidades físicas.",
     category: "Ingeniería",
     date: "05 Mayo, 2026",
-    author: "Laboratorio Geo-AI",
+    author: "Albert Daniel Gaviria Zapata",
     readTime: "10 min",
     image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
-          Un gemelo digital es tan útil como la precisión de sus datos. Mientras que los sistemas estándar se conforman con resoluciones satelitales, DevGiz implementa sensores LiDAR para capturar la infraestructura con precisión milimétrica.
+          Un gemelo digital es tan útil como la precisión de sus datos. Además de imágenes satelitales, los proyectos pueden incorporar sensores LiDAR para capturar la infraestructura con alta precisión, que depende del equipo, la altura de vuelo y los puntos de control.
         </p>
 
-        <h2 class="text-3xl font-black text-[#1a1a1a]">Ventajas Competitivas</h2>
-        <p>La ventaja de nuestra tecnología radica en la densidad de la nube de puntos. Esto permite identificar patologías en vías, medir volúmenes exactos de construcción y predecir el impacto de nuevas obras con un margen de error inexistente.</p>
+        <h2 class="text-3xl font-black text-[#1a1a1a]">Ventajas de la Nube de Puntos</h2>
+        <p>La densidad de la nube de puntos permite identificar patologías en vías, estimar volúmenes de construcción y anticipar el impacto de nuevas obras con márgenes de error conocidos y documentados. La demostración interactiva usa datos ficticios.</p>
       </section>
     `,
     lab: <LidarLab />,
     sidebar: {
       metrics: [
-        { label: "Densidad", value: "> 50 pts/m2" },
-        { label: "Precisión", value: "< 1.5 cm" },
+        { label: "Densidad (ejemplo)", value: "> 50 pts/m2" },
+        { label: "Precisión", value: "Según equipo y vuelo" },
         { label: "Visualización", value: "Digital Twin" }
       ],
       relatedProject: "ConstruMetrix 3D"
@@ -1169,28 +1169,28 @@ const BLOG_DATA = {
     subtitle: "Cómo los modelos de visión computacional están revolucionando la gestión predial en Colombia.",
     category: "Geo-AI",
     date: "01 Mayo, 2026",
-    author: "Laboratorio de IA Espacial",
+    author: "Albert Daniel Gaviria Zapata",
     readTime: "14 min",
     image: "/assets/img/geoai_after.webp",
     content: `
       <section class="space-y-8">
         <p class="text-xl text-slate-600 font-light leading-relaxed">
-          La inteligencia artificial no reemplaza al topógrafo — lo potencia. En DevGiz, hemos desarrollado modelos de visión computacional entrenados específicamente en ortofotografía colombiana, capaces de identificar mejoras no declaradas, inconsistencias de linderos y anomalías geométricas con una precisión que supera los métodos manuales.
+          La inteligencia artificial no reemplaza al topógrafo — lo potencia. En DevGiz trabajamos con modelos de visión computacional aplicados a ortofotografía para apoyar la identificación de mejoras no declaradas, inconsistencias de linderos y anomalías geométricas, siempre con revisión profesional de los resultados.
         </p>
 
         <h2 class="text-3xl font-black text-[#1a1a1a] pt-8">El Pipeline de Detección AI</h2>
-        <p>Nuestro motor combina redes convolucionales profundas (CNN) con el estándar LADM-COL para generar diagnósticos automatizados que incluyen la segmentación de construcciones, la estimación volumétrica y la clasificación de uso de suelo — todo validado contra la normativa del IGAC y la Resolución 1040/2020.</p>
+        <p>Nuestro motor combina redes convolucionales profundas (CNN) con el estándar LADM-COL para generar diagnósticos automatizados que incluyen la segmentación de construcciones, la estimación volumétrica y la clasificación de uso de suelo — con reglas basadas en la normativa catastral vigente.</p>
 
-        <h2 class="text-3xl font-black text-[#1a1a1a] pt-8">Casos de Uso Reales</h2>
-        <p>En el Valle del Cauca, nuestro modelo detectó más de 3,200 mejoras informales que representaban una fuga fiscal estimada de $4,800M COP anuales. En Villavicencio, la validación cruzada con el VUR permitió sanear 1,847 inconsistencias registrales en 48 horas — un proceso que manualmente habría tomado 6 meses.</p>
+        <h2 class="text-3xl font-black text-[#1a1a1a] pt-8">Casos de Uso (ilustrativos)</h2>
+        <p>Caso ilustrativo / demostración técnica con datos ficticios: en un municipio de ejemplo, un modelo de este tipo puede priorizar zonas con posibles mejoras no incorporadas al catastro y cruzarlas con información registral para que el equipo profesional las revise. Los resultados reales dependen de la calidad de los insumos y no se presentan aquí cifras de clientes.</p>
       </section>
     `,
     lab: <GeoAILab />,
     sidebar: {
       metrics: [
-        { label: "Precisión", value: "97.8% mAP" },
+        { label: "Demostración", value: "Datos ficticios" },
         { label: "Modelo", value: "CNN Geo-Spatial" },
-        { label: "Velocidad", value: "12K ha/hora" }
+        { label: "Revisión", value: "Profesional" }
       ],
       relatedProject: "Detección AI"
     }
@@ -1242,6 +1242,9 @@ export default function BlogPostPage() {
             </div>
 
             {/* Immersion Lab - This makes it unique */}
+            <p className="mb-2 inline-block px-3 py-1 rounded-full border border-amber-500/40 bg-amber-50 text-amber-800 text-xs font-bold">
+              Demostración con datos ficticios
+            </p>
             {post.lab}
 
             <div 

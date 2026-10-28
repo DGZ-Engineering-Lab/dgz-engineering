@@ -1,5 +1,13 @@
 // Base de datos comercial y técnica de los 10 servicios de DevGiz
 
+// Avisos de precio (Ley 1480 de 2011, Estatuto del Consumidor: información clara
+// sobre precio, impuestos y condiciones). Se reutilizan en OffersSection y auditOffer.
+export const PRICE_NOTES = {
+  currency: "Valores en pesos colombianos (COP), IVA no incluido; se liquida en la factura cuando la operación lo cause.",
+  validity: "Precios de referencia vigentes a octubre de 2026; el valor final se confirma en cotización formal escrita.",
+  deposit: "El anticipo se descuenta del valor total; condiciones de reembolso según la propuesta firmada.",
+};
+
 export const SERVICES_DATA = {
   "gis-geointelligence": {
     id: "SVC-C1-01",
@@ -12,9 +20,9 @@ export const SERVICES_DATA = {
     iconName: "Globe",
     concept: "Convertimos datos geográficos crudos en inteligencia estratégica accionable para la planeación urbana, la administración catastral y la toma de decisiones corporativas avanzadas.",
     metrics: [
-      { label: "Tiempo de Carga", value: "< 2s" },
-      { label: "Precisión Cartográfica", value: "Subcentimétrica" },
-      { label: "Cumplimiento Normativo", value: "100%" }
+      { label: "Estándar de Referencia", value: "LADM-COL v3.0" },
+      { label: "Servicios", value: "OGC (WMS / WFS)" },
+      { label: "Precisión Cartográfica", value: "Según insumos y escala" }
     ],
     problemSolved: "Las entidades territoriales e industrias a menudo operan con cartografía desactualizada, bases de datos geográficas fragmentadas e incompatibilidades entre sistemas que retrasan trámites y causan imprecisiones jurídicas.",
     solution: "Integramos visores WebGIS de alto rendimiento y motores espaciales vectorizados que consolidan toda la dinámica del territorio bajo estándares internacionales abiertos y soberanos.",
@@ -35,7 +43,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["Shapefiles (.shp)", "GeoJSON", "GeoPackage (.gpkg)", "KML/KMZ", "Rásters (TIFF/DEM)"],
       outputs: ["Visores WebGIS Interactivos", "Archivos GML Estructurados", "APIs OGC (WMS, WFS)", "Archivos .XTF (INTERLIS)"],
-      compliance: ["ISO 19152 (LADM)", "Estándar LADM-COL v3.0 (IGAC/SNR)", "Open Geospatial Consortium (OGC)", "ICDE (Infraestructura de Datos Espaciales de Colombia)"],
+      compliance: ["Metodología alineada con ISO 19152 (LADM)", "Modelo LADM-COL v3.0 publicado por IGAC/SNR", "Open Geospatial Consortium (OGC)", "ICDE (Infraestructura de Datos Espaciales de Colombia)"],
       architecture: "Arquitectura basada en visores livianos React alimentados por teselas vectoriales en caché geodistribuida, interactuando de forma asíncrona con bases de datos PostGIS centralizadas y optimizadas a través de APIs geoespaciales escalables."
     },
     marketplace: [
@@ -43,7 +51,7 @@ export const SERVICES_DATA = {
         name: "Piloto WebGIS Municipal",
         // Precio confirmado por Daniel (2026-10-15).
         price: "COP 18.000.000",
-        priceNote: "Precio fijo + IVA",
+        priceNote: `${PRICE_NOTES.currency} ${PRICE_NOTES.validity} ${PRICE_NOTES.deposit}`,
         // Anticipo por link de pago Wompi (sin backend). Si la variable no está
         // definida en Vercel, el botón de anticipo no se muestra.
         deposit: {
@@ -68,7 +76,7 @@ export const SERVICES_DATA = {
           "Soporte estricto LADM-COL e INTERLIS",
           "Módulos avanzados de edición topológica",
           "Integración directa con bases de datos locales",
-          "Soporte técnico preferente 24/7"
+          "Soporte técnico preferente (horario según contrato)"
         ]
       },
       {
@@ -78,8 +86,8 @@ export const SERVICES_DATA = {
         deliverables: [
           "Despliegue completo en nube soberana propia",
           "Código fuente bajo licenciamiento especializado",
-          "Garantía de cumplimiento legal nacional absoluto",
-          "Integraciones a la medida con SNR y catastros"
+          "Acompañamiento en la revisión del cumplimiento normativo aplicable",
+          "Integraciones a la medida con los servicios que habiliten SNR y gestores catastrales"
         ]
       }
     ]
@@ -96,9 +104,9 @@ export const SERVICES_DATA = {
     iconName: "BarChart3",
     concept: "Transformamos flujos masivos de datos crudos en dashboards ejecutivos de alto impacto, analítica predictiva y modelos estadísticos que maximizan la eficiencia operativa de tu negocio.",
     metrics: [
-      { label: "Velocidad de Consulta", value: "< 5ms (Polars)" },
-      { label: "Volumen de Datos", value: "Terabytes" },
-      { label: "Automatización", value: "100% Desatendida" }
+      { label: "Motor Analítico", value: "Polars / DuckDB" },
+      { label: "Volumen de Datos", value: "Escalable" },
+      { label: "Automatización", value: "Procesos programados" }
     ],
     problemSolved: "Las compañías acumulan millones de registros de operaciones, clientes o predios en hojas de cálculo y bases de datos aisladas, perdiendo de vista patrones críticos y demorando la toma de decisiones por reportes manuales lentos.",
     solution: "Construimos pipelines de analítica in-memory ultrarrápidos y tableros interactivos e integrales de Business Intelligence que actualizan y cruzan tus métricas clave de forma instantánea.",
@@ -119,7 +127,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["CSV / Excel masivos", "Parquet / Orc", "Bases de datos SQL/NoSQL", "APIs JSON/REST"],
       outputs: ["Tableros Interactivos (BI)", "Modelos Parquet particionados", "Reportes PDF automatizados", "Alertas en tiempo real (Slack/Email)"],
-      compliance: ["ISO/IEC 27001 (Seguridad)", "GDPR / Ley 1581 (Habeas Data)", "Estándares OGC para metadatos analíticos"],
+      compliance: ["Buenas prácticas inspiradas en ISO/IEC 27001 (sin certificación)", "Ley 1581 de 2012 (Habeas Data)", "Estándares OGC para metadatos analíticos"],
       architecture: "Pipelines de datos vectorizados con Polars y DuckDB para consultas analíticas ultrarrápidas, desplegados sobre servidores distribuidos e integrados de forma nativa en visores ejecutivos web con animaciones interactivas."
     },
     marketplace: [
@@ -160,9 +168,9 @@ export const SERVICES_DATA = {
     iconName: "Brain",
     concept: "Diseñamos e implementamos modelos de IA aplicada para clasificar imágenes satelitales, automatizar tareas documentales catastrales y agilizar procesos operacionales técnicos mediante agentes cognitivos.",
     metrics: [
-      { label: "Precisión de Modelos", value: "95% (Computer Vision)" },
-      { label: "Reducción de Tiempos", value: "Hasta 85%" },
-      { label: "Soporte Cognitivo", value: "24/7 Autónomo" }
+      { label: "Enfoque", value: "Computer Vision + LLM" },
+      { label: "Resultados", value: "Con revisión profesional" },
+      { label: "Precisión", value: "Se mide en cada proyecto" }
     ],
     problemSolved: "Procesos manuales como la detección de construcciones informales, la digitalización de folios de registro o el análisis de inconsistencias topológicas consumen miles de horas hombre y conllevan a errores costosos.",
     solution: "Desplegamos modelos avanzados de visión artificial, procesamiento de lenguaje natural y agentes inteligentes que automatizan los flujos de datos del territorio sin intervención manual.",
@@ -183,7 +191,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["Imágenes Satelitales (TIF/JPG)", "Documentos PDF/Escaneados", "Folios de Registro (SNR)", "Textos en Lenguaje Natural"],
       outputs: ["Polígonos de Construcción Identificados", "Base de datos estructurada con datos de escrituras", "Agentes de Chat Inteligentes", "Alertas y clasificaciones predictivas"],
-      compliance: ["Ethics Guidelines for Trustworthy AI", "ISO/IEC 42001 (Inteligencia Artificial)", "Estándares de interoperabilidad de la ICDE"],
+      compliance: ["Ethics Guidelines for Trustworthy AI", "Referencia ISO/IEC 42001 (sin certificación)", "Estándares de interoperabilidad de la ICDE"],
       architecture: "Modelos neuronales convolucionales (CNN) y transformadores (LLM) alojados en infraestructuras GPU de alto rendimiento, orquestados mediante FastMCP y FastAPI para interactuar dinámicamente con los sistemas centrales del cliente."
     },
     marketplace: [
@@ -223,9 +231,9 @@ export const SERVICES_DATA = {
     iconName: "Building",
     concept: "Planificamos, diseñamos y modelamos proyectos de edificación integrando datos geográficos en tiempo real y gemelos digitales BIM que optimizan costos, sostenibilidad y cumplimiento legal.",
     metrics: [
-      { label: "Optimización BIM", value: "Clash Detection 100%" },
-      { label: "Ahorro en Construcción", value: "Hasta 15%" },
-      { label: "Integridad del Entorno", value: "Exactitud GIS" }
+      { label: "Optimización BIM", value: "Clash Detection" },
+      { label: "Integración", value: "BIM + GIS" },
+      { label: "Contexto del Entorno", value: "Capas GIS" }
     ],
     problemSolved: "Muchos diseños conceptuales de arquitectura fallan al integrarse con la topografía real, provocando sobrecostos por movimientos de tierras inesperados, problemas de linderos legales o retrasos en licencias de construcción.",
     solution: "Fusionamos el modelado conceptual clásico con geodatabases de alta precisión y gemelos digitales BIM, permitiendo validar la viabilidad física, ambiental y jurídica de cada diseño desde el primer día.",
@@ -246,7 +254,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["Estudios de Suelos", "Nubes de Puntos LiDAR", "Parámetros Urbanísticos del POT", "Conceptos de Diseño"],
       outputs: ["Modelos BIM (Revit/IFC)", "Planimetría Digital e Implantes", "Renders e Immersiones 3D", "Estudios Geotécnicos e Hidrológicos"],
-      compliance: ["Estándares ISO 19650 (BIM)", "Norma Sismo Resistente NSR-10", "Planes de Ordenamiento Territorial (POT) locales", "LADM-COL v3.0 (Submodelo de Construcción)"],
+      compliance: ["Referencia ISO 19650 (BIM)", "Norma Sismo Resistente NSR-10", "Planes de Ordenamiento Territorial (POT) locales", "LADM-COL v3.0 (Submodelo de Construcción)"],
       architecture: "Flujos coordinados utilizando Revit, Civil 3D y ArcGIS Pro, vinculando modelos geométricos paramétricos directamente con bases de datos espaciales y plataformas web de visualización en 3D interactivo."
     },
     marketplace: [
@@ -286,9 +294,9 @@ export const SERVICES_DATA = {
     iconName: "Route",
     concept: "Planificamos, monitoreamos y auditamos proyectos viales complejos mediante topografía láser, fotogrametría aérea y monitoreo de avance de obra en tiempo real.",
     metrics: [
-      { label: "Precisión de Pendiente", value: "< 0.5%" },
-      { label: "Frecuencia de Monitoreo", value: "Semanal" },
-      { label: "Control de Volúmenes", value: "Tolerancia subcentimétrica" }
+      { label: "Insumos", value: "LiDAR / Fotogrametría" },
+      { label: "Frecuencia de Monitoreo", value: "Según contrato" },
+      { label: "Control de Volúmenes", value: "Según precisión del levantamiento" }
     ],
     problemSolved: "El desarrollo de infraestructura vial suele enfrentar desviaciones presupuestarias críticas debido a cálculos erróneos en el movimiento de tierras, falta de inventarios viales precisos e ineficiencia en el control de contratistas.",
     solution: "Implementamos sistemas de supervisión geoespacial de alta frecuencia, generando modelos digitales del terreno precisos (LiDAR y Drones) para auditar cada fase de la obra y controlar la inversión.",
@@ -349,9 +357,9 @@ export const SERVICES_DATA = {
     iconName: "Sprout",
     concept: "Optimizamos el rendimiento de cultivos y la eficiencia de insumos mediante teledetección satelital, análisis multiespectral con drones, zonificación de suelos y modelos predictivos climáticos.",
     metrics: [
-      { label: "Ahorro de Agroinsumos", value: "Hasta 20%" },
-      { label: "Precisión de Mapeo", value: "Hasta 5 cm/pixel" },
-      { label: "Aumento de Productividad", value: "10% - 15%" }
+      { label: "Índices", value: "NDVI y similares" },
+      { label: "Resolución de Mapeo", value: "Según sensor y altura de vuelo" },
+      { label: "Enfoque", value: "Agricultura de precisión" }
     ],
     problemSolved: "Los productores agrícolas aplican fertilizantes, agua y plaguicidas de forma uniforme en todo el lote, ignorando la variabilidad interna de los suelos. Esto incrementa costos ambientales y reduce la productividad global.",
     solution: "Desplegamos un sistema analítico que sectoriza tus campos según su salud foliar, humedad de suelo e índices de nitrógeno, aplicando insumos únicamente donde y cuando se necesitan.",
@@ -410,14 +418,14 @@ export const SERVICES_DATA = {
     tagline: "Sostenibilidad Territorial Respaldada por Datos Empíricos",
     theme: "teal",
     iconName: "Wind",
-    concept: "Monitoreamos variables ambientales críticas, evaluamos impactos de proyectos sobre ecosistemas y garantizamos el cumplimiento normativo mediante modelado geoespacial y sensores continuos.",
+    concept: "Monitoreamos variables ambientales críticas, evaluamos impactos de proyectos sobre ecosistemas y apoyamos el cumplimiento normativo mediante modelado geoespacial y sensores continuos.",
     metrics: [
-      { label: "Monitoreo Forestal", value: "100% Automatizado" },
-      { label: "Detección de Deforestación", value: "< 24h" },
-      { label: "Precisión de Afectación", value: "Submétrica" }
+      { label: "Monitoreo Forestal", value: "Automatizado + revisión" },
+      { label: "Detección de Cambios", value: "Según revisita satelital" },
+      { label: "Precisión de Afectación", value: "Según insumos" }
     ],
     problemSolved: "Las empresas enfrentan sanciones severas, retrasos en licenciamientos y riesgos reputacionales debido a la falta de monitoreo continuo de sus impactos ambientales y a la dificultad para justificar la sostenibilidad de sus proyectos.",
-    solution: "Desplegamos un ecosistema de monitoreo geoespacial continuo, cruzando imágenes satelitales, estaciones de campo y análisis de coberturas vegetales para garantizar la sostenibilidad y el cumplimiento de las normas.",
+    solution: "Desplegamos un ecosistema de monitoreo geoespacial continuo, cruzando imágenes satelitales, estaciones de campo y análisis de coberturas vegetales para apoyar la sostenibilidad y el cumplimiento de las normas.",
     useCases: [
       {
         title: "Monitoreo Multitemporal de Deforestación",
@@ -435,7 +443,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["Imágenes Multiespectrales e Hiperspectrales", "Datos de Estaciones Hidrométricas", "Inventarios de Cobertura Terrestre", "POT y Áreas Protegidas (RUNAP)"],
       outputs: ["Mapas de Cobertura Corine Land Cover", "Estudios de Impacto Ambiental (EIA)", "Modelos de Dinámica de Inundación", "Reportes de Alertas de Deforestación"],
-      compliance: ["Directrices de la ANLA (Colombia)", "Normativas del Ministerio de Ambiente y Desarrollo Sostenible", "Metodología Corine Land Cover Adaptada para Colombia", "Estándares ISO 14001 (Gestión Ambiental)"],
+      compliance: ["Directrices de la ANLA (Colombia)", "Normativas del Ministerio de Ambiente y Desarrollo Sostenible", "Metodología Corine Land Cover Adaptada para Colombia", "Referencia ISO 14001 (Gestión Ambiental)"],
       architecture: "Flujos de análisis multiespectral continuo combinando procesamiento en la nube (Google Earth Engine) con bases de datos espaciales y visores web dinámicos accesibles para entes reguladores y equipos internos."
     },
     marketplace: [
@@ -473,11 +481,11 @@ export const SERVICES_DATA = {
     tagline: "Arquitectura Cloud Escalable para Soluciones Geoespaciales e IA",
     theme: "orange",
     iconName: "Cloud",
-    concept: "Diseñamos, escalamos y operamos infraestructuras tecnológicas sumamente robustas en la nube, garantizando el 99.9% de disponibilidad, despliegues automáticos y seguridad perimetral estricta.",
+    concept: "Diseñamos, escalamos y operamos infraestructuras tecnológicas robustas en la nube, con objetivos de disponibilidad definidos en el SLA de cada contrato, despliegues automáticos y seguridad perimetral estricta.",
     metrics: [
-      { label: "Disponibilidad (SLA)", value: "99.9%" },
-      { label: "Tiempos de Despliegue", value: "< 5 Minutos" },
-      { label: "Seguridad de Datos", value: "Cifrado End-to-End" }
+      { label: "Disponibilidad (SLA)", value: "Según contrato" },
+      { label: "Despliegues", value: "Automatizados (CI/CD)" },
+      { label: "Seguridad de Datos", value: "Cifrado en tránsito y reposo" }
     ],
     problemSolved: "Sistemas catastrales y plataformas analíticas sufren caídas constantes durante periodos de alta demanda, presentan fugas de información sensible por malas configuraciones cloud o demoran semanas en desplegar actualizaciones menores.",
     solution: "Implementamos infraestructuras basadas en contenedores autogestionados y código parametrizado (IaC) con orquestadores de despliegue automatizado y observabilidad integrada.",
@@ -498,7 +506,7 @@ export const SERVICES_DATA = {
     specs: {
       inputs: ["Configuración de Código de Infraestructura", "Repositorios de Código (Git)", "Políticas de Seguridad", "Requisitos de Carga"],
       outputs: ["Plantillas Terraform / Ansible", "Clústeres Kubernetes Operacionales", "Pipelines CI/CD (GitHub Actions / GitLab)", "Dashboards de Monitoreo (Grafana/Prometheus)"],
-      compliance: ["ISO/IEC 27001 (Seguridad de la Información)", "Estándares SOC 2 Type II", "Lineamientos de Ciberseguridad del Gobierno Digital", "AWS / Azure Well-Architected Frameworks"],
+      compliance: ["Buenas prácticas inspiradas en ISO/IEC 27001 (sin certificación)", "Proveedores de nube con informes SOC 2 (certificación del proveedor, no de DevGiz)", "Lineamientos de Ciberseguridad del Gobierno Digital", "AWS / Azure Well-Architected Frameworks"],
       architecture: "Arquitectura cloud nativa desacoplada e inmutable escrita con Terraform, implementando contenedores Docker coordinados por clústeres Kubernetes con balanceo de carga global y encriptación de datos en reposo y tránsito."
     },
     marketplace: [
@@ -518,10 +526,10 @@ export const SERVICES_DATA = {
         price: "Consultar",
         duration: "Mensual",
         deliverables: [
-          "Monitoreo proactivo 24/7 con sistemas de alertas",
+          "Monitoreo automatizado con sistemas de alertas",
           "Optimización mensual de costos de consumo en nube",
           "Administración de parches de seguridad y backups",
-          "Soporte inmediato ante caídas del sistema (SLA < 30 min)"
+          "Atención de caídas del sistema con tiempos de respuesta definidos en el SLA"
         ]
       }
     ]
@@ -538,12 +546,12 @@ export const SERVICES_DATA = {
     iconName: "Plane",
     concept: "Capturamos información geoespacial de ultra-alta definición mediante sensores aerotransportados LiDAR, cámaras fotogramétricas y sistemas térmicos operados por pilotos expertos.",
     metrics: [
-      { label: "Precisión de Georreferencia", value: "Subcentimétrica (RTK)" },
-      { label: "Densidad LiDAR", value: "> 100 puntos/m2" },
-      { label: "Rendimiento de Vuelo", value: "Hasta 500 ha/día" }
+      { label: "Georreferenciación", value: "GNSS RTK + puntos de control" },
+      { label: "Densidad LiDAR", value: "Según sensor y vuelo" },
+      { label: "Rendimiento de Vuelo", value: "Según área y permisos" }
     ],
     problemSolved: "La topografía tradicional por tierra para grandes extensiones de terreno es lenta, costosa y peligrosa en zonas de difícil acceso. Además, no captura el detalle volumétrico total requerido para ingeniería avanzada.",
-    solution: "Desplegamos vehículos aéreos no tripulados (UAVs) equipados con sensores de última generación, capturando millones de puntos de datos en minutos con una precisión georreferenciada absoluta.",
+    solution: "Desplegamos vehículos aéreos no tripulados (UAVs) equipados con sensores de última generación, capturando millones de puntos de datos con georreferenciación de alta precisión (según equipo, vuelo y puntos de control).",
     useCases: [
       {
         title: "Levantamiento Fotogramétrico de Zonas Urbanas",
@@ -601,8 +609,8 @@ export const SERVICES_DATA = {
     iconName: "Code",
     concept: "Diseñamos y programamos aplicaciones a la medida, plataformas WebGIS de alto desempeño y APIs robustas enfocadas en el geoprocesamiento, la automatización y el control de flujos de datos.",
     metrics: [
-      { label: "Tiempos de Respuesta API", value: "< 15ms" },
-      { label: "Seguridad de Código", value: "OWASP Top 10" },
+      { label: "API", value: "FastAPI / REST" },
+      { label: "Seguridad de Código", value: "Buenas prácticas OWASP Top 10" },
       { label: "Arquitectura", value: "Escalable / Reactiva" }
     ],
     problemSolved: "Las organizaciones utilizan software GIS comercial que requiere costosas licencias anuales por usuario, o contratan software a medida tradicional que no sabe procesar datos espaciales masivos provocando caídas y lentitud crítica.",

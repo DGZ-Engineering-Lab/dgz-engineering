@@ -20,11 +20,12 @@ import {
 import Link from "next/link";
 import Logo from "../../components/Logo";
 
+// Cifras verificables tomadas de la hoja de vida del fundador (ver ProfessionalProfile.jsx).
 const ACHIEVEMENTS = [
-  { label: "Municipios Actualizados", value: 29, suffix: "", desc: "Soberanía fiscal activa en entes territoriales." },
-  { label: "Predios Procesados", value: 1.2, suffix: "M+", desc: "Bases de datos armonizadas bajo LADM-COL." },
-  { label: "Integraciones OGC", value: 15, suffix: "+", desc: "Interoperabilidad nativa con IGAC/SNR." },
-  { label: "Precisión Técnica", value: 99.9, suffix: "%", desc: "Garantía de seguridad jurídica del dato." }
+  { label: "Experiencia SIG desde", value: 2021, suffix: "", desc: "Año de inicio de la experiencia laboral del fundador (CV)." },
+  { label: "Organizaciones", value: 8, suffix: "", desc: "Empleadores y proyectos en la hoja de vida del fundador." },
+  { label: "Departamentos en campo", value: 4, suffix: "", desc: "Antioquia, Cauca, Atlántico y Meta." },
+  { label: "Cursos y certificados", value: 14, suffix: "", desc: "Formación complementaria (SENA, ICDE, Coursera)." }
 ];
 
 const DIRECTORS = [
@@ -34,8 +35,8 @@ const DIRECTORS = [
     desc: "Estudiante de Ingeniería en Desarrollo Territorial y Profesional SIG. Diseñador de la plataforma SaaS DevGiz bajo el estándar LADM-COL v3.0. Especialista en PostgreSQL/PostGIS, SQL Server, automatización con Python (GeoPandas, Pandas, Shapely), interfaces web interactivas (TypeScript, React, Next.js), coordinador de brigadas de barrido predial, operador de drones/RPAS y especialista en telemetría GNSS/GPS RTK.",
     initials: "AGZ",
     icon: Cpu,
-    publicKey: "ID: 1007533510 // LADM-COL V3.0 // MEDELLÍN",
-    signatureHash: "Albert Daniel Gaviria Zapata // IGAC QA/QC // ICDE Certified",
+    publicKey: "MATRÍCULA COPNIA VIGENTE // LADM-COL V3.0 // MEDELLÍN",
+    signatureHash: "Albert Daniel Gaviria Zapata // QA/QC catastral // Formación ICDE",
     status: "ONLINE",
     latency: "6ms",
     coordinates: "LAT: 6.2442° N // LON: 75.5812° W", // Medellín, Colombia
@@ -43,39 +44,39 @@ const DIRECTORS = [
       { name: "Estándar LADM-COL v3.0 & ISO 19152", level: 100 },
       { name: "QGIS (PyQGIS) & ArcGIS Pro Suite", level: 100 },
       { name: "Bases Espaciales (PostGIS / SQL Server)", level: 95 },
-      { name: "Drones RPAS & Telemetría GNSS RTK (<0.05m)", level: 95 }
+      { name: "Drones RPAS & Receptores GNSS RTK", level: 95 }
     ],
     logs: [
       "[INIT] Cargando entorno de ingeniería territorial DevGiz...",
-      "[MODEL] Modelo conceptual y físico LADM_COL_V3_0 validado conforme a IGAC/SNR...",
+      "[MODEL] Modelo conceptual y físico alineado con LADM_COL_V3_0...",
       "[AUDIT] Verificación QA/QC de reconocimiento predial y consistencia topológica...",
-      "[SURVEY] Conexión GNSS RTK submétrica establecida (< 0.05 m de tolerancia)...",
-      "[VERIFIED] Credenciales institucionales ICDE, UC Davis y SENA autenticadas."
+      "[SURVEY] Experiencia en levantamientos con receptores GNSS RTK...",
+      "[INFO] Formación: cursos ICDE, UC Davis (Coursera) y SENA."
     ]
   },
   { 
-    name: "Dirección Estratégica", 
-    role: "Gestión Operativa & Normativa", 
-    desc: "Líderes en la articulación de políticas nacionales de catastro multipropósito y cumplimiento de estándares internacionales ISO 19152. Expertos en viabilidad jurídica, planeación territorial y estructuración fiscal.",
+    name: "Enfoque Normativo", 
+    role: "Área de trabajo (no es un equipo adicional)", 
+    desc: "Componente normativo de los proyectos que dirige el fundador: revisión de la normativa catastral vigente, metodología alineada con LADM-COL / ISO 19152 y apoyo a la viabilidad jurídica y la planeación territorial. Cuando un proyecto lo requiere, se coordina con profesionales externos idóneos.",
     initials: "DE",
     icon: Shield,
-    publicKey: "0xDGZ_DIR_12C4A...A21F",
+    publicKey: "ÁREA DE TRABAJO // NORMATIVA CATASTRAL",
     signatureHash: "f1a8e2cb9397f371190bc21cd38ea3fc2de08ab78b32d2011b98c9fcf82acde1",
     status: "SECURE",
     latency: "14ms",
-    coordinates: "LAT: 4.598° N // LON: 74.076° W", // Bogotá, IGAC Geocentro
+    coordinates: "LAT: 6.2442° N // LON: 75.5812° W", // Medellín, Colombia
     capabilities: [
       { name: "Políticas Catastrales Nacionales", level: 96 },
-      { name: "Cumplimiento Estándar ISO 19152", level: 98 },
+      { name: "Metodología alineada con ISO 19152", level: 98 },
       { name: "Estrategias de Financiamiento Territorial", level: 94 },
-      { name: "Articulación IGAC / SNR / Catastros", level: 97 }
+      { name: "Normativa IGAC / SNR / Gestores Catastrales", level: 97 }
     ],
     logs: [
-      "[AUTH] Validando firmas institucionales ICDE...",
-      "[COMPLIANCE] Verificando correspondencia de folios inmobiliarios SNR...",
-      "[AUDIT] Auditoría del Catastro del Valle: Sincronización completa aprobada.",
-      "[OK] Articulación SNR e IGAC certificada bajo resolución nacional de tierras.",
-      "[SUCCESS] Estructura jurídica validada para el despliegue del piloto."
+      "[INIT] Cargando lineamientos normativos de catastro multipropósito...",
+      "[COMPLIANCE] Revisión de correspondencia catastro-registro (metodología)...",
+      "[INFO] Referencia: modelo LADM-COL / ISO 19152 (sin certificación).",
+      "[INFO] Coordinación con las entidades competentes según cada proyecto.",
+      "[READY] Enfoque normativo disponible para nuevos proyectos."
     ]
   }
 ];
@@ -84,16 +85,16 @@ const TECH_STACK = [
   {
     name: "Polars & DuckDB",
     category: "Procesamiento Analítico Masivo",
-    desc: "Motor in-memory para análisis geoespacial masivo sin base de datos tradicional, procesando millones de predios por segundo con mínima huella de memoria.",
-    metric: "1.2M+ predios/seg",
-    latency: "< 8.5ms query time",
+    desc: "Motor in-memory para análisis geoespacial de grandes volúmenes de predios sin base de datos tradicional y con baja huella de memoria.",
+    metric: "Columnar / Parquet",
+    latency: "Ejecución lazy",
     accent: "from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400 shadow-cyan-500/5",
     accentColor: "#06b6d4",
     icon: Database,
     snippet: `import polars as pl
 
 # Ingesta y filtrado de parcelas catastrales
-df = pl.scan_parquet("valle_predios.parquet")
+df = pl.scan_parquet("predios_ejemplo.parquet")
 result = df.filter(
     (pl.col("area_registrada") > 500) & 
     (pl.col("inconsistencias") == 0)
@@ -104,9 +105,9 @@ print(f"Predios listos para exportación LADM-COL: {len(result)}")`
   {
     name: "FastAPI & Python Geo",
     category: "Servicios Geoespaciales Async",
-    desc: "Backends asíncronos ultrarrápidos para la automatización e ingesta de parcelas con validación topológica instantánea vía Shapely y Fiona.",
-    metric: "100% Async pipeline",
-    latency: "< 12ms API response",
+    desc: "Backends asíncronos para la automatización e ingesta de parcelas con validación topológica vía Shapely y Fiona.",
+    metric: "Async pipeline",
+    latency: "OpenAPI",
     accent: "from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400 shadow-emerald-500/5",
     accentColor: "#10b981",
     icon: Cpu,
@@ -131,9 +132,9 @@ async def verify_topology(parcel: ParcelTopology):
   {
     name: "LADM-COL & INTERLIS",
     category: "Interoperabilidad Soberana",
-    desc: "Alineación estricta al modelo de Catastro Multipropósito de Colombia (ISO 19152), generando archivos de transferencia GML estructurados nativos.",
+    desc: "Metodología alineada con el modelo de Catastro Multipropósito de Colombia (LADM-COL / ISO 19152), generando archivos de transferencia estructurados.",
     metric: "LADM-COL v3.1",
-    latency: "100% ISO 19152",
+    latency: "Alineado ISO 19152",
     accent: "from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400 shadow-amber-500/5",
     accentColor: "#f59e0b",
     icon: Activity,
@@ -158,7 +159,7 @@ END LADM_COL_V3_1.`
     category: "Sistemas de Escritorio de Élite",
     desc: "Desarrollo de complementos nativos en PyQt5 para digitalización avanzada, topología autocurativa y conexión directa a repositorios en la nube.",
     metric: "Qt5 / C++ Core",
-    latency: "Zero UI Latency",
+    latency: "Escritorio",
     accent: "from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-400 shadow-violet-500/5",
     accentColor: "#8b5cf6",
     icon: Code,
@@ -179,12 +180,12 @@ def load_validated_parcels(self, uri: str):
 const SIMULATOR_SCENARIOS = [
   {
     id: "cartago",
-    name: "Cartago (Valle)",
+    name: "Municipio A (ficticio)",
     context: "Desfase Topológico Multitemporal",
     normative: "Resolución Conjunta IGAC 1101 / SNR 11344",
     description: "Desplazamiento cartográfico y solapes en límites rurales debido a levantamientos de distintas épocas sin control geodésico común. Bloquea el registro de predios.",
-    initialStats: { topologyError: "18.4% solapes", interlis: "Sin estructurar", snrStatus: "Rechazado por SNR", taxLeak: "-22.5% recaudo" },
-    solvedStats: { topologyError: "0.00% (Sanado)", interlis: "LADM-COL v3.1 Válido", snrStatus: "Conciliado e Inscrito", taxLeak: "+18.2% incremento" },
+    initialStats: { topologyError: "Solapes (ejemplo)", interlis: "Sin estructurar", snrStatus: "Con observaciones", taxLeak: "Posible pérdida de recaudo" },
+    solvedStats: { topologyError: "Corregido (demo)", interlis: "Estructura LADM-COL de ejemplo", snrStatus: "Listo para trámite", taxLeak: "Efecto ilustrativo" },
     areaFisica: 1450.25,
     areaJuridica: 1250.00,
     toleranceThreshold: 15.0,
@@ -208,12 +209,12 @@ END LADM_COL_V3_1.`
   },
   {
     id: "yumbo",
-    name: "Yumbo (Industrial)",
+    name: "Municipio B (ficticio)",
     context: "Traslape con Reserva Forestal",
     normative: "Ley 1955 de 2019 / Determinantes Ambientales",
     description: "Predio industrial con expansión sobre la ronda protectora del río y zona forestal nacional protegida. Requiere zonificación LADM-COL para regularización.",
-    initialStats: { topologyError: "Alerta ambiental", interlis: "Sin relacionar", snrStatus: "FMI Bloqueado", taxLeak: "-15.0% sanciones" },
-    solvedStats: { topologyError: "Servidumbre legal", interlis: "Restricción Ambiental", snrStatus: "Inscrito con Limitación", taxLeak: "Cumplimiento 100%" },
+    initialStats: { topologyError: "Alerta ambiental", interlis: "Sin relacionar", snrStatus: "Con observaciones", taxLeak: "Posibles sanciones" },
+    solvedStats: { topologyError: "Restricción identificada", interlis: "Restricción Ambiental", snrStatus: "Listo para trámite", taxLeak: "Efecto ilustrativo" },
     areaFisica: 3200.50,
     areaJuridica: 3200.50,
     toleranceThreshold: 5.0,
@@ -237,12 +238,12 @@ END LADM_COL_V3_1.`
   },
   {
     id: "palmira",
-    name: "Palmira (Agrícola)",
+    name: "Municipio C (ficticio)",
     context: "Discrepancia Catastro-Registro",
     normative: "Resolución Conjunta SNR-IGAC de Tolerancias",
     description: "Diferencia crítica de cabida (área medida en levantamiento físico vs escritura pública de 1974). Paraliza el crédito agropecuario y la transferencia del bien.",
-    initialStats: { topologyError: "Desfase 28.5%", interlis: "Sin vincular", snrStatus: "Rechazado por Registro", taxLeak: "-10.0% avalúo" },
-    solvedStats: { topologyError: "0.0% (Ajustado)", interlis: "Vinculado SNR", snrStatus: "Folio Actualizado", taxLeak: "+15.0% avalúo real" },
+    initialStats: { topologyError: "Desfase (ejemplo)", interlis: "Sin vincular", snrStatus: "Con observaciones", taxLeak: "Avalúo desactualizado" },
+    solvedStats: { topologyError: "Ajustado (demo)", interlis: "Vínculo físico-jurídico", snrStatus: "Listo para trámite", taxLeak: "Efecto ilustrativo" },
     areaFisica: 850.00,
     areaJuridica: 620.00,
     toleranceThreshold: 20.0,
@@ -443,9 +444,9 @@ export default function AboutPage() {
               </motion.h2>
               <div className="space-y-8">
                 {[
-                  { num: "01", title: "Rigor Técnico", desc: "Cada línea de código y cada polígono procesado cumple estrictamente con el estándar ISO 19152 y la normativa nacional LADM-COL.", icon: Shield },
+                  { num: "01", title: "Rigor Técnico", desc: "Trabajamos con una metodología alineada con el estándar ISO 19152 y el modelo nacional LADM-COL, con controles de calidad en cada entrega.", icon: Shield },
                   { num: "02", title: "Independencia", desc: "Promovemos la autonomía de las entidades territoriales, eliminando la dependencia de licencias privativas y formatos cerrados.", icon: Globe },
-                  { num: "03", title: "Innovación de Élite", desc: "Implementamos arquitecturas de alto rendimiento (Polars, DuckDB) para el procesamiento masivo de datos que otros sistemas no pueden manejar.", icon: Zap }
+                  { num: "03", title: "Innovación Aplicada", desc: "Implementamos arquitecturas de alto rendimiento (Polars, DuckDB) para el procesamiento de grandes volúmenes de datos territoriales.", icon: Zap }
                 ].map((item, idx) => (
                   <motion.div 
                     key={idx}
@@ -473,10 +474,10 @@ export default function AboutPage() {
               <h3 className="text-3xl font-black mb-8 tracking-tight">¿Por qué elegir DevGiz?</h3>
               <div className="space-y-6">
                 {[
-                  "Soluciones internacionales con presencia en toda América.",
-                  "Dominio total de la normativa LADM-COL e interoperabilidad IGAC/SNR.",
-                  "Arquitectura de alto rendimiento para procesamiento masivo.",
-                  "Transparencia total mediante auditoría de datos geoespaciales."
+                  "Servicio remoto desde Medellín para proyectos en Colombia.",
+                  "Experiencia aplicada en LADM-COL y en los formatos de intercambio IGAC/SNR.",
+                  "Arquitectura de alto rendimiento para grandes volúmenes de datos.",
+                  "Transparencia mediante auditoría de datos geoespaciales."
                 ].map((item, i) => (
                   <motion.div 
                     key={i} 
@@ -509,8 +510,8 @@ export default function AboutPage() {
             animate={impactInView ? "visible" : "hidden"}
             variants={stagger}
           >
-            <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.28em]">Strategic Results // KPI Report</motion.div>
-            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Impacto en <span className="text-slate-500 italic font-light">Cifras</span></motion.h2>
+            <motion.div variants={fadeUp} className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.28em]">Datos del CV del fundador</motion.div>
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter">Trayectoria en <span className="text-slate-500 italic font-light">Cifras</span></motion.h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
             {ACHIEVEMENTS.map((item, i) => (
@@ -556,9 +557,12 @@ export default function AboutPage() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-none">
                 Simulador Catastral <br /> <span className="text-slate-400 font-light italic">LADM-COL v3.1</span>
               </h2>
+              <p className="inline-block px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-bold">
+                Demostración con datos ficticios
+              </p>
             </div>
             <p className="text-slate-400 font-light leading-relaxed max-w-lg">
-              La falta de interoperabilidad entre catastro y registro cuesta millones a los municipios colombianos. Nuestro motor automatiza la corrección física de predios y concilia su estado jurídico en segundos.
+              La falta de interoperabilidad entre catastro y registro genera costos a los municipios. Esta demostración, con municipios y cifras ficticios, muestra cómo abordamos la corrección física de predios y la conciliación con su estado jurídico.
             </p>
           </div>
 
@@ -802,7 +806,7 @@ export default function AboutPage() {
                               ...prev,
                               "[INTERLIS] Iniciando compilación de modelo LADM_COL_V3_1...",
                               "[INTERLIS] Validando correspondencia de tipos y atributos...",
-                              "[SUCCESS] Archivo .XTF compilado exitosamente. Cumplimiento ISO 19152 verificado.",
+                              "[SUCCESS] Archivo .XTF de ejemplo generado (demostración, sin validación oficial).",
                               "[REQUERIDO] Paso 3: Conciliar áreas físicas (Catastro) vs jurídicas (Registro/SNR)."
                             ]);
                             setActiveStep(3);
@@ -888,7 +892,7 @@ export default function AboutPage() {
                               "[CONCILIADOR] Analizando tolerancia legal según Resolución Conjunta...",
                               `[INFO] Área Física: ${SIMULATOR_SCENARIOS[selectedScenarioIndex].areaFisica} m² | Área Jurídica: ${SIMULATOR_SCENARIOS[selectedScenarioIndex].areaJuridica} m²`,
                               `[SUCCESS] Discrepancia conciliada dentro del margen legal de tolerancia.`,
-                              "[REQUERIDO] Paso 4: Realizar estampillado criptográfico para habilitar soberanía fiscal."
+                              "[REQUERIDO] Paso 4: Generar sello de integridad de la demostración."
                             ]);
                             setActiveStep(4);
                             if (typeof window !== "undefined" && window.dgzSynth) {
@@ -923,14 +927,14 @@ export default function AboutPage() {
                             <CheckCircle2 className="w-6 h-6" />
                           </div>
                           <div>
-                            <span className="text-[10px] font-mono text-emerald-400 font-black uppercase tracking-widest block">CERTIFICATE_DEPLOYS_SUCCESSFULLY</span>
-                            <h4 className="text-lg font-black text-white mt-1">Soberanía Fiscal Asegurada</h4>
+                            <span className="text-[10px] font-mono text-emerald-400 font-black uppercase tracking-widest block">DEMO_COMPLETED</span>
+                            <h4 className="text-lg font-black text-white mt-1">Demostración Completada</h4>
                           </div>
                           <p className="text-[10px] text-slate-400 font-light leading-relaxed">
-                            El predio ha sido incorporado al catastro multipropósito y sincronizado con SNR. Se ha emitido la firma criptográfica para garantizar la seguridad jurídica.
+                            Datos ficticios: esta demostración no tiene efectos jurídicos. En un proyecto real, el resultado se presenta al gestor catastral y a la oficina de registro competentes para su trámite.
                           </p>
                           <div className="bg-[#080d1a] p-3 rounded-lg border border-slate-900 inline-block">
-                            <span className="text-[9.5px] font-mono text-slate-500 uppercase block">EFICIENCIA FISCAL ESTIMADA</span>
+                            <span className="text-[9.5px] font-mono text-slate-500 uppercase block">EFECTO FISCAL (ILUSTRATIVO)</span>
                             <span className="text-emerald-400 font-mono font-black text-sm">{SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}</span>
                           </div>
                         </div>
@@ -950,7 +954,7 @@ export default function AboutPage() {
 
                     <div className="text-center space-y-3 mt-6">
                       <p className="text-xs text-slate-400 font-light max-w-sm">
-                        Genere la firma criptográfica de seguridad catastral para certificar la base de datos municipal.
+                        Genere un sello de integridad para cerrar la demostración (sin valor de certificación).
                       </p>
                       <button
                         type="button"
@@ -967,8 +971,8 @@ export default function AboutPage() {
                               ...prev,
                               "[ESTAMPILLADO] Generando hash criptográfico de seguridad territorial...",
                               `[HASH] SHA-256: 0x${Array.from({length: 32}, () => Math.floor(Math.random()*16).toString(16)).join("")}`,
-                              `[SUCCESS] ¡Municipio certificado bajo LADM-COL! Soberanía fiscal garantizada.`,
-                              `[FINANZAS] Incremento proyectado de recaudo impuesto predial: ${SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}`,
+                              `[SUCCESS] Escenario de demostración completado (datos ficticios; no constituye certificación).`,
+                              `[FINANZAS] Efecto en recaudo predial: ${SIMULATOR_SCENARIOS[selectedScenarioIndex].solvedStats.taxLeak}`,
                               "[SISTEMA] Simulador completado con éxito. Gracias por usar DevGiz Lab."
                             ]);
                             if (typeof window !== "undefined" && window.dgzSynth) {
@@ -1037,10 +1041,10 @@ export default function AboutPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold block">Management & Engineering Board</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 font-bold block">Founder Profile & Work Areas</span>
               </div>
               <h2 className="text-4xl font-black tracking-tighter text-white">
-                Liderazgo <span className="text-slate-500 italic font-light">Estratégico</span>
+                Fundador y <span className="text-slate-500 italic font-light">Áreas de Trabajo</span>
               </h2>
             </div>
             <p className="text-slate-400 font-light leading-relaxed max-w-md text-sm">
@@ -1051,7 +1055,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left selector - vertical tab list */}
-            <div role="tablist" aria-label="Directores de ingeniería" aria-orientation="vertical" className="lg:col-span-4 space-y-4">
+            <div role="tablist" aria-label="Perfil del fundador y áreas de trabajo" aria-orientation="vertical" className="lg:col-span-4 space-y-4">
               {DIRECTORS.map((director, i) => {
                 const isSelected = selectedDirector === i;
                 const DirIcon = director.icon;
@@ -1249,7 +1253,7 @@ export default function AboutPage() {
                     <div className="space-y-1.5 min-w-0">
                       <div className="flex items-center gap-2">
                         <Fingerprint className="w-4 h-4 text-cyan-500/60" />
-                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Protocolo de Firma Digital</span>
+                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Identificador del Perfil</span>
                       </div>
                       {verifiedSignatures[activeDirector.name] ? (
                         <div className="font-mono text-[10px] space-y-0.5 min-w-0">
@@ -1257,7 +1261,7 @@ export default function AboutPage() {
                           <p className="text-slate-500 truncate text-[10px]">SHA-256 HASH: {activeDirector.signatureHash}</p>
                         </div>
                       ) : (
-                        <p className="text-xs text-slate-400 font-light">Valide el hash criptográfico SHA-256 de seguridad jurídica para este perfil.</p>
+                        <p className="text-xs text-slate-400 font-light">Elemento visual: no es una firma digital ni tiene valor jurídico.</p>
                       )}
                     </div>
 
@@ -1276,17 +1280,17 @@ export default function AboutPage() {
                       {verifiedSignatures[activeDirector.name] ? (
                         <>
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          Validada
+                          Mostrado
                         </>
                       ) : verifyingDirector === activeDirector.name ? (
                         <>
                           <Activity className="w-3.5 h-3.5 animate-spin" />
-                          Escaneando...
+                          Cargando...
                         </>
                       ) : (
                         <>
                           <Shield className="w-3.5 h-3.5" />
-                          Validar Firma
+                          Ver Identificador
                         </>
                       )}
                     </button>

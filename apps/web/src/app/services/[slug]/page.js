@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
 import { CONTACT } from "../../../lib/seo";
+import { POLICY_VERSION } from "../../../lib/legal";
+import ConsentCheckbox from "../../../components/ConsentCheckbox";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Globe, 
@@ -225,6 +227,9 @@ export default function ServicePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  // Autorización Ley 1581 de la cotización (nunca premarcada)
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
 
   // Terminal simple properties
   const [terminalLog, setTerminalLog] = useState(() => (
@@ -343,6 +348,11 @@ export default function ServicePage() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
+    if (!privacyConsent) {
+      setConsentInvalid(true);
+      document.getElementById("quote-consent")?.focus();
+      return;
+    }
     setIsSubmitting(true);
     setSubmitError("");
 
@@ -356,6 +366,9 @@ export default function ServicePage() {
           email: formData.email,
           company: formData.org,
           message: `[Servicio: ${service.title}] [Plan: ${formData.scope}]${formData.phone ? ` [Tel: ${formData.phone}]` : ""} ${formData.msg}`,
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: "service-quote",
         }),
       });
       const result = await response.json().catch(() => ({}));
@@ -369,6 +382,7 @@ export default function ServicePage() {
         );
       }
       setSubmitSuccess(true);
+      setPrivacyConsent(false); // una nueva solicitud requiere una nueva autorización
     } catch (err) {
       setSubmitError(err.message || "Fallo de red al enviar la solicitud.");
     } finally {
@@ -1737,6 +1751,17 @@ export default function ServicePage() {
                           className="w-full bg-slate-50 border border-slate-200 focus:border-cyan-500/40 hover:border-slate-300 rounded-xl px-4 py-3.5 text-xs font-mono text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-600/40 transition-all duration-300 resize-none leading-relaxed"
                         />
                       </div>
+
+                      <ConsentCheckbox
+                        id="quote-consent"
+                        finalidad="cotizacion"
+                        checked={privacyConsent}
+                        onChange={(value) => {
+                          setPrivacyConsent(value);
+                          if (value) setConsentInvalid(false);
+                        }}
+                        invalid={consentInvalid}
+                      />
 
                       {submitError && (
                         <p role="alert" className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl">

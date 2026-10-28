@@ -19,15 +19,19 @@ export default function OfficialGISDemo() {
     script.onload = () => {
       if (window.L && !mapLoaded) {
         const L = window.L;
-        const map = L.map(mapRef.current).setView([4.6486, -74.0592], 18); // Zoom in to see the ingested parcels
+        // La atribución va arriba a la derecha: las tarjetas inferiores la taparían
+        const map = L.map(mapRef.current, { attributionControl: false }).setView([4.6486, -74.0592], 18); // Zoom in to see the ingested parcels
+        L.control.attribution({ position: "topright" }).addTo(map);
 
-        // Base Layers
-        const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "© OpenStreetMap contributors"
+        // Capas base con licencia abierta y atribución (sin teselas de Google)
+        const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
         }).addTo(map);
 
-        const satellite = L.tileLayer("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
-          attribution: "© Google Maps"
+        const topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+          maxZoom: 17,
+          attribution: 'Datos: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>, SRTM | Estilo: © <a href="https://opentopomap.org" target="_blank" rel="noopener noreferrer">OpenTopoMap</a> (CC-BY-SA)'
         });
 
         // Official IGAC WMS (The background official layer)
@@ -116,7 +120,7 @@ export default function OfficialGISDemo() {
 
         L.control.layers({
           "OpenStreetMap": osm,
-          "Satélite Google": satellite
+          "Topográfico (OpenTopoMap)": topo
         }, {
           "IGAC Official WMS": wmsCatastro
         }).addTo(map);

@@ -4,6 +4,10 @@
 //
 // The SDK (~75 KB gzipped) is imported after the page is idle, and only when
 // a DSN is configured, so error monitoring never delays the first render.
+//
+// Minimización de datos: solo errores y trazas de rendimiento. Sin Session Replay
+// (grababa la pantalla del visitante) ni widget de feedback (pedía nombre y correo),
+// y sin PII por defecto (IP, cookies, encabezados de usuario).
 
 const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
@@ -13,30 +17,16 @@ async function initSentry() {
   Sentry.init({
     dsn,
 
+    // No enviar IP, cookies ni datos de usuario
+    sendDefaultPii: false,
+
     // Performance Monitoring
     tracesSampleRate: 0.3, // 30% of transactions
 
-    // Session Replay (free tier: 50 replays/mo)
-    replaysSessionSampleRate: 0.05,
-    replaysOnErrorSampleRate: 1.0,
-
-    integrations: [
-      Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration(),
-      Sentry.feedbackIntegration({
-        colorScheme: "dark",
-        buttonLabel: "Report Issue",
-        submitButtonLabel: "Send",
-        formTitle: "DGZ Bug Report",
-      }),
-    ],
+    integrations: [Sentry.browserTracingIntegration()],
 
     // Filter noisy errors
-    ignoreErrors: [
-      "ResizeObserver loop",
-      "Non-Error promise rejection",
-      "Loading chunk",
-    ],
+    ignoreErrors: ["ResizeObserver loop", "Non-Error promise rejection", "Loading chunk"],
 
     environment: process.env.NODE_ENV,
   });
@@ -59,4 +49,3 @@ export const onRouterTransitionStart = (href) => {
       .catch(() => {});
   }
 };
-

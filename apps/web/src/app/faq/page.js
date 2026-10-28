@@ -5,6 +5,8 @@ import { Plus, Minus, Search, Mail, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Logo from "../../components/Logo";
 import { FAQS } from "../../data/faqData";
+import { POLICY_VERSION, RESPONSABLE } from "../../lib/legal";
+import ConsentCheckbox from "../../components/ConsentCheckbox";
 
 function FAQAccordion({ q, a, index }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,11 +64,19 @@ export default function FAQPage() {
   const headerInView = useInView(headerRef, { once: true });
 
   const [subscribeStatus, setSubscribeStatus] = useState("idle"); // idle | sending | error
+  // Autorización Ley 1581 para el boletín (nunca premarcada)
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
 
   // Envío real por el pipeline de leads (antes solo se simulaba la confirmación y el correo se perdía)
   const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!newsletterEmail || !newsletterEmail.includes("@") || subscribeStatus === "sending") return;
+    if (!newsletterConsent) {
+      setConsentInvalid(true);
+      document.getElementById("faq-newsletter-consent")?.focus();
+      return;
+    }
     setSubscribeStatus("sending");
     try {
       const response = await fetch("/api/contact", {
@@ -77,14 +87,18 @@ export default function FAQPage() {
           email: newsletterEmail,
           company: "N/A",
           message: "[Suscripción al boletín Territorial Intelligence Brief desde /faq]",
-          // Suscribirse es el consentimiento explícito para la lista de correo.
-          consent: true,
+          // Solo con la casilla marcada se da de alta en la lista de correo.
+          consent: newsletterConsent === true,
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: "newsletter-faq",
         }),
       });
       if (!response.ok) throw new Error("subscribe_failed");
       setSubscribed(true);
       setSubscribeStatus("idle");
       setNewsletterEmail("");
+      setNewsletterConsent(false);
     } catch {
       setSubscribeStatus("error");
     }
@@ -191,6 +205,16 @@ export default function FAQPage() {
                       placeholder="Email institucional"
                       className="bg-[#fafafa] border border-slate-300 p-3 min-h-11 text-xs font-mono placeholder:text-slate-500 focus:outline-none focus:border-slate-500 focus-visible:ring-2 focus-visible:ring-slate-900 rounded-lg transition-colors"
                     />
+                    <ConsentCheckbox
+                      id="faq-newsletter-consent"
+                      finalidad="boletin"
+                      checked={newsletterConsent}
+                      onChange={(value) => {
+                        setNewsletterConsent(value);
+                        if (value) setConsentInvalid(false);
+                      }}
+                      invalid={consentInvalid}
+                    />
                     {subscribeStatus === "error" && (
                       <p id="newsletter-error" role="alert" className="text-xs text-red-700">
                         No pudimos registrar tu correo. Intenta de nuevo en unos minutos.
@@ -204,6 +228,10 @@ export default function FAQPage() {
                       <Mail aria-hidden="true" className="w-3 h-3" />
                       {subscribeStatus === "sending" ? "Enviando…" : "Suscribirse"}
                     </button>
+                    <p className="text-[11px] text-slate-500 leading-snug break-words">
+                      Puede darse de baja en cualquier momento escribiendo a{" "}
+                      <a href={`mailto:${RESPONSABLE.email}`} className="underline underline-offset-2 hover:text-slate-800">{RESPONSABLE.email}</a>.
+                    </p>
                   </form>
                 )}
               </div>

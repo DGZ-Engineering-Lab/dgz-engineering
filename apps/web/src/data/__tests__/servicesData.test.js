@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SERVICES_DATA } from "../servicesData";
+import { PRICE_NOTES, SERVICES_DATA } from "../servicesData";
 
 const services = Object.entries(SERVICES_DATA);
 
@@ -65,6 +65,17 @@ describe("marketplace tiers", () => {
         expect(tier.deposit.percent).toBeLessThanOrEqual(50);
         expect(tier.deposit.amount).toBeTruthy();
         expect(typeof tier.deposit.url).toBe("string");
+      }
+    }
+  });
+
+  it("priced tiers state currency, VAT, validity and deposit terms", () => {
+    for (const [, service] of services) {
+      for (const tier of service.marketplace ?? []) {
+        if (!/\d/.test(tier.price)) continue;
+        expect(tier.priceNote).toContain(PRICE_NOTES.currency);
+        expect(tier.priceNote).toContain(PRICE_NOTES.validity);
+        if (tier.deposit) expect(tier.priceNote).toContain(PRICE_NOTES.deposit);
       }
     }
   });
