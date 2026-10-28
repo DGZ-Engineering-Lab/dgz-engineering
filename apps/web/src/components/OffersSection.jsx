@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Check, Clock, MessageCircle } from "lucide-react";
 import { AUDIT_OFFER } from "../data/auditOffer";
-import { SERVICES_DATA } from "../data/servicesData";
+import { PRICE_NOTES, SERVICES_DATA } from "../data/servicesData";
 import { CONTACT } from "../lib/seo";
 
 const PILOT = SERVICES_DATA["gis-geointelligence"].marketplace[0];
@@ -54,13 +54,14 @@ export default function OffersSection() {
 
             <h3 className="relative mt-6 text-2xl md:text-3xl font-black tracking-tight text-white">{AUDIT_OFFER.name}</h3>
             <p className="relative mt-3 max-w-lg text-slate-300 font-light leading-relaxed">
-              Medimos cuánto recaudo predial se está perdiendo por una base catastral desactualizada, con sus propios datos.
+              Estimamos cuánto recaudo predial se podría estar perdiendo por una base catastral desactualizada, a partir de sus propios datos.
             </p>
 
             <p className="relative mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-4xl md:text-5xl font-black tracking-tight text-white tabular-nums">{AUDIT_OFFER.price}</span>
-              <span className="text-sm text-slate-400">{AUDIT_OFFER.priceNote}</span>
+              <span className="text-sm text-slate-400">+ IVA, si aplica</span>
             </p>
+            <p className="relative mt-2 max-w-lg text-xs text-slate-400 leading-relaxed">{AUDIT_OFFER.priceNote}</p>
 
             <ul className="relative mt-7 grid gap-3 sm:grid-cols-2 text-sm text-slate-200">
               {AUDIT_OFFER.deliverables.map((item) => (
@@ -100,13 +101,17 @@ export default function OffersSection() {
 
             <p className="mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-3xl md:text-4xl font-black tracking-tight text-slate-950 tabular-nums">{PILOT.price}</span>
-              <span className="text-sm text-slate-500">{PILOT.priceNote}</span>
+              <span className="text-sm text-slate-500">+ IVA, si aplica</span>
             </p>
             {PILOT.deposit?.amount && (
               <p className="mt-1 text-sm text-slate-500">
                 Anticipo del {PILOT.deposit.percent}%: <span className="font-semibold text-slate-700 tabular-nums">{PILOT.deposit.amount}</span>
               </p>
             )}
+            <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+              {PRICE_NOTES.currency} {PRICE_NOTES.validity}
+              {PILOT.deposit ? ` ${PRICE_NOTES.deposit}` : ""}
+            </p>
 
             <ul className="mt-7 space-y-3 text-sm text-slate-700">
               {PILOT.deliverables.map((item) => (
@@ -125,7 +130,11 @@ export default function OffersSection() {
           </article>
         </div>
 
-        <p className="mt-6 text-sm text-slate-600">
+        <p className="mt-6 text-xs text-slate-500 leading-relaxed">
+          {PRICE_NOTES.currency} {PRICE_NOTES.validity} {PRICE_NOTES.deposit}
+        </p>
+
+        <p className="mt-3 text-sm text-slate-600">
           ¿Tu proyecto no encaja en estos paquetes?{" "}
           <a href="#contact" className="font-semibold text-slate-900 underline decoration-cyan-500/50 underline-offset-4 hover:text-cyan-700">
             Cuéntanos el alcance y cotizamos a la medida

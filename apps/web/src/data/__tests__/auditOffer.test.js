@@ -7,6 +7,12 @@ describe("AUDIT_OFFER", () => {
     expect(AUDIT_OFFER.delivery).toBeTruthy();
     expect(AUDIT_OFFER.deliverables.length).toBeGreaterThan(0);
   });
+
+  it("states currency, VAT and price validity (Ley 1480 de 2011)", () => {
+    expect(AUDIT_OFFER.priceNote).toContain("pesos colombianos (COP)");
+    expect(AUDIT_OFFER.priceNote).toContain("IVA no incluido");
+    expect(AUDIT_OFFER.priceNote).toContain("cotización formal escrita");
+  });
 });
 
 describe("buildAuditLeadMessage", () => {

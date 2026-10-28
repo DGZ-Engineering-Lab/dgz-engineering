@@ -10,6 +10,8 @@ import {
 import dynamic from "next/dynamic";
 import RtkSatelliteHud from "../../components/RtkSatelliteHud";
 import AuditLeadCapture from "../../components/AuditLeadCapture";
+import ConsentCheckbox from "../../components/ConsentCheckbox";
+import { LEGAL_PATHS, POLICY_VERSION } from "../../lib/legal";
 
 function BlueprintSkeleton() {
   return (
@@ -102,6 +104,9 @@ export default function DiagnosticPage() {
     telefono: ""
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  // Autorización Ley 1581 del formulario de pre-auditoría (nunca premarcada)
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
   const [auditStep, setAuditStep] = useState(0); // 0: Form, 1: Scanning terminal, 2: Report
   const [auditTerminalLogs, setAuditTerminalLogs] = useState([]);
   
@@ -272,6 +277,11 @@ export default function DiagnosticPage() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.municipio) return;
+    if (!privacyConsent) {
+      setConsentInvalid(true);
+      document.getElementById("diag-consent")?.focus();
+      return;
+    }
 
     setAuditStep(1); // Terminal step
 
@@ -283,7 +293,10 @@ export default function DiagnosticPage() {
         name: formData.name,
         email: formData.email,
         company: formData.municipio,
-        message: `[Lead Diagnóstico] Generó la pre-auditoría simulada\nCargo: ${formData.cargo}\nMunicipio / organización: ${formData.municipio}`
+        message: `[Lead Diagnóstico] Generó la pre-auditoría simulada\nCargo: ${formData.cargo}\nMunicipio / organización: ${formData.municipio}`,
+        privacyConsent: true,
+        policyVersion: POLICY_VERSION,
+        consentSource: "diagnostic-preaudit"
       })
     }).catch(() => {});
     
@@ -291,7 +304,7 @@ export default function DiagnosticPage() {
     const terminalScripts = [
       `SYS // Inicializando Pre-Auditoría para el municipio de [${formData.municipio}]`,
       `SYS // Consultor solicitante: ${formData.name} (${formData.cargo})`,
-      "VUR_API // Estableciendo túnel seguro con la Superintendencia de Notariado y Registro...",
+      "DEMO // Simulación con datos ficticios: sin conexión con la Superintendencia de Notariado y Registro...",
       "VUR_API // Conexión exitosa. Extrayendo folios de matrícula inmobiliaria...",
       "IGAC_GEOPORTAL // Descargando cartografía histórica y modelo digital de terreno...",
       "AI_LIDAR // Procesando ortofotografía histórica mediante red convolucional espacial...",
@@ -1025,16 +1038,27 @@ export default function DiagnosticPage() {
 
                       </div>
 
-                      <div className="p-4 bg-slate-950/80 border border-slate-900 rounded-2xl flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <Lock className="w-4 h-4 text-cyan-500" />
-                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest leading-none">
-                            Protección de datos conforme ley Habeas Data 1581
+                      <div className="p-4 bg-slate-950/80 border border-slate-900 rounded-2xl space-y-3">
+                        <ConsentCheckbox
+                          id="diag-consent"
+                          finalidad="diagnostico"
+                          variant="dark"
+                          checked={privacyConsent}
+                          onChange={(value) => {
+                            setPrivacyConsent(value);
+                            if (value) setConsentInvalid(false);
+                          }}
+                          invalid={consentInvalid}
+                        />
+                        <p className="flex items-start gap-2 text-[11px] text-slate-500 leading-snug">
+                          <Lock aria-hidden="true" className="w-3.5 h-3.5 text-cyan-500 flex-shrink-0 mt-px" />
+                          <span>
+                            Sus datos se tratan conforme a nuestra{" "}
+                            <a href={LEGAL_PATHS.privacy} target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300">
+                              Política de Tratamiento de Datos
+                            </a>.
                           </span>
-                        </div>
-                        <span className="text-[9.5px] font-mono text-cyan-500 bg-cyan-500/5 px-2 py-0.5 border border-cyan-500/10 rounded uppercase">
-                          Cifrado AES-256
-                        </span>
+                        </p>
                       </div>
 
                       <button

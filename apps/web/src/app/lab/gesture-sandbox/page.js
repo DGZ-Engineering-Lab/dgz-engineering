@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
 
@@ -13,24 +13,60 @@ export default function GestureSandboxPage() {
   const [activeCoords, setActiveCoords] = useState("4.6486° N, 74.0592° W");
 
   const videoRef = useRef(null);
+  const streamRef = useRef(null);
+  const unmountedRef = useRef(false);
   const [hasCamera, setHasCamera] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
+  const [cameraError, setCameraError] = useState("");
+
+  // La cámara solo se enciende cuando el usuario lo pide; al detenerla se liberan todos los tracks.
+  const stopCamera = useCallback(() => {
+    const stream = streamRef.current;
+    streamRef.current = null;
+    if (stream) stream.getTracks().forEach((track) => track.stop());
+    if (videoRef.current) videoRef.current.srcObject = null;
+    setHasCamera(false);
+  }, []);
+
+  const startCamera = async () => {
+    if (streamRef.current || isStarting) return;
+    setCameraError("");
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraError("Su navegador no permite acceder a la cámara.");
+      return;
+    }
+    setIsStarting(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      // Si el usuario salió de la página mientras aceptaba el permiso, se libera de inmediato
+      if (unmountedRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        return;
+      }
+      streamRef.current = stream;
+      if (videoRef.current) videoRef.current.srcObject = stream;
+      setHasCamera(true);
+      setLogs((prev) => ["[SENSOR] Cámara activada (procesamiento local)", ...prev.slice(0, 6)]);
+    } catch {
+      setCameraError("No se pudo acceder a la cámara. Revise el permiso del navegador.");
+      setLogs((prev) => ["[ERROR] Camera Access Denied", ...prev.slice(0, 6)]);
+    } finally {
+      if (!unmountedRef.current) setIsStarting(false);
+    }
+  };
+
+  // Al desmontar: parar todos los tracks
+  useEffect(() => {
+    unmountedRef.current = false;
+    return () => {
+      unmountedRef.current = true;
+      const stream = streamRef.current;
+      streamRef.current = null;
+      if (stream) stream.getTracks().forEach((track) => track.stop());
+    };
+  }, []);
 
   useEffect(() => {
-    async function startCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          setHasCamera(true);
-        }
-      } catch (err) {
-        console.error("Error accessing camera:", err);
-        setLogs(prev => ["[ERROR] Camera Access Denied", ...prev]);
-      }
-    }
-    
-    startCamera();
-    
     // Simulated gesture stream
     const interval = setInterval(() => {
       const actions = [
@@ -81,7 +117,7 @@ export default function GestureSandboxPage() {
               </div>
               <div className="text-left space-y-1">
                  <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Detection Engine</div>
-                 <div className="text-sm font-black uppercase text-white tracking-tight">Computer Vision [ACTIVE]</div>
+                 <div className="text-sm font-black uppercase text-white tracking-tight">Computer Vision [{hasCamera ? "ACTIVE" : "STANDBY"}]</div>
                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
                     <span className="text-[10px] font-mono text-emerald-500 uppercase">Synchronized with NeuralLink</span>
@@ -94,12 +130,41 @@ export default function GestureSandboxPage() {
            
            {/* Visualizer Side */}
            <div className="lg:col-span-8 space-y-8">
+              {/* Aviso previo y control explícito de la cámara */}
+              <div className="p-5 md:p-6 bg-slate-900/50 border border-slate-800 rounded-2xl flex flex-col md:flex-row md:flex-wrap md:items-center gap-4">
+                 <p id="camera-notice" className="flex-1 text-sm text-slate-300 leading-relaxed">
+                    El laboratorio usa la cámara para detectar gestos de la mano. El video se procesa únicamente en su navegador; no se graba, almacena ni envía a ningún servidor.
+                 </p>
+                 <div className="flex gap-3 shrink-0">
+                    <button
+                      type="button"
+                      onClick={startCamera}
+                      disabled={hasCamera || isStarting}
+                      aria-describedby="camera-notice"
+                      className="px-5 py-3 bg-cyan-600 border border-cyan-400/50 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-500 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
+                    >
+                      {isStarting ? "Activando..." : "Activar cámara"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={stopCamera}
+                      disabled={!hasCamera}
+                      className="px-5 py-3 bg-white/10 border border-white/20 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-cyan-400 focus:outline-none"
+                    >
+                      Detener cámara
+                    </button>
+                 </div>
+                 <p role="status" className="md:basis-full text-xs font-mono text-slate-400">
+                    {cameraError || (hasCamera ? "Cámara activa." : "Cámara apagada.")}
+                 </p>
+              </div>
+
               <div id="simulator" className="relative aspect-video bg-black rounded-[3rem] border border-slate-800 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
                  
-                 {/* Map Content - Dynamic Satellite Simulation */}
+                 {/* Mapa base: tesela de OpenStreetMap (ODbL, requiere atribución) */}
                  <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img loading="lazy" decoding="async" src="https://mt1.google.com/vt/lyrs=s&x=75500&y=104000&z=18" className="w-full h-full object-cover opacity-60" alt="Satellite" />
+                    <img loading="lazy" decoding="async" src="https://tile.openstreetmap.org/16/19285/31920.png" className="w-full h-full object-cover opacity-60" alt="Mapa base de Bogotá (OpenStreetMap)" />
                  </div>
 
                  {/* Camera Feed Overlay */}
@@ -140,7 +205,7 @@ export default function GestureSandboxPage() {
                     </div>
 
                     <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
-                       <div className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded text-[10px] font-black text-red-400 animate-pulse">REC // LIVE_FEED</div>
+                       <div className={`px-3 py-1 rounded text-[10px] font-black ${hasCamera ? "bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 animate-pulse" : "bg-black/60 border border-white/10 text-slate-400"}`}>{hasCamera ? "CÁMARA // LOCAL" : "CÁMARA // APAGADA"}</div>
                        <div className="px-3 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-[10px] font-black text-cyan-400 animate-pulse">SIMULADOR DE CAPAS SIG</div>
                        <div className="px-3 py-1 bg-black/60 border border-white/10 rounded text-[10px] font-mono text-slate-400">BOGOTÁ_D.C_DISTRICT_V</div>
                     </div>
@@ -158,6 +223,16 @@ export default function GestureSandboxPage() {
                        ))}
                     </div>
                  </div>
+
+                 {/* Atribución obligatoria de OpenStreetMap */}
+                 <a
+                   href="https://www.openstreetmap.org/copyright"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 px-2 py-0.5 bg-black/70 rounded text-[10px] font-mono text-slate-300 hover:text-white whitespace-nowrap"
+                 >
+                   © OpenStreetMap contributors
+                 </a>
 
                  {/* Action Bar */}
                  <div className="absolute bottom-10 right-10 flex gap-3">
@@ -203,7 +278,7 @@ export default function GestureSandboxPage() {
 
                     <div className="p-5 bg-black/50 border border-slate-800 rounded-2xl flex justify-between items-center group hover:border-cyan-500/30 transition-all">
                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Active Source</span>
-                       <span className="text-xs font-black text-cyan-400 tracking-tight">IGAC_SAT_2024</span>
+                       <span className="text-xs font-black text-cyan-400 tracking-tight">OSM_BASEMAP</span>
                     </div>
 
                     <div className="p-5 bg-black/50 border border-slate-800 rounded-2xl flex justify-between items-center group hover:border-emerald-500/30 transition-all">
@@ -253,7 +328,7 @@ export default function GestureSandboxPage() {
               </div>
               <div className="space-y-4">
                  <h2 className="text-3xl font-black uppercase tracking-tighter leading-none">Sincronizando Sensor</h2>
-                 <p className="text-slate-400 text-sm font-light leading-relaxed">Mueva su mano lentamente en círculos frente a la cámara para que la IA reconozca su patrón biométrico.</p>
+                 <p className="text-slate-400 text-sm font-light leading-relaxed">Mueva su mano lentamente en círculos frente a la cámara para que el detector reconozca el gesto. El video no sale de su navegador.</p>
               </div>
               <button onClick={() => setIsCalibrating(false)} className="px-10 py-4 bg-white/5 border border-white/10 text-white font-black text-[10px] rounded-2xl hover:bg-white hover:text-black transition-all uppercase tracking-widest">
                  Finalizar Calibración

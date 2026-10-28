@@ -562,7 +562,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
       const data = await res.json();
       
       if (res.ok && data.success) {
-        addLog(`BLOB_UPLOADER: Capa subida con éxito a ${data.storage}`, "success");
+        addLog(`BLOB_UPLOADER: Capa procesada en ${data.storage}`, "success");
         setUploadedFileMeta({
           filename: data.filename,
           url: data.url,
@@ -1643,6 +1643,9 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       </div>
                     </div>
                   </div>
+                  <p className="text-[9.5px] leading-snug text-slate-400">
+                    No suba archivos con datos personales de terceros sin autorización. El cruce se procesa en su navegador; los archivos no se envían a ningún servidor.
+                  </p>
                   
                   {/* Join Column & Actions */}
                   <div className="grid grid-cols-2 gap-3">
@@ -2124,6 +2127,7 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       id="geojson-file-input"
                       className="sr-only"
                       accept=".geojson,.json"
+                      aria-describedby="geojson-upload-notice"
                       onChange={handleFileInputChange}
                       disabled={isUploading}
                     />
@@ -2148,6 +2152,10 @@ export default function SpatialIntelligenceDashboard({ forceSovereign = false, o
                       )}
                     </label>
                   </div>
+                  {/* Aviso de datos personales: el archivo se analiza en memoria y no se almacena */}
+                  <p id="geojson-upload-notice" className="text-[9.5px] leading-snug text-slate-400">
+                    No suba archivos con datos personales de terceros sin autorización. Los archivos se procesan para la demostración y se eliminan.
+                  </p>
                   
                   {uploadedDiagnostics && (
                     <motion.div

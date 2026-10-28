@@ -75,7 +75,10 @@ function denyResult(tokens, reason) {
  * @returns {Promise<{ success: boolean, limit: number, remaining: number, reset: number, reason?: string }>}
  */
 export async function checkRateLimit(identifier, options = {}) {
-  const { name, tokens = 10, window = '10 s', failClosed = false } = options;
+  const { name, tokens = 10, window = '10 s' } = options;
+  // El cierre ante fallo de Redis es opcional (RATE_LIMIT_FAIL_CLOSED=1): activarlo solo
+  // tras comprobar que Redis responde, o una caída de Upstash tumbaría contacto/IA/subidas.
+  const failClosed = Boolean(options.failClosed) && process.env.RATE_LIMIT_FAIL_CLOSED === '1';
 
   if (!redis) {
     if (failClosed && isProductionEnv()) {

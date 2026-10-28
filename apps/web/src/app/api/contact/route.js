@@ -1,14 +1,16 @@
+import { createHash } from "node:crypto";
 import { kv } from "@vercel/kv";
 import { NextResponse } from "next/server";
 import { checkRateLimit, dailyBudget } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
 import {
   assertSameOrigin,
-  boundedString,
   getClientIp,
   isJsonRequest,
-  isValidEmail,
 } from "../../../lib/security";
+import { buildConsentRecord, finalidadFromSource } from "../../../lib/consent";
+import { ContactValidationError, parseContactBody } from "../../../lib/contact-validation";
+import { authorizationText } from "../../../lib/legal";
 
 
 export const runtime = 'nodejs';
@@ -16,6 +18,10 @@ export const runtime = 'nodejs';
 const MESSAGES_KEY = "devgiz_messages";
 const MAX_STORED_MESSAGES = 1000; // tope de la lista en Redis
 const MAX_MEMORY_MESSAGES = 200; // tope del buffer en memoria
+const CONSENT_LOG_KEY = "devgiz_consent_log"; // pruebas de autorización (no las borra el cron)
+const MAX_CONSENT_LOG = 10000;
+
+const sha256 = (text) => createHash("sha256").update(text).digest("hex");
 
 export async function POST(req) {
   try {
@@ -60,17 +66,17 @@ export async function POST(req) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const name = boundedString(body?.name, 120);
-    const email = boundedString(body?.email, 254);
-    const message = boundedString(body?.message, 5000);
-    const company = boundedString(body?.company, 160, { required: false });
-
-    if (!name || !email || !message || company === null) {
-      return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
+    // Consentimiento (Ley 1581) y campos: un error de validación responde 400 con su código.
+    let fields;
+    try {
+      fields = parseContactBody(body);
+    } catch (err) {
+      if (err instanceof ContactValidationError) {
+        return NextResponse.json({ error: err.code }, { status: 400 });
+      }
+      throw err;
     }
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-    }
+    const { name, email, message, company } = fields;
 
     // Presupuesto diario global: protege la cuota de Resend y de Redis.
     const budget = await dailyBudget("contact", 40);
@@ -88,13 +94,28 @@ export async function POST(req) {
       email,
       message,
       company: company || "N/A",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      // Prueba de la autorización (versión de política, formulario, fecha y huella del texto). Sin IP.
+      consent: buildConsentRecord(body, { hashText: sha256 }),
     };
 
     // Store in KV
     try {
       await kv.lpush(MESSAGES_KEY, JSON.stringify(payload));
       await kv.ltrim(MESSAGES_KEY, 0, MAX_STORED_MESSAGES - 1);
+      // Prueba de la autorización en un registro propio: el cron borra los mensajes a los
+      // 30 días, pero la prueba debe conservarse mientras dure el tratamiento. Guarda el
+      // texto exacto aceptado y una huella del correo (no el mensaje ni el correo en claro).
+      await kv.lpush(
+        CONSENT_LOG_KEY,
+        JSON.stringify({
+          ...payload.consent,
+          contactId,
+          emailHash: sha256(email.toLowerCase()),
+          text: authorizationText(finalidadFromSource(payload.consent.source)),
+        })
+      );
+      await kv.ltrim(CONSENT_LOG_KEY, 0, MAX_CONSENT_LOG - 1);
     } catch (e) {
       console.warn("KV not connected, simulating storage");
     }

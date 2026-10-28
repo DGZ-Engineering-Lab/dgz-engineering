@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, CheckCircle2, Clock, Lock, RefreshCw } from "lucide-react";
 import { AUDIT_OFFER, buildAuditLeadMessage } from "../data/auditOffer";
+import { POLICY_VERSION } from "../lib/legal";
+import ConsentCheckbox from "./ConsentCheckbox";
 
 /**
  * Email capture + paid audit offer shown at the end of the /diagnostic flows.
@@ -17,6 +19,7 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
   });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
   const [errorMessage, setErrorMessage] = useState("");
+  const [consentInvalid, setConsentInvalid] = useState(false);
   const successHeadingRef = useRef(null);
 
   // Al confirmar, el foco pasa al título para que el lector de pantalla anuncie el resultado.
@@ -27,6 +30,12 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "sending") return;
+    // Sin autorización (Ley 1581) no se envía nada.
+    if (form.consent !== true) {
+      setConsentInvalid(true);
+      document.getElementById(`lead-${source}-consent`)?.focus();
+      return;
+    }
     setStatus("sending");
     setErrorMessage("");
 
@@ -38,7 +47,10 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
           name: form.name,
           email: form.email,
           company: form.municipio,
-          consent: form.consent === true,
+          // La autorización cubre el diagnóstico, no el boletín: no se envía `consent` (audiencia de correo).
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: `audit-${source}`,
           message: buildAuditLeadMessage({
             source,
             municipio: form.municipio,
@@ -159,18 +171,16 @@ export default function AuditLeadCapture({ source = "calculator", estimate = {},
           </div>
         </div>
 
-        <label className="flex items-start gap-3 text-[11px] text-slate-600 leading-relaxed cursor-pointer">
-          <input
-            type="checkbox"
-            required
-            checked={form.consent}
-            onChange={(e) => setForm({ ...form, consent: e.target.checked })}
-            className="mt-0.5 accent-cyan-600"
-          />
-          <span>
-            Autorizo a DevGiz a usar estos datos para enviarme la propuesta y contactarme sobre la auditoría (Ley 1581 de 2012, Habeas Data).
-          </span>
-        </label>
+        <ConsentCheckbox
+          id={`lead-${source}-consent`}
+          finalidad="diagnostico"
+          checked={form.consent}
+          onChange={(value) => {
+            setForm({ ...form, consent: value });
+            if (value) setConsentInvalid(false);
+          }}
+          invalid={consentInvalid}
+        />
 
         {status === "error" && (
           <p role="alert" className="text-xs text-rose-600">{errorMessage}</p>

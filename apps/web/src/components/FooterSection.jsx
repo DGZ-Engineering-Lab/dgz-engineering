@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import { Mail, MapPin, ExternalLink, MessageCircle, ArrowUpRight, Code2 } from "lucide-react";
 import { CONTACT } from "../lib/seo";
+import { LEGAL_PATHS } from "../lib/legal";
+import { openCookieSettings } from "../lib/cookie-consent";
 import useDarkSurface from "./useDarkSurface";
 
 const COLUMNS = [
@@ -190,6 +192,16 @@ export default function FooterSection() {
             <Link href="/terms" className={`inline-flex min-h-11 items-center text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
               Términos
             </Link>
+            <Link href={LEGAL_PATHS.cookies} className={`inline-flex min-h-11 items-center text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}>
+              Política de cookies
+            </Link>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className={`inline-flex min-h-11 cursor-pointer items-center text-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 ${isDark ? "text-slate-300 hover:text-cyan-300" : "text-slate-600 hover:text-cyan-700"}`}
+            >
+              Configurar cookies
+            </button>
             <a
               href={CONTACT.linkedin}
               target="_blank"

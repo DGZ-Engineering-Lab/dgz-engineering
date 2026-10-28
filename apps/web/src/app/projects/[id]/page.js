@@ -17,19 +17,19 @@ const PROJECTS_DATA = {
   "catastro-valle": {
     title: "Catastro Multipropósito Valle del Cauca",
     category: "Infraestructura Territorial",
-    tagline: "Soberanía fiscal y seguridad jurídica predial mediante la implementación nativa del estándar LADM-COL e INTERLIS.",
+    tagline: "Caso ilustrativo / demostración técnica con datos ficticios: cómo se estructuraría un catastro multipropósito departamental con LADM-COL e INTERLIS.",
     image: "/assets/img/blog-ladm-col.webp",
-    description: "Esta iniciativa lidera la vanguardia en administración y gobernanza de tierras en Colombia. Implementamos un ecosistema digital completo basado en la norma internacional ISO 19152 (LADM-COL) para descentralizar la gestión catastral del departamento, garantizando interoperabilidad transaccional absoluta con el Instituto Geográfico Agustín Codazzi (IGAC) y la Superintendencia de Notariado y Registro (SNR).",
+    description: "Caso ilustrativo (no corresponde a un contrato real ni a resultados obtenidos). Describe la arquitectura que DevGiz propone para un ecosistema digital de gestión catastral con una metodología alineada con la norma ISO 19152 (LADM-COL), preparado para intercambiar información en los formatos que publican el Instituto Geográfico Agustín Codazzi (IGAC) y la Superintendencia de Notariado y Registro (SNR). No implica vínculo, aval ni conexión con esas entidades.",
     goals: [
       "Armonización de datos alfanuméricos y geográficos bajo modelos INTERLIS.",
-      "Cumplimiento del 100% en la validación y exportación de archivos XTF catastrales.",
-      "Habilitación de trámites ciudadanos digitales de alta precisión territorial en tiempo real."
+      "Validación y exportación de archivos XTF catastrales contra el modelo LADM-COL vigente.",
+      "Diseño de flujos para trámites ciudadanos digitales con información territorial actualizada."
     ],
-    challenges: "La disparidad histórica de información de linderos entre el registro y el catastro fue superada mediante el desarrollo de algoritmos propietarios para la conciliación automática de geometría jurídica de predios.",
+    challenges: "Reto típico abordado en la demostración: la disparidad de información de linderos entre registro y catastro, que se trata con reglas de conciliación asistida de la geometría de los predios y revisión profesional.",
     impact: [
-      { label: "Área Mapeada", value: "22,140 km2" },
-      { label: "Precisión Legal", value: "Grado 1" },
-      { label: "Interoperabilidad", value: "VUR / SNR" }
+      { label: "Tipo de caso", value: "Ilustrativo" },
+      { label: "Datos", value: "Ficticios" },
+      { label: "Estándar", value: "LADM-COL / ISO 19152" }
     ],
     lab: "CADASTRE_VIEWER"
   },
@@ -38,16 +38,16 @@ const PROJECTS_DATA = {
     category: "Software de Ingeniería",
     tagline: "Control de calidad topológico nativo y verificación estructurada de consistencia parcelaria en tiempo real.",
     image: "/assets/img/geoai_before.webp",
-    description: "Herramienta de software industrial y de código abierto diseñada para la validación espacial instantánea de bases de datos territoriales bajo el estándar LADM-COL. Optimiza los flujos de trabajo de los operadores catastrales eliminando errores manuales en la digitalización cartográfica.",
+    description: "Demostración técnica de una herramienta de validación espacial de bases de datos territoriales con reglas alineadas con el estándar LADM-COL. Busca reducir errores manuales en la digitalización cartográfica de los operadores catastrales.",
     goals: [
       "Detección automática de traslapes, slivers y microvacíos topológicos.",
       "Sincronización segura y transaccional con bases de datos PostGIS.",
-      "Generación instantánea de reportes de conformidad técnica para radicación oficial."
+      "Generación de reportes de revisión técnica como apoyo a la preparación de entregas."
     ],
     challenges: "El procesamiento de millones de geometrías vectoriales complejas en el cliente inicialmente presentaba latencias. Lo optimizamos reescribiendo el motor en PyQGIS acoplado a indexación espacial R-Tree.",
     impact: [
-      { label: "Error Humano", value: "-95%" },
-      { label: "Velocidad", value: "10x Faster" },
+      { label: "Tipo de caso", value: "Demostración" },
+      { label: "Validaciones", value: "Topológicas" },
       { label: "Soporte", value: "QGIS 3.x" }
     ],
     lab: "PLUGIN_SIMULATOR"
@@ -55,7 +55,7 @@ const PROJECTS_DATA = {
   "automation-systems": {
     title: "Territorial ETL & Data Pipelines",
     category: "Infraestructura de Datos",
-    tagline: "Ingeniería de datos geoespaciales masivos para gobernaciones, alcaldías y gestores catastrales habilitados.",
+    tagline: "Ingeniería de datos geoespaciales diseñada para gobernaciones, alcaldías y gestores catastrales (demostración técnica con datos ficticios).",
     image: "/assets/img/topo-bg.webp",
     description: "Sistemas de orquestación de datos masivos para la migración, transformación y validación automática de archivos GML, GeoJSON, KML e INTERLIS (XTF). Diseñados bajo esquemas de tolerancia a fallos para entornos corporativos y públicos de alta escala.",
     goals: [
@@ -65,9 +65,9 @@ const PROJECTS_DATA = {
     ],
     challenges: "La heterogeneidad de fuentes de datos heredadas impedía una consistencia limpia. Diseñamos un motor ETL inteligente con reglas de mapeo dinámico y depuración topológica automática.",
     impact: [
-      { label: "Registros/Día", value: "500k+" },
-      { label: "Uptime", value: "99.99%" },
-      { label: "Seguridad", value: "AES-256" }
+      { label: "Tipo de caso", value: "Demostración" },
+      { label: "Formatos", value: "GML · XTF · GeoJSON" },
+      { label: "Cifrado", value: "AES-256 (en reposo)" }
     ],
     lab: "PIPELINE_MONITOR"
   },
@@ -80,7 +80,7 @@ const PROJECTS_DATA = {
     goals: [
       "Traducción precisa de consultas coloquiales en español a sentencias Spatial SQL robustas.",
       "Modelado predictivo del mercado inmobiliario y patrones de expansión urbana.",
-      "Generación en segundos de informes, resoluciones y memorias técnicas territoriales conformes."
+      "Borradores de informes y memorias técnicas territoriales, siempre sujetos a revisión profesional."
     ],
     challenges: "La ambigüedad inherente al lenguaje natural al tratar con relaciones espaciales estrictas. Implementamos un compilador semántico que traduce y valida las consultas contra el esquema de PostGIS antes de su ejecución.",
     impact: [
@@ -98,7 +98,7 @@ function CadastreViewer() {
     {
       id: "P-76001-A01",
       name: "Predio La Esmeralda",
-      interesado: "Sonia Giraldo - CC 31.420.912",
+      interesado: "TITULAR DE EJEMPLO 1 - C.C. 000.000.001",
       derecho: "Propiedad / Dominio Pleno",
       lidarArea: "1,245.82 m²",
       ladmClass: "LA_Predio (Terreno)",
@@ -110,7 +110,7 @@ function CadastreViewer() {
     {
       id: "P-76001-B02",
       name: "Hacienda El Vergel",
-      interesado: "Agro-Valle S.A.S. - NIT 900.240.111-2",
+      interesado: "Entidad de ejemplo 1 - NIT 000.000.001-0",
       derecho: "Servidumbre de Paso (Restricción)",
       lidarArea: "8,942.10 m²",
       ladmClass: "LA_ServidumbrePaso",
@@ -122,7 +122,7 @@ function CadastreViewer() {
     {
       id: "P-76001-C03",
       name: "Lote Urbanización Versalles",
-      interesado: "Alcaldía de Cali - NIT 800.124.901-0",
+      interesado: "Entidad de ejemplo 2 (pública) - NIT 000.000.002-0",
       derecho: "Bien de Uso Público",
       lidarArea: "4,120.35 m²",
       ladmClass: "LA_Predio (Espacio Público)",
@@ -134,7 +134,7 @@ function CadastreViewer() {
     {
       id: "P-76001-D04",
       name: "Finca El Porvenir",
-      interesado: "Manuel Tiberio Ocampo - CC 16.290.114",
+      interesado: "TITULAR DE EJEMPLO 2 - C.C. 000.000.002",
       derecho: "Derecho de Ocupación Registrada",
       lidarArea: "5,302.50 m²",
       ladmClass: "LA_Predio (Terreno)",
@@ -146,7 +146,7 @@ function CadastreViewer() {
     {
       id: "P-76001-E05",
       name: "Parcela La Aurora",
-      interesado: "Cooperativa de Cafeteros - NIT 890.340.231-1",
+      interesado: "Entidad de ejemplo 3 - NIT 000.000.003-0",
       derecho: "Derecho de Ocupación Registrada",
       lidarArea: "3,110.15 m²",
       ladmClass: "LA_Predio (Terreno)",
@@ -157,8 +157,8 @@ function CadastreViewer() {
     },
     {
       id: "P-76001-F06",
-      name: "Reserva Forestal Farallones",
-      interesado: "CVC Corporación Autónoma - NIT 890.399.001-3",
+      name: "Reserva Forestal de Ejemplo",
+      interesado: "Entidad de ejemplo 4 (ambiental) - NIT 000.000.004-0",
       derecho: "Restricción Ambiental Completa",
       lidarArea: "15,820.40 m²",
       ladmClass: "LA_RestriccionTerritorial",
@@ -433,7 +433,7 @@ function CadastreViewer() {
           </div>
 
           <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-500 pt-1">
-            <span>Sincronizado con Nodo IGAC</span>
+            <span>Datos ficticios · sin conexión con el IGAC</span>
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
               LIVE
@@ -646,7 +646,7 @@ function PipelineMonitor() {
           setRecordsCount(Math.floor(next * 1429.12));
           
           if (next === 10) {
-            setLogs(l => [...l, `[${new Date().toLocaleTimeString()}] [INFO] Reading Valle_Del_Cauca_Parcels_2026.xtf...`]);
+            setLogs(l => [...l, `[${new Date().toLocaleTimeString()}] [INFO] Reading Parcelas_Ejemplo_Ficticio.xtf...`]);
           } else if (next === 25) {
             setLogs(l => [...l, `[${new Date().toLocaleTimeString()}] [INFO] Parsing INTERLIS v3 XML Schema...`]);
           } else if (next === 45) {
@@ -799,7 +799,7 @@ function AiChatLab() {
   const queries = useMemo(() => [
     {
       q: "¿Cuáles predios se traslapan con la ronda de río de 30m?",
-      answer: "Analizando capas catastrales y de rondas hídricas en Valle del Cauca. Se identificaron 12 predios con traslapes superiores al límite de tolerancia legal. A continuación, el reporte y código de consulta espacial:",
+      answer: "Analizando capas catastrales y de rondas hídricas de un municipio de ejemplo (datos ficticios). Se identificaron 12 predios con traslapes superiores al límite de tolerancia legal. A continuación, el reporte y código de consulta espacial:",
       sql: `SELECT p.identificador, p.area_escrita, 
        ST_Area(ST_Intersection(p.geom, r.geom)) AS area_traslape
 FROM dgz_catastro.la_predio p, dgz_ambiental.col_ronda r
@@ -810,7 +810,7 @@ LIMIT 5;`,
     },
     {
       q: "Calcular la superficie total de bosque reservado afectada por minería.",
-      answer: "Cruzando la base de datos de concesiones mineras activas ANM con las zonas protegidas registradas RUNAP. La superposición de geometrías da el siguiente resultado:",
+      answer: "Cruzando una capa ficticia de concesiones mineras con una capa ficticia de zonas protegidas (datos de demostración). La superposición de geometrías da el siguiente resultado:",
       sql: `SELECT m.concesionario, SUM(ST_Area(ST_Intersection(m.geom, b.geom)))/10000 AS hectareas_afectadas
 FROM dgz_mineria.concesion m, dgz_ambiental.bosque_reservado b
 WHERE ST_Intersects(m.geom, b.geom)
@@ -820,13 +820,13 @@ LIMIT 3;`,
     },
     {
       q: "Verificar inconsistencias de área registrada vs área física > 10%.",
-      answer: "Ejecutando auditoría cruzada entre el área reportada en los títulos alfanuméricos de la Oficina de Registro (SNR) y el polígono geométrico calculado por LiDAR de alta precisión:",
+      answer: "Ejecutando auditoría cruzada (datos ficticios) entre el área reportada en títulos de ejemplo y el polígono geométrico calculado por LiDAR:",
       sql: `SELECT p.identificador, p.area_registro, ST_Area(p.geom) AS area_lidar,
        ABS(p.area_registro - ST_Area(p.geom)) / p.area_registro * 100 AS porcentaje_desviacion
 FROM dgz_catastro.la_predio p
 WHERE ABS(p.area_registro - ST_Area(p.geom)) / p.area_registro > 0.10
 LIMIT 5;`,
-      metrics: { "Predios con Desviación": "1,412", "Porcentaje Máximo": "42.15%", "Confianza LiDAR": "99.8%" }
+      metrics: { "Predios con Desviación": "1,412", "Porcentaje Máximo": "42.15%", "Datos": "Ficticios" }
     }
   ], []);
 
@@ -1033,6 +1033,9 @@ LIMIT 5;`,
               <Send className="w-3 h-3" />
             </button>
           </div>
+          <p role="note" className="mt-2 text-[9.5px] leading-snug text-amber-300/90 font-mono">
+            Asistente de IA (modelo de lenguaje vía Groq, EE. UU.). Las respuestas pueden contener errores y no constituyen asesoría profesional. No escriba datos personales.
+          </p>
         </div>
       </div>
 
@@ -1155,7 +1158,7 @@ LIMIT 5;`,
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-[9.5px] font-mono text-cyan-400">
                 <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
-                DEMO PRE-RENDERIZADA
+                DEMO PRE-RENDERIZADA · DATOS FICTICIOS
               </div>
               <p className="text-[10px] text-slate-300 leading-relaxed font-light">
                 {typedText}
@@ -1257,7 +1260,7 @@ export default function ProjectDetailPage() {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-mono text-slate-600 uppercase tracking-[0.2em]">
                 <span className="text-[#1a1a1a] font-bold">{project.category}</span>
                 <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span>Engineering Case Study</span>
+                <span className="px-2 py-0.5 rounded border border-amber-500/40 bg-amber-50 text-amber-800 font-bold normal-case tracking-normal">Caso ilustrativo / demostración técnica con datos ficticios</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter leading-[1.02] text-[#1a1a1a]">
                 {project.title}
@@ -1308,9 +1311,10 @@ export default function ProjectDetailPage() {
                   <div className="space-y-1">
                     <div className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Immersion Lab // Interactive Viewer</div>
                     <div className="text-sm font-bold text-[#1a1a1a]">Módulo de Visualización e Interacción Premium</div>
+                    <div className="text-[11px] font-bold text-amber-800">Demostración con datos ficticios</div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-cyan-400 text-xs font-mono animate-pulse">
-                    LIVE
+                  <div className="w-8 h-8 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-cyan-400 text-[9px] font-mono animate-pulse">
+                    DEMO
                   </div>
                 </div>
                 <ProjectLabComponent labType={project.lab} />
@@ -1333,6 +1337,7 @@ export default function ProjectDetailPage() {
                 <h2 className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] mb-10 border-b border-slate-200 pb-4">
                   Especificaciones Técnicas
                 </h2>
+                <p className="-mt-6 mb-8 text-[11px] text-amber-800 font-semibold">Caso ilustrativo: no son resultados de un cliente real.</p>
                 <div className="space-y-10">
                   {project.impact.map(stat => (
                     <div key={stat.label} className="space-y-1">

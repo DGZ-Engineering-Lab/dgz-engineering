@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, MapPin, Mail, CheckCircle2, AlertTriangle, ShieldCheck, Check, AlertCircle, MessageCircle, Clock } from "lucide-react";
 import { CONTACT } from "../lib/seo";
+import { POLICY_VERSION } from "../lib/legal";
+import ConsentCheckbox from "./ConsentCheckbox";
 // Sentry is loaded on demand so it stays out of the home page bundle.
 const withSentry = (fn) => import("@sentry/nextjs").then(fn).catch(() => {});
 
@@ -17,6 +19,9 @@ export default function ContactSection() {
   
   const [status, setStatus] = useState("idle"); // idle, sending, success, error
   const [errorMessage, setErrorMessage] = useState("");
+  // Autorización Ley 1581: nunca premarcada; el error se muestra si se intenta enviar sin marcar.
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentInvalid, setConsentInvalid] = useState(false);
   const successHeadingRef = useRef(null);
   const [touched, setTouched] = useState({
     name: false,
@@ -83,17 +88,14 @@ export default function ContactSection() {
       return;
     }
 
+    if (!privacyConsent) {
+      setConsentInvalid(true);
+      failValidation("contact-consent", "Debes autorizar el tratamiento de tus datos para enviar la solicitud.");
+      return;
+    }
+
     setStatus("sending");
     setErrorMessage("");
-
-    // Telemetry capture: Log submission event in Sentry for instant validation
-    withSentry((Sentry) => Sentry.captureMessage("Lead Contact Session Request", {
-      level: "info",
-      extra: {
-        subject: formData.subject,
-        length: formData.description.length
-      }
-    }));
 
     try {
 
@@ -106,7 +108,10 @@ export default function ContactSection() {
           name: formData.name,
           email: formData.email,
           company: formData.company,
-          message: `[Asunto: ${formData.subject}] ${formData.description}`
+          message: `[Asunto: ${formData.subject}] ${formData.description}`,
+          privacyConsent: true,
+          policyVersion: POLICY_VERSION,
+          consentSource: "contact"
         })
       });
 
@@ -114,12 +119,9 @@ export default function ContactSection() {
 
       if (response.ok) {
         setStatus("success");
-        // Record in PostHog if available
+        // Evento de conversión sin datos personales (minimización, Ley 1581 art. 4)
         if (typeof window !== "undefined" && window.posthog) {
-          window.posthog.capture("lead_form_submitted", {
-            subject: formData.subject,
-            company: formData.company
-          });
+          window.posthog.capture("lead_form_submitted", { subject: formData.subject });
         }
       } else {
         // Los errores del API vienen en inglés: se muestran mensajes en español al usuario
@@ -209,6 +211,8 @@ export default function ContactSection() {
                     onClick={() => {
                       setStatus("idle");
                       setFormData({ name: "", company: "", email: "", subject: "Catastro multipropósito / LADM-COL", description: "" });
+                      setPrivacyConsent(false);
+                      setConsentInvalid(false);
                       setTouched({ name: false, email: false, company: false, description: false });
                       // El panel de éxito se desmonta: devolvemos el foco al primer campo del formulario nuevo.
                       requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById("contact-name")?.focus()));
@@ -457,6 +461,17 @@ export default function ContactSection() {
                       </p>
                     )}
                   </div>
+
+                  <ConsentCheckbox
+                    id="contact-consent"
+                    finalidad="contacto"
+                    checked={privacyConsent}
+                    onChange={(value) => {
+                      setPrivacyConsent(value);
+                      if (value) setConsentInvalid(false);
+                    }}
+                    invalid={consentInvalid}
+                  />
 
                   <button 
                     type="submit"

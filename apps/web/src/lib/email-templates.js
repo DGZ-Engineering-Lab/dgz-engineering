@@ -3,11 +3,20 @@ import { escapeHtml } from "./security.js";
 /**
  * Generates the HTML template for internal Admin notifications.
  */
-export function getAdminNotificationTemplate({ name, email, message, company }) {
+export function getAdminNotificationTemplate({ name, email, message, company, consent }) {
   name = escapeHtml(name);
   email = escapeHtml(email);
   message = escapeHtml(message);
   company = escapeHtml(company || "N/A");
+  // Copia de la prueba de autorización (Ley 1581) en el buzón del responsable.
+  const consentBlock = consent
+    ? `
+      <div style="margin-top: 20px; font-size: 12px; color: #555; border-left: 3px solid #0891b2; padding-left: 10px;">
+        <p style="margin: 0 0 4px 0;"><strong>Autorización de tratamiento de datos</strong></p>
+        <p style="margin: 0;">Formulario: ${escapeHtml(consent.source)} · Política v${escapeHtml(consent.policyVersion)} · ${escapeHtml(consent.acceptedAt)}</p>
+        <p style="margin: 0;">Boletín: ${consent.newsletter ? "sí" : "no"} · Huella del texto: ${escapeHtml(consent.textHash)}</p>
+      </div>`
+    : "";
   return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; padding: 20px;">
       <h2 style="color: #333;">Nuevo Lead desde DevGiz Engineering</h2>
@@ -16,7 +25,7 @@ export function getAdminNotificationTemplate({ name, email, message, company }) 
       <p><strong>Email:</strong> ${email}</p>
       <div style="background-color: #f9f9f9; padding: 15px; margin-top: 20px; border-radius: 5px; white-space: pre-line;">
         <p style="margin: 0; font-style: italic;">"${message}"</p>
-      </div>
+      </div>${consentBlock}
       <hr style="border: none; border-top: 1px solid #eaeaea; margin: 30px 0;" />
       <p style="font-size: 12px; color: #888;">Este es un mensaje automático generado por la plataforma DevGiz.</p>
     </div>

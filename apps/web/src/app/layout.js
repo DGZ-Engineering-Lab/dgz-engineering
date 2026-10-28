@@ -21,6 +21,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "../components/PostHogProvider";
 import MotionPreferences from "../components/MotionPreferences";
 import MobileCtaBar from "../components/MobileCtaBar";
+import CookieConsent from "../components/CookieConsent";
 import JsonLd from "../components/JsonLd";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_LOCALE, SITE_LANG, FOUNDER, siteJsonLd } from "../lib/seo";
 
@@ -95,6 +96,7 @@ export default function RootLayout({ children }) {
             </main>
             <FooterSection />
             <MobileCtaBar />
+            <CookieConsent />
           </MotionPreferences>
           <Analytics />
           <SpeedInsights />

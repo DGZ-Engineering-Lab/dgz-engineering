@@ -17,45 +17,47 @@ const SESSION_TTL        = 60 * 60; // 1 hour session tokens
 const AUDIT_LOG_MAX      = 200;     // Keep last 200 audit entries
 
 // ─── MOCK DATA ─────────────────────────────────────────────────────────────────
+// Datos 100 % ficticios (placeholders evidentes): sin nombres de personas reales,
+// sin dominios ni nombres de entidades reales (Ley 1581 de 2012 / uso de marcas).
 const HIGH_FIDELITY_MOCKS = [
   {
     id: "contact:1716301200000",
-    name: "Dr. Alejandro Montoya",
-    email: "a.montoya@medellin.gov.co",
-    company: "Alcaldía de Medellín - Subsecretaría de Catastro",
-    message: "Requerimos cotización formal para integrar la capa parcelaria de la Comuna 14 (El Poblado) con el nuevo estándar LADM-COL v3.0 en su suite espacial. Excelente visor 3D.",
+    name: "TITULAR DE EJEMPLO 1",
+    email: "contacto1@example.com",
+    company: "Entidad de ejemplo 1",
+    message: "[DATO FICTICIO] Requerimos cotización formal para integrar una capa parcelaria de ejemplo con el estándar LADM-COL v3.0.",
     timestamp: "2026-05-21T10:30:00.000Z"
   },
   {
     id: "contact:1716304800000",
-    name: "Ing. Beatriz Elena Restrepo",
-    email: "beatriz.restrepo@conconcreto.co",
-    company: "Constructora Conconcreto S.A.",
-    message: "Hola equipo DevGiz. Estamos auditando linderos para un mega-proyecto en Rionegro. El detector LiDAR de construcciones omitidas es justo lo que necesitamos para evitar multas catastrales. ¿Tienen API corporativa?",
+    name: "TITULAR DE EJEMPLO 2",
+    email: "contacto2@example.com",
+    company: "Entidad de ejemplo 2",
+    message: "[DATO FICTICIO] Estamos revisando linderos para un proyecto de ejemplo. ¿Tienen API para integración?",
     timestamp: "2026-05-21T11:45:00.000Z"
   },
   {
     id: "contact:1716308400000",
-    name: "Carlos Mario Zuluaga",
-    email: "carlos.zuluaga@igac.gov.co",
-    company: "Instituto Geográfico Agustín Codazzi (IGAC)",
-    message: "Felicitaciones por la implementación del motor de cruce físico-jurídico con Polars. Nos gustaría programar una mesa técnica para evaluar su rendimiento frente al validador nacional.",
+    name: "TITULAR DE EJEMPLO 3",
+    email: "contacto3@example.com",
+    company: "Entidad de ejemplo 3",
+    message: "[DATO FICTICIO] Nos gustaría programar una reunión técnica para conocer el motor de cruce físico-jurídico.",
     timestamp: "2026-05-21T12:15:00.000Z"
   },
   {
     id: "contact:1716312000000",
-    name: "Diana Carolina Velez",
-    email: "d.velez@supernotariado.gov.co",
-    company: "Superintendencia de Notariado y Registro",
-    message: "Estamos interesados en el módulo de Sincronización Híbrida Offline. ¿Cómo manejan la reconciliación de folios de matrícula inmobiliaria cuando hay desfases superiores al 10%?",
+    name: "TITULAR DE EJEMPLO 4",
+    email: "contacto4@example.com",
+    company: "Entidad de ejemplo 4",
+    message: "[DATO FICTICIO] ¿Cómo manejan la reconciliación de folios de matrícula cuando hay diferencias de área?",
     timestamp: "2026-05-21T13:50:00.000Z"
   },
   {
     id: "contact:1716315600000",
-    name: "Arq. Eduardo Giraldo",
-    email: "egiraldo@amb.gov.co",
-    company: "Área Metropolitana del Valle de Aburrá",
-    message: "Solicitamos demo presencial de la capa ambiental y de protección de ríos de DevGiz. Queremos incorporar las alertas tempranas de invasión de cauce en nuestros mapas de ordenamiento.",
+    name: "TITULAR DE EJEMPLO 5",
+    email: "contacto5@example.com",
+    company: "Entidad de ejemplo 5",
+    message: "[DATO FICTICIO] Solicitamos una demostración de la capa ambiental y de protección de rondas hídricas.",
     timestamp: "2026-05-21T14:10:00.000Z"
   }
 ];

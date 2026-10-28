@@ -40,7 +40,10 @@ export default function SpatialLabSection() {
             Laboratorio de <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">Inteligencia Espacial</span>
           </h2>
           <p className="text-sm md:text-base text-slate-400 font-light max-w-4xl leading-relaxed">
-            Explora nuestros <strong className="text-white font-medium">nodos geoespaciales de alto rendimiento</strong>. Desde automatización territorial desatendida hasta agentes de Inteligencia Artificial que escriben Spatial SQL en tiempo real.
+            Explora nuestros <strong className="text-white font-medium">prototipos y demostraciones geoespaciales</strong>. Desde automatización territorial hasta agentes de Inteligencia Artificial que proponen consultas Spatial SQL.
+          </p>
+          <p className="inline-block px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-bold">
+            Demostración con datos ficticios
           </p>
         </div>
 
@@ -60,9 +63,9 @@ function ProjectCarousel() {
     {
       id: "PROJ-CM-01",
       tag: "FLAGSHIP_NODE",
-      status: "PRODUCTION STABLE",
+      status: "DEMO · DATOS FICTICIOS",
       title: "ConstruMetrix GIS",
-      desc: "Plataforma de monitoreo urbano para infraestructura a nivel empresarial. Sincronización de telemetría en tiempo real y gemelos digitales 3D.",
+      desc: "Prototipo de plataforma de monitoreo urbano para infraestructura, con visualización de telemetría y gemelos digitales 3D (demostración con datos ficticios).",
       img: "/assets/img/logo-construmetrix.svg",
       link: "https://daga21gz.github.io/ConstruMetrix/",
       tech: ["POSTGIS", "PYQGIS", "MAPBOX GL"],
@@ -83,7 +86,7 @@ function ProjectCarousel() {
     {
       id: "PROJ-EVA-01",
       tag: "AI_CORE_SYSTEM",
-      status: "STABLE_PRODUCTION",
+      status: "PROTOTIPO",
       title: "E.V.A. Framework",
       desc: "Engineering Virtual Assistant. Agente cognitivo especializado en automatización de ingeniería, soporte técnico avanzado y generación de insights.",
       img: null,
@@ -107,9 +110,9 @@ function ProjectCarousel() {
     {
       id: "PROJ-GLLM-05",
       tag: "GEO_LLM_05",
-      status: "R&D KERNEL",
+      status: "I+D · PROTOTIPO",
       title: "Geo-LLM Intelligence",
-      desc: "Motor de procesamiento natural que traduce consultas humanas a Spatial SQL, ejecutando análisis territoriales complejos de forma autónoma.",
+      desc: "Prototipo que traduce consultas en lenguaje natural a Spatial SQL para análisis territoriales; las respuestas deben revisarse por un profesional.",
       img: null,
       icon: "🤖",
       link: "/projects/geo-llm",
@@ -131,9 +134,9 @@ function ProjectCarousel() {
     {
       id: "PROJ-DASH-02",
       tag: "DASHBOARD_02",
-      status: "LIVE_NODE",
+      status: "DEMO · DATOS FICTICIOS",
       title: "Enterprise GIS Dashboard",
-      desc: "Interfaz interactiva conectada a PostGIS para análisis territorial, telemetría IoT y tableros de control estadístico en tiempo real.",
+      desc: "Demostración de interfaz interactiva sobre PostGIS para análisis territorial, telemetría IoT y tableros de control estadístico (datos ficticios).",
       img: null,
       icon: "📊",
       link: "/projects/gis-dashboard",
@@ -155,9 +158,9 @@ function ProjectCarousel() {
     {
       id: "PROJ-QGIS-03",
       tag: "PYQGIS_PLUGIN",
-      status: "STABLE_TOOL",
+      status: "DEMO · DATOS FICTICIOS",
       title: "LADM-COL QGIS Plugin",
-      desc: "Suite de herramientas nativas para QGIS diseñadas para la validación topológica y consistencia del modelo LADM-COL en entornos productivos.",
+      desc: "Herramientas para QGIS orientadas a la validación topológica y la consistencia con el modelo LADM-COL (demostración técnica).",
       img: null,
       icon: "🔌",
       link: "/projects/qgis-plugin",

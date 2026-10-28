@@ -24,33 +24,35 @@ const VurQuery = () => {
       
       if (response.ok) {
         const apiData = await response.json();
+        // Nunca se muestran nombre ni documento del titular (Ley 1581 de 2012):
+        // se descartan owner/owner_name/cedula aunque la API los enviara.
+        // eslint-disable-next-line no-unused-vars
+        const { owner, owner_name, cedula, raw_data, ...safeData } = apiData || {};
+        const isMock = apiData?.simulated === true || safeData.source !== "SNR_VUR_OFFICIAL";
+        // Los valores de relleno solo se usan en la demostración; en una respuesta real
+        // no se inventan datos: se muestra "NO DISPONIBLE".
+        const fill = (demoValue) => (isMock ? demoValue : "NO DISPONIBLE");
         setResult({
-            ...apiData,
-            owner: apiData.owner || "GARCIA MARQUEZ GABRIEL", // Demo Fallback
-            cedula: apiData.cedula || "1.020.XXX.XXX",
-            area_registrada: apiData.area_registrada || "1,250.45 m2",
-            coeficiente: apiData.coeficiente || "100%",
-            gravamenes: apiData.gravamenes || "SIN GRAVÁMENES VIGENTES",
-            ultima_actuacion: apiData.ultima_actuacion || "2024-03-12 (COMPRAVENTA)",
-            ubicacion: apiData.ubicacion || "BOGOTA D.C. - BARRIO SANTA ANA",
-            confiabilidad: "99.8%",
+            ...safeData,
+            matricula: safeData.matricula || query,
+            isMock,
+            area_registrada: safeData.area_registrada || (safeData.area_snr_m2 ? `${safeData.area_snr_m2} m2` : fill("1,250.45 m2")),
+            gravamenes: safeData.gravamenes || safeData.legal_incumbrances || fill("SIN GRAVÁMENES VIGENTES (DATO FICTICIO)"),
+            ultima_actuacion: safeData.ultima_actuacion || fill("2024-03-12 (COMPRAVENTA DE EJEMPLO)"),
+            ubicacion: safeData.ubicacion || fill("MUNICIPIO DE EJEMPLO - SECTOR DE EJEMPLO"),
             timestamp: new Date().toLocaleString()
         });
       } else {
         // Fallback to high-fidelity mock if API is down during demo
         const mockData = {
-          source: "SUPERINTENDENCIA DE NOTARIADO Y REGISTRO (MOCK)",
+          source: "DEMO_DATOS_FICTICIOS",
           matricula: query,
           isMock: true,
           status: "ACTIVO",
-          owner: "GARCIA MARQUEZ GABRIEL",
-          cedula: "1.020.XXX.XXX",
           area_registrada: "1,250.45 m2",
-          coeficiente: "100%",
-          gravamenes: "SIN GRAVÁMENES VIGENTES",
-          ultima_actuacion: "2024-03-12 (COMPRAVENTA)",
-          ubicacion: "BOGOTA D.C. - BARRIO SANTA ANA",
-          confiabilidad: "99.8%",
+          gravamenes: "SIN GRAVÁMENES VIGENTES (DATO FICTICIO)",
+          ultima_actuacion: "2024-03-12 (COMPRAVENTA DE EJEMPLO)",
+          ubicacion: "MUNICIPIO DE EJEMPLO - SECTOR DE EJEMPLO",
           timestamp: new Date().toLocaleString()
         };
         setResult(mockData);
@@ -68,7 +70,7 @@ const VurQuery = () => {
 
     } catch (err) {
       console.error("VUR_QUERY_ERR:", err);
-      setError("Error al conectar con los servidores de la SNR. Verifique su conexión.");
+      setError("No fue posible completar la consulta de demostración. Intente de nuevo más tarde.");
     } finally {
       setLoading(false);
     }
@@ -84,10 +86,13 @@ const VurQuery = () => {
           <div className="flex-1 space-y-4">
             <h4 className="text-2xl font-bold text-white flex items-center gap-3">
               <span aria-hidden="true" className="p-2 bg-red-500/20 text-red-500 rounded-lg text-xl">🔍</span>
-              Consulta Registral VUR/SNR
+              Consulta Registral (demostración)
             </h4>
+            <p className="inline-block px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-200 text-xs font-bold">
+              Demostración con datos ficticios
+            </p>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Verificación jurídica y física en tiempo real directamente desde la base de datos de la Superintendencia de Notariado y Registro.
+              Ejemplo de cómo DevGiz presenta el estado físico-jurídico de un folio de matrícula. DevGiz no es la Superintendencia de Notariado y Registro (SNR) ni tiene convenio, aval o conexión oficial con ella; para información registral oficial consulte directamente en la SNR.
             </p>
           </div>
 
@@ -142,35 +147,34 @@ const VurQuery = () => {
                 <div className="absolute inset-0 border-4 border-t-red-500 rounded-full animate-spin"></div>
             </div>
             <div className="space-y-2 text-center">
-                <p className="text-red-500 font-bold tracking-widest text-xs animate-pulse uppercase">Conectando con Servidores SNR...</p>
+                <p className="text-red-500 font-bold tracking-widest text-xs animate-pulse uppercase">Generando consulta de demostración...</p>
             </div>
           </div>
         )}
 
         {error && (
           <div role="alert" className="p-8 bg-red-500/10 border border-red-500/50 rounded-3xl text-red-300 text-center max-w-md">
-            <p className="font-bold mb-2">Error de Sincronización</p>
+            <p className="font-bold mb-2">Error en la consulta</p>
             <p className="text-sm opacity-80">{error}</p>
           </div>
         )}
 
         {result && (
           <div role="region" aria-label="Resultado de la consulta registral" className="vur-result-card w-full opacity-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-            {result.isMock && (
-              <p role="note" className="md:col-span-2 lg:col-span-3 px-4 py-2 rounded-xl border border-amber-500/40 bg-amber-500/10 text-amber-200 text-xs">
-                Datos de demostración: el servicio de consulta no respondió y se muestra un registro simulado, no información real de la SNR.
-              </p>
-            )}
+            <p role="note" className="md:col-span-2 lg:col-span-3 px-4 py-2 rounded-xl border border-amber-500/40 bg-amber-500/10 text-amber-200 text-xs">
+              {result.isMock
+                ? "Demostración con datos ficticios: se muestra un registro simulado, no información real de la SNR."
+                : "Resultado informativo sin valor oficial: no reemplaza el certificado de tradición y libertad expedido por la SNR."}
+            </p>
             {/* Main Info Card */}
             <div className="lg:col-span-2 p-8 bg-[#0a0f18] border border-slate-800 rounded-3xl space-y-6 shadow-xl hover:border-red-500/30 transition-colors group">
               <div className="flex justify-between items-start">
                 <div>
-                   <h5 className="text-xs font-mono text-red-400 uppercase tracking-widest mb-1">PROPIETARIO REGISTRADO</h5>
-                   <p className="text-2xl font-black text-white">{result.owner}</p>
-                   <p className="text-slate-500 text-sm">{result.cedula}</p>
+                   <h5 className="text-xs font-mono text-red-400 uppercase tracking-widest mb-1">TITULAR</h5>
+                   <p className="text-lg font-bold text-white">Titular: dato reservado (Ley 1581) — consulte directamente en la SNR</p>
                 </div>
-                <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-                  <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">VERIFICADO</span>
+                <div className="px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full">
+                  <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest">{result.isMock ? "DEMO" : "INFORMATIVO"}</span>
                 </div>
               </div>
 
@@ -215,14 +219,10 @@ const VurQuery = () => {
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                    </svg>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Índice Confiabilidad SNR</span>
-                   <span className="text-[10px] font-bold text-emerald-500">{result.confiabilidad}</span>
-                </div>
-                <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                   <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 w-[99.8%]"></div>
-                </div>
-                <p className="mt-4 text-[10px] font-mono text-slate-600 uppercase tracking-[0.2em]">Hash de Integridad: {encodeURIComponent(matricula || "DEMO").replace(/%/g, "").substring(0, 10).toUpperCase()}</p>
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Aviso</span>
+                <p className="mt-2 text-[11px] text-slate-400 leading-relaxed">
+                  Esta vista es ilustrativa. Para trámites y decisiones use el certificado de tradición y libertad oficial de la SNR.
+                </p>
               </div>
             </div>
           </div>
@@ -232,12 +232,8 @@ const VurQuery = () => {
       {/* Institutional Handshake Footer */}
       {result && (
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-4">
-           <div className="flex items-center gap-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-              <span className="text-[9.5px] font-mono text-slate-500 uppercase tracking-[0.28em]">Interoperando con:</span>
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_de_Colombia.svg/1200px-Escudo_de_Colombia.svg.png" alt="Colombia" className="h-8" />
-              <div className="h-8 w-px bg-slate-800"></div>
-              <span className="text-[10px] font-bold text-slate-400">VUR_NODE_ACTIVE_051</span>
+           <div className="flex items-center gap-6 opacity-60">
+              <span className="text-[9.5px] font-mono text-amber-300 uppercase tracking-[0.28em]">Demostración con datos ficticios · sin conexión oficial con la SNR</span>
            </div>
            <div className="text-[10px] font-mono text-slate-600">
               TIMESTAMP: {result.timestamp} | NODE_VER: 1.2.0-STABLE

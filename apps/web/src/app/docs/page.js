@@ -11,7 +11,7 @@ const ENDPOINTS = {
     title: "Introduction",
     icon: Cpu,
     desc: "La API de DevGiz es una puerta de enlace de alto rendimiento diseñada para la automatización, validación y gestión catastral de escala nacional. Permite integrar la potencia de nuestros motores paralelos directos sobre sus sistemas preexistentes.",
-    details: "Nuestra infraestructura utiliza un pipeline híbrido orquestado en Rust y Python que procesa geometrías complejas, transformaciones cartográficas a CTM12, validación conceptual LADM-COL v3.0 e interoperabilidad directa con el IGAC."
+    details: "Nuestra infraestructura utiliza un pipeline orquestado en Python que procesa geometrías complejas, transformaciones cartográficas a CTM12, validación conceptual LADM-COL v3.0 y generación de archivos en los formatos de intercambio que publica el IGAC (sin conexión directa ni aval de esa entidad)."
   },
   authentication: {
     title: "Authentication",
@@ -85,7 +85,7 @@ const result = await res.json();`
   ladm: {
     title: "LADM-COL Validation",
     icon: FileCheck,
-    desc: "Valide la integridad topológica, semántica y conceptual de sus modelos catastrales multipropósito contra el perfil LADM-COL v3.0 oficial.",
+    desc: "Valide la integridad topológica, semántica y conceptual de sus modelos catastrales multipropósito contra el perfil LADM-COL v3.0 publicado.",
     codeSnippets: {
       curl: `curl -X POST https://api.devgiz.com/v1/validation/ladm-col \\
   -H "Authorization: Bearer $DEVGIZ_TOKEN" \\
@@ -125,7 +125,7 @@ const result = await res.json();`
   -H "Authorization: Bearer $DEVGIZ_TOKEN" \\
   -H "Content-Type: application/json" \\
   -d '{
-    "url": "https://su-servidor.gov.co/callbacks/devgiz",
+    "url": "https://su-servidor.example.com/callbacks/devgiz",
     "events": ["validation.completed", "etl.finished"]
   }'`,
       python: `import requests
@@ -133,7 +133,7 @@ const result = await res.json();`
 url = "https://api.devgiz.com/v1/webhooks/register"
 headers = { "Authorization": "Bearer $DEVGIZ_TOKEN", "Content-Type": "application/json" }
 payload = {
-    "url": "https://su-servidor.gov.co/callbacks/devgiz",
+    "url": "https://su-servidor.example.com/callbacks/devgiz",
     "events": ["validation.completed", "etl.finished"]
 }
 
@@ -146,7 +146,7 @@ print(res.json())`,
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    url: "https://su-servidor.gov.co/callbacks/devgiz",
+    url: "https://su-servidor.example.com/callbacks/devgiz",
     events: ["validation.completed", "etl.finished"]
   })
 });
@@ -205,7 +205,7 @@ const PLAYGROUND_PLANS = {
       "📁  [Ingest] Leyendo archivo catastral .xtf...",
       "⚙️  [INTERLIS] Analizando semántica de clases...",
       "📐  [Topology] Evaluando traslapes y huecos prediales...",
-      "✨  [LADM-COL] Verificación contra modelo oficial v3.0 finalizada."
+      "✨  [LADM-COL] Verificación contra el modelo LADM-COL v3.0 publicado finalizada (simulación)."
     ],
     response: {
       valid: true,
@@ -318,16 +318,16 @@ export default function DocsPage() {
               <div className="p-6 bg-slate-950 border border-slate-900 rounded-2xl space-y-4">
                  <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">System Health</div>
                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400">Latencia API:</span>
-                    <span className="font-mono text-cyan-400 font-bold">12ms avg</span>
+                    <span className="text-slate-400">Estado:</span>
+                    <span className="font-mono text-cyan-400 font-bold">Referencia</span>
                  </div>
                  <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-400">Disponibilidad:</span>
-                    <span className="font-mono text-emerald-400 font-bold">99.99%</span>
+                    <span className="font-mono text-emerald-400 font-bold">Según contrato</span>
                  </div>
                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400">Validaciones / Día:</span>
-                    <span className="font-mono text-slate-300">42,401</span>
+                    <span className="text-slate-400">Playground:</span>
+                    <span className="font-mono text-slate-300">Datos ficticios</span>
                  </div>
               </div>
            </div>
@@ -415,10 +415,13 @@ export default function DocsPage() {
                        Interactive Sandbox Console
                     </div>
                     <h2 className="text-3xl font-black tracking-tight uppercase">
-                       Consola de <span className="text-slate-400 font-light italic">Pruebas en Vivo</span>
+                       Consola de <span className="text-slate-400 font-light italic">Pruebas</span>
                     </h2>
+                    <p className="inline-block px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-bold">
+                       Demostración con datos ficticios
+                    </p>
                     <p className="text-slate-500 text-sm font-light">
-                       Seleccione un endpoint de API para simular la ingesta de datos y el flujo completo del pipeline de validación catastral.
+                       Seleccione un endpoint de API para simular (sin llamadas reales) la ingesta de datos y el flujo del pipeline de validación catastral.
                     </p>
                  </div>
 
