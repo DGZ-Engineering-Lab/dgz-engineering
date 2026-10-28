@@ -26,7 +26,11 @@ export function sanitizeSource(value) {
   if (typeof value !== "string") return "unknown";
   // Se acota la longitud antes de cualquier regex y los guiones de los extremos se quitan
   // sin regex (evita backtracking costoso con entradas largas de "-").
-  let clean = value.slice(0, MAX_SOURCE_LENGTH * 2).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-");
+  let clean = value
+    .slice(0, MAX_SOURCE_LENGTH * 2)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-");
   let start = 0;
   let end = clean.length;
   while (start < end && clean[start] === "-") start++;

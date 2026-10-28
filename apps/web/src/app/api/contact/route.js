@@ -5,12 +5,11 @@ import { checkRateLimit, dailyBudget } from "../../../lib/upstash";
 import { emailService } from "../../../lib/email-service";
 import {
   assertSameOrigin,
-  boundedString,
   getClientIp,
   isJsonRequest,
-  isValidEmail,
 } from "../../../lib/security";
-import { buildConsentRecord, finalidadFromSource, hasPrivacyConsent } from "../../../lib/consent";
+import { buildConsentRecord, finalidadFromSource } from "../../../lib/consent";
+import { ContactValidationError, parseContactBody } from "../../../lib/contact-validation";
 import { authorizationText } from "../../../lib/legal";
 
 
@@ -67,22 +66,17 @@ export async function POST(req) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    // Ley 1581 de 2012: sin autorización previa y expresa no se tratan los datos.
-    if (!hasPrivacyConsent(body)) {
-      return NextResponse.json({ error: "consent_required" }, { status: 400 });
+    // Consentimiento (Ley 1581) y campos: un error de validación responde 400 con su código.
+    let fields;
+    try {
+      fields = parseContactBody(body);
+    } catch (err) {
+      if (err instanceof ContactValidationError) {
+        return NextResponse.json({ error: err.code }, { status: 400 });
+      }
+      throw err;
     }
-
-    const name = boundedString(body?.name, 120);
-    const email = boundedString(body?.email, 254);
-    const message = boundedString(body?.message, 5000);
-    const company = boundedString(body?.company, 160, { required: false });
-
-    if (!name || !email || !message || company === null) {
-      return NextResponse.json({ error: "Missing or invalid fields" }, { status: 400 });
-    }
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
-    }
+    const { name, email, message, company } = fields;
 
     // Presupuesto diario global: protege la cuota de Resend y de Redis.
     const budget = await dailyBudget("contact", 40);
